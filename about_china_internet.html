@@ -1348,5 +1348,161 @@ connectivity between Asian countries and the Pacific region.
 })();
 </script>
 
+    <script>
+(function () {
+    "use strict";
+
+    /*
+     * Automatically convert bare external URLs into safe links.
+     *
+     * Detects:
+     *   https://example.com
+     *   http://example.com
+     *   https\://example.com   <-- escaped form in source
+     *   www.example.com
+     *
+     * Existing <a> elements are skipped.
+     */
+
+    const URL_PATTERN =
+        /(?:https\\?:\/\/|https?:\/\/|www\.)[^\s<>"'`]+/gi;
+
+    const SKIP_TAGS = new Set([
+        "A",
+        "SCRIPT",
+        "STYLE",
+        "TEXTAREA",
+        "INPUT",
+        "BUTTON"
+    ]);
+
+    function makeExternalLink(url) {
+        let href = url;
+
+        // Convert escaped https\:// into normal https://
+        href = href.replace(/^https\\:\/\//i, "https://");
+
+        // www.example.com needs a scheme for href
+        if (/^www\./i.test(href)) {
+            href = "https://" + href;
+        }
+
+        const link = document.createElement("a");
+
+        link.href = href;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+
+        // Show the corrected URL.
+        link.textContent = href;
+
+        return link;
+    }
+
+    function processTextNode(textNode) {
+        const parent = textNode.parentElement;
+
+        if (!parent || SKIP_TAGS.has(parent.tagName)) {
+            return;
+        }
+
+        const text = textNode.nodeValue;
+
+        if (!URL_PATTERN.test(text)) {
+            URL_PATTERN.lastIndex = 0;
+            return;
+        }
+
+        URL_PATTERN.lastIndex = 0;
+
+        const fragment = document.createDocumentFragment();
+        let lastIndex = 0;
+        let match;
+
+        while ((match = URL_PATTERN.exec(text)) !== null) {
+            const rawUrl = match[0];
+
+            /*
+             * Remove common punctuation that normally comes after
+             * a URL in prose.
+             */
+            let url = rawUrl;
+            let trailing = "";
+
+            while (/[),.;:!?]$/.test(url)) {
+                trailing = url.slice(-1) + trailing;
+                url = url.slice(0, -1);
+            }
+
+            if (match.index > lastIndex) {
+                fragment.appendChild(
+                    document.createTextNode(
+                        text.slice(lastIndex, match.index)
+                    )
+                );
+            }
+
+            fragment.appendChild(makeExternalLink(url));
+
+            if (trailing) {
+                fragment.appendChild(
+                    document.createTextNode(trailing)
+                );
+            }
+
+            lastIndex = match.index + rawUrl.length;
+        }
+
+        if (lastIndex < text.length) {
+            fragment.appendChild(
+                document.createTextNode(text.slice(lastIndex)
+            ));
+        }
+
+        textNode.parentNode.replaceChild(fragment, textNode);
+    }
+
+    function convertBareUrls() {
+        const walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT
+        );
+
+        const nodes = [];
+        let node;
+
+        while ((node = walker.nextNode())) {
+            const parent = node.parentElement;
+
+            if (!parent || SKIP_TAGS.has(parent.tagName)) {
+                continue;
+            }
+
+            /*
+             * Extra protection:
+             * never modify text that is already inside an <a>.
+             */
+            if (parent.closest("a")) {
+                continue;
+            }
+
+            nodes.push(node);
+        }
+
+        nodes.forEach(processTextNode);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener(
+            "DOMContentLoaded",
+            convertBareUrls,
+            { once: true }
+        );
+    } else {
+        convertBareUrls();
+    }
+})();
+</script>
+
 </body>
 </html>
