@@ -1,233 +1,338 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-	<title>About China: Internet</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About China: Internet</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
 <style>
-	* {
-    		font-family: 'Roboto', sans-serif;
-	}
-	body {
-		margin: 0;
-	}
-	main {
-		width: min(100% - 2rem, 50rem);
-            	margin-inline: auto;
-            	padding-block: 1.5rem;
-            	line-height: 1.6;
-	}
-  	img,
-  	video {
-  		display:block;margin: 0px auto;padding:0px;
-  		max-width: 100%;
-  		height: auto;
-  	}
-    	pre {border-radius:3px;overflow:auto;background-color:#121650;color:#E1E1DC;padding:2px 5px 2px 5px;font-size:0.9em;white-space: pre-wrap;word-break:break-all;}
-    	p { border-radius:3px;background-color:gray ;color:#ffffff;padding:2px 5px 2px 5px;margin-bottom:-20px;}
-    	.hl {color:#01FF70;}
-    	.ll {color:#ff6f2f;}
-    	hr {
-    		color:silver;
-    		padding:1px;
-    		margin-top:10px;
-      		margin-bottom:10px;
-      		-webkit-box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.34);
-      		-moz-box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.34);
-     	 	box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.34);
-      		-webkit-filter: blur(1px);
-      		-moz-filter: blur(1px);
-      		-o-filter: blur(1px);
-     		-ms-filter: blur(1px);
-      		filter: blur(1px);
-    	}
-	code {
- 		margin-top:3px;
-    		padding:3px 3px 3px 3px;
-    		background: #1A3089;
-  		//#1d3595 ;
-    		border: 1px solid #ddd;
-    		//border-left: 3px solid #f36d33;
-    		//color: #e6e6e6;
-    		//page-break-inside: avoid;
-    		//font-family: monospace;
-    		font-size: 0.8em;
-    		//line-height: 1.6;
-    		//margin-bottom: 1.6em;
-  		// max-width: 90%;
-    		overflow: auto;
-    		//padding: 1em 1.5em;
-    		display: inline-block;
-    		//word-wrap: break-word;
-  		letter-spacing: 2px;
-  		text-align:left;
-	}
+    * {
+        font-family: 'Roboto', sans-serif;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 1rem;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    main {
+        width: min(100% - 2rem, 50rem);
+        margin-inline: auto;
+        padding-block: 1.5rem;
+        line-height: 1.6;
+    }
+
+    img,
+    video {
+        display: block;
+        margin: 0 auto;
+        padding: 0;
+        max-width: 100%;
+        height: auto;
+    }
+
+    pre {
+        border-radius: 3px;
+        overflow: auto;
+        background-color: #121650;
+        color: #E1E1DC;
+        padding: 2px 5px;
+        font-size: 0.9em;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .section-title {
+        display: block;
+        border-radius: 3px;
+        background-color: gray;
+        color: #ffffff;
+        padding: 2px 5px;
+        margin-bottom: -20px;
+    }
+
+    .hl {
+        color: #01FF70;
+    }
+
+    .ll {
+        color: #ff6f2f;
+    }
+
+    hr {
+        color: silver;
+        padding: 1px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        box-shadow: 3px 3px 3px 1px rgba(0,0,0,0.34);
+        filter: blur(1px);
+    }
+
+    code {
+        margin-top: 3px;
+        padding: 3px;
+        background: #1A3089;
+        border: 1px solid #ddd;
+        font-size: 0.8em;
+        overflow: auto;
+        display: inline-block;
+        letter-spacing: 2px;
+        text-align: left;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: underline;
+    }
+
+    .term {
+        color: #01FF70;
+        font-weight: bold;
+    }
+
+    .back {
+        display: inline-block;
+        margin: 0.5rem 0;
+        padding: 3px 8px;
+        background: #1A3089;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .back:hover,
+    .back:focus {
+        background: #263ea5;
+    }
+
+    .definition {
+        scroll-margin-top: 1rem;
+    }
 </style>
+```
+
 </head>
+
+<body>
+
 <main>
+
 <pre>
-<p>What is going on in China?<p>
+<span class="section-title">What is going on in China?</span>
+
 Access to popular global websites including android apps are blocked.
-International outbound bandwidth are strangled intentionally and it's more noticeable at peak hour (around 7.30 pm to 10.30 pm).
-Using corporate lines like IPLC/IEPL are needed to maintain stability and speed at peak hour. 
-Blocking is stricter on Tier 1 city like Shanghai / Beijing / Shenzen.
 
+International outbound bandwidth are strangled intentionally and it's more noticeable at <a class="term" href="#peak-hour">peak hour</a> (around 7.30 pm to 10.30 pm).
 
+Using corporate lines like <a class="term" href="#iplc-iepl">IPLC/IEPL</a> are needed to maintain stability and speed at peak hour.
 
-
+Blocking is stricter on <a class="term" href="#tier-1-city">Tier 1 city</a> like Shanghai / Beijing / Shenzen.
 </pre>
+
 <br>
+
 <pre>
-<p>What needed to get through/cross border</p>
+<span class="section-title">What needed to get through/cross border</span>
 
 <b>CATEGORY</b>
-E-SIM
 
+<a class="term" href="#esim">E-SIM</a>
 
-VPN
+<a class="term" href="#vpn">VPN</a>
 VPN has less servers to use and easily blocked and expensive too!
-	mulladvpn
-	amneziavpn
-	letsvpn
-  	v1vpn
-	wannaflix
-	astrill
+    mulladvpn
+    amneziavpn
+    letsvpn
+v1vpn
+    wannaflix
+    astrill
 
-
-Ji Chang / Proxies
+<a class="term" href="#jichang">Ji Chang / Proxies</a>
 Is usually cheap around 5-100 RMB.
 Cheaper sides are usually limited in the amount of connected devices.
-	
 
 <b>Local SIM Card</b>
 China Unicom has been used widely by foreigners especially to access America.
 China Mobile as of July 2026 has increased connectivity toward South East Asian countries, thus better ping.
 
-
 <b>Protocols</b>
-VLESS Reality
-Hysteria 2
-Shadowsocks with AEAD (popular on corporate line, because though easier to track but less strict on corporate line)
 
+<a class="term" href="#vless-reality">VLESS Reality</a>
+<a class="term" href="#hysteria2">Hysteria 2</a>
+<a class="term" href="#shadowsocks-aead">Shadowsocks with AEAD</a> (popular on corporate line, because though easier to track but less strict on corporate line)
 
 <b>Problems</b>
 Peak hour sluggishness.
 
-
 <b>TOOLS</b>
+
 Third party tools
 - Clash Verge
 - FlClash
 
 From proxy provider itself
+</pre>
 
+<pre>
+<span class="section-title">Testing</span>
 
-
-
-
-<p>Testing</p>
 <b>IP</b>
-China sites:
-http://ip.cn
-https://myip.ipip.net
-https://ip.cx/
 
+China sites:
+[http://ip.cn](http://ip.cn)
+[https://myip.ipip.net](https://myip.ipip.net)
+[https://ip.cx/](https://ip.cx/)
 
 <b>Leaks</b>
-https://dnsleaktest.com
-https://browserleaks.com
 
+[https://dnsleaktest.com](https://dnsleaktest.com)
+[https://browserleaks.com](https://browserleaks.com)
 
 <b>Benchmarks</b>
-https://www.itdog.cn
-https://ping.pe
 
+[https://www.itdog.cn](https://www.itdog.cn)
+[https://ping.pe](https://ping.pe)
 
 <b>Sharing the internet via Wi-Fi</b>
+
 With sing-box + myPublicWiFi
 
-OpenWRT with Passwall2 or OpenClash
-
-
+<a class="term" href="#openwrt">OpenWRT</a> with Passwall2 or OpenClash
 </pre>
-<pre>
-<p>Some list of providers</p>
-Good enough list
-elf academy - https://pub2.riolu.icu - 8Y/30GB 15Y/120GB 30Y/250GB
-HungryCake - https://efanccyun.org/ - 280Y 200GB 0IP - Midnite rate 02:00-09:00 0.1x - 6Month
-Lighting Cat/Speed Cat - https://scaffb06.cc/ - 20Y 100GB
-	https://jc.speedcat.xyz/ - https://speedcat.xyz/auth/login - https://webinv02.sc-aff.cc/ - https://a06.scvbaff-hezb13.cc/user
-    https://www.amytele.co/cart.php - 150 GB 196Y / 6Month
 
-https://tagss.pro/ - 185RMB/3Month 250GB expensive - no sharing
-doggygo vpn - https://party.dginv.click/#/register?code=ARdo0mXx - https://panel.dg5.biz/ - 17Y 160GB
-totorocloud.org - https://lmvipaffa02.cc/ - 15 RMB 100GB / 30Y 200GB IPLC ngakunya - support vless reality - DOUBTFUL
-getgoso.net - https://socloud.me - 30Y 100GB 4IP - WEIRD SITE
+<pre>
+<span class="section-title">Some list of providers</span>
+
+Good enough list
+
+elf academy - [https://pub2.riolu.icu](https://pub2.riolu.icu) - 8Y/30GB 15Y/120GB 30Y/250GB
+
+HungryCake - [https://efanccyun.org/](https://efanccyun.org/) - 280Y 200GB 0IP - Midnite rate 02:00-09:00 0.1x - 6Month
+
+Lighting Cat/Speed Cat - [https://scaffb06.cc/](https://scaffb06.cc/) - 20Y 100GB
+    [https://jc.speedcat.xyz/](https://jc.speedcat.xyz/) - [https://speedcat.xyz/auth/login](https://speedcat.xyz/auth/login) - [https://webinv02.sc-aff.cc/](https://webinv02.sc-aff.cc/) - [https://a06.scvbaff-hezb13.cc/user](https://a06.scvbaff-hezb13.cc/user)
+
+[https://www.amytele.co/cart.php](https://www.amytele.co/cart.php) - 150 GB 196Y / 6Month
+
+[https://tagss.pro/](https://tagss.pro/) - 185RMB/3Month 250GB expensive - no sharing
+
+doggygo vpn - [https://party.dginv.click/#/register?code=ARdo0mXx](https://party.dginv.click/#/register?code=ARdo0mXx) - [https://panel.dg5.biz/](https://panel.dg5.biz/) - 17Y 160GB
+
+totorocloud.org - [https://lmvipaffa02.cc/](https://lmvipaffa02.cc/) - 15 RMB 100GB / 30Y 200GB IPLC ngakunya - support vless reality - DOUBTFUL
+
+getgoso.net - [https://socloud.me](https://socloud.me) - 30Y 100GB 4IP - WEIRD SITE
+
 orymi.net - 20Y 150GB
-Candy Cloud - https://candytally.xyz/ - 18Y 100GB 0IP - UNSURE
-https://flyingbirds.one/ - 15RMB 100GB - https://a03.fbaffb01.cc/auth/register - https://www.flyingbird.pro/user - OK for Nanjing ?
-https://aijichang.com/go/ssrdog/ - https://dog.ssrdog.com/account/subscribe/monthly - 3Month 105-135 RMB 150GB - SLA 45Y 300GB
-https://jichangtuijian1.com/gaoduanjichang
-Flying Pig - https://ftzaffcom01.fliggyaff.xyz/#/plan - 20Y 120G 0IP
+
+Candy Cloud - [https://candytally.xyz/](https://candytally.xyz/) - 18Y 100GB 0IP - UNSURE
+
+[https://flyingbirds.one/](https://flyingbirds.one/) - 15RMB 100GB - [https://a03.fbaffb01.cc/auth/register](https://a03.fbaffb01.cc/auth/register) - [https://www.flyingbird.pro/user](https://www.flyingbird.pro/user) - OK for Nanjing ?
+
+[https://aijichang.com/go/ssrdog/](https://aijichang.com/go/ssrdog/) - [https://dog.ssrdog.com/account/subscribe/monthly](https://dog.ssrdog.com/account/subscribe/monthly) - 3Month 105-135 RMB 150GB - SLA 45Y 300GB
+
+[https://jichangtuijian1.com/gaoduanjichang](https://jichangtuijian1.com/gaoduanjichang)
+
+Flying Pig - [https://ftzaffcom01.fliggyaff.xyz/#/plan](https://ftzaffcom01.fliggyaff.xyz/#/plan) - 20Y 120G 0IP
+
 neogrid.top - 2USD 120GB 3IP / 2.5USD 100GB 4IP residential - alipay ok
-https://github.com/winston779/YToo - y-too.com - https://y-too.net - https://www.stentvessel.shop/ - 36Y 200GB / 372Y(31Y) 12Month - dedicated line - looks legit
-https://mesl.cloud/ - https://panel.meslcloud.com/#/landing - 50Y 200GB / 72Y(24Y) 3Month 100GB - IEPL - big brand
-flowercloud.net - https://api-flowercloud.com/cart.php - 39Y 150GB - SLA - no sharing
-youtu1.com youtunice.com - https://888.youtu7.shop - rate 2.5x dedicated peak hour 19:00-02:00 - 210Y(35Y):6Month 150GB - IEPL - no sharing
-https://clashsubs.com/boostnet - https://999.boostnet4.com/console - 260Y(43Y) 6Month 200GB - dedicated line - gpt - no sharing
-fastlink - https://s.yam.com/99Dbw - 100GB 20Y 200GB 40Y
+
+https://github.com/winston779/YToo - y-too.com - [https://y-too.net](https://y-too.net) - [https://www.stentvessel.shop/](https://www.stentvessel.shop/) - 36Y 200GB / 372Y(31Y) 12Month - dedicated line - looks legit
+
+[https://mesl.cloud/](https://mesl.cloud/) - [https://panel.meslcloud.com/#/landing](https://panel.meslcloud.com/#/landing) - 50Y 200GB / 72Y(24Y) 3Month 100GB - IEPL - big brand
+
+flowercloud.net - [https://api-flowercloud.com/cart.php](https://api-flowercloud.com/cart.php) - 39Y 150GB - SLA - no sharing
+
+youtu1.com youtunice.com - [https://888.youtu7.shop](https://888.youtu7.shop) - rate 2.5x dedicated peak hour 19:00-02:00 - 210Y(35Y):6Month 150GB - IEPL - no sharing
+
+[https://clashsubs.com/boostnet](https://clashsubs.com/boostnet) - [https://999.boostnet4.com/console](https://999.boostnet4.com/console) - 260Y(43Y) 6Month 200GB - dedicated line - gpt - no sharing
+
+fastlink - [https://s.yam.com/99Dbw](https://s.yam.com/99Dbw) - 100GB 20Y 200GB 40Y
 
 
 With Trials
-c.tigr02.xyz - https://e321.tigr18.sbs/#/register?code=F1uiFHxL - 30Y 300GB - 3Day Trial
-bitznet - https://www.neobitz.net/ - 24Hour Trial - 23Y 80GB / 40Y 400GB(share?) - 3Month -  shanghai iepl line - Looks Legit
 
+c.tigr02.xyz - [https://e321.tigr18.sbs/#/register?code=F1uiFHxL](https://e321.tigr18.sbs/#/register?code=F1uiFHxL) - 30Y 300GB - 3Day Trial
+
+bitznet - [https://www.neobitz.net/](https://www.neobitz.net/) - 24Hour Trial - 23Y 80GB / 40Y 400GB(share?) - 3Month - shanghai iepl line - Looks Legit
 
 
 Expensive but reliable list ?
-https://wgetcloud.ltd / https://b8cfff2a4jquxdbmwbaj.wgetcloud.org/user/shop - 99RMB 280GB / SLA 119Y 270GB
-https://ip.harmonylink.net/share/e31gg1 - https://c.chinagrp.com/#pricing - 7usd
+
+[https://wgetcloud.ltd](https://wgetcloud.ltd) / [https://b8cfff2a4jquxdbmwbaj.wgetcloud.org/user/shop](https://b8cfff2a4jquxdbmwbaj.wgetcloud.org/user/shop) - 99RMB 280GB / SLA 119Y 270GB
+
+[https://ip.harmonylink.net/share/e31gg1](https://ip.harmonylink.net/share/e31gg1) - [https://c.chinagrp.com/#pricing](https://c.chinagrp.com/#pricing) - 7usd
+
 nexitallysafe.com - 100Y
+
 justmysocks.net
 
 
 Unsure ?
+
 bajie.pw - 25.90RMB 150GB
+
 coke cloud - 12.9Y 300GB 5IP
-https://www.cutecloud.cc/#/shop - 100GB 10RMB/225GB 20RMB
-https://jichangtuijian1.com/pianyijichang/feiniaojichang - flying bird - https://a21.fbaffb02.cc/user/shop - https://fbinv02.fbaff.cc - 15Y 100GB 30Y 300GB
-the lord of the rings.net - https://xn--zuup71g88ae4i.com/ - no expiration? - 210 GB 30 RMB 420 GB 52 RMB
-https://xsus.cloud/register?code=xJFcT1Dw - 88Y / 3months 100GB --- 52Y / 3 bulan 50GB - BGP optimized
-fatcatcloud.org - https://a03.fcvipaffa07.cc/ - 20Y
-doggygo - https://user.665353.xyz / https://panel.dg1.top - 17Y
-tntcloud - https://w05.tntyunb01.cc/#/login - 20Y - alipay
-https://my.cloudnz.cc/store/accelerate - quarterly 105Y 100GB
-https://cdn.e-ix.org/#/register?code=OgkZxfFL - 45RMB 256GB - BGP
-https://goflybit.com/#/register?code=7h1NCdM7 - https://www.flybit2026.org/#/dashboard - 128-256GB - 15-28RMB - cm support shadowsocks
-https://pub2.riolu.icu/?code=zkuvy1tw - https://system.riolu-node.link/dashboard - 15-30 RMB 120-250GB
-	• https://pub0.riolu.icu
-	• https://system.riolu-node.link
-	• https://user.riolu00.link
-	• https://portal.riolu.work affcode
+
+[https://www.cutecloud.cc/#/shop](https://www.cutecloud.cc/#/shop) - 100GB 10RMB/225GB 20RMB
+
+[https://jichangtuijian1.com/pianyijichang/feiniaojichang](https://jichangtuijian1.com/pianyijichang/feiniaojichang) - flying bird - [https://a21.fbaffb02.cc/user/shop](https://a21.fbaffb02.cc/user/shop) - [https://fbinv02.fbaff.cc](https://fbinv02.fbaff.cc) - 15Y 100GB 30Y 300GB
+
+the lord of the rings.net - [https://xn--zuup71g88ae4i.com/](https://xn--zuup71g88ae4i.com/) - no expiration? - 210 GB 30 RMB 420 GB 52 RMB
+
+[https://xsus.cloud/register?code=xJFcT1Dw](https://xsus.cloud/register?code=xJFcT1Dw) - 88Y / 3months 100GB --- 52Y / 3 bulan 50GB - BGP optimized
+
+fatcatcloud.org - [https://a03.fcvipaffa07.cc/](https://a03.fcvipaffa07.cc/) - 20Y
+
+doggygo - [https://user.665353.xyz](https://user.665353.xyz) / [https://panel.dg1.top](https://panel.dg1.top) - 17Y
+
+tntcloud - [https://w05.tntyunb01.cc/#/login](https://w05.tntyunb01.cc/#/login) - 20Y - alipay
+
+[https://my.cloudnz.cc/store/accelerate](https://my.cloudnz.cc/store/accelerate) - quarterly 105Y 100GB
+
+[https://cdn.e-ix.org/#/register?code=OgkZxfFL](https://cdn.e-ix.org/#/register?code=OgkZxfFL) - 45RMB 256GB - BGP
+
+[https://goflybit.com/#/register?code=7h1NCdM7](https://goflybit.com/#/register?code=7h1NCdM7) - [https://www.flybit2026.org/#/dashboard](https://www.flybit2026.org/#/dashboard) - 128-256GB - 15-28RMB - cm support shadowsocks
+
+[https://pub2.riolu.icu/?code=zkuvy1tw](https://pub2.riolu.icu/?code=zkuvy1tw) - [https://system.riolu-node.link/dashboard](https://system.riolu-node.link/dashboard) - 15-30 RMB 120-250GB
+    • [https://pub0.riolu.icu](https://pub0.riolu.icu)
+    • [https://system.riolu-node.link](https://system.riolu-node.link)
+    • [https://user.riolu00.link](https://user.riolu00.link)
+    • [https://portal.riolu.work](https://portal.riolu.work) affcode
 
 
 Warning
-	Users who already have paid plans need to be cautious when purchasing.
-	For the same tier of plan, membership time will be stacked and data will not stack; if tier is different, data and time will not stack, and the plan will be overridden.
-	If you have any questions before purchasing, please contact the administrator or online customer service via TG.
-	Do not repurchase monthly plans; after purchase, data will be reset to the plan, causing leftover data to be lost. Make sure to continue purchasing when your data is almost used up.
+
+    Users who already have paid plans need to be cautious when purchasing.
+    For the same tier of plan, membership time will be stacked and data will not stack; if tier is different, data and time will not stack, and the plan will be overridden.
+    If you have any questions before purchasing, please contact the administrator or online customer service via TG.
+    Do not repurchase monthly plans; after purchase, data will be reset to the plan, causing leftover data to be lost. Make sure to continue purchasing when your data is almost used up.
+
 
 <b>Alternatives</b>
+
 Renting a VPS in Japan, Singapore, USA.
-	Popular, cheap VPS providers used by developers (like DigitalOcean, Vultr, Linode, or Bandwagon Host) face massive, automated IP sweeps
-    Prefer KVM. 1 vCPU 1 GB RAM and public ipv4.	
+
+Popular, cheap VPS providers used by developers (like DigitalOcean, Vultr, Linode, or Bandwagon Host) face massive, automated IP sweeps
+
+Prefer KVM. 1 vCPU 1 GB RAM and public ipv4.
 
 
 <b>TIKTOK</b>
+
 Tiktok is specially blocked even when using vpn. It detects chinese SIM Card.
 
 
 <b>Remote Desktop with RustDesk and Tailscale</b>
+
 -Normal way
 Laptop1 >> RustDesk relay << proxy << China Laptop
 
@@ -239,272 +344,900 @@ Laptop1 >> Your own RustDesk relay << proxy << China Laptop
 
 
 <b>News about proxies</b>
-https://clashsubs.com/
-https://aijichang.com/
-https://www.ermao.net/airport/
-https://trustmyip.com/blog/best-vpn-for-china#section-0
+
+[https://clashsubs.com/](https://clashsubs.com/)
+[https://aijichang.com/](https://aijichang.com/)
+[https://www.ermao.net/airport/](https://www.ermao.net/airport/)
+[https://trustmyip.com/blog/best-vpn-for-china#section-0](https://trustmyip.com/blog/best-vpn-for-china#section-0)
 https://github.com/everett7623/airport-recommendations-2026
-https://2.x31415926.top/
-https://9.234456.xyz/abc.html?t=639209355439987124
+[https://2.x31415926.top/](https://2.x31415926.top/)
+[https://9.234456.xyz/abc.html?t=639209355439987124](https://9.234456.xyz/abc.html?t=639209355439987124)
 https://github.com/lynkco01/jichangtuijian
-https://aijichang.com/13010/
-https://subconverter.org/proxy/
-https://www.vpnjichang.com/node/xxfeng/
-https://shadowrocket.one/
-https://kerrynotes.com/
-https://www.vpntizi.com/
-https://www.51vps.info/
-https://jichangtuijian1.com/pianyijichang
-https://jichangtuijian1.com/
-https://jichangtuijian1.com/iplc
-https://limbopro.com/865.html
-https://gfwoff.org/
-https://www.ermao.net/posts/vpn/
-https://vpnnew.net/vpn-recommend/
-https://www.wallmama.com/en/best-vpn-china/
+[https://aijichang.com/13010/](https://aijichang.com/13010/)
+[https://subconverter.org/proxy/](https://subconverter.org/proxy/)
+[https://www.vpnjichang.com/node/xxfeng/](https://www.vpnjichang.com/node/xxfeng/)
+[https://shadowrocket.one/](https://shadowrocket.one/)
+[https://kerrynotes.com/](https://kerrynotes.com/)
+[https://www.vpntizi.com/](https://www.vpntizi.com/)
+[https://www.51vps.info/](https://www.51vps.info/)
+[https://jichangtuijian1.com/pianyijichang](https://jichangtuijian1.com/pianyijichang)
+[https://jichangtuijian1.com/](https://jichangtuijian1.com/)
+[https://jichangtuijian1.com/iplc](https://jichangtuijian1.com/iplc)
+[https://limbopro.com/865.html](https://limbopro.com/865.html)
+[https://gfwoff.org/](https://gfwoff.org/)
+[https://www.ermao.net/posts/vpn/](https://www.ermao.net/posts/vpn/)
+[https://vpnnew.net/vpn-recommend/](https://vpnnew.net/vpn-recommend/)
+[https://www.wallmama.com/en/best-vpn-china/](https://www.wallmama.com/en/best-vpn-china/)
 
 
 <b>Other</b>
-Disable Tailscale DNS when using vpn/clash apps.
-Do not rotate proxy selection when using Remote Desktop software.
-Configure split tunneling so that local traffic will not get proxified.
-TUN Mode only works with admin access. It also enables software to use proxy. Try mixed mode then gvisor.
-Always turn off SECURE DNS.
-Enable fake-ip to avoid dns leak if possible.
-Do a MTR test.
 
+Disable <a class="term" href="#tailscale">Tailscale</a> DNS when using vpn/clash apps.
+
+Do not rotate proxy selection when using Remote Desktop software.
+
+Configure <a class="term" href="#split-tunneling">split tunneling</a> so that local traffic will not get proxified.
+
+<a class="term" href="#tun-mode">TUN Mode</a> only works with admin access. It also enables software to use proxy. Try mixed mode then gvisor.
+
+Always turn off <a class="term" href="#secure-dns">SECURE DNS</a>.
+
+Enable <a class="term" href="#fake-ip">fake-ip</a> to avoid dns leak if possible.
+
+Do a <a class="term" href="#mtr">MTR</a> test.
+
+To use sing-box, proxy apps need to enable <a class="term" href="#allow-lan">ALLOW LAN</a>.
+
+Windows Defender sometimes will keep scanning proxy apps thus high cpu usage. Add the proxy apps folder to exclusion.
 
 
 <b>More about protocols</b>
-VLESS REALITY VISION
-	-needs domain that support TLS v1.3 http2 and ALPN compatibility
-	-match the vps provider, if use microsoft azure vps, then use microsoft domain
-	-match data center, if using cheap vps (usually in crowded datacenter), find large tech service or open source mirror or corporate portal that rent space nearing the vps datacenter
-	-use domains that are in close location proximity with the VPS location
-	-NO akamai, cloudflare, fastly
-	-avoid giants domain instead look for local sites that handle heavy traffic but arent wellknown for example:regional university portals, local govt infrastructure, major national bank login page, regional telecom provider homepage
+
+<a class="term" href="#vless-reality-vision">VLESS REALITY VISION</a>
+
+    -needs domain that support TLS v1.3 http2 and ALPN compatibility
+    -match the vps provider, if use microsoft azure vps, then use microsoft domain
+    -match data center, if using cheap vps (usually in crowded datacenter), find large tech service or open source mirror or corporate portal that rent space nearing the vps datacenter
+    -use domains that are in close location proximity with the VPS location
+    -NO akamai, cloudflare, fastly
+    -avoid giants domain instead look for local sites that handle heavy traffic but arent wellknown for example:regional university portals, local govt infrastructure, major national bank login page, regional telecom provider homepage
 </pre>
+
 <br>
+
 <pre>
-<p>Resources</p>
+<span class="section-title">Resources</span>
+
 <b>TEST WHETHER A WEBPAGE IS GETTING BLOCKED IN CHINA</b>
-https://viewdns.info/chinesefirewall/
-https://www.websitepulse.com/tools/china-firewall-test#
-https://en.greatfire.org/analyzer
+
+[https://viewdns.info/chinesefirewall/](https://viewdns.info/chinesefirewall/)
+[https://www.websitepulse.com/tools/china-firewall-test#](https://www.websitepulse.com/tools/china-firewall-test#)
+[https://en.greatfire.org/analyzer](https://en.greatfire.org/analyzer)
 
 
 <b>TEST IP CLEANLINESS --vital for using AI tools</b>
-https://ippure.com/
-https://ipsuper.com/
-https://geoiphub.com/tools/datacenter-ip-check
-https://ipfighter.com/
-https://ipcheck.ing/
+
+[https://ippure.com/](https://ippure.com/)
+[https://ipsuper.com/](https://ipsuper.com/)
+[https://geoiphub.com/tools/datacenter-ip-check](https://geoiphub.com/tools/datacenter-ip-check)
+[https://ipfighter.com/](https://ipfighter.com/)
+[https://ipcheck.ing/](https://ipcheck.ing/)
 ip.cx
 
 
 <b>TEST IP PING</b>
+
 speedtest.hk --Hongkong
 speedtest.sg --Singapore
 yahoo.co.jp --Japan
 
 
 <b>Corporate Line Test</b>
-https://www.varidata.com/looking-glass/hong-kong-cn2/
-https://www.simcentric.com/looking-glass/
+
+[https://www.varidata.com/looking-glass/hong-kong-cn2/](https://www.varidata.com/looking-glass/hong-kong-cn2/)
+[https://www.simcentric.com/looking-glass/](https://www.simcentric.com/looking-glass/)
 
 
 <b>Free VPN</b>
-https://au1rxx.github.io/free-vpn-subscriptions/
+
+[https://au1rxx.github.io/free-vpn-subscriptions/](https://au1rxx.github.io/free-vpn-subscriptions/)
+[https://au1rxx.github.io/free-vpn-subscriptions/guides/clash-verge.html](https://au1rxx.github.io/free-vpn-subscriptions/guides/clash-verge.html)
+https://github.com/Pawdroid/Free-servers
+https://github.com/ebrasha/free-v2ray-public-list
+https://github.com/rtwo2/FastNodes
+https://github.com/proxifly/free-proxy-list
 
 
 <b>Converter --beware</b>
-https://sub-converter.neogrid.top
+
+[https://sub-converter.neogrid.top](https://sub-converter.neogrid.top)
 
 
 <b>Tutorial installing VLESS Reality</b>
-https://habr.com/en/articles/990128/
-https://habr.com/en/articles/990542/
+
+[https://habr.com/en/articles/990128/](https://habr.com/en/articles/990128/)
+[https://habr.com/en/articles/990542/](https://habr.com/en/articles/990542/)
 
 
 <b>Alternative tools download</b>
-https://www.chonglangbiji.com/downloads/ 
+
+[https://www.chonglangbiji.com/downloads/](https://www.chonglangbiji.com/downloads/)
 
 ### DOWNLOAD USING MIRROR
+
 1. Prefix proxy (simplest & most recommended)
+
 Just put a proxy domain in front of the original GitHub link.
+
 Popular working proxies (try several if one is slow):
 
-https://ghproxy.net/
-https://ghproxy.com/
-https://mirror.ghproxy.com/
-https://ghfast.top/
-https://gh.llkk.cc/
-https://github.xxlab.tech/ (web interface also available)
+[https://ghproxy.net/](https://ghproxy.net/)
+[https://ghproxy.com/](https://ghproxy.com/)
+[https://mirror.ghproxy.com/](https://mirror.ghproxy.com/)
+[https://ghfast.top/](https://ghfast.top/)
+[https://gh.llkk.cc/](https://gh.llkk.cc/)
+[https://github.xxlab.tech/](https://github.xxlab.tech/) (web interface also available)
 
 How to use:
-Original link example (Hiddify):
-texthttps://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe
-Accelerated link:
-texthttps://ghproxy.net/https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe
-Same for Sing-box, Mihomo, Karing, etc.
 
+Original link example (Hiddify):
+
+texthttps://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe
+
+Accelerated link:
+
+text[https://ghproxy.net/https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe](https://ghproxy.net/https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe)
+
+Same for Sing-box, Mihomo, Karing, etc.
 </pre>
+
 <br>
+
 <pre>
 ================================================================================
-          CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING CHEAT SHEET             
+CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING CHEAT SHEET
 ================================================================================
 
 1. THE BIG THREE OPERATORS (CARRIERS)
 --------------------------------------------------------------------------------
+
 * China Telecom (CT)  : The largest landline/broadband operator. Owns the most
-                        massive international gateway capacity but suffers from
-                        severe public routing congestion.
+  massive international gateway capacity but suffers from
+  severe public routing congestion.
+
 * China Unicom (CU)   : Strong infrastructure, particularly in Northern China.
-                        Its standard international routes are often slightly 
-                        cleaner and less congested than CT.
+  Its standard international routes are often slightly
+  cleaner and less congested than CT.
+
 * China Mobile (CM)   : The largest mobile operator. Its international branch
-                        (CMI) has rapidly expanded fiber capacity, offering 
-                        good routing to APAC hubs (e.g., Hong Kong).
+  (CMI) has rapidly expanded fiber capacity, offering
+  good routing to APAC hubs (e.g., Hong Kong).
+
 
 2. THE TWO TIER HIGHWAY SYSTEM: NORMAL VS. PREMIUM ROUTES
 --------------------------------------------------------------------------------
+
 * NORMAL ROUTES (Public Internet / Civilian Backbones)
-  - Characteristics : Massive bandwidth capacity, highly affordable, but shared 
-                      by millions of standard residential users.
-  - Peak Performance: Terribly congested during China peak hours (18:00 - 24:00 
-                      GMT+8). Packet loss can spike to 10%–30%; high jitter.
-  - Use Case        : Static files, large downloads, non-time-sensitive data.
+
+- Characteristics : Massive bandwidth capacity, highly affordable, but shared
+  by millions of standard residential users.
+
+- Peak Performance: Terribly congested during China peak hours (18:00 - 24:00
+  GMT+8). Packet loss can spike to 10%–30%; high jitter.
+
+- Use Case        : Static files, large downloads, non-time-sensitive data.
+
 
 * PREMIUM ROUTES (Enterprise / VIP Backbones)
-  - Characteristics : Isolated, dedicated express lanes with strict Quality of 
-                      Service (QoS) guarantees. Completely distinct ASNs.
-  - Peak Performance: Stays ultra-stable 24/7. Latency remains flat and packet 
-                      loss is near 0%, even during peak evening congestion.
-  - Use Case        : Live streaming, gaming, financial apps, corporate VPNs.
+
+- Characteristics : Isolated, dedicated express lanes with strict Quality of
+  Service (QoS) guarantees. Completely distinct ASNs.
+
+- Peak Performance: Stays ultra-stable 24/7. Latency remains flat and packet
+  loss is near 0%, even during peak evening congestion.
+
+- Use Case        : Live streaming, gaming, financial apps, corporate VPNs.
+
 
 3. PREMIUM CATEGORIZATION (THE EXPENSIVE HIGH-END ROUTES)
 --------------------------------------------------------------------------------
 
 CATEGORY A: CHINA TELECOM (CT) PREMIUM LINES
+
 * CT 163 Network (AS4134)   -> [NORMAL] Standard public route. High congestion.
+
 * CN2 GT (AS4809)           -> [MID-TIER] "Global Transit". Uses CN2 lines for
-                               the international hop, but dumps traffic back onto
-                               the congested AS4134 network inside China.
+  the international hop, but dumps traffic back onto
+  the congested AS4134 network inside China.
+
 * CN2 GIA (AS4809)          -> [ULTRA-PREMIUM] "Global Internet Access". The
-                               gold standard. Pure AS4809 path both inside 
-                               China and overseas. Absolute lowest latency.
+  gold standard. Pure AS4809 path both inside
+  China and overseas. Absolute lowest latency.
+
 
 CATEGORY B: CHINA UNICOM (CU) PREMIUM LINES
-* CU 169 Network (AS4837)   -> [NORMAL] Standard public route. Decent, but 
-                               congests at peak hours.
-* 9929 Network / CNI        -> [ULTRA-PREMIUM] Enterprise-grade backbone. 
-  (AS9929 / A99)               Features very low user load and exceptional 
-                               stability, rivaling CN2 GIA for performance.
-* AS10099 (CUG / CUP)       -> [GLOBAL AGGREGATION] China Unicom Global line. 
-                               Used to collect international traffic and aggregate
-                               it at overseas hubs before entering AS9929/AS4837.
+
+* CU 169 Network (AS4837)   -> [NORMAL] Standard public route. Decent, but
+  congests at peak hours.
+
+* 9929 Network / CNI        -> [ULTRA-PREMIUM] Enterprise-grade backbone.
+  (AS9929 / A99)
+  Features very low user load and exceptional
+  stability, rivaling CN2 GIA for performance.
+
+* AS10099 (CUG / CUP)       -> [GLOBAL AGGREGATION] China Unicom Global line.
+  Used to collect international traffic and aggregate
+  it at overseas hubs before entering AS9929/AS4837.
+
 
 CATEGORY C: CHINA MOBILE (CM) PREMIUM LINES
+
 * CMI Standard (AS58453)    -> [NORMAL] Good speed to nearby Asian hubs via
-                               public peering, but subject to unpredictable drops.
+  public peering, but subject to unpredictable drops.
+
 * CMIN2 Premium (AS58807)   -> [ULTRA-PREMIUM] China Mobile's answer to CN2 GIA.
-                               A newly built, highly isolated premium network
-                               specifically engineered to bypass public congestion.
+  A newly built, highly isolated premium network
+  specifically engineered to bypass public congestion.
+
 
 4. CRITICAL PITFALLS & THE ULTIMATE LEVEL ABOVE BGP
 --------------------------------------------------------------------------------
-* Asymmetric Routing Trap   : Watch out for "One-Way Premium" providers. They 
-                              route traffic via expensive premium lines for the 
-                              outbound return to China, but use cheap, congested 
-                              standard routes for the inbound path. True premium 
-                              requires bidirectional "Two-Way" (双程) routing.
 
-* GFW Overhead & DPI Filters: Premium networks bypass physical pipe congestion, 
-                              NOT censorship. Cross-border traffic still faces 
-                              Deep Packet Inspection (DPI) at international 
-                              gateways. If your traffic triggers the Great 
-                              Firewall, packets will be dropped regardless of line.
+* Asymmetric Routing Trap   : Watch out for "One-Way Premium" providers. They
+  route traffic via expensive premium lines for the
+  outbound return to China, but use cheap, congested
+  standard routes for the inbound path. True premium
+  requires bidirectional "Two-Way" (双程) routing.
+
+* GFW Overhead & DPI Filters: Premium networks bypass physical pipe congestion,
+  NOT censorship. Cross-border traffic still faces
+  Deep Packet Inspection (DPI) at international
+  gateways. If your traffic triggers the Great
+  Firewall, packets will be dropped regardless of line.
 
 * BGP vs. IPLC/IEPL Private : If your budget allows and your mission requires 0%
-                              packet loss, look above premium BGP. IPLC/IEPL 
-                              (International Private Leased Circuit) lines are 
-                              literal physical point-to-point private lines 
-                              (e.g., HK to Shenzhen) that sit entirely behind 
-                              the public internet and completely bypass the GFW.
+  packet loss, look above premium BGP. IPLC/IEPL
+  (International Private Leased Circuit) lines are
+  literal physical point-to-point private lines
+  (e.g., HK to Shenzhen) that sit entirely behind the
+  public internet and completely bypass the GFW.
+</pre>
 
+<pre>
 ================================================================================
-SUMMARY: "Tri-Net Premium BGP" means an infrastructure combines CT (CN2 GIA), 
-CU (AS9929), and CM (CMIN2) into a single BGP session, ensuring peak speeds 
+SUMMARY: "Tri-Net Premium BGP" means an infrastructure combines CT (CN2 GIA),
+CU (AS9929), and CM (CMIN2) into a single BGP session, ensuring peak speeds
 regardless of which provider the end-user inside China uses.
 ================================================================================
 </pre>
+
 <br>
+
 <pre>
 ================================================================================
-          THE ULTIMATE PROXY ENGINE & CLIENT GUIDE (2026 ECOSYSTEM)
+THE ULTIMATE PROXY ENGINE & CLIENT GUIDE (2026 ECOSYSTEM)
 ================================================================================
 
 1. CORE, FILE FORMAT, AND CLIENT APPLICATION MATRIX
 --------------------------------------------------------------------------------
+
 File Format  | Core Engine         | Apps Using It         | Core Design & Reason
 --------------------------------------------------------------------------------
+
 .yaml        | Mihomo              | * Clash Verge Rev     | ALL-IN-ONE BLUEPRINT.
 
              | (Clash Meta)        | * FlClash             | Houses nodes, speed-test
-             |                     |                       | groups, and script rules in 
-             |                     |                       | a single file. Essential for 
+             |                     |                       | groups, and script rules in
+             |                     |                       | a single file. Essential for
              |                     |                       | native load balancing.
+
+
 --------------------------------------------------------------------------------
+
 .json        | Sing-box            | * Hiddify             | NATIVE EFFICIENCY.
 
-             |                     | * GUI.for.SingBox     | Eliminates bloated text 
+             |                     | * GUI.for.SingBox     | Eliminates bloated text
              |                     | * sing-box (Official) | layouts. Built for lightning-
-             |                     |                       | fast mobile execution and 
+             |                     |                       | fast mobile execution and
              |                     |                       | ultra-low memory footprints.
+
+
 --------------------------------------------------------------------------------
+
 .txt / Links | Xray / V2Ray        | * v2rayN              | PHONE BOOK METHOD.
 
-             |                     | * v2rayNG             | A simple list of single-line 
-             |                     |                       | share links (vless://, etc.). 
-             |                     |                       | Handled raw nodes natively before 
+             |                     | * v2rayNG             | A simple list of single-line
+             |                     |                       | share links (vless://, etc.).
+             |                     |                       | Handled raw nodes natively before
              |                     |                       | unified configurations existed.
---------------------------------------------------------------------------------
 
+
+--------------------------------------------------------------------------------
 2. WHAT "AIRPORT" PROVIDERS COMMONLY USE
 --------------------------------------------------------------------------------
+
 * Universal Standard: Overwhelmingly .yaml (Clash/Mihomo syntax).
-* The Reason: It allows airports to hardcode automated rule groups (e.g., splitting 
-  International Media like Netflix from Local Bypass traffic) directly into your file. 
+
+* The Reason: It allows airports to hardcode automated rule groups (e.g., splitting
+  International Media like Netflix from Local Bypass traffic) directly into your file.
   This drastically reduces customer support requests.
-* Backend Protocols: They mix Shadowsocks (for premium transit lines) with modern 
+
+* Backend Protocols: They mix Shadowsocks (for premium transit lines) with modern
   stealth protocols like VLESS-Reality, Hysteria2, and TUIC.
-* The Workaround: If you use a JSON/Text app (like Hiddify or v2rayN), you must use the 
-  airport panel's "Subscription Converter" (订阅转换) to translate that default .yaml 
+
+* The Workaround: If you use a JSON/Text app (like Hiddify or v2rayN), you must use the
+  airport panel's "Subscription Converter" (订阅转换) to translate that default .yaml
   file into a base64 text link or a Sing-box JSON link.
 
+
+--------------------------------------------------------------------------------
 3. DUAL-DEPLOYMENT HARMONY: WINDOWS 11 + ANDROID
 --------------------------------------------------------------------------------
-To maintain an identical visual user interface, layout, and settings menu across 
+
+To maintain an identical visual user interface, layout, and settings menu across
 Windows 11 and Android simultaneously, you choose between two dominant paths:
 
+
 PATH A: The Mihomo Engine (Best for Airport .yaml Files & Concurrent Load Balancing)
+
 * Primary Client: FlClash
-* Why it is popular: Built on the Flutter framework, meaning the interface on Windows 11 
-  is a 1:1 pixel match to your Android app. It reads raw airport .yaml profiles perfectly, 
+
+* Why it is popular: Built on the Flutter framework, meaning the interface on Windows 11
+  is a 1:1 pixel match to your Android app. It reads raw airport .yaml profiles perfectly,
   shares files easily between PC and phone, and includes an effortless load balancing toggle.
 
+
 PATH B: The Sing-box Engine (Best for Mobile Battery Optimization & Clean Interface)
+
 * Primary Client: Hiddify
-* Why it is popular: Offers a highly polished, unified cross-platform application design. 
-  The Sing-box engine handles mobile network handoffs (Wi-Fi to Mobile Data) flawlessly 
-  with minimal battery drain. It auto-parses online links but completely rejects local raw .yaml files.
+
+* Why it is popular: Offers a highly polished, unified cross-platform application design.
+  The Sing-box engine handles mobile network handoffs (Wi-Fi to Mobile Data) flawlessly
+  with minimal battery drain. It auto-parses online links but completely rejects local raw
+  .yaml files.
+
 
 SUMMARY RULE OF THUMB:
+
 * Local .yaml files + Native Concurrent Load Balancing -> FlClash
 * Subscription URLs + Optimal Android Battery Life    -> Hiddify
+
 ================================================================================
 </pre>
+
+<!-- ========================================================= -->
+
+<!-- GLOSSARY -->
+
+<!-- ========================================================= -->
+
+<pre>
+<span class="section-title">Glossary / Explanations</span>
+
+This section contains the explanations for the terms introduced above.
+
+The main sections intentionally introduce the term first.
+Clicking the term jumps here.
+
+Every explanation has a Back button that returns to the exact
+position where the term was clicked.
+</pre>
+
+<!-- NETWORK / CHINA TERMS -->
+
+<pre id="peak-hour" class="definition">
+<b>PEAK HOUR</b>
+
+The period when network demand is highest.
+
+In this document, peak hour refers mainly to the evening period around
+19:30–22:30, although the exact congestion period can vary.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="iplc-iepl" class="definition">
+<b>IPLC / IEPL</b>
+
+IPLC = International Private Leased Circuit.
+
+IEPL = International Ethernet Private Line.
+
+These are private international circuits rather than ordinary public
+internet transit. They are commonly discussed when stable cross-border
+connectivity is required.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="tier-1-city" class="definition">
+<b>TIER 1 CITY</b>
+
+A commonly used Chinese classification for major first-tier cities.
+
+The original notes refer to Shanghai, Beijing and Shenzhen.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="vpn" class="definition">
+<b>VPN</b>
+
+Virtual Private Network.
+
+A VPN creates an encrypted connection between a device and a VPN
+endpoint. In this document, VPN refers to commercial VPN services
+used for cross-border connectivity.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="jichang" class="definition">
+<b>JI CHANG / 机场</b>
+
+"Ji Chang" literally means "airport" in Chinese.
+
+In the proxy/VPN community, it commonly refers to subscription
+providers that sell access to multiple proxy nodes through a
+subscription system.
+
+The original document uses "Ji Chang" and "airport provider"
+interchangeably.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="esim" class="definition">
+<b>E-SIM</b>
+
+An electronic SIM built into the device rather than requiring a
+physical SIM card.
+
+For travel, an eSIM may provide connectivity through a foreign
+mobile operator or roaming arrangement.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<!-- PROTOCOLS -->
+
+<pre id="vless-reality" class="definition">
+<b>VLESS REALITY</b>
+
+VLESS is a lightweight proxy protocol commonly associated with Xray.
+
+REALITY is an Xray transport/security mechanism designed to make
+the connection resemble legitimate TLS traffic.
+
+The original notes use "VLESS Reality" as one of the protocols to
+consider for cross-border connectivity.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="vless-reality-vision" class="definition">
+<b>VLESS REALITY VISION</b>
+
+A VLESS + REALITY configuration using Vision-related transport
+settings in Xray.
+
+The original notes specify requirements and selection considerations
+for the domain and VPS environment.
+
+Original notes:
+
+    -needs domain that support TLS v1.3 http2 and ALPN compatibility
+    -match the vps provider, if use microsoft azure vps, then use microsoft domain
+    -match data center, if using cheap vps (usually in crowded datacenter), find large tech service or open source mirror or corporate portal that rent space nearing the vps datacenter
+    -use domains that are in close location proximity with the VPS location
+    -NO akamai, cloudflare, fastly
+    -avoid giants domain instead look for local sites that handle heavy traffic but arent wellknown for example:regional university portals, local govt infrastructure, major national bank login page, regional telecom provider homepage
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="hysteria2" class="definition">
+<b>HYSTERIA 2</b>
+
+A modern proxy protocol designed around QUIC/UDP transport.
+
+It is commonly used where high throughput and handling packet loss or
+variable network conditions are important.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="shadowsocks-aead" class="definition">
+<b>SHADOWSOCKS WITH AEAD</b>
+
+Shadowsocks is an encrypted proxy protocol.
+
+AEAD means Authenticated Encryption with Associated Data.
+
+AEAD encryption simultaneously provides confidentiality and
+authentication/integrity protection.
+
+The original notes mention Shadowsocks with AEAD as being used on
+corporate lines.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<!-- ROUTING -->
+
+<pre id="openwrt" class="definition">
+<b>OPENWRT</b>
+
+OpenWrt is an open-source Linux-based operating system designed
+primarily for routers and embedded networking devices.
+
+The original notes use OpenWrt with Passwall2 or OpenClash for
+sharing/proxying internet connections.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="tailscale" class="definition">
+<b>TAILSCALE</b>
+
+Tailscale is a mesh/VPN networking system built around WireGuard.
+
+It allows devices to communicate through a private virtual network
+without requiring conventional port forwarding in many situations.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="split-tunneling" class="definition">
+<b>SPLIT TUNNELING</b>
+
+A configuration where only selected traffic uses the proxy or VPN.
+
+Other traffic goes directly through the normal local connection.
+
+The original notes recommend this for keeping local traffic from
+being unnecessarily proxified.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="tun-mode" class="definition">
+<b>TUN MODE</b>
+
+A virtual network interface mode used by proxy applications.
+
+Instead of requiring each individual application to understand
+proxy settings, the proxy application can capture and route network
+traffic through the virtual TUN interface.
+
+The original notes state:
+
+    TUN Mode only works with admin access.
+    It also enables software to use proxy.
+    Try mixed mode then gvisor.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="secure-dns" class="definition">
+<b>SECURE DNS</b>
+
+A DNS configuration that sends DNS queries through an encrypted
+protocol such as DNS-over-HTTPS or DNS-over-TLS.
+
+The original notes recommend turning it off when troubleshooting
+proxy applications.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="fake-ip" class="definition">
+<b>FAKE-IP</b>
+
+A DNS handling technique used by some proxy clients.
+
+Instead of returning the real destination IP directly to the
+operating system, the proxy application can assign a synthetic
+address and internally map it back to the original domain.
+
+The original notes mention using fake-ip to avoid DNS leaks if possible.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="mtr" class="definition">
+<b>MTR</b>
+
+My Traceroute.
+
+MTR combines traceroute-style path discovery with continuous
+ping-style measurements.
+
+It is useful for identifying packet loss, latency and routing
+problems at different hops.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="allow-lan" class="definition">
+<b>ALLOW LAN</b>
+
+A proxy application setting that allows other devices on the local
+network to connect to the proxy service running on the host.
+
+The original notes mention enabling ALLOW LAN when using sing-box.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<!-- CARRIER / BGP TERMS -->
+
+<pre id="bgp" class="definition">
+<b>BGP</b>
+
+Border Gateway Protocol.
+
+BGP is the routing protocol used between autonomous networks on the
+internet.
+
+It determines how networks announce and select routes to other
+networks.
+
+The original document discusses BGP in comparison with private
+international circuits such as IPLC/IEPL.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="asn" class="definition">
+<b>ASN</b>
+
+Autonomous System Number.
+
+An ASN identifies a network or group of networks participating in
+BGP routing.
+
+Examples in the original notes include AS4134, AS4809, AS4837,
+AS9929, AS10099, AS58453 and AS58807.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="cn2-gt" class="definition">
+<b>CN2 GT</b>
+
+China Telecom's CN2 Global Transit service.
+
+The original notes classify it as a mid-tier route and distinguish
+it from CN2 GIA.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="cn2-gia" class="definition">
+<b>CN2 GIA</b>
+
+China Telecom's CN2 Global Internet Access service.
+
+The original notes classify it as a premium route.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="cmi" class="definition">
+<b>CMI</b>
+
+China Mobile International.
+
+CMI is the international business/network arm associated with
+China Mobile.
+
+The original notes distinguish CMI Standard from CMIN2 Premium.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="cmin2" class="definition">
+<b>CMIN2</b>
+
+A China Mobile international network referenced in the original
+notes as a premium routing option.
+
+The original notes associate it with AS58807.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="dpi" class="definition">
+<b>DPI</b>
+
+Deep Packet Inspection.
+
+A network inspection technique that examines traffic characteristics
+and, depending on the implementation, packet contents or metadata.
+
+The original carrier section discusses DPI in the context of
+cross-border traffic and censorship filtering.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="qos" class="definition">
+<b>QOS</b>
+
+Quality of Service.
+
+Network mechanisms used to prioritize or manage different classes
+of traffic.
+
+The original notes use QoS when describing premium/enterprise
+network characteristics.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="gfw" class="definition">
+<b>GFW</b>
+
+Great Firewall.
+
+A commonly used term for China's system of internet filtering,
+blocking and traffic interference.
+
+The original notes distinguish censorship/filtering from ordinary
+physical network congestion.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<!-- CLIENT / FILE FORMAT TERMS -->
+
+<pre id="mihomo" class="definition">
+<b>MIHOMO / CLASH META</b>
+
+Mihomo is a proxy core derived from the Clash ecosystem.
+
+It commonly uses YAML configuration files and supports proxy nodes,
+rules, groups and related routing functionality.
+
+The original notes associate it with Clash Verge Rev and FlClash.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="sing-box" class="definition">
+<b>SING-BOX</b>
+
+Sing-box is a modern universal proxy platform/core.
+
+The original notes associate it with JSON configurations and
+applications such as Hiddify and GUI.for.SingBox.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="xray" class="definition">
+<b>XRAY / V2RAY</b>
+
+Xray is a proxy platform/core used by clients such as v2rayN and
+v2rayNG.
+
+V2Ray is the earlier project from which much of the ecosystem
+developed.
+
+The original notes describe TXT/links as the "phone book method"
+for raw proxy share links.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="airport-subscription" class="definition">
+<b>AIRPORT SUBSCRIPTION</b>
+
+A subscription supplied by a Ji Chang/airport provider.
+
+It commonly contains multiple proxy nodes and may also contain
+routing rules, groups and automatic selection logic.
+
+The original notes say YAML/Clash/Mihomo format is widely used.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="subscription-converter" class="definition">
+<b>SUBSCRIPTION CONVERTER</b>
+
+A tool that converts one proxy subscription/configuration format
+into another.
+
+The original notes describe converting YAML into Base64 text links
+or Sing-box JSON links.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="kvm" class="definition">
+<b>KVM</b>
+
+Kernel-based Virtual Machine.
+
+A virtualization technology commonly used by VPS providers.
+
+The original notes recommend a KVM VPS with 1 vCPU, 1 GB RAM and
+a public IPv4 address.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<!-- OTHER TERMS -->
+
+<pre id="packet-loss" class="definition">
+<b>PACKET LOSS</b>
+
+Packets are units of network data.
+
+Packet loss occurs when packets fail to reach their destination or
+return successfully.
+
+Loss can produce slow connections, retransmissions, buffering and
+unstable interactive applications.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="jitter" class="definition">
+<b>JITTER</b>
+
+Variation in packet arrival time.
+
+A connection can have acceptable average latency but still feel
+unstable when latency varies substantially from packet to packet.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
+<pre id="apac" class="definition">
+<b>APAC</b>
+
+Asia-Pacific.
+
+A geographic term commonly used when discussing network
+connectivity between Asian countries and the Pacific region.
+
+<a class="back" href="#" onclick="goBack(event)">← Back</a>
+</pre>
+
 </main>
+
+<script>
+(function () {
+    const STORAGE_KEY = "china-internet-guide-return";
+
+    document.querySelectorAll('a.term[href^="#"]').forEach(function (link) {
+        link.addEventListener("click", function () {
+            sessionStorage.setItem(
+                STORAGE_KEY,
+                window.location.href.split("#")[0] + window.location.hash
+            );
+        });
+    });
+
+    window.goBack = function (event) {
+        event.preventDefault();
+
+        if (history.length > 1) {
+            history.back();
+            return;
+        }
+
+        const saved = sessionStorage.getItem(STORAGE_KEY);
+
+        if (saved) {
+            window.location.href = saved;
+        }
+    };
+})();
+</script>
+
 </body>
 </html>
