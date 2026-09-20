@@ -150,27 +150,28 @@
 - Need more than one VPN just to be safe.
 - Payments usually in USD. Some accept AliPay.
 - On average around 5 - 20 USD. Much cheaper with yearly/bi-yearly plans.
-- Usually no speed and quota limit.
-    mulladvpn
-    amneziavpn
-    letsvpn
-    v1vpn
-    wannaflix
-    astrill
+- Usually no speed and quota data limit.
+- Some providers:
+	https://mullvad.net/en
+	https://amnezia.org/
+	https://letsvpn.world/?hl=en
+	https://www.v1vpn.com/
+	https://wannaflix.com/
+	https://www.astrill.com/
 
 <a class="term" href="#jichang">Ji Chang / Proxies</a>
-- Usually cheap under 50 RMB. But many tiers and many providers from old establishments(more than 10 years) to newer ones (less than 2 years). Meanwhile most of them come and go because it's illegal in China. When uncertain use monthly plans.
-- Cheaper sides are usually limited in the max amount of connected devices (1-3 devices) with small quota under 100GB. Connecting via a proxy/VPN takes more quota.
-- Have many servers as backups and treated more leniently.</pre>
+- Usually cheap under 50 RMB. But many tiers and many providers from old establishments(more than 10 years) to newer ones (less than 2 years). Meanwhile most of them can come and go because it's illegal in China. If uncertain buy monthly plans.
+- Cheaper sides are usually limited in the max amount of connected devices (1-3 devices) with small quota under 100GB. Connecting via a proxy/VPN takes more quota data.
+- Have many servers as backups and treated more leniently by GFW.</pre>
 
 <pre>
 <span class="section-title">Local SIM Card</span>
 
 China Unicom has been used widely by foreigners especially to access US resources.
-China Mobile as of July 2026 has increased connectivity toward South East Asian countries, thus better <a class="term" href="#ping">ping</a>.</pre>
+China Mobile as of July 2026 has increased connectivity toward South East Asian countries (SEA-H2X), thus better <a class="term" href="#ping">ping</a>.</pre>
 
 <pre>
-<span class="section-title">Protocols</span>
+<span class="section-title">Some Protocols Used</span>
 
 <a class="term" href="#vless-reality">VLESS Reality</a>
 <a class="term" href="#hysteria2">Hysteria 2</a>
@@ -179,17 +180,19 @@ China Mobile as of July 2026 has increased connectivity toward South East Asian 
 <pre>
 <span class="section-title">TOOLS</span>
 
-Third party clash based apps
-- Clash Verge
-- FlClash
+- Third party <a class="term" href="#clashapps">CLASH</a> based apps
+	https://clashverge.net
+	https://flclash.cc/
 
-From proxy provider itself</pre>
+- And some other apps, ex: https://hiddify.com/.
+
+- From proxy provider itself</pre>
 
 <pre>
 <span class="section-title">Testing</span>
 
 <b>IP Address Check</b>
-Chinese sites:
+Use chinese sites to test traffic splitting. The rules are working if real IP is shown. And proxy IP is shown when using https://ip.me/.
 <a href="http://ip.cn" target="_blank" rel="noopener noreferrer">http://ip.cn</a>
 <a href="https://myip.ipip.net" target="_blank" rel="noopener noreferrer">https://myip.ipip.net</a>
 <a href="https://ip.cx/" target="_blank" rel="noopener noreferrer">https://ip.cx/</a>
@@ -203,14 +206,14 @@ Chinese sites:
 <a href="https://ping.pe" target="_blank" rel="noopener noreferrer">https://ping.pe</a></pre>
 
 <pre>
-<span class="section-title">Sharing the proxy/VPN</span>
+<span class="section-title">Sharing the proxy/VPN to <a class="term" href="#lan">LAN</a></span>
 
-- Need to ENABLE LAN.
-- With sing-box + myPublicWiFi via Windows 10/11.
-- With Passwall2 or OpenClash in via OpenWrt.</pre>
+- Option to ENABLE LAN should be available on the app.
+- With https://github.com/SagerNet/sing-box + https://mypublicwifi.com via Windows 10/11 portable hotspot.
+- With https://github.com/Openwrt-Passwall/openwrt-passwall2 with minimum 512MB RAM or https://github.com/vernesong/openclash with minimum 256MB RAM in via OpenWrt device.</pre>
 
 <pre>
-<span class="section-title">Some list of providers</span>
+<span class="section-title">Some list of proxy providers</span>
 
 <b>Good enough list</b>
 Elf Academy - <a href="https://pub2.riolu.icu" target="_blank" rel="noopener noreferrer">https://pub2.riolu.icu</a> - 8Y/30GB 15Y/120GB 30Y/250GB
@@ -303,11 +306,13 @@ tntcloud - <a href="https://w05.tntyunb01.cc/#/login" target="_blank" rel="noope
     • <a href="https://portal.riolu.work" target="_blank" rel="noopener noreferrer">https://portal.riolu.work</a> affcode
 
 
-<span class="ll">Warning</span>
-    Users who already have paid plans need to be cautious when purchasing.
-    For the same tier of plan, membership time will be stacked and data will not stack; if tier is different, data and time will not stack, and the plan will be overridden.
-    If you have any questions before purchasing, please contact the administrator or online customer service via TG.
-    Do not repurchase monthly plans; after purchase, data will be reset to the plan, causing leftover data to be lost. Make sure to continue purchasing when your data is almost used up.</pre>
+<span class="ll"><b>Warning</b></span>
+	- Users who already have paid plans need to be cautious when purchasing.
+	
+	- For the same plan tier, the subscription period is extended from the existing expiration date, BUT the new data quota may not get added to the existing quota, or existing data quota might get reset when the new plan takes effect or, only the new data quota gets added. It's all depending on the website panel's configuration. If you purchase a different plan tier, the new plan replaces the existing plan, including its data quota and expiration date.
+		Example: You purchase a 100 GB monthly plan from January 1 to February 1. If you purchase the same 100 GB plan again on January 20, the subscription period is extended to March 1, but the data quota from the new purchase is not added to the existing quota. So your data quota now could be 0, or 100 GB. To specifically add data quota, separate data top-up purchase is needed but this does not extend the expiration date.
+	
+	- If you have any questions before purchasing, please contact the administrator or online customer service via Telegram.</pre>
 
 <pre>
 <span class="section-title"">Alternatives via VPS</span>
@@ -316,7 +321,7 @@ tntcloud - <a href="https://w05.tntyunb01.cc/#/login" target="_blank" rel="noope
 
 - Look for good ping/MTR result especially during peak hour.
 
-- Popular, cheap VPS providers used by developers (like DigitalOcean, Vultr, Linode, or Bandwagon Host) face massive, automated IP sweeps
+- Popular, cheap VPS providers used by developers (like https://www.digitalocean.com/, https://www.vultr.com/, https://www.linode.com/, or https://bandwagonhost.com/) face massive, automated IP sweeps
 
 - Prefer KVM. 1 vCPU 1 GB RAM and public ipv4.
 
@@ -325,7 +330,9 @@ tntcloud - <a href="https://w05.tntyunb01.cc/#/login" target="_blank" rel="noope
 <pre>
 <span class="section-title">TIKTOK</span>
 
-Tiktok could still get blocked because it detects chinese SIM Card.</pre>
+- Tiktok could still get blocked because it detects chinese SIM Card.
+
+- Use https://github.com/Ackites/Nrfr and https://github.com/rikkaapps/shizuku to change SIM Card to other country.
 
 <pre>
 <span class="section-title">Remote Desktop with RustDesk and Tailscale</span>
@@ -1080,7 +1087,27 @@ physical network congestion.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
+<pre id"lan" class="definition">
+<b>LAN</b>
+
+The local network that connects devices together in the same home, office, or building.
+
+Example: Your phone and computer connected to the same Wi-Fi are on the same LAN.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
 <!-- CLIENT / FILE FORMAT TERMS -->
+
+<pre id="clashapps" class="definition">
+<b>Clash Apps</b>
+
+CLASH Apps are proxy/VPN client apps that use the CLASH/Mihomo system to manage internet connections.
+
+They let you add proxy servers (nodes), choose which node to use, and create rules that decide which traffic goes DIRECT and which traffic goes THROUGH a proxy.
+
+DIRECT is the same as not using a proxy.
+<a class="back" href="#">&larr; Back</a>
+</pre>
 
 <pre id="mihomo" class="definition">
 <b>MIHOMO / CLASH META</b>
