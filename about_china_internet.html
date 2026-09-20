@@ -211,8 +211,90 @@ Use chinese sites to test traffic splitting. The rules are working if real IP is
 
 - Option to ENABLE LAN should be available on the app.
 - With https://github.com/SagerNet/sing-box + https://mypublicwifi.com via Windows 10/11 portable hotspot.
-- With https://github.com/Openwrt-Passwall/openwrt-passwall2 with minimum 512MB RAM or https://github.com/vernesong/openclash with minimum 256MB RAM in via OpenWrt device.</pre>
+- With https://github.com/Openwrt-Passwall/openwrt-passwall2 with minimum 512MB RAM or https://github.com/vernesong/openclash with minimum 256MB RAM in via OpenWrt device.
+- ICS quirks on sleep mode will not go up after resume
+	New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\SharedAccess" -Name "EnableRebootPersistConnection" -Value 1 -PropertyType dword -Force
 
+
+<b>Mobile hotspot settings to avoid always going back to sleep</b>
+	1. set sleep on power to never
+	2. set wireless power saving to maximum performance
+	3. set link state power management to moderate power saving(last 30 to 60mins), better set it off
+	4. set button shortcut to turn off monitor without invoking sleep with this C:\Windows\System32\scrnsave.scr /s
+	5. set screen auto off
+	6. use mypublicwifi for hotspot manager with router mode
+
+
+<b>Setup for sharing vpn/proxy connection to wi-fi clients in win 11 with mobile hotspot</b>
+	
+	What you need:
+	
+		1. proxy clients (flclash, clashverge)
+		2. sing-box software
+		3. active vpn/proxy account
+		4. mypublicwifi software
+		
+	The flow of data:
+	
+		wifi-clients &gt; sing-box &gt; proxy clients &gt; ethernet &gt; internet
+
+	Specifics:
+	
+		sing-box
+			sing-box is used so rules can be applied to wifi clients too.
+			not contain any DNS rules (geoip geosite), everything is left to the proxy client.
+			capture all wifi-clients traffic and dump it to proxy client in TUN mode.
+			enable global proxy, so the computer's running the software doesn't have to set proxy ip:port manually.
+			add some process bypass including itself and proxy clients to direct to avoid loop in catching it's own traffic.
+			bypass local LAN ips and tailscale to direct.
+			no need to set MTU
+			before closing sing-box, stop or close mypublicwifi first.
+			when it's running properly flclash should have ip 172.19.0.1 as internal ip.
+		
+		proxy client
+			some software needs to disable TUN and use System proxy mode to work
+			set allow LAN so sing-box could work
+			enable proxy port so sing-box could work too
+			we add clash subscription link here and rules from the subscription link will also get applied
+			
+		mypublicwifi (hotspot)
+			set network connection to sing-box
+			set as router mode
+			
+		all steps needs to be done correctly, starting from proxy client > start, sing-box, then mypublicwifi
+		everytime you change rules, restart the software
+		before update or sync subscription, turn off the proxy first
+		Shadowsocks protocol is much more friendly with youtube since it will load video instantly most of the time
+		you can directly share internet without sing-box by pointing to ethernet/wifi adapter
+		
+	Some quirks:
+	
+		flclash alone with additional rules
+			proxy mode, rules got applied
+			tun mode, rules doesnt get applied because domain name is stripped out and left with ip only
+			combined with sing-box, flclash can see domain, but the DIRECT rules is broken for other countries other than "cn"
+
+		When rules do not apply properly in FlClash TUN mode, it is usually because TUN mode intercepts raw IP packets, causing domain-based rules to break. When applications send traffic directly via IP or when DNS mapping fails, FlClash defaults to matching everything into your final catch-all rule (usually a proxy node or MATCH).
+
+		After enabling TUN mode: all domain names are resolved to IP addresses, causing the configured rules to become ineffective, as shown in the image.
+		https://github.com/clash-verge-rev/clash-verge-rev/issues/740
+
+		flclash tun mode + singbox tun, doesnt work properly, and slow
+
+		flclash tun mode will set 198.18.0.1 as intranet eventhough it's not host ip but sing-box still can work. 
+
+		close mypublicwifi this if no sing-box running, if not your LAN/Wifi adapter will get assigned wrong ip (192.168.5.1), then you have to reset the ip and gateway back.
+			reset mapping between adapter: Get-NetAdapter | Restart-NetAdapter
+		
+		if you use other vpn like easyconnect , you need to bypass it's ip range from singbox to set to direct
+
+		different proxies can have different effect on youtube android app playback time, sometimes it can delay for 10 seconds.
+			if you set MTU on sing-box config with wrong value, it could stretch as far as 30 seconds delay.		
+
+		flclash/proxy/vpn TUN + singbox TUN will break tailscale; set the first one to system proxy.
+		
+		tailscale: try to do P2P first and when failed will use public relay server.
+			it's best to bypass tailscale ip range so it runs direct.</pre>
 <pre>
 <span class="section-title">Some list of proxy providers</span>
 
@@ -336,16 +418,16 @@ tntcloud - <a href="https://w05.tntyunb01.cc/#/login" target="_blank" rel="noope
 - Use https://github.com/Ackites/Nrfr and https://github.com/rikkaapps/shizuku to change SIM Card to other country.</pre>
 
 <pre>
-<span class="section-title">Remote Desktop with RustDesk and Tailscale</span>
+<span class="section-title">Remote Desktop with https://rustdesk.com/ and https://tailscale.com/</span>
 
 - Normal way
-Laptop1 &gt;&gt; RustDesk relay &lt;&lt; proxy &lt;&lt; China Laptop
+Laptop1 &gt;&gt; RustDesk relay server &lt;&lt; proxy &lt;&lt; China Laptop
 
 - Via Tailscale
-Laptop1 &gt;&gt; Tailscale relay &gt;&gt; RustDesk Direct IP &lt;&lt; Tailscale relay &lt;&lt; proxy &lt;&lt; China Laptop
+Laptop1 &gt;&gt; Tailscale relay server &gt;&gt; RustDesk Direct IP &lt;&lt; Tailscale relay server &lt;&lt; proxy &lt;&lt; China Laptop
 
 - Alternative when it's laggy
-Laptop1 &gt;&gt; Your own RustDesk relay &lt;&lt; proxy &lt;&lt; China Laptop</pre>
+Laptop1 &gt;&gt; Your own RustDesk relay server &lt;&lt; proxy &lt;&lt; China Laptop</pre>
 
 <pre>
 <span class="section-title">News about proxies</span>
@@ -375,11 +457,22 @@ Laptop1 &gt;&gt; Your own RustDesk relay &lt;&lt; proxy &lt;&lt; China Laptop</p
 <a href="https://www.wallmama.com/en/best-vpn-china/" target="_blank" rel="noopener noreferrer">https://www.wallmama.com/en/best-vpn-china/</a></pre>
 
 <pre>
-<span class="section-title">Other</span>
+<span class="section-title">Other / Quirks</span>
 
 - Disable <a class="term" href="#tailscale">Tailscale</a> DNS when using vpn/clash apps.
 
+- Cannot use proxy app TUN + Tailscale Exit NODE. Only use Exit Node without proxy.
+ 
+- If expressvpn or any vpn software are being clingy to flclash or any proxy app, then reduce the metric by lowering the priority.
+	Get-NetIPInterface | Format-Table ifIndex,InterfaceAlias,InterfaceMetric,AddressFamily
+	Set-NetIPInterface -InterfaceAlias "ExpressVPNOpenVPN WinTUN Adapter" -InterfaceMetric 30
+	Set-NetIPInterface -InterfaceAlias ""ExpressVPNOpenVPN WinTUN Adapter" -AddressFamily IPv4 -AutomaticMetric Enabled
+
 - Do not rotate proxy selection when using Remote Desktop software.
+
+- Cannot share proxy RULES to myPublicWiFi clients for that need sing-box and turn off proxy app TUN and enable proxy mode.
+
+- https://awesun.aweray.com/ cannot work when using western IPs.
 
 - Configure <a class="term" href="#split-tunneling">split tunneling</a> so that local traffic will not get proxified.
 
@@ -476,13 +569,9 @@ Accelerated link:
 Same for Sing-box, Mihomo, Karing, etc.</pre>
 
 <pre>
-
-================================================================================
-CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING CHEAT SHEET
-================================================================================
+CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING
 
 1. THE BIG THREE OPERATORS (CARRIERS)
---------------------------------------------------------------------------------
 
 * China Telecom (CT)  : The largest landline/broadband operator. Owns the most
   massive international gateway capacity but suffers from
@@ -497,9 +586,7 @@ CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING CHEAT SHEET
   good routing to APAC hubs (e.g., Hong Kong).
 
 
-
 2. THE TWO TIER HIGHWAY SYSTEM: NORMAL VS. PREMIUM ROUTES
---------------------------------------------------------------------------------
 
 * NORMAL ROUTES (Public Internet / Civilian Backbones)
 
@@ -510,7 +597,6 @@ CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING CHEAT SHEET
   GMT+8). Packet loss can spike to 10%–30%; high jitter.
 
 - Use Case        : Static files, large downloads, non-time-sensitive data.
-
 
 
 * PREMIUM ROUTES (Enterprise / VIP Backbones)
@@ -524,9 +610,7 @@ CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING CHEAT SHEET
 - Use Case        : Live streaming, gaming, financial apps, corporate VPNs.
 
 
-
 3. PREMIUM CATEGORIZATION (THE EXPENSIVE HIGH-END ROUTES)
---------------------------------------------------------------------------------
 
 CATEGORY A: CHINA TELECOM (CT) PREMIUM LINES
 
@@ -539,7 +623,6 @@ CATEGORY A: CHINA TELECOM (CT) PREMIUM LINES
 * CN2 GIA (AS4809)          -> [ULTRA-PREMIUM] "Global Internet Access". The
   gold standard. Pure AS4809 path both inside
   China and overseas. Absolute lowest latency.
-
 
 
 CATEGORY B: CHINA UNICOM (CU) PREMIUM LINES
@@ -557,7 +640,6 @@ CATEGORY B: CHINA UNICOM (CU) PREMIUM LINES
   it at overseas hubs before entering AS9929/AS4837.
 
 
-
 CATEGORY C: CHINA MOBILE (CM) PREMIUM LINES
 
 * CMI Standard (AS58453)    -> [NORMAL] Good speed to nearby Asian hubs via
@@ -568,9 +650,7 @@ CATEGORY C: CHINA MOBILE (CM) PREMIUM LINES
   specifically engineered to bypass public congestion.
 
 
-
 4. CRITICAL PITFALLS & THE ULTIMATE LEVEL ABOVE BGP
---------------------------------------------------------------------------------
 
 * Asymmetric Routing Trap   : Watch out for "One-Way Premium" providers. They
   route traffic via expensive premium lines for the
@@ -591,21 +671,13 @@ CATEGORY C: CHINA MOBILE (CM) PREMIUM LINES
   (e.g., HK to Shenzhen) that sit entirely behind
   the public internet and completely bypass the GFW.
 </pre>
-
 <pre>
-================================================================================
 SUMMARY: "Tri-Net Premium BGP" means an infrastructure combines CT (CN2 GIA),
 CU (AS9929), and CM (CMIN2) into a single BGP session, ensuring peak speeds
 regardless of which provider the end-user inside China uses.
-================================================================================
 </pre>
-
-
-
 <pre>
-================================================================================
 THE ULTIMATE PROXY ENGINE & CLIENT GUIDE (2026 ECOSYSTEM)
-================================================================================
 
 1. CORE, FILE FORMAT, AND CLIENT APPLICATION MATRIX
 --------------------------------------------------------------------------------
@@ -644,9 +716,8 @@ File Format  | Core Engine         | Apps Using It         | Core Design & Reaso
 
 
 
---------------------------------------------------------------------------------
+
 2. WHAT "AIRPORT" PROVIDERS COMMONLY USE
---------------------------------------------------------------------------------
 
 * Universal Standard: Overwhelmingly .yaml (Clash/Mihomo syntax).
 
@@ -662,14 +733,10 @@ File Format  | Core Engine         | Apps Using It         | Core Design & Reaso
   file into a base64 text link or a Sing-box JSON link.
 
 
-
---------------------------------------------------------------------------------
 3. DUAL-DEPLOYMENT HARMONY: WINDOWS 11 + ANDROID
---------------------------------------------------------------------------------
 
 To maintain an identical visual user interface, layout, and settings menu across
 Windows 11 and Android simultaneously, you choose between two dominant paths:
-
 
 
 PATH A: The Mihomo Engine (Best for Airport .yaml Files & Concurrent Load Balancing)
@@ -679,7 +746,6 @@ PATH A: The Mihomo Engine (Best for Airport .yaml Files & Concurrent Load Balanc
 * Why it is popular: Built on the Flutter framework, meaning the interface on Windows 11
   is a 1:1 pixel match to your Android app. It reads raw airport .yaml profiles perfectly,
   shares files easily between PC and phone, and includes an effortless load balancing toggle.
-
 
 
 PATH B: The Sing-box Engine (Best for Mobile Battery Optimization & Clean Interface)
@@ -692,13 +758,232 @@ PATH B: The Sing-box Engine (Best for Mobile Battery Optimization & Clean Interf
   .yaml files.
 
 
-
 SUMMARY RULE OF THUMB:
 
 * Local .yaml files + Native Concurrent Load Balancing -> FlClash
 * Subscription URLs + Optimal Android Battery Life    -> Hiddify
+</pre>
+<pre>
+THE ARTIFICIAL CHOKEPOINT: UNDERSTANDING CHINA-TO-HONG KONG NETWORK ROUTING
 
-================================================================================
+If you test a connection from Mainland China to Hong Kong, you will quickly notice
+a geographic paradox: 
+- Pinging the United States (across the Pacific Ocean): ~150ms (Normal/Expected)
+- Pinging certain Hong Kong servers (literally next door): 250ms+ (Absurd)
+
+This guide breaks down the hidden mechanics, artificial bottlenecks, and 
+commercial gatekeeping that explain why cross-border networking between China 
+and Hong Kong feels intentionally broken.
+
+
+1. THE CORE PARADOX: THE CALIFORNIA DETOUR
+
+When you ping an unoptimized Hong Kong IP from a city like Jiangsu, your packets 
+do not take a straight path south across the Shenzhen border. Instead, they 
+frequently embark on a massive international detour:
+
+[Jiangsu] -> [Shanghai/Beijing Gateway] -> (Pacific Ocean) -> [Los Angeles/San Jose] 
+                                                                    |
+[Hong Kong] <- (Pacific Ocean) <- [Los Angeles/San Jose] <----------+
+
+This physical journey across the Pacific Ocean and back is exactly why your latency 
+spikes to 250ms. The Chinese carriers are deliberately forcing local traffic 
+into public international transit loops.
+
+
+2. THE MONOPOLY & THE "CHINA DIRECT" TAX
+
+The three major state-owned carriers—China Telecom, China Unicom, and China Mobile—
+control all physical fiber lines crossing the Mainland-HK border. They treat 
+cross-border bandwidth as a premium luxury commodity rather than public infrastructure.
+
+To manage this, they divide their networks into two distinct tiers:
+
+A. The Public Dump (163 Network / AS4134 & AS4837)
+   - This is the standard, cheap public broadband path used by regular everyday users.
+   - The border pipes for this network are intentionally left congested, unoptimized, 
+     or completely closed to certain HK data centers.
+   - If a Hong Kong website or server (like speedtest.hk) relies on standard public 
+     routing, their China-bound traffic is thrown into the 250ms "California Detour."
+
+B. The Premium Highway (CN2 GIA / CMI / CU Premium)
+   - These are dedicated, high-priority, border-optimized fiber routes.
+   - Latency over these lines is flawless (30ms - 50ms from central China to HK).
+   - *The Catch:* The carriers charge hosting companies and data centers an 
+     exorbitant "China Direct" premium fee—often 10x to 20x the cost of standard 
+     bandwidth—to access these clean lines.
+
+
+3. WHY THE U.S. ROUTES BETTER THAN HONG KONG
+
+It seems dishonest that a packet can travel to America faster than it can cross 
+the street into Hong Kong. This happens because of how traffic is categorized:
+
+- US Traffic = Bulk Commodity: China has massive, open-peering, high-capacity 
+  undersea cables built directly to the US west coast. Standard public traffic is 
+  allowed to use these freely because the carriers don't monetize standard US 
+  routes the way they monetize the scarcity of Hong Kong access.
+- Hong Kong Traffic = Premium Gatekeeping: Because Hong Kong is the primary 
+  gateway for Chinese businesses looking outwards (and vice versa), the carriers 
+  know they can demand extreme prices for direct border access. They artificially 
+  constrict public routing to force businesses into buying expensive enterprise VIP lines.
+
+
+4. THE GREAT FIREWALL (GFW) BOTTLENECK
+
+Every single packet traveling between Mainland China and Hong Kong must pass through 
+Deep Packet Inspection (DPI) at one of the massive international gateway hubs 
+(Guangzhou, Shanghai, or Beijing). 
+
+Because Hong Kong operates on an open, uncensored internet, the inspection 
+bottlenecks at the HK border are significantly harsher and more congested than 
+the bulk pipes leading out to the rest of the world. Standard public traffic sits 
+in a massive digital waiting line at the border, while paid Premium (CN2) traffic 
+gets fast-tracked through dedicated hardware.
+
+
+SUMMARY FOR NETWORK TESTERS
+
+- Does 250ms represent reality? 
+  Yes, for small, independent websites or services that cannot afford the "China Tax."
+- Does 250ms represent major apps/games? 
+  No. Multi-billion dollar platforms (Tencent, Alibaba, NetEase) buy the premium 
+  direct lines so their users experience a smooth 30-50ms connection.
+
+The network performance you see between China and Hong Kong is rarely dictated 
+by physics or geography—it is dictated entirely by commercial toll booths.
+
+
+If the ping is less than 100ms from cheap VPS to HONGKONG, then:
+	The VPS is hosted in a Hong Kong data center that pays extra for CN2 GIA (China Telecom), CU Premium (China Unicom), or CMI (China Mobile) direct-routing bandwidth. Your VPN packets are allowed onto the high-speed border highway that regular public web traffic is blocked from using.
+
+
+When buying a VPS, it's better to buy from America.
+</pre>
+<pre>
+<b>Example test using https://ping.pe from various Asia+America cities from Jiangsu</b>
+
+14.29 GMT+7
+HK	CT		CM		CU
+	7.4%/295ms	1.8%/283ms	1.8%/283ms
+	Packet Loss/Ping Time
+			Packet Loss/Ping Time
+					Packet Loss/Ping Time
+SG	35.4/318	1.2/97		2.4/252
+JP	15/95		0/99		13/121
+ID	20/216		6/90		3/469
+NY	17/79		0/73		52/68
+
+9.31 GMT+7
+HK	5/290		0/290		2/290
+SG	22/317		0/78		0/237
+JP	4/140		0/91		2/100
+ID	6/215		4/89		2/464
+ID2	2.3/376		0/201		6.4/398
+NY	7/77		0/72		42/86
+LA	3.4/240		0/193		5.6/233
+
+13.30 GMT+7
+HK	6.9/317		0/290		6.9/304
+SG	23.8/324	0/97		1/246
+JP	12/81		0/98		3/112
+ID	6/223		2/87		7/491
+ID2	8/378		0/201		9.4/398
+NY	1/42		0/287		10/115
+LA	9.5/242		0/193		20/236
+
+18.00 GMT+7
+HK	6.8/291		0/290		0/223
+SG	27/325		0/90		1.9/246
+JP	20/108		0/97		22/134
+ID	8.2/215		4.9/89		4.8/462
+NY	7.1/47		1.8/288		10/118
+
+19.00 GMT+7
+HK	17.4/292	0/291		3.8/226
+SG	30/329		0/89		2.9/241
+JP	25/133		7/93		4.5/115
+ID	6.3/223		10/87		3.9/478
+ID2	35/374		32/202		7/397
+NY	100% packet loss
+LA	20/259		10/205		3/238
+
+19.35 GMT+7
+HK	23/352		0/291		0/219
+SG	40/336		10/121		24.5/272
+JP	15/84		7.4/99		9.3/124
+ID	14/214		6.8/92		8.1/461
+NY	100% packet loss
+
+20.27 GMT+7
+HK	21/324		3/291		3/230
+SG	43/338		8/95		4/270
+JP	7.9/130		7.9/89		5.9/106
+ID	7/216		5/90		4/473
+NY	8/49		7/288		14/122
+
+12.37 GMT+7
+HK	2/311		0/290		4/285
+SG	11/297		0/78		0/231
+JP	3/129		0/88		2/97
+ID	5/221		4/87		3/237
+NY	100% packet loss
+
+Pattern:
+CT is good for America
+CM is good for Asia Pacific and America
+CU is good for America and worser than CT for Asia Pacific
+
+The result is almost the same, day to day from August to September 2026.
+</pre>
+<pre>
+<b>Clash Verge</b>
+
+1. import profile from an URL
+	> Profiles > paste in profile input field on top > click import
+2a. check rules from the profile or if there's any (FOR CHINA)
+	> right click on the newly added profile > edit rules
+		> to add rules to only apply proxy to non local ip (geoip splitting)
+			> rule type, GEOIP
+			> rule content, CN
+			> proxy policy, DIRECT
+			> click on PREPEND
+		> for LAN, it's by default already ignored
+
+2b. For Indonesia for TESTING purpose only with geoip splitting
+	> in tun mode, add no-resolve to make the splitting works.
+		> profiles -> edit rules -> advanced > GEOIP,ID,DIRECT,no-resolve
+			> no-resolve prevents from re-resolving domain name that will return virtual tun adapter ip thus messing up things.
+
+
+3. Activate the proxy
+	> Home > network settings
+		> system proxy, click / toggle to the right (ON)
+			> only for web browsing
+		> tun mode, click install service first > then toggle to the right (ON)
+			> all traffic including from software or anything that doesnt use proxy will be affected
+		> proxy mode, make sure it's set to Rule (by default)
+
+4. To update the proxies data from URL
+	> Home > selected loaded panel > Update Time > click circle arrow on the left
+	> profiles > selected loaded panel > click circle arrow on the right
+		> or right click on the profile and select update
+
+5a. Find out the best proxy with low latency
+	> proxies > go either auto or select > click on wifi icon to delay check right now
+		> click on wall clock icon a couple of times until the tooltip changes to sort by delay > now the top list are the fastest proxies
+			> take a note on the position of the proxy
+
+5b. Use the fastest proxy instead auto select
+	> home > look at current node > proxy, auto > click on it and select the position of the best proxy you found from step 5a
+
+6. How to tell if it's working?
+	> Connections
+		> if we use geoip or geosite rule, everytime we open local domains/ip, Rule would be DIRECT
+			> everything we open crossborder or abroad domains/ips, Rule would be Match
+
+7. Select which profiles
+	> right click on profiles you want to use > select
 </pre>
 
 <!-- ========================================================= -->
