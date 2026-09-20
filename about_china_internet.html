@@ -138,10 +138,17 @@
 <a class="term" href="#esim">E-SIM</a>
 - It's activated on arrival.
 - Need a smartphone that supports E-SIM.
-- The most expensive.
+- The most expensive but the easiest way.
+- No speed limit but very small quotas (30 GB or less monthly with daily quota too on top).
+- No need to open an app or set anything.
 
 <a class="term" href="#vpn">VPN</a>
-- VPN has less servers to use and easily blocked + especially targetted by <a class="term" href="gfw">GFW</a> and expensive too!
+- VPN has less servers to use and easily blocked + especially targetted by <a class="term" href="#gfw">GFW</a> and expensive too!
+- More trustworthy and operate as legitimate entities.
+- Need more than one VPN just to be safe.
+- Payments usually in USD. Some accept AliPay.
+- On average around 5 - 20 USD. Much cheaper with yearly/bi-yearly plans.
+- Usually no speed and quota limit.
     mulladvpn
     amneziavpn
     letsvpn
@@ -150,15 +157,15 @@
     astrill
 
 <a class="term" href="#jichang">Ji Chang / Proxies</a>
-- Usually cheap around 5-100 RMB.
-- Cheaper sides are usually limited in the max amount of connected devices (1-3 devices).
-- Have many servers as backup and treated more leniently.
+- Usually cheap under 50 RMB. But many tiers and many providers from old establishments(more than 10 years) to newer ones (less than 2 years). Meanwhile most of them come and go because it's illegal in China. When uncertain use monthly plans.
+- Cheaper sides are usually limited in the max amount of connected devices (1-3 devices) with small quota under 100GB. Connecting via a proxy/VPN takes more quota.
+- Have many servers as backups and treated more leniently.
 </pre>
 <br>
 <pre>
 <span class="section-title">Local SIM Card</span>
 China Unicom has been used widely by foreigners especially to access US resources.
-China Mobile as of July 2026 has increased connectivity toward South East Asian countries, thus better <a class="term" href="ping">ping</a>.
+China Mobile as of July 2026 has increased connectivity toward South East Asian countries, thus better <a class="term" href="#ping">ping</a>.
 </pre>
 <br>
 <pre>
@@ -377,6 +384,8 @@ Laptop1 &gt;&gt; Your own RustDesk relay &lt;&lt; proxy &lt;&lt; China Laptop
 - To use sing-box, proxy apps need to enable <a class="term" href="#allow-lan">ALLOW LAN</a>.
 
 - Microsoft Windows Defender sometimes will keep scanning proxy apps causing high cpu usage. Add the proxy apps folder to exclusion.
+
+- Use https://www.geospoof.com <a class="term" href="#browserextension">browser extension</a> to block <a class="term" href="#webrtc">Web-RTC</a> and synchronize your computer geolocation with proxy/VPN IP. It's safer this way.
 </pre>
 <br>
 <pre>
@@ -928,6 +937,22 @@ Ping is a network utility tool used to test if a device or website is reachable 
 
 It is useful for identifying packet loss, latency and routing
 problems at different hops like MTR.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="webrtc" class=definition">
+<b>Web-RTC</b>
+
+WebRTC (Web Real-Time Communication) is an open-source standard enabling browsers to share ultra-low latency video and data directly between devices (P2P) without plugins.
+
+Why disable it: When using a proxy or VPN, WebRTC can bypass your security settings to communicate with external servers, leaking your true public IP address and local network details to any website you visit, which completely defeats your online anonymity.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="browserextension" class="definition">
+<b>Browser Extension</b>
+
+A browser extension is a small add-on program that installs into your web browser (Firefox, Ms Edge, Brave, etc) to give it extra features or change how websites look.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
