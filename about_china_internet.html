@@ -80,8 +80,8 @@
     		font-weight: 700;
 	}
 	.label {
+		font-size: 1.2em;
 		background-color: gray;
-    		font-weight: 800;
 	}
         code {
             margin-top: 3px;
@@ -993,7 +993,7 @@ The result is almost the same, day to day from August to September 2026.
 
 
 <span class="section-title">UNDERSTANDING VPS ROUTING TO MAINLAND CHINA: A PRACTICAL GUIDE FOR NON-NETWORK ENGINEERS</span>
-<h2>CHAPTER 1 - THE BIGGEST MISCONCEPTION</h3>
+<span class="label>CHAPTER 1 - THE BIGGEST MISCONCEPTION</span>
 
 Many people believe:
 "My VPS is located in Singapore.
@@ -1022,7 +1022,7 @@ because the courier company has its own logistics network.
 The Internet behaves the same way.
 
 
-<h2>CHAPTER 2 - WHAT IS A VPS?</h3>
+<span class="label>CHAPTER 2 - WHAT IS A VPS?</span>
 
 A VPS (Virtual Private Server) is simply a computer inside a datacenter.
 
@@ -1035,7 +1035,7 @@ The VPS itself does not determine how packets travel.
 The NETWORK connected to the VPS determines that.
 
 
-<h2>CHAPTER 3 - DATACENTER ≠ NETWORK</h3>
+<span class="label>CHAPTER 3 - DATACENTER ≠ NETWORK</span>
 
 This is one of the most important concepts.
 
@@ -1077,7 +1077,7 @@ They all rent space.
 Simply being inside Equinix says NOTHING about which network your VPS uses.
 
 
-<h2>CHAPTER 4 - WHO ACTUALLY MOVES THE PACKETS?</h3>
+<span class="label>CHAPTER 4 - WHO ACTUALLY MOVES THE PACKETS?</span>
 
 Packets usually travel through several companies.
 
@@ -1125,7 +1125,7 @@ There is nothing "wrong" with using NTT.
 It is simply a GENERAL PURPOSE international backbone.
 
 
-<span class="sub-title">CHAPTER 6 - WHAT IS A "MIDDLEMAN"?</span>
+<span class="label>CHAPTER 6 - WHAT IS A "MIDDLEMAN"?</span>
 
 Suppose your traffic is:
 
@@ -1140,7 +1140,7 @@ This is completely normal.
 Nearly every budget VPS has at least one transit provider.
 
 
-<h3>CHAPTER 7 - DOES HONG KONG REMOVE THE MIDDLEMAN?</h3>
+<h3>CHAPTER 7 - DOES HONG KONG REMOVE THE MIDDLEMAN?</span>
 
 No.
 
@@ -1161,7 +1161,7 @@ Hong Kong VPS → Arelion → China Mobile
 The physical location does not determine the routing.
 
 
-<h2>CHAPTER 8 - WHY ARE CHINA ROUTES EXPENSIVE?</h3>
+<span class="label>CHAPTER 8 - WHY ARE CHINA ROUTES EXPENSIVE?</span>
 Chinese carriers have international companies.
 
 China Unicom → China Unicom Global (CUG)
@@ -1185,7 +1185,7 @@ Your VPS provider buys bandwidth from them.
 Then resells it to you.
 
 
-<h3>CHAPTER 9 - WHAT DOES "CHINA OPTIMIZED" MEAN?</h3>
+<span class="label>CHAPTER 9 - WHAT DOES "CHINA OPTIMIZED" MEAN?</span>
 
 A China optimized VPS usually has better connectivity into mainland China.
 
@@ -1208,7 +1208,7 @@ Latency, Packet loss, Jitter
 Especially during busy hours.
 
 
-<h3>CHAPTER 10 - DOES PREMIUM ALWAYS MEAN FASTER?</h3>
+<span class="label>CHAPTER 10 - DOES PREMIUM ALWAYS MEAN FASTER?</span>
 NO.
 
 This is extremely important.
@@ -1248,7 +1248,7 @@ Everyone shares the same link.
 Performance becomes poor.
 
 
-<h3>CHAPTER 11 - WHY DO THINGS BECOME SLOW AT NIGHT?</h3>
+<span class="label>CHAPTER 11 - WHY DO THINGS BECOME SLOW AT NIGHT?</span>
 
 The usual peak hours are approximately:
 
@@ -1265,7 +1265,7 @@ Downloads
 The international links become congested.
 
 
-<h3>CHAPTER 12 - WHY PING IS NOT EVERYTHING</h3>
+<span class="label>CHAPTER 12 - WHY PING IS NOT EVERYTHING</span>
 
 Many beginners only look at:
 
@@ -1337,7 +1337,7 @@ Voice calls stutter.
 Games feel inconsistent.
 
 
-<h3>CHAPTER 14 - WHAT IS PACKET LOSS?</h3>
+<span class="label>CHAPTER 14 - WHAT IS PACKET LOSS?</span>
 
 Packet loss means:
 
@@ -1360,7 +1360,7 @@ usually feels bad.
 Packet loss is often worse than adding 20 ms of latency.
 
 
-<h3>CHAPTER 15 - UNDERSTANDING TRACEROUTE</h3>
+<span class="label>CHAPTER 15 - UNDERSTANDING TRACEROUTE</span>
 
 Traceroute shows:
 
@@ -1373,7 +1373,7 @@ Singapore → NTT Singapore → NTT Hong Kong → China Unicom → Nanjing
 This is completely normal.
 
 
-<h3>CHAPTER 16 - WHY DO SOME HOPS SHOW 80% LOSS?</h3>
+<span class="label>CHAPTER 16 - WHY DO SOME HOPS SHOW 80% LOSS?</span>
 
 Example:
 
@@ -1398,7 +1398,7 @@ Always look at:
 THE FINAL DESTINATION.
 
 
-<h3>CHAPTER 18 - CAN VPN FIX A BAD ROUTE?</h3>
+<span class="label>CHAPTER 18 - CAN VPN FIX A BAD ROUTE?</span>
 
 Sometimes.
 
@@ -1425,7 +1425,7 @@ The VPN itself is not the reason.
 The underlying network is.
 
 
-<h3>CHAPTER 19 - WHAT ABOUT "AIRPORT" SUBSCRIPTIONS?</h3>
+<span class="label>CHAPTER 19 - WHAT ABOUT "AIRPORT" SUBSCRIPTIONS?</span>
 
 Many Chinese "Airport" providers advertise:
 
@@ -1448,7 +1448,7 @@ Sometimes it is only marketing.
 Always test.
 
 
-<h3>CHAPTER 20 - SHOULD I BUY CN2?</h3>
+<span class="label>CHAPTER 20 - SHOULD I BUY CN2?</span>
 
 Not immediately.
 
@@ -1467,7 +1467,7 @@ stop.
 Only upgrade if you actually experience problems.
 
 
-<h3>CHAPTER 22 - WHAT SHOULD I LOOK FOR WHEN BUYING A VPS?</h3>
+<span class="label>CHAPTER 22 - WHAT SHOULD I LOOK FOR WHEN BUYING A VPS?</span>
 
 Priority #1
 
@@ -1500,7 +1500,7 @@ For a relay server:
 is usually enough.
 
 
-<h3>CHAPTER 23 - HOW TO EVALUATE A VPS</h3>
+<span class="label>CHAPTER 23 - HOW TO EVALUATE A VPS</span>
 
 GOOD SIGNS
 
@@ -1529,7 +1529,7 @@ BAD SIGNS
 ✗ Many reports of evening congestion
 
 
-<h3>CHAPTER 24 - THE SIMPLEST MENTAL MODEL</h3>
+<span class="label>CHAPTER 24 - THE SIMPLEST MENTAL MODEL</span>
 
 Think of Internet routing as airline travel.
 
@@ -1552,7 +1552,7 @@ The airplane (WireGuard, VPN, Hysteria) does NOT choose the route.
 The airline (network provider) does.
 
 
-<h3>FINAL TAKEAWAYS</h3>
+<span class="label>FINAL TAKEAWAYS</span>
 
 1. A VPS location does NOT determine routing.
 
