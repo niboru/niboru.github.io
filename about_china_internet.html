@@ -78,6 +78,7 @@
         p { border-radius:3px;background-color:gray ;color:#ffffff;padding:2px 5px 2px 5px;margin-bottom:-20px;}
       
 	.label {
+		border-radius: 3px;
 		font-size: 1em;
 		padding: 2px 2px;
 		background-color: gray;
@@ -137,10 +138,19 @@
 
 - International outbound bandwidth are strangled intentionally and it's more noticeable at <a class="term" href="#peak-hour">peak hour</a> (around 7.30 pm to 10.30 pm).
 
+- Because international bandwidth is finite, traffic for foreign websites often gets the lowest priority compared to domestic traffic (like WeChat, Tencent, or Alibaba).
+
 - Using corporate lines like <a class="term" href="#iplc-iepl">IPLC/IEPL</a> are needed to maintain stability and speed at peak hour.
 
-- Blocking is stricter on <a class="term" href="#tier-1-city">Tier 1 city</a> like Shanghai / Beijing / Guangzhou / Shenzen.</pre>
+- Blocking is stricter on <a class="term" href="#tier-1-city">Tier 1 city</a> like Shanghai / Beijing / Guangzhou / Shenzen.
 
+- Political Issues
+	
+	The "Sensitive Period" Sweeps: During major political events in China (such as the National People's Congress, anniversaries, or periods of social unrest), the <a class="term" href="#gfw">GFW</a> heavily ramps up its automated filtering.
+	
+	Blanket Bans: During these weeks, the firewall switches to an aggressive "block first, ask questions later" mode.
+	
+	Targeted Providers: Popular, cheap VPS providers used by developers (like DigitalOcean, Vultr, Linode, or Bandwagon Host) face massive, automated IP sweeps. Millions of IPs are blocked overnight, regardless of whether you were doing anything wrong.</pre>
 <pre>
 <span class="section-title">What needed to get through/cross border</span>
 
@@ -151,14 +161,16 @@
 - No speed limit but very small quotas (30 GB or less monthly with daily quota too on top).
 - No need to open an app or set anything.
 
+
 <a class="term" href="#vpn">VPN</a>
-- VPN has less servers to use and easily blocked + especially targetted by <a class="term" href="#gfw">GFW</a> and expensive too!
+- VPN has less servers to use and easily blocked + especially targetted by GFW and expensive too!
 - More trustworthy and operate as legitimate entities.
 - Need more than one VPN just to be safe.
 - Payments usually in USD. Some accept AliPay.
 - On average around 5 - 20 USD. Much cheaper with yearly/bi-yearly plans.
 - Usually no speed and quota data limit.
 - Some providers:
+
 	https://mullvad.net/en
 	https://amnezia.org/
 	https://letsvpn.world/?hl=en
@@ -166,10 +178,29 @@
 	https://wannaflix.com/
 	https://www.astrill.com/
 
+
 <a class="term" href="#jichang">Ji Chang / Proxies</a>
 - Usually cheap under 50 RMB. But many tiers and many providers from old establishments(more than 10 years) to newer ones (less than 2 years). Meanwhile most of them can come and go because it's illegal in China. If uncertain buy monthly plans.
+
 - Cheaper sides are usually limited in the max amount of connected devices (1-3 devices) with small quota under 100GB. Connecting via a proxy/VPN takes more quota data.
-- Have many servers as backups and treated more leniently by GFW.</pre>
+
+- Have many servers as backups and treated more leniently by GFW.
+
+- Budget sellers utilize several infrastructure strategies to make expensive routes look incredibly affordable:
+
+	Massive Over-Subscription (Crowding): The provider buys a single, modest 50 Mbps IPLC or CN2 GIA bandwidth pipe and crams 1,000 budget users onto it. If only 20 people are using it at 3:00 PM, it feels blindingly fast. If everyone hops on at 9:00 PM to play games or watch videos, the provider forcefully throttles everyone's speed to keep the connection alive.
+	
+	NAT/Shared Port Systems: Instead of giving you an individual server or a dedicated IP, they sell you a specific port range on a shared machine. Hundreds of users share a single premium IP address, drastically cutting down the provider's IP hosting costs.
+	
+	Hybrid "Fake" Routing (Sling-Shotting): This is the most common trick. The seller routes your initial connection request over a premium IPLC or CN2 GIA line to quickly clear the Great Firewall. However, once the connection clears the border checkpoint, they immediately offload your heavy data downloads onto standard, cheap public BGP routes. You get a fast initial response time (low ping), but your overall download speeds are highly vulnerable to network congestion.
+	
+- If you purchase an ultra-cheap premium line proxy, expect the following trade-offs:
+
+	The "Peak Hour" Slump: The service may perform flawlessly during the day, but will lag or drop connections from 8:00 PM to 11:00 PM when the shared pool gets overcrowded.
+	
+	Poor IP Reputation: Because hundreds of budget users share the exact same outbound IP addresses, those IPs get flagged quickly. You will constantly run into Google Captchas, Cloudflare verification screens, or sudden IP bans on platforms like Steam, PlayStation Network, or Netflix.
+	
+	Sudden Disappearances: Budget providers operate on razor-thin margins. If their upstream IPLC/CN2 provider raises prices or cuts them off for data abuse, the seller will often just shut down operations overnight without issuing refunds.</pre>
 
 <pre>
 <span class="section-title">Local SIM Card</span>
@@ -182,8 +213,17 @@ China Mobile as of July 2026 has increased connectivity toward South East Asian 
 
 <a class="term" href="#vless-reality">VLESS Reality</a>
 <a class="term" href="#hysteria2">Hysteria 2</a>
-<a class="term" href="#shadowsocks-aead">Shadowsocks with AEAD</a> (popular on corporate line, because though easier to track but less strict on corporate line)</pre>
+<a class="term" href="#shadowsocks-aead">Shadowsocks with AEAD</a> (popular on corporate line, because though easier to track but less strict on corporate line)
 
+
+VLESS REALITY VISION:
+	- needs a domain that supports TLS v1.3 http2 and has ALPN compatibility
+	- match the VPS provider, if use microsoft azure VPS then use microsoft domain
+	- match data center, if using cheap vps (usually in crowded datacenter), find large tech service or open source mirror or corporate portal that rent space nearing the VPS datacenter
+	- use domains that are in close geographical location proximity with the VPS location
+	- NO akamai, cloudflare, fastly
+	- avoid giants domain instead look for local sites that handle heavy traffic but aren''t well known for example: regional university portals, local govt infrastructure, major national bank login page, regional telecom provider homepage
+	- the domain IP should be static public</pre>
 <pre>
 <span class="section-title">TOOLS</span>
 
@@ -414,7 +454,21 @@ tntcloud - <a href="https://w05.tntyunb01.cc/#/login" target="_blank" rel="noope
 
 - Prefer KVM. 1 vCPU 1 GB RAM and public ipv4.
 
-- Only one IP so it's risky and troublesome when got blocked.</pre>
+- Only one IP so it's risky and troublesome when got blocked.
+
+
+Avoid the following heavily flagged VPS providers for China-facing servers, as their IP pools are highly contaminated:
+
+	Vultr: The most heavily targeted provider. Because it offers cheap hourly billing, thousands of users use it to cycle through IPs after getting blocked. As a result, entire Vultr subnets (especially Tokyo and Los Angeles) are blocked by default.
+	
+	DigitalOcean: Highly prone to instant TCP handshake blocking. Their San Francisco, New York, and Singapore data centers are strictly monitored.
+	
+	Linode / Akamai: Their Tokyo and Singapore nodes are frequently targeted, making it difficult to find a clean IP address that can establish an initial connection.
+	
+	Alibaba Cloud (International): Specifically, their Hong Kong and Singapore regional nodes are heavily scrutinized and dynamically throttled for inbound mainland China traffic.
+	
+	Bandwagon Host (Standard Tiers): Their low-cost promotional plans are deeply saturated with blocked IPs. Only their high-end, expensive premium lines (CN2-GIA) remain viable.
+</pre>
 
 <pre>
 <span class="section-title">TIKTOK</span>
@@ -433,8 +487,10 @@ Laptop1 &gt;&gt; RustDesk relay server &lt;&lt; proxy &lt;&lt; China Laptop
 Laptop1 &gt;&gt; Tailscale relay server &gt;&gt; RustDesk Direct IP &lt;&lt; Tailscale relay server &lt;&lt; proxy &lt;&lt; China Laptop
 
 - Alternative when it's laggy
-Laptop1 &gt;&gt; Your own RustDesk relay server &lt;&lt; proxy &lt;&lt; China Laptop</pre>
+Laptop1 &gt;&gt; Your own RustDesk relay server &lt;&lt; proxy &lt;&lt; China Laptop
 
+
+Do not rotate the proxies!</pre>
 <pre>
 <span class="section-title">News about proxies</span>
 
@@ -990,7 +1046,7 @@ The result is almost the same, day to day from August to September 2026.
 7. Select which profiles
 	> right click on profiles you want to use > select
 
-<hr>
+
 <span class="section-title">UNDERSTANDING VPS ROUTING TO MAINLAND CHINA: A PRACTICAL GUIDE FOR NON-NETWORK ENGINEERS</span>
 
 <span class="label">CHAPTER 1 - THE BIGGEST MISCONCEPTION</span>
