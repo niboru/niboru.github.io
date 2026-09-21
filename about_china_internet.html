@@ -985,7 +985,591 @@ The result is almost the same, day to day from August to September 2026.
 7. Select which profiles
 	> right click on profiles you want to use > select
 </pre>
+<pre>
+<p>UNDERSTANDING VPS ROUTING TO MAINLAND CHINA
+A PRACTICAL GUIDE FOR NON-NETWORK ENGINEERS</p>
+<b>CHAPTER 1 - THE BIGGEST MISCONCEPTION</b>
 
+Many people believe:
+"My VPS is located in Singapore.
+Therefore packets travel directly from Singapore to China."
+
+Unfortunately, this is usually FALSE.
+
+The Internet does not work by choosing the geographically shortest path.
+
+Instead, every network chooses where to send your packets.
+
+The decision is made by the network operator using BGP (Border Gateway Protocol).
+
+Think of it like shipping a package.
+
+A package from Jakarta to Nanjing may travel:
+
+Jakarta → Singapore → Hong Kong → Nanjing
+
+instead of
+
+Jakarta → Nanjing
+
+because the courier company has its own logistics network.
+
+The Internet behaves the same way.
+
+
+<b>CHAPTER 2 - WHAT IS A VPS?</b>
+
+A VPS (Virtual Private Server) is simply a computer inside a datacenter.
+
+For example:
+
+Your Laptop → Internet → Singapore VPS → Internet → Computer in China
+
+The VPS itself does not determine how packets travel.
+
+The NETWORK connected to the VPS determines that.
+
+
+<b>CHAPTER 3 - DATACENTER ≠ NETWORK</b>
+
+This is one of the most important concepts.
+
+Example:
+
+Your VPS says:
+
+Location:
+Singapore
+
+Datacenter:
+Equinix
+
+Many people assume:
+
+Singapore = Excellent China route
+
+This is NOT guaranteed.
+
+Equinix is only the building.
+
+Inside Equinix there are hundreds of companies.
+
+Imagine Equinix as a shopping mall.
+
+Inside the mall:
+
+Google
+AWS
+Tencent
+Alibaba
+Cloudflare
+NTT
+PCCW
+Many VPS companies
+
+They all rent space.
+
+Simply being inside Equinix says NOTHING about which network your VPS uses.
+
+
+<b>CHAPTER 4 - WHO ACTUALLY MOVES THE PACKETS?</b>
+
+Packets usually travel through several companies.
+
+Example:
+
+Your VPS → Provider Network → NTT → China Unicom → China Computer
+
+NTT is called an INTERNATIONAL TRANSIT PROVIDER.
+
+They carry traffic between countries.
+
+Other major international carriers include:
+
+NTT
+PCCW
+Arelion (formerly Telia)
+Tata
+GTT
+Lumen
+Cogent
+Hurricane Electric
+
+These companies own submarine cables, backbone routers and international links.
+
+
+<b>CHAPTER 5 - WHY DOES NTT APPEAR SO OFTEN?</b>
+
+NTT is enormous.
+
+They have major Points of Presence (PoPs) in:
+
+Singapore
+Hong Kong
+Tokyo
+Osaka
+Taipei
+Seoul
+
+Many VPS providers simply buy bandwidth from NTT.
+
+This is completely normal.
+
+There is nothing "wrong" with using NTT.
+
+It is simply a GENERAL PURPOSE international backbone.
+
+
+<b>CHAPTER 6 - WHAT IS A "MIDDLEMAN"?</b>
+
+Suppose your traffic is:
+
+Singapore VPS → NTT → China Unicom → Nanjing
+
+NTT is acting as the international carrier.
+
+Many people call this a "middleman".
+
+This is completely normal.
+
+Nearly every budget VPS has at least one transit provider.
+
+
+<b>CHAPTER 7 - DOES HONG KONG REMOVE THE MIDDLEMAN?</b>
+
+No.
+
+This is another common misunderstanding.
+
+A Hong Kong VPS may still be:
+
+Hong Kong VPS → NTT → China Unicom
+
+or
+
+Hong Kong VPS → PCCW → China Telecom
+
+or
+
+Hong Kong VPS → Arelion → China Mobile
+
+The physical location does not determine the routing.
+
+
+<b>CHAPTER 8 - WHY ARE CHINA ROUTES EXPENSIVE?</b>
+
+Chinese carriers have international companies.
+
+China Unicom → China Unicom Global (CUG)
+China Telecom → China Telecom Global (CTG)
+China Mobile → China Mobile International (CMI)
+
+These companies sell premium international connectivity.
+
+Their customers are usually:
+
+Cloud providers
+Banks
+Enterprises
+CDNs
+Large VPS providers
+
+NOT ordinary consumers.
+
+Your VPS provider buys bandwidth from them.
+
+Then resells it to you.
+
+
+<b>CHAPTER 9 - WHAT DOES "CHINA OPTIMIZED" MEAN?</b>
+
+A China optimized VPS usually has better connectivity into mainland China.
+
+Instead of
+
+Singapore → NTT → China
+
+it might be
+
+Singapore → China Unicom Global → China Unicom → Nanjing
+
+or
+
+Singapore → China Telecom Global → China Telecom → Nanjing
+
+This usually reduces:
+
+Latency, Packet loss, Jitter
+
+Especially during busy hours.
+
+
+<b>CHAPTER 10 - DOES PREMIUM ALWAYS MEAN FASTER?</b>
+NO.
+
+This is extremely important.
+
+Premium routing only means:
+
+The provider purchased a better path.
+
+They can STILL oversell it.
+
+Imagine this ...
+
+Provider buys:
+
+10 Gbps premium China bandwidth.
+
+Then sells:
+
+1000 VPS
+
+Each advertised as
+
+100 Mbps.
+
+In theory:
+
+1000 × 100 Mbps = 100 Gbps
+
+But the provider only owns:
+
+10 Gbps.
+
+During peak hours:
+
+Everyone shares the same link.
+
+Performance becomes poor.
+
+
+<b>CHAPTER 11 - WHY DO THINGS BECOME SLOW AT NIGHT?</b>
+
+The usual peak hours are approximately:
+
+7 PM → 2 AM China time.
+
+This happens because millions of users begin using:
+
+Streaming
+Gaming
+Cloud services
+Video
+Downloads
+
+The international links become congested.
+
+
+<b>CHAPTER 12 - WHY PING IS NOT EVERYTHING</b>
+
+Many beginners only look at:
+
+Average Ping
+
+Example:
+
+100 ms
+
+looks good.
+
+But this tells only part of the story.
+
+Much more important:
+
+Packet loss
+Jitter
+Latency consistency
+
+Example A:
+
+100
+101
+100
+101
+100
+
+Very smooth.
+
+Example B:
+
+100
+150
+95
+180
+110
+
+Average is still around 127 ms.
+
+But the connection feels much worse.
+
+
+<b>CHAPTER 13 - WHAT IS JITTER?</b>
+
+Jitter means:
+
+How much the latency changes.
+
+Low jitter:
+
+100
+101
+100
+102
+101
+
+High jitter:
+
+95
+150
+103
+170
+110
+
+Remote desktop becomes laggy.
+
+Voice calls stutter.
+
+Games feel inconsistent.
+
+
+<b>CHAPTER 14 - WHAT IS PACKET LOSS?</b>
+
+Packet loss means:
+
+Some packets never arrive.
+
+Even:
+
+1%
+
+can be noticeable.
+
+3%
+
+becomes annoying.
+
+5%
+
+usually feels bad.
+
+Packet loss is often worse than adding 20 ms of latency.
+
+
+<b>CHAPTER 15 - UNDERSTANDING TRACEROUTE</b>
+
+Traceroute shows:
+
+Which routers your packets visit.
+
+Example:
+
+Singapore → NTT Singapore → NTT Hong Kong → China Unicom → Nanjing
+
+This is completely normal.
+
+
+CHAPTER 16 - WHY DO SOME HOPS SHOW 80% LOSS?
+
+Example:
+
+Hop 5
+
+80%
+
+Hop 6
+
+90%
+
+Destination
+
+0%
+
+This DOES NOT mean your connection has 80% packet loss.
+
+Many routers simply ignore traceroute replies.
+
+Always look at:
+
+THE FINAL DESTINATION.
+
+
+<b>CHAPTER 18 - CAN VPN FIX A BAD ROUTE?</b>
+
+Sometimes.
+
+Usually not.
+
+VPNs cannot reduce congestion.
+
+They only change WHICH path is used.
+
+Example:
+
+Without VPN:
+
+Singapore → NTT → China
+
+With VPN:
+
+Singapore → China Unicom Global → China
+
+Now performance may improve.
+
+The VPN itself is not the reason.
+
+The underlying network is.
+
+
+<b>CHAPTER 19 - WHAT ABOUT "AIRPORT" SUBSCRIPTIONS?</b>
+
+Many Chinese "Airport" providers advertise:
+
+CN2
+
+CMI
+
+CUG
+
+CTG
+
+These providers usually purchase premium enterprise connectivity.
+
+Your traffic then uses THEIR network.
+
+Sometimes this is much better.
+
+Sometimes it is only marketing.
+
+Always test.
+
+
+<b>CHAPTER 20 - SHOULD I BUY CN2?</b>
+
+Not immediately.
+
+For most people:
+
+Step 1
+
+Buy a normal Singapore VPS.
+
+Test it.
+
+If it performs well,
+
+stop.
+
+Only upgrade if you actually experience problems.
+
+
+<b>CHAPTER 22 - WHAT SHOULD I LOOK FOR WHEN BUYING A VPS?</b>
+
+Priority #1
+
+Network quality.
+
+Priority #2
+
+Routing into China.
+
+Priority #3
+
+Packet loss.
+
+Priority #4
+
+Jitter.
+
+Priority #5
+
+Latency.
+
+CPU and RAM are MUCH less important.
+
+For a relay server:
+
+1 vCPU
+
+1 GB RAM
+
+is usually enough.
+
+
+<b>CHAPTER 23 - HOW TO EVALUATE A VPS</b>
+
+GOOD SIGNS
+
+✓ Looking Glass available
+
+✓ Test IP available
+
+✓ Stable traceroute
+
+✓ Low packet loss
+
+✓ Consistent latency
+
+✓ Good reputation
+
+BAD SIGNS
+
+✗ No network information
+
+✗ Highly inconsistent traceroutes
+
+✗ Large latency spikes
+
+✗ Frequent packet loss
+
+✗ Many reports of evening congestion
+
+
+<b>CHAPTER 24 - THE SIMPLEST MENTAL MODEL</b>
+
+Think of Internet routing as airline travel.
+
+Your destination is Nanjing.
+
+The VPS provider chooses the airline.
+
+Some airlines fly:
+
+Singapore → Hong Kong → Nanjing
+
+Others fly:
+
+Singapore → Tokyo → Shanghai → Nanjing
+
+Others have direct partnerships.
+
+The airplane (WireGuard, VPN, Hysteria) does NOT choose the route.
+
+The airline (network provider) does.
+
+
+<b>FINAL TAKEAWAYS</b>
+
+1. A VPS location does NOT determine routing.
+
+2. Equinix is a datacenter, not an Internet provider.
+
+3. Most inexpensive VPS providers buy transit from companies like NTT or PCCW.
+
+4. Seeing NTT in a traceroute is completely normal.
+
+5. Hong Kong VPSs can also use transit providers.
+
+6. "China Optimized" usually means the provider has purchased better connectivity into Chinese carriers.
+
+7. Premium routes can still perform poorly if the provider oversells them.
+
+8. Packet loss and jitter matter more than a small difference in average ping.
+
+9. VPNs do not magically improve the Internet. They only help if they use a better underlying network.
+
+10. The best approach is to test a standard VPS first. Upgrade to a premium China route only if real-world performance during peak hours is unacceptable.
+</pre>
 <!-- ========================================================= -->
 <!-- GLOSSARY -->
 <!-- ========================================================= -->
