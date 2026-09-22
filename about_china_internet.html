@@ -340,7 +340,9 @@ Use chinese sites to test traffic splitting. The rules are working if real IP is
 		flclash/proxy/vpn TUN + singbox TUN will break tailscale; set the first one to system proxy.
 		
 		tailscale: try to do P2P first and when failed will use public relay server.
-			it's best to bypass tailscale ip range so it runs direct.</pre>
+			it's best to bypass tailscale ip range so it runs direct.
+			
+		The GFW aggressively kills idle TCP connections after 1–2 minutes. Phones connected to your MyPublicWiFi hotspot will stop receiving real-time push notifications (Google FCM, Telegram, WhatsApp) because their background socket dies; Fix: In FlClash / Mihomo, ensure keep-alive-interval is set to 15 or 30 seconds so the proxy regularly sends heartbeat packets to keep mobile connections alive.</pre>
 <pre>
 <span class="section-title">Some list of proxy providers</span>
 
@@ -348,7 +350,9 @@ Use chinese sites to test traffic splitting. The rules are working if real IP is
 Ninja Cloud - <a href="https://www.ninjacloud.online/" target="_blank" rel="noopener noreferrer">https://www.ninjacloud.online/</a> - 6Y 50GB 4IP / 10Y 120GB 6IP / 20Y 500GB 10IP
 
 Taishan - <a href="https://taishannet.top" target="_blank" rel="noopener noreferrer">https://taishannet.top/</a> - 10Y 64GB / 18Y 512GB ?? 22Y 128GB ??
- 
+
+ChuiXue Cloud - <a href="https://to.iix.im/cx01" target="_blank" rel="noopener noreferrer">https://to.iix.im/cx01</a> - 2Y 128GB 8IP / 4Y 512GB 10IP / 6Y 1024GB 20IP
+
 Elf Academy - <a href="https://pub2.riolu.icu" target="_blank" rel="noopener noreferrer">https://pub2.riolu.icu</a> - 8Y/30GB 15Y/120GB 30Y/250GB
 
 HungryCake - <a href="https://efanccyun.org/" target="_blank" rel="noopener noreferrer">https://efanccyun.org/</a> - 280Y 200GB 0IP - Midnite rate 02:00-09:00 0.1x - 6Month
@@ -526,9 +530,25 @@ Do not rotate the proxies!</pre>
 <pre>
 <span class="section-title">Other / Quirks</span>
 
+- Prefer proxy/vpn apps that support traffic splitting(SMART/RULE) because visiting popular or legitimate sites with different foreign IPs will make your accounts get flagged. You may need to re-authenticate with passport or face photo or simply get banned. Yes you can also turn on off the proxy/vpn which is a hassle.
+
+- Avoid using proxy/vpn on public Wi-Fi. The rule is stricter on local residents.
+
+- Before using any provider's app, it's better to do a https://www.virustotal.com scan on the file first.
+
+- Before refreshing servers for the fastest ping, disconnect first from the proxy/vpn. Fastest ping does not equal fast download.
+
+- Only use ONE of the same engine apps. If you use FLClash then turn off or disable Clash Verge or any other Clash apps.
+
+- Western VPNs sometimes can be too aggresive with other proxy apps, uninstall if dont use and reboot/restart.
+
+- Often times GFW mess with subscription links thus inability to update or refresh. Most of the time the proxy servers are OK.
+
+- Prepare at least 2 proxy or vpn subscriptions. One premium and one cheap. Sometimes the cheap ones work better because of the novelty (1-10 RMB).
+
 - Disable <a class="term" href="#tailscale">Tailscale</a> DNS when using vpn/clash apps.
 
-- Cannot use proxy app TUN + Tailscale Exit NODE. Only use Exit Node without proxy.
+- Cannot use proxy app TUN + Tailscale Exit NODE at the same time.
  
 - If expressvpn or any vpn software are being clingy to flclash or any proxy app, then reduce the metric by lowering the priority.
 	Get-NetIPInterface | Format-Table ifIndex,InterfaceAlias,InterfaceMetric,AddressFamily
@@ -538,6 +558,8 @@ Do not rotate the proxies!</pre>
 - Do not rotate proxy selection when using Remote Desktop software.
 
 - Cannot share proxy RULES to myPublicWiFi clients for that need sing-box and turn off proxy app TUN and enable proxy mode.
+
+- Some proxies will have 10~ secs delay when opening www.youtube.com videos.
 
 - https://awesun.aweray.com/ cannot work when using western IPs.
 
