@@ -559,10 +559,10 @@ Avoid the following heavily flagged VPS providers for China-facing servers, as t
 Laptop1 &gt;&gt; RustDesk relay server &lt;&lt; proxy &lt;&lt; China Laptop
 
 - Via Tailscale
-Laptop1 &gt;&gt; Tailscale relay server &gt;&gt; RustDesk Direct IP &lt;&lt; Tailscale relay server &lt;&lt; proxy &lt;&lt; China Laptop
+Laptop1 &gt;&gt; Tailscale relay server &gt;&gt; <a class="term" href="#directip">RustDesk Direct IP</a> &lt;&lt; Tailscale relay server &lt;&lt; proxy &lt;&lt; China Laptop
 
 - Alternative when it's laggy
-Laptop1 &gt;&gt; Your own RustDesk relay server &lt;&lt; proxy &lt;&lt; China Laptop
+Laptop1 &gt;&gt; <a class="term" href="#rustdeskownrelay">Your own RustDesk relay server</a> &lt;&lt; proxy &lt;&lt; China Laptop
 
 
 Do not rotate the proxies!</pre>
@@ -2228,6 +2228,24 @@ Asia-Pacific.
 
 A geographic term commonly used when discussing network
 connectivity between Asian countries and the Pacific region.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="directip" class="definition">
+<b>Rust Desk Direct IP</b>
+
+Instead of entering target computer Rust Desk ID, we use IP we get from Tailscale which is actually a LAN IP.
+
+Get the target IP via GUI in smartphone or via command prompt by typing: "tailscale status" on Windows 10/11.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="rustdeskownrelay" class="definition">
+<b>Rust Desk Own Relay Server</b>
+
+Rent a VPS and install Rust Desk relay server software.
+
+On Rust Desk, open Settings &gt; Network &gt; ID/Relay server.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
