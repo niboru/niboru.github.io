@@ -175,7 +175,7 @@
 
 - Need more than one VPN just to be safe.
 
-- Payments usually in USD. Some accept AliPay.
+- Payments usually in USD. Some accept https://mobile.alipay.com/.
 
 - On average around 5 - 20 USD. Much cheaper with yearly/bi-yearly plans.
 
@@ -193,23 +193,25 @@
 
 <a class="term" href="#jichang">Ji Chang / Proxies</a>
 
-- Usually cheap under 50 RMB. But many tiers and many providers from old establishments(more than 10 years) to newer ones (less than 2 years). Meanwhile most of them can come and go because it's illegal in China. If uncertain buy monthly plans.
+- Usually cheap under 50 RMB. But many tiers and many providers from old establishments(more than 10 years) to newer ones (less than 2 years). Meanwhile most of them can come and go because it's <a href="https://www.allbrightlaw.com/EN/10475/6408019c394498c4.aspx" target="_blank" rel="noopener noreferrer">illegal</a> in China. If uncertain buy monthly plans.
 
 - Cheaper sides are usually limited in the max amount of connected devices (1-3 devices) with small quota under 100GB. Connecting via a proxy/VPN takes more quota data.
 
 - Have many servers as backups and treated more leniently by GFW.
 
+- It's also called <a class="term" href="#airport-subscription">airport subscription</a>.
+
 - Budget sellers utilize several infrastructure strategies to make expensive routes look incredibly affordable:
 
-	- Massive Over-Subscription (Crowding): The provider buys a single, modest 50 Mbps IPLC or CN2 GIA bandwidth pipe and crams 1,000 budget users onto it. If only 20 people are using it at 3:00 PM, it feels blindingly fast. If everyone hops on at 9:00 PM to play games or watch videos, the provider forcefully throttles everyone's speed to keep the connection alive.
+	- Massive Over-Subscription (Crowding): The provider buys a single, modest 50 Mbps IPLC or <a class="term" href="#cn2-gia">CN2 GIA</a> bandwidth pipe and crams 1,000 budget users onto it. If only 20 people are using it at 3:00 PM, it feels blindingly fast. If everyone hops on at 9:00 PM to play games or watch videos, the provider forcefully throttles everyone's speed to keep the connection alive.
 	
 	- NAT/Shared Port Systems: Instead of giving you an individual server or a dedicated IP, they sell you a specific port range on a shared machine. Hundreds of users share a single premium IP address, drastically cutting down the provider's IP hosting costs.
 	
-	- Hybrid "Fake" Routing (Sling-Shotting): This is the most common trick. The seller routes your initial connection request over a premium IPLC or CN2 GIA line to quickly clear the Great Firewall. However, once the connection clears the border checkpoint, they immediately offload your heavy data downloads onto standard, cheap public BGP routes. You get a fast initial response time (low ping), but your overall download speeds are highly vulnerable to network congestion.
+	- Hybrid "Fake" Routing (Sling-Shotting): This is the most common trick. The seller routes your initial connection request over a premium IPLC or CN2 GIA line to quickly clear the Great Firewall. However, once the connection clears the border checkpoint, they immediately offload your heavy data downloads onto standard, cheap public <a class="term" href="#bgp">BGP</a> routes. You get a fast initial response time (low <a class="term" href="#ping">ping</a>), but your overall download speeds are highly vulnerable to network congestion.
 	
 - If you purchase an ultra-cheap premium line proxy, expect the following trade-offs:
 
-	- The "Peak Hour" Slump: The service may perform flawlessly during the day, but will lag or drop connections from 8:00 PM to 11:00 PM when the shared pool gets overcrowded.
+	- The "Peak Hour" Slump: The service may perform flawlessly during the day, but will <a class="term" href="#lag">lag</a> or drop connections from 8:00 PM to 11:00 PM when the shared pool gets overcrowded.
 	
 	- Poor IP Reputation: Because hundreds of budget users share the exact same outbound IP addresses, those IPs get flagged quickly. You will constantly run into Google Captchas, Cloudflare verification screens, or sudden IP bans on platforms like Steam, PlayStation Network, or Netflix.
 	
@@ -220,31 +222,31 @@
 
 China Unicom has been used widely by foreigners especially to access US resources.
 
-China Mobile as of July 2026 has increased connectivity toward South East Asian countries (SEA-H2X), thus better <a class="term" href="#ping">ping</a>.</pre>
+China Mobile as of July 2026 has increased connectivity toward South East Asian countries (SEA-H2X), thus better ping.</pre>
 
 <pre>
 <span class="section-title">Some Protocols Used</span>
 
 <a class="term" href="#vless-reality">VLESS Reality</a>
 <a class="term" href="#hysteria2">Hysteria 2</a>
-<a class="term" href="#shadowsocks-aead">Shadowsocks with AEAD</a> (popular on corporate line, because though easier to track but less strict on corporate line)
+<a class="term" href="#shadowsocks-aead">Shadowsocks with AEAD</a> (popular on corporate line, though easier to track but less strict on corporate line and faster more established)
 
 
 VLESS REALITY VISION requirements:
 
-	- needs a domain that supports TLS v1.3 http2 and has ALPN compatibility
+	- needs a domain that supports TLS v1.3 <a class="term" href="#http2">http2</a> and has ALPN compatibility.
 	
-	- match the VPS provider, if use microsoft azure VPS then use microsoft domain
+	- match the VPS provider, if use https://azure.microsoft.com VPS then use microsoft domain.
 	
-	- match data center, if using cheap vps (usually in crowded datacenter), find large tech service or open source mirror or corporate portal that rent space nearing the VPS datacenter
+	- match data center, if using cheap vps (usually in crowded datacenter), find large tech service or open source mirror or corporate portal that rent space nearing the VPS datacenter.
 	
-	- use domains that are in close geographical location proximity with the VPS location
+	- use domains that are in close geographical location proximity with the VPS location.
 	
-	- NO akamai, cloudflare, fastly
+	- NO akamai, cloudflare, fastly.
 	
-	- avoid giants domain instead look for local sites that handle heavy traffic but aren''t well known for example: regional university portals, local govt infrastructure, major national bank login page, regional telecom provider homepage
+	- avoid giants domain instead look for local sites that handle heavy traffic but aren''t well known for example: regional university portals, local govt infrastructure, major national bank login page, regional telecom provider homepage.
 	
-	- the domain IP should be public static</pre>
+	- the domain IP should be public static.</pre>
 <pre>
 <span class="section-title">TOOLS</span>
 
@@ -262,7 +264,8 @@ VLESS REALITY VISION requirements:
 <span class="section-title">Proxy / VPN Testing</span>
 
 <b>IP Address Check</b>
-Use chinese sites to test traffic splitting.
+
+Use chinese sites to test <a class="term" href="#split-tunneling">traffic splitting</a>.
 
 The rules are working if real IP is shown.
 
@@ -273,7 +276,7 @@ And proxy IP is shown when using https://ip.me/.
 <a href="https://ip.cx/" target="_blank" rel="noopener noreferrer">https://ip.cx/</a>
 
 
-<b>DNS Leak Check</b>
+<b><a class="term" href="#dnsleak">DNS Leak</a> Check</b>
 
 <a href="https://dnsleaktest.com" target="_blank" rel="noopener noreferrer">https://dnsleaktest.com</a>
 <a href="https://browserleaks.com" target="_blank" rel="noopener noreferrer">https://browserleaks.com</a>
@@ -285,7 +288,7 @@ And proxy IP is shown when using https://ip.me/.
 <a href="https://ping.pe" target="_blank" rel="noopener noreferrer">https://ping.pe</a></pre>
 
 <pre>
-<span class="section-title">Sharing the proxy/VPN to <a class="term" href="#lan">LAN</a></span>
+<span class="section-title">Sharing proxy/VPN to <a class="term" href="#lan">LAN</a></span>
 
 - Option to ENABLE LAN should be available on the app.
 
@@ -293,7 +296,7 @@ And proxy IP is shown when using https://ip.me/.
 
 - Use https://github.com/Openwrt-Passwall/openwrt-passwall2 with minimum 512MB RAM or https://github.com/vernesong/openclash with minimum 256MB RAM via OpenWrt device.
 
-- ICS quirk fix while on sleep mode will not go up after resume
+- <a class="term" href="#ics">"ICS</a> quirk fix while on sleep mode will not go up after resume
 	<code>New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\SharedAccess" -Name "EnableRebootPersistConnection" -Value 1 -PropertyType dword -Force</code>
 
 
@@ -318,7 +321,7 @@ And proxy IP is shown when using https://ip.me/.
 	
 		1. proxy clients (Flclash, Clashverge, Hiddify)
 		
-		2. Sing-box.exe
+		2. <a class="term" href="#sing-box">Sing-box.exe</a>
 		
 		3. active VPN /proxy account
 		
@@ -342,9 +345,9 @@ And proxy IP is shown when using https://ip.me/.
 			
 			enable global proxy, so the computer's running the sing-box doesn't have to set proxy ip:port manually.
 			
-			add some processes bypass including for Sing-box and proxy clients to DIRECT to avoid loop in catching it's own traffic.
+			add some processes bypass including for Sing-box and proxy clients to <a class="term" href="#direct">DIRECT</a> to avoid loop in catching it's own traffic.
 			
-			bypass local LAN IPs and <a class="term" href="#tailscale">Tailscale</a> to DIRECT.
+			bypass local <a class="term" href="#lanip">LAN IPs</a> and <a class="term" href="#tailscale">Tailscale</a> to DIRECT.
 			
 			no need to set MTU.
 			
@@ -402,13 +405,13 @@ And proxy IP is shown when using https://ip.me/.
 
 		different proxies can have different effect on Youtube android app playback start time, sometimes it can delay for 10 seconds.
 		
-			if you set MTU on sing-box config with wrong value, it could stretch as far as 30 seconds.
+			if you set <a class="term" href="#mtu">MTU</a> on sing-box config with wrong value, it could stretch as far as 30 seconds.
 
 		Flclash/proxy/VPN TUN + Sing-box TUN will break Tailscale. Use ONLY proxy mode, but some apps can work well.
 		
 		The GFW aggressively kills idle TCP connections after 1–2 minutes. Phones connected to your MyPublicWiFi hotspot will stop receiving real-time push notifications (Google FCM, Telegram, WhatsApp) because their background socket dies.
 		
-			Fix: In FlClash / Mihomo, ensure keep-alive-interval is set to 15 or 30 seconds so the proxy regularly sends heartbeat packets to keep mobile connections alive.</pre>
+			Fix: In FlClash / <a class="term" href="#mihomo">Mihomo</a>, ensure keep-alive-interval is set to 15 or 30 seconds so the proxy regularly sends heartbeat packets to keep mobile connections alive.</pre>
 			
 <pre>
 <span class="section-title">Some list of proxy providers</span>
@@ -527,7 +530,7 @@ tntcloud - <a href="https://w05.tntyunb01.cc/#/login" target="_blank" rel="noope
 
 - Look for good ping/MTR result especially during peak hour.
 
-- Prefer KVM. 1 vCPU 1 GB RAM and public ipv4.
+- Prefer <a class="term" href="#kvm">KVM</a>. 1 vCPU 1 GB RAM and public ipv4.
 
 - Only one IP so it's risky and troublesome when got blocked.
 
@@ -634,7 +637,7 @@ Do not rotate the proxies!</pre>
 
 - https://awesun.aweray.com/ cannot work when using western IPs.
 
-- Configure <a class="term" href="#split-tunneling">split tunneling</a> so that local traffic will not get proxified.
+- Configure split tunneling</a> so that local traffic will not go through proxy.
 
 - <a class="term" href="#tun-mode">TUN Mode</a> only works with admin access. It also enables software to use proxy. Try mixed mode then gvisor.
 
@@ -682,7 +685,7 @@ https://yahoo.co.jp --Japan
 <a href="https://github.com/rtwo2/FastNodes" target="_blank" rel="noopener noreferrer">https://github.com/rtwo2/FastNodes</a>
 <a href="https://github.com/proxifly/free-proxy-list" target="_blank" rel="noopener noreferrer">https://github.com/proxifly/free-proxy-list</a>
 
-<b>Converter --beware</b>
+<b><a class="term" href="#subscription-converter">Converter</a> --beware</b>
 <a href="https://sub-converter.neogrid.top" target="_blank" rel="noopener noreferrer">https://sub-converter.neogrid.top</a>
 
 <b>Tutorial installing VLESS Reality</b>
@@ -719,290 +722,247 @@ Same for Sing-box, Mihomo, Karing, etc.
 
 <span class="section-title">CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING</span>
 
-1. THE BIG THREE OPERATORS (CARRIERS)
+<b>1. THE BIG THREE OPERATORS (CARRIERS)</b>
 
-* China Telecom (CT)  : The largest landline/broadband operator. Owns the most
-  massive international gateway capacity but suffers from
-  severe public routing congestion.
+* China Telecom (CT)  : The largest landline/broadband operator. Owns the most massive international gateway capacity but suffers from severe public routing congestion.
 
 * China Unicom (CU)   : Strong infrastructure, particularly in Northern China.
-  Its standard international routes are often slightly
-  cleaner and less congested than CT.
+  Its standard international routes are often slightly cleaner and less congested than CT.
 
-* China Mobile (CM)   : The largest mobile operator. Its international branch
-  (CMI) has rapidly expanded fiber capacity, offering
-  good routing to APAC hubs (e.g., Hong Kong).
+* China Mobile (CM)   : The largest mobile operator. Its international branch (<a class="term" href="#cmi">CMI</a>) has rapidly expanded fiber capacity, offering good routing to <a class="term" href="#apac">APAC</a> hubs (e.g., Hong Kong).
 
 
-2. THE TWO TIER HIGHWAY SYSTEM: NORMAL VS. PREMIUM ROUTES
+<b>2. THE TWO TIER HIGHWAY SYSTEM: NORMAL VS. PREMIUM ROUTES</b>
 
 * NORMAL ROUTES (Public Internet / Civilian Backbones)
 
-- Characteristics : Massive bandwidth capacity, highly affordable, but shared
-  by millions of standard residential users.
+- Characteristics : Massive bandwidth capacity, highly affordable, but shared by millions of standard residential users.
 
-- Peak Performance: Terribly congested during China peak hours (18:00 - 24:00
-  GMT+8). Packet loss can spike to 10%–30%; high jitter.
+- Peak Performance: Terribly congested during China peak hours (18:00 - 24:00 GMT+8). <a class="term" href="#packet-loss">Packet loss</a> can spike to 10%–30%; high <a class="term" href="#jitter">jitter</a>.
 
 - Use Case        : Static files, large downloads, non-time-sensitive data.
 
 
 * PREMIUM ROUTES (Enterprise / VIP Backbones)
 
-- Characteristics : Isolated, dedicated express lanes with strict Quality of
-  Service (QoS) guarantees. Completely distinct ASNs.
+- Characteristics : Isolated, dedicated express lanes with strict Quality of Service (QoS) guarantees. Completely distinct <a class="term" href="#asn">ASNs</a>.
 
-- Peak Performance: Stays ultra-stable 24/7. Latency remains flat and packet
-  loss is near 0%, even during peak evening congestion.
+- Peak Performance: Stays ultra-stable 24/7. Latency remains flat and packet loss is near 0%, even during peak evening congestion.
 
 - Use Case        : Live streaming, gaming, financial apps, corporate VPNs.
 
 
-3. PREMIUM CATEGORIZATION (THE EXPENSIVE HIGH-END ROUTES)
+<b>3. PREMIUM CATEGORIZATION (THE EXPENSIVE HIGH-END ROUTES)</b>
 
 CATEGORY A: CHINA TELECOM (CT) PREMIUM LINES
 
 * CT 163 Network (AS4134)   -> [NORMAL] Standard public route. High congestion.
 
-* CN2 GT (AS4809)           -> [MID-TIER] "Global Transit". Uses CN2 lines for
-  the international hop, but dumps traffic back onto
-  the congested AS4134 network inside China.
+* <a class="term" href="#cn2-gt">CN2 GT</a> (AS4809)           -> [MID-TIER] "Global Transit". Uses CN2 lines for the international hop, but dumps traffic back onto the congested AS4134 network inside China.
 
-* CN2 GIA (AS4809)          -> [ULTRA-PREMIUM] "Global Internet Access". The
-  gold standard. Pure AS4809 path both inside
-  China and overseas. Absolute lowest latency.
+* CN2 GIA (AS4809)          -> [ULTRA-PREMIUM] "Global Internet Access". The gold standard. Pure AS4809 path both inside China and overseas. Absolute lowest latency.
 
 
 CATEGORY B: CHINA UNICOM (CU) PREMIUM LINES
 
-* CU 169 Network (AS4837)   -> [NORMAL] Standard public route. Decent, but
-  congests at peak hours.
+* CU 169 Network (AS4837)   -> [NORMAL] Standard public route. Decent, but congests at peak hours.
 
 * 9929 Network / CNI        -> [ULTRA-PREMIUM] Enterprise-grade backbone.
   (AS9929 / A99)
-  Features very low user load and exceptional
-  stability, rivaling CN2 GIA for performance.
+  Features very low user load and exceptional stability, rivaling CN2 GIA for performance.
 
 * AS10099 (CUG / CUP)       -> [GLOBAL AGGREGATION] China Unicom Global line.
-  Used to collect international traffic and aggregate
-  it at overseas hubs before entering AS9929/AS4837.
+  Used to collect international traffic and aggregate it at overseas hubs before entering AS9929/AS4837.
 
 
 CATEGORY C: CHINA MOBILE (CM) PREMIUM LINES
 
-* CMI Standard (AS58453)    -> [NORMAL] Good speed to nearby Asian hubs via
-  public peering, but subject to unpredictable drops.
+* CMI Standard (AS58453)    -> [NORMAL] Good speed to nearby Asian hubs via public peering, but subject to unpredictable drops.
 
-* CMIN2 Premium (AS58807)   -> [ULTRA-PREMIUM] China Mobile's answer to CN2 GIA.
-  A newly built, highly isolated premium network
-  specifically engineered to bypass public congestion.
+* <a class="term" href="#cmin2">CMIN2</a> Premium (AS58807)   -> [ULTRA-PREMIUM] China Mobile's answer to CN2 GIA.
+  A newly built, highly isolated premium network specifically engineered to bypass public congestion.
 
 
-4. CRITICAL PITFALLS & THE ULTIMATE LEVEL ABOVE BGP
+<b>4. CRITICAL PITFALLS & THE ULTIMATE LEVEL ABOVE BGP</b>
 
-* Asymmetric Routing Trap   : Watch out for "One-Way Premium" providers. They
-  route traffic via expensive premium lines for the
-  outbound return to China, but use cheap, congested
-  standard routes for the inbound path. True premium
-  requires bidirectional "Two-Way" (双程) routing.
+* Asymmetric Routing Trap   : Watch out for "One-Way Premium" providers. They route traffic via expensive premium lines for the outbound return to China, but use cheap, congested standard routes for the inbound path. True premium requires bidirectional "Two-Way" (双程) routing.
 
-* GFW Overhead & DPI Filters: Premium networks bypass physical pipe congestion,
-  NOT censorship. Cross-border traffic still faces
-  Deep Packet Inspection (DPI) at international
-  gateways. If your traffic triggers the Great
-  Firewall, packets will be dropped regardless of line.
+* GFW Overhead & <a class="term" href="#dpi">DPI</a> Filters: Premium networks bypass physical pipe congestion, NOT censorship. Cross-border traffic still faces Deep Packet Inspection (DPI) at international gateways. If your traffic triggers the Great Firewall, packets will be dropped regardless of line.
 
-* BGP vs. IPLC/IEPL Private : If your budget allows and your mission requires 0%
-  packet loss, look above premium BGP. IPLC/IEPL
-  (International Private Leased Circuit) lines are
-  literal physical point-to-point private lines
-  (e.g., HK to Shenzhen) that sit entirely behind
-  the public internet and completely bypass the GFW.
+* BGP vs. IPLC/IEPL Private : If your budget allows and your mission requires 0% packet loss, look above premium BGP. IPLC/IEPL (International Private Leased Circuit) lines are literal physical point-to-point private lines (e.g., HK to Shenzhen) that sit entirely behind the public internet and completely bypass the GFW.
 
-SUMMARY: "Tri-Net Premium BGP" means an infrastructure combines CT (CN2 GIA),
-CU (AS9929), and CM (CMIN2) into a single BGP session, ensuring peak speeds
-regardless of which provider the end-user inside China uses.
+SUMMARY: "Tri-Net Premium BGP" means an infrastructure combines CT (CN2 GIA), CU (AS9929), and CM (CMIN2) into a single BGP session, ensuring peak speeds regardless of which provider the end-user inside China uses.
 
 
 <span class="section-title">THE ULTIMATE PROXY ENGINE & CLIENT GUIDE (2026 ECOSYSTEM)</span>
 
-1. CORE, FILE FORMAT, AND CLIENT APPLICATION MATRIX
---------------------------------------------------------------------------------
+<b>1. CORE, FILE FORMAT, AND CLIENT APPLICATION</b>
 
-File Format  | Core Engine         | Apps Using It         | Core Design & Reason
---------------------------------------------------------------------------------
+File format/extension
+	Engine
+		Example apps
+		
+.yaml
+	
+	&gt; Mihomo (previously called Meta)
+		&gt; Clash Verge
+		&gt; FlClash
+		
 
-.yaml        | Mihomo              | * Clash Verge Rev     | ALL-IN-ONE BLUEPRINT.
+.json
 
-             | (Clash Meta)        | * FlClash             | Houses nodes, speed-test
-             |                     |                       | groups, and script rules in
-             |                     |                       | a single file. Essential for
-             |                     |                       | native load balancing.
+	&gt; Sing-box
+		&gt; Hiddify (accept v2ray .json too)
+		&gt; GUI for SingBox
+		
 
+.txt / simple file / base64 / .json
 
-
---------------------------------------------------------------------------------
-
-.json        | Sing-box            | * Hiddify             | NATIVE EFFICIENCY.
-
-             |                     | * GUI.for.SingBox     | Eliminates bloated text
-             |                     | * sing-box (Official) | layouts. Built for lightning-
-             |                     |                       | fast mobile execution and
-             |                     |                       | ultra-low memory footprints.
-
-
-
---------------------------------------------------------------------------------
-
-.txt / Links | Xray / V2Ray        | * v2rayN              | PHONE BOOK METHOD.
-
-             |                     | * v2rayNG             | A simple list of single-line
-             |                     |                       | share links (vless://, etc.).
-             |                     |                       | Handled raw nodes natively before
-             |                     |                       | unified configurations existed.
+	&gt; <a class="term" href="#v2ray">V2Ray</a> (previously called Xray)
+		&gt; V2RayN
+		&gt; V2RayNG
 
 
+As of 2026-
+
+Basically the apps with *Clash* in the name use Mihomo engine that isn't compatible with V2Ray .json format.
+
+Where apps with Sing-box engine are also compatible with V2Ray because they both use .json format.
 
 
-2. WHAT "AIRPORT" PROVIDERS COMMONLY USE
+<b>2. WHAT "AIRPORT" PROVIDERS COMMONLY USE</b>
 
 * Universal Standard: Overwhelmingly .yaml (Clash/Mihomo syntax).
 
-* The Reason: It allows airports to hardcode automated rule groups (e.g., splitting
-  International Media like Netflix from Local Bypass traffic) directly into your file.
-  This drastically reduces customer support requests.
 
-* Backend Protocols: They mix Shadowsocks (for premium transit lines) with modern
-  stealth protocols like VLESS-Reality, Hysteria2, and TUIC.
-
-* The Workaround: If you use a JSON/Text app (like Hiddify or v2rayN), you must use the
-  airport panel's "Subscription Converter" (订阅转换) to translate that default .yaml
-  file into a base64 text link or a Sing-box JSON link.
+* The Reason: It allows airports to hardcode automated rule groups (e.g., splitting International Media like Netflix from Local Bypass traffic) directly into your file.
+  
+	This drastically reduces customer support requests.
 
 
-3. DUAL-DEPLOYMENT HARMONY: WINDOWS 11 + ANDROID
-
-To maintain an identical visual user interface, layout, and settings menu across
-Windows 11 and Android simultaneously, you choose between two dominant paths:
+* Backend Protocols: They mix Shadowsocks (for premium transit lines) with modern stealth protocols like VLESS-Reality, Hysteria2, and TUIC.
 
 
-PATH A: The Mihomo Engine (Best for Airport .yaml Files & Concurrent Load Balancing)
-
-* Primary Client: FlClash
-
-* Why it is popular: Built on the Flutter framework, meaning the interface on Windows 11
-  is a 1:1 pixel match to your Android app. It reads raw airport .yaml profiles perfectly,
-  shares files easily between PC and phone, and includes an effortless load balancing toggle.
+* The Workaround: If you use a JSON/Text app (like Hiddify or v2rayN), you must use the airport panel's "Subscription Converter" (订阅转换) to translate that default .yaml file into a base64 text link or a Sing-box JSON link.
 
 
-PATH B: The Sing-box Engine (Best for Mobile Battery Optimization & Clean Interface)
+<b>3. DUAL-DEPLOYMENT HARMONY: WINDOWS 11 + ANDROID</b>
 
-* Primary Client: Hiddify
+To maintain an identical visual user interface, layout, and settings menu across Windows 11 and Android simultaneously, you choose between two dominant paths:
 
-* Why it is popular: Offers a highly polished, unified cross-platform application design.
-  The Sing-box engine handles mobile network handoffs (Wi-Fi to Mobile Data) flawlessly
-  with minimal battery drain. It auto-parses online links but completely rejects local raw
-  .yaml files.
+	PATH A: The Mihomo Engine (Best for Airport .yaml Files & Concurrent Load Balancing)
+
+	* Primary Client: FlClash
+	
+	* Why it is popular: Built on the Flutter framework, meaning the interface on Windows 11 is a 1:1 pixel match to your Android app. It reads raw airport .yaml profiles perfectly, shares files easily between PC and phone, and includes an effortless load balancing toggle.
 
 
-SUMMARY RULE OF THUMB:
+	PATH B: The Sing-box Engine (Best for Mobile Battery Optimization & Clean Interface)
 
-* Local .yaml files + Native Concurrent Load Balancing -> FlClash
-* Subscription URLs + Optimal Android Battery Life    -> Hiddify
+	* Primary Client: Hiddify
+
+	* Why it is popular: Offers a highly polished, unified cross-platform application design.
+	
+  		The Sing-box engine handles mobile network handoffs (Wi-Fi to Mobile Data) flawlessly with minimal battery drain. It auto-parses online links but completely rejects local raw .yaml files.
+
+
+	SUMMARY RULE OF THUMB:
+
+	* Local .yaml files + Native Concurrent Load Balancing -> FlClash
+	
+	* Subscription URLs + Optimal Android Battery Life    -> Hiddify
 
 
 <span class="section-title">THE ARTIFICIAL CHOKEPOINT: UNDERSTANDING CHINA-TO-HONG KONG NETWORK ROUTING</span>
 
-If you test a connection from Mainland China to Hong Kong, you will quickly notice
-a geographic paradox: 
+If you test a connection from Mainland China to Hong Kong, you will quickly notice a geographic paradox:
+
 - Pinging the United States (across the Pacific Ocean): ~150ms (Normal/Expected)
 - Pinging certain Hong Kong servers (literally next door): 250ms+ (Absurd)
+
 
 This guide breaks down the hidden mechanics, artificial bottlenecks, and 
 commercial gatekeeping that explain why cross-border networking between China 
 and Hong Kong feels intentionally broken.
 
 
-1. THE CORE PARADOX: THE CALIFORNIA DETOUR
+<b>1. THE CORE PARADOX: THE CALIFORNIA DETOUR</b>
 
-When you ping an unoptimized Hong Kong IP from a city like Jiangsu, your packets 
-do not take a straight path south across the Shenzhen border. Instead, they 
-frequently embark on a massive international detour:
+When you ping an unoptimized Hong Kong IP from a city like Jiangsu, your packets do not take a straight path south across the Shenzhen border.
 
-[Jiangsu] -> [Shanghai/Beijing Gateway] -> (Pacific Ocean) -> [Los Angeles/San Jose] 
-                                                                    |
-[Hong Kong] <- (Pacific Ocean) <- [Los Angeles/San Jose] <----------+
+Instead, they frequently embark on a massive international detour:
 
-This physical journey across the Pacific Ocean and back is exactly why your latency 
-spikes to 250ms. The Chinese carriers are deliberately forcing local traffic 
-into public international transit loops.
+[Jiangsu] -&gt; [Shanghai/Beijing Gateway] -&gt; (Pacific Ocean) -&gt; [Los Angeles/San Jose] -&gt; (Pacific Ocean) -&gt; [Hong Kong]
+
+This physical journey across the Pacific Ocean and back is exactly why your latency spikes to 250ms. The Chinese carriers are deliberately forcing local traffic into public international transit loops.
 
 
-2. THE MONOPOLY & THE "CHINA DIRECT" TAX
+<b>2. THE MONOPOLY & THE "CHINA DIRECT" TAX</b>
 
-The three major state-owned carriers—China Telecom, China Unicom, and China Mobile—
-control all physical fiber lines crossing the Mainland-HK border. They treat 
-cross-border bandwidth as a premium luxury commodity rather than public infrastructure.
+The three major state-owned carriers—China Telecom, China Unicom, and China Mobile control all physical fiber lines crossing the Mainland-HK border.
+
+They treat cross-border bandwidth as a premium luxury commodity rather than public infrastructure.
 
 To manage this, they divide their networks into two distinct tiers:
 
-A. The Public Dump (163 Network / AS4134 & AS4837)
-   - This is the standard, cheap public broadband path used by regular everyday users.
-   - The border pipes for this network are intentionally left congested, unoptimized, 
-     or completely closed to certain HK data centers.
-   - If a Hong Kong website or server (like speedtest.hk) relies on standard public 
-     routing, their China-bound traffic is thrown into the 250ms "California Detour."
 
-B. The Premium Highway (CN2 GIA / CMI / CU Premium)
-   - These are dedicated, high-priority, border-optimized fiber routes.
-   - Latency over these lines is flawless (30ms - 50ms from central China to HK).
-   - *The Catch:* The carriers charge hosting companies and data centers an 
-     exorbitant "China Direct" premium fee—often 10x to 20x the cost of standard 
-     bandwidth—to access these clean lines.
+	A. The Public Dump (163 Network / AS4134 & AS4837)
+
+   	- This is the standard, cheap public broadband path used by regular everyday users.
+   
+   	- The border pipes for this network are intentionally left congested, unoptimized, or completely closed to certain HK data centers.
+   
+   	- If a Hong Kong website or server (like speedtest.hk) relies on standard public routing, their China-bound traffic is thrown into the 250ms "California Detour."
 
 
-3. WHY THE U.S. ROUTES BETTER THAN HONG KONG
+	B. The Premium Highway (CN2 GIA / CMI / CU Premium)
 
-It seems dishonest that a packet can travel to America faster than it can cross 
-the street into Hong Kong. This happens because of how traffic is categorized:
-
-- US Traffic = Bulk Commodity: China has massive, open-peering, high-capacity 
-  undersea cables built directly to the US west coast. Standard public traffic is 
-  allowed to use these freely because the carriers don't monetize standard US 
-  routes the way they monetize the scarcity of Hong Kong access.
-- Hong Kong Traffic = Premium Gatekeeping: Because Hong Kong is the primary 
-  gateway for Chinese businesses looking outwards (and vice versa), the carriers 
-  know they can demand extreme prices for direct border access. They artificially 
-  constrict public routing to force businesses into buying expensive enterprise VIP lines.
+   	- These are dedicated, high-priority, border-optimized fiber routes.
+   
+   	- Latency over these lines is flawless (30ms - 50ms from central China to HK).
+   
+   	- *The Catch:* The carriers charge hosting companies and data centers an exorbitant "China Direct" premium fee—often 10x to 20x the cost of standard bandwidth—to access these clean lines.
 
 
-4. THE GREAT FIREWALL (GFW) BOTTLENECK
+<b>3. WHY THE U.S. ROUTES BETTER THAN HONG KONG</b>
 
-Every single packet traveling between Mainland China and Hong Kong must pass through 
-Deep Packet Inspection (DPI) at one of the massive international gateway hubs 
-(Guangzhou, Shanghai, or Beijing). 
+It seems dishonest that a packet can travel to America faster than it can cross the street into Hong Kong. This happens because of how traffic is categorized:
 
-Because Hong Kong operates on an open, uncensored internet, the inspection 
-bottlenecks at the HK border are significantly harsher and more congested than 
-the bulk pipes leading out to the rest of the world. Standard public traffic sits 
-in a massive digital waiting line at the border, while paid Premium (CN2) traffic 
-gets fast-tracked through dedicated hardware.
+- US Traffic = Bulk Commodity: China has massive, open-peering, high-capacity undersea cables built directly to the US west coast.
+
+	Standard public traffic is allowed to use these freely because the carriers don't monetize standard US routes the way they monetize the scarcity of Hong Kong access.
+
+- Hong Kong Traffic = Premium Gatekeeping: Because Hong Kong is the primary gateway for Chinese businesses looking outwards (and vice versa), the carriers know they can demand extreme prices for direct border access.
+	
+	They artificially constrict public routing to force businesses into buying expensive enterprise VIP lines.
+
+
+<b>4. THE GREAT FIREWALL (GFW) BOTTLENECK</b>
+
+Every single packet traveling between Mainland China and Hong Kong must pass through Deep Packet Inspection (DPI) at one of the massive international gateway hubs ()Guangzhou, Shanghai, or Beijing). 
+
+Because Hong Kong operates on an open, uncensored internet, the inspection bottlenecks at the HK border are significantly harsher and more congested than the bulk pipes leading out to the rest of the world.
+
+Standard public traffic sits in a massive digital waiting line at the border, while paid Premium (CN2) traffic gets fast-tracked through dedicated hardware.
 
 
 SUMMARY FOR NETWORK TESTERS
 
-- Does 250ms represent reality? 
+- Does 250ms represent reality?
   Yes, for small, independent websites or services that cannot afford the "China Tax."
+  
 - Does 250ms represent major apps/games? 
   No. Multi-billion dollar platforms (Tencent, Alibaba, NetEase) buy the premium 
   direct lines so their users experience a smooth 30-50ms connection.
 
-The network performance you see between China and Hong Kong is rarely dictated 
-by physics or geography—it is dictated entirely by commercial toll booths.
 
+The network performance you see between China and Hong Kong is rarely dictated by physics or geography—it is dictated entirely by commercial toll booths.
 
 If the ping is less than 100ms from cheap VPS to HONGKONG, then:
-	The VPS is hosted in a Hong Kong data center that pays extra for CN2 GIA (China Telecom), CU Premium (China Unicom), or CMI (China Mobile) direct-routing bandwidth. Your VPN packets are allowed onto the high-speed border highway that regular public web traffic is blocked from using.
+
+The VPS is hosted in a Hong Kong data center that pays extra for CN2 GIA (China Telecom), CU Premium (China Unicom), or CMI (China Mobile) direct-routing bandwidth.
+
+Your VPN packets are allowed onto the high-speed border highway that regular public web traffic is blocked from using.
 
 
 When buying a VPS, it's better to buy from America.
@@ -1739,8 +1699,7 @@ position where the term was clicked.
 
 The period when network demand is highest.
 
-In this document, peak hour refers mainly to the evening period around
-19:30–22:30, although the exact congestion period can vary.
+In this document, peak hour refers mainly to the evening period around 19:30–22:30, although the exact congestion period can vary.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1751,9 +1710,7 @@ IPLC = International Private Leased Circuit.
 
 IEPL = International Ethernet Private Line.
 
-These are private international circuits rather than ordinary public
-internet transit. They are commonly discussed when stable cross-border
-connectivity is required.
+These are private international circuits rather than ordinary public internet transit. They are commonly discussed when stable cross-border connectivity is required.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1769,9 +1726,7 @@ A commonly used Chinese classification for major first-tier cities.
 
 Virtual Private Network.
 
-A VPN creates an encrypted connection between a device and a VPN
-endpoint. In this document, VPN refers to commercial VPN services
-used for cross-border connectivity.
+A VPN creates an encrypted connection between a device and a VPN endpoint. In this document, VPN refers to commercial VPN services used for cross-border connectivity.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1787,23 +1742,18 @@ Well-known computer firewall system used in China that filters outbound internet
 
 "Ji Chang" literally means "airport" in Chinese.
 
-In the proxy/VPN community, it commonly refers to subscription
-providers that sell access to multiple proxy nodes through a
-subscription system.
+In the proxy/VPN community, it commonly refers to subscription providers that sell access to multiple proxy nodes through a subscription system.
 
-The original document uses "Ji Chang" and "airport provider"
-interchangeably.
+The original document uses "Ji Chang" and "airport provider" interchangeably.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
 <pre id="esim" class="definition">
 <b>E-SIM</b>
 
-An electronic SIM built into the device rather than requiring a
-physical SIM card.
+An electronic SIM built into the device rather than requiring a physical SIM card.
 
-For travel, an eSIM may provide connectivity through a foreign
-mobile operator or roaming arrangement.
+For travel, an eSIM may provide connectivity through a foreign mobile operator or roaming arrangement.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1825,11 +1775,9 @@ consider for cross-border connectivity.
 <pre id="vless-reality-vision" class="definition">
 <b>VLESS REALITY VISION</b>
 
-A VLESS + REALITY configuration using Vision-related transport
-settings in Xray.
+A VLESS + REALITY configuration using Vision-related transport settings in Xray.
 
-The original notes specify requirements and selection considerations
-for the domain and VPS environment.
+The original notes specify requirements and selection considerations for the domain and VPS environment.
 
 Original notes:
 
@@ -1847,8 +1795,7 @@ Original notes:
 
 A modern proxy protocol designed around QUIC/UDP transport.
 
-It is commonly used where high throughput and handling packet loss or
-variable network conditions are important.
+It is commonly used where high throughput and handling packet loss or variable network conditions are important.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1859,11 +1806,9 @@ Shadowsocks is an encrypted proxy protocol.
 
 AEAD means Authenticated Encryption with Associated Data.
 
-AEAD encryption simultaneously provides confidentiality and
-authentication/integrity protection.
+AEAD encryption simultaneously provides confidentiality and authentication/integrity protection.
 
-The original notes mention Shadowsocks with AEAD as being used on
-corporate lines.
+The original notes mention Shadowsocks with AEAD as being used on corporate lines.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1872,11 +1817,9 @@ corporate lines.
 <pre id="openwrt" class="definition">
 <b>OPENWRT</b>
 
-OpenWrt is an open-source Linux-based operating system designed
-primarily for routers and embedded networking devices.
+OpenWrt is an open-source Linux-based operating system designed primarily for routers and embedded networking devices.
 
-The original notes use OpenWrt with Passwall2 or OpenClash for
-sharing/proxying internet connections.
+The original notes use OpenWrt with Passwall2 or OpenClash for sharing/proxying internet connections.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1885,8 +1828,7 @@ sharing/proxying internet connections.
 
 Tailscale is a mesh/VPN networking system built around WireGuard.
 
-It allows devices to communicate through a private virtual network
-without requiring conventional port forwarding in many situations.
+It allows devices to communicate through a private virtual network without requiring conventional port forwarding in many situations.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1897,8 +1839,7 @@ A configuration where only selected traffic uses the proxy or VPN.
 
 Other traffic goes directly through the normal local connection.
 
-The original notes recommend this for keeping local traffic from
-being unnecessarily proxified.
+The original notes recommend this for keeping local traffic from being unnecessarily proxified.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1907,9 +1848,7 @@ being unnecessarily proxified.
 
 A virtual network interface mode used by proxy applications.
 
-Instead of requiring each individual application to understand
-proxy settings, the proxy application can capture and route network
-traffic through the virtual TUN interface.
+Instead of requiring each individual application to understand proxy settings, the proxy application can capture and route network traffic through the virtual TUN interface.
 
 The original notes state:
 
@@ -1922,11 +1861,9 @@ The original notes state:
 <pre id="secure-dns" class="definition">
 <b>SECURE DNS</b>
 
-A DNS configuration that sends DNS queries through an encrypted
-protocol such as DNS-over-HTTPS or DNS-over-TLS.
+A DNS configuration that sends DNS queries through an encrypted protocol such as DNS-over-HTTPS or DNS-over-TLS.
 
-The original notes recommend turning it off when troubleshooting
-proxy applications.
+The original notes recommend turning it off when troubleshooting proxy applications.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1935,9 +1872,7 @@ proxy applications.
 
 A DNS handling technique used by some proxy clients.
 
-Instead of returning the real destination IP directly to the
-operating system, the proxy application can assign a synthetic
-address and internally map it back to the original domain.
+Instead of returning the real destination IP directly to the operating system, the proxy application can assign a synthetic address and internally map it back to the original domain.
 
 The original notes mention using fake-ip to avoid DNS leaks if possible.
 <a class="back" href="#">&larr; Back</a>
@@ -1948,11 +1883,9 @@ The original notes mention using fake-ip to avoid DNS leaks if possible.
 
 My Traceroute.
 
-MTR combines traceroute-style path discovery with continuous
-ping-style measurements.
+MTR combines traceroute-style path discovery with continuous ping-style measurements.
 
-It is useful for identifying packet loss, latency and routing
-problems at different hops.
+It is useful for identifying packet loss, latency and routing problems at different hops.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1961,8 +1894,13 @@ problems at different hops.
 
 Ping is a network utility tool used to test if a device or website is reachable and to measure how long data takes to travel between two points.
 
-It is useful for identifying packet loss, latency and routing
-problems at different hops like MTR.
+It is useful for identifying packet loss, latency and routing problems at different hops like MTR.
+
+It's measured by millisecond (ms).
+
+Under 20ms is fast and 300-500ms is slow.
+
+Connecting via Wi-Fi or 4/5G networks add more latency. (around 50ms more)
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1985,8 +1923,7 @@ A browser extension is a small add-on program that installs into your web browse
 <pre id="allow-lan" class="definition">
 <b>ALLOW LAN</b>
 
-A proxy application setting that allows other devices on the local
-network to connect to the proxy service running on the host.
+A proxy application setting that allows other devices on the local network to connect to the proxy service running on the host.
 
 The original notes mention enabling ALLOW LAN when using sing-box.
 <a class="back" href="#">&larr; Back</a>
@@ -1999,14 +1936,9 @@ The original notes mention enabling ALLOW LAN when using sing-box.
 
 Border Gateway Protocol.
 
-BGP is the routing protocol used between autonomous networks on the
-internet.
+BGP is the routing protocol used between autonomous networks on the internet.
 
-It determines how networks announce and select routes to other
-networks.
-
-The original document discusses BGP in comparison with private
-international circuits such as IPLC/IEPL.
+It determines how networks announce and select routes to other networks.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2015,52 +1947,55 @@ international circuits such as IPLC/IEPL.
 
 Autonomous System Number.
 
-An ASN identifies a network or group of networks participating in
-BGP routing.
-
-Examples in the original notes include AS4134, AS4809, AS4837,
-AS9929, AS10099, AS58453 and AS58807.
+An ASN identifies a network or group of networks participating in BGP routing.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
 <pre id="cn2-gt" class="definition">
 <b>CN2 GT</b>
 
-China Telecom's CN2 Global Transit service.
+CN2 GT is a cheaper, mid-tier hybrid option that still routes traffic through China's heavily congested public nodes (202.97.*.*) during the domestic return path, causing heavy lag in the evenings.
 
-The original notes classify it as a mid-tier route and distinguish
-it from CN2 GIA.
+It sits awkwardly right in the middle between the terrible public internet routing line and the ultra-premium gold standard CN2 GIA route.
+
+In the proxy and hosting community, it is often called a "half-optimized" or "semi-premium" route.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
 <pre id="cn2-gia" class="definition">
 <b>CN2 GIA</b>
 
-China Telecom's CN2 Global Internet Access service.
+CN2 GIA (China Telecom Next Generation Carrier Network - Global Internet Access) is the absolute gold standard of premium network routes into mainland China.
 
-The original notes classify it as a premium route.
+If CMIN2 is the elite highway for China Mobile users, CN2 GIA is the original, ultra-premium highway created by China Telecom.
+
+In the VPS and proxy community, it is considered the most stable, reliable, and expensive routing option available.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
 <pre id="cmi" class="definition">
 <b>CMI</b>
 
-China Mobile International.
+CMI stands for China Mobile International (operating under AS58453).
 
-CMI is the international business/network arm associated with
-China Mobile.
+It is the standard, non-premium international routing line provided by China Mobile.
 
-The original notes distinguish CMI Standard from CMIN2 Premium.
+This is a regular public low priority routing that's slow to a crawl during night peak hour time.
+
+If you buy a regular VPS or a budget proxy subscription that lists "China Mobile optimization," it is almost certainly using standard CMI routing.
+
+CMI is actually good with Hongkong VPS.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
 <pre id="cmin2" class="definition">
 <b>CMIN2</b>
 
-A China Mobile international network referenced in the original
-notes as a premium routing option.
+CMIN2 stands for China Mobile International N2 (or China Mobile International Next-generation Network).
 
-The original notes associate it with AS58807.
+It is a premium, high-speed international backbone network created and operated by China Mobile.
+
+In the web-hosting and proxy provider industry, it represents an elite routing path specifically optimized to bypass peak-hour network congestion between mainland China and overseas servers.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2069,11 +2004,9 @@ The original notes associate it with AS58807.
 
 Deep Packet Inspection.
 
-A network inspection technique that examines traffic characteristics
-and, depending on the implementation, packet contents or metadata.
+A network inspection technique that examines traffic characteristics and, depending on the implementation, packet contents or metadata.
 
-The original carrier section discusses DPI in the context of
-cross-border traffic and censorship filtering.
+This is applied to most of the traffic going out from China.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2082,11 +2015,9 @@ cross-border traffic and censorship filtering.
 
 Quality of Service.
 
-Network mechanisms used to prioritize or manage different classes
-of traffic.
+Network mechanisms used to prioritize or manage different classes of traffic.
 
-The original notes use QoS when describing premium/enterprise
-network characteristics.
+The original notes use QoS when describing premium/enterprise network characteristics.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2095,11 +2026,9 @@ network characteristics.
 
 Great Firewall.
 
-A commonly used term for China's system of internet filtering,
-blocking and traffic interference.
+A commonly used term for China's system of internet filtering, blocking and traffic interference.
 
-The original notes distinguish censorship/filtering from ordinary
-physical network congestion.
+The original notes distinguish censorship/filtering from ordinary physical network congestion.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2130,10 +2059,9 @@ DIRECT is the same as not using a proxy.
 
 Mihomo is a proxy core derived from the Clash ecosystem.
 
-It commonly uses YAML configuration files and supports proxy nodes,
-rules, groups and related routing functionality.
+It commonly uses YAML configuration files and supports proxy nodes, rules, groups and related routing functionality.
 
-The original notes associate it with Clash Verge Rev and FlClash.
+Mihomo is powerful in managing traffic rules compared with other.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2142,22 +2070,19 @@ The original notes associate it with Clash Verge Rev and FlClash.
 
 Sing-box is a modern universal proxy platform/core.
 
-The original notes associate it with JSON configurations and
-applications such as Hiddify and GUI.for.SingBox.
+It's currently the lightest and fastest.
+
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
-<pre id="xray" class="definition">
+<pre id="v2ray" class="definition">
 <b>XRAY / V2RAY</b>
 
-Xray is a proxy platform/core used by clients such as v2rayN and
-v2rayNG.
+Xray is a proxy platform / engine core used by clients such as v2rayN and v2rayNG.
 
-V2Ray is the earlier project from which much of the ecosystem
-developed.
+Xray then upgraded to V2Ray.
 
-The original notes describe TXT/links as the "phone book method"
-for raw proxy share links.
+Xray is the oldest among others.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2166,21 +2091,14 @@ for raw proxy share links.
 
 A subscription supplied by a Ji Chang/airport provider.
 
-It commonly contains multiple proxy nodes and may also contain
-routing rules, groups and automatic selection logic.
-
-The original notes say YAML/Clash/Mihomo format is widely used.
+It commonly contains multiple proxy nodes/servers and may also contain routing rules, groups and automatic selection logic.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
 <pre id="subscription-converter" class="definition">
 <b>SUBSCRIPTION CONVERTER</b>
 
-A tool that converts one proxy subscription/configuration format
-into another.
-
-The original notes describe converting YAML into Base64 text links
-or Sing-box JSON links.
+A tool that converts one proxy subscription/configuration format into another.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2189,10 +2107,27 @@ or Sing-box JSON links.
 
 Kernel-based Virtual Machine.
 
-A virtualization technology commonly used by VPS providers.
+A virtualization technology and gold standard commonly used by VPS providers.
 
-The original notes recommend a KVM VPS with 1 vCPU, 1 GB RAM and
-a public IPv4 address.
+On a KVM VPS, your RAM, CPU, and storage are strictly locked to your server.
+
+Other users on the same physical hardware cannot steal your performance.
+
+If you buy 4GB of RAM, you get 4GB of RAM 100% of the time.
+
+Because KVM simulates an entirely separate physical computer, you can install any OS you want.
+
+You can run custom versions of Ubuntu Linux, Windows Server, or even custom networking software.
+
+KVM grants you "Root" access to the core system files (the Kernel).
+
+This allows you to install advanced firewalls, modify deep network protocols, or run specialized Docker containers that won't work on cheaper, shared VPS hosting.
+
+Popular web-based control panels run on Docker.
+
+KVM fully supports TUN/TAP devices out of the box.
+
+On shared-container hosting, network routing is highly restricted, meaning you cannot easily set up advanced firewalls (iptables) or handle UDP traffic routing properly.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2203,11 +2138,9 @@ a public IPv4 address.
 
 Packets are units of network data.
 
-Packet loss occurs when packets fail to reach their destination or
-return successfully.
+Packet loss occurs when packets fail to reach their destination or return successfully.
 
-Loss can produce slow connections, retransmissions, buffering and
-unstable interactive applications.
+Loss can produce slow connections, retransmissions, buffering and unstable interactive applications.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2216,8 +2149,7 @@ unstable interactive applications.
 
 Variation in packet arrival time.
 
-A connection can have acceptable average latency but still feel
-unstable when latency varies substantially from packet to packet.
+A connection can have acceptable average latency but still feel unstable when latency varies substantially from packet to packet.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2226,8 +2158,7 @@ unstable when latency varies substantially from packet to packet.
 
 Asia-Pacific.
 
-A geographic term commonly used when discussing network
-connectivity between Asian countries and the Pacific region.
+A geographic term commonly used when discussing network connectivity between Asian countries and the Pacific region.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2246,6 +2177,91 @@ Get the target IP via GUI in smartphone or via command prompt by typing: "tailsc
 Rent a VPS and install Rust Desk relay server software.
 
 On Rust Desk, open Settings &gt; Network &gt; ID/Relay server.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="mtu" class="definition">
+<b>MTU</b>
+
+MTU (Maximum Transmission Unit) is the size limit for a single chunk of data (called a packet) that can travel across a network.
+
+Think of it like a height limit for a tunnel or low bridge on a highway.
+
+If a truck is too tall to fit under the bridge, it cannot pass through.
+
+In networking, if a data packet is larger than the MTU limit, it cannot pass through that part of the network all at once.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="lanip" class="definition">
+<b>LAN IP</b>
+
+A LAN IP address (also known as a private or internal IP address) is a unique digital label assigned to a device within a local network, such as your home, school, or office.
+
+Think of it like an office phone extension.
+
+Anyone inside the building can dial your extension directly to reach you, but people outside the company cannot call that extension directly from the public network.
+
+They have to dial the main company number first.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="direct" class="definition">
+</b>DIRECT</b>
+
+"DIRECT" means your device connects straight to the destination server without using a proxy server.
+
+If you visualize your traffic as a road trip, using a proxy is like taking a detour through a checkpoint.
+
+A DIRECT connection means you take the highway straight to your destination.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="lag" class="definition">
+<b>LAG</b>
+
+Lag is a noticeable delay or slow response between an action you take and the result you see on your screen.
+
+It is the digital world’s equivalent of a traffic jam, where data takes too long to travel from point A to point B.
+
+The delay could be caused by physical distance, crowded network, GFW inspection and bad BGP routing.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="http2" class="definition">
+<b>HTTP2</b>
+
+HTTP/2 is a major upgrade to the underlying protocol of the web that makes websites load much faster.
+
+In the context of a proxy, HTTP/2 is highly relevant because it drastically reduces lag by fixing how data is transferred.
+
+Because a proxy acts as a middleman, any efficiency gains in the protocol make a huge difference.
+
+Many modern proxy tools (like V2Ray, Xray, or Trojan protocols) frequently use HTTP/2 transport layers because it allows them to blend in with normal, secure web traffic while keeping data moving smoothly without getting stuck in a queue.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="dnsleak" class="definition">
+<b>DNS LEAK</b>
+
+A DNS leak is a flaw where your internet activity is accidentally exposed to your internet service provider (ISP) or the government, even though you are using a proxy or VPN.
+
+What is DNS?
+
+Think of a DNS (Domain Name System) like the phonebook of the internet.
+
+When you type a website name like google.com into your browser, your device sends a request to a DNS server to translate that name into a computer-readable number (an IP address like 142.250.190.46).
+
+So basically which websites you go to, got leaked, including your real IP address.
+<a class="back" href="#">&larr; Back</a>
+</pre>
+
+<pre id="ics" class="definition">
+<b>ICS</b>
+
+Internet Connection Sharing (ICS) in Windows is a feature that turns your computer into a mini Wi-Fi router.
+
+It lets your PC share its current internet connection with other nearby devices—like your phone, tablet, or a gaming console—using a Wi-Fi signal or a network cable.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
