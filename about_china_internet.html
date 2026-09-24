@@ -641,7 +641,7 @@ Do not rotate the proxies!</pre>
 
 - <a class="term" href="#tun-mode">TUN Mode</a> only works with admin access. It also enables software to use proxy. Try mixed mode then gvisor.
 
-- Always turn off <a class="term" href="#secure-dns">SECURE DNS</a>.
+- Always turn off / disable <a class="term" href="#secure-dns">SECURE / PRIVATE DNS</a>.
 
 - Enable <a class="term" href="#fake-ip">fake-ip</a> to avoid dns leak if possible.
 
@@ -745,7 +745,7 @@ Same for Sing-box, Mihomo, Karing, etc.
 
 * PREMIUM ROUTES (Enterprise / VIP Backbones)
 
-- Characteristics : Isolated, dedicated express lanes with strict Quality of Service (QoS) guarantees. Completely distinct <a class="term" href="#asn">ASNs</a>.
+- Characteristics : Isolated, dedicated express lanes with strict Quality of Service (<a class="term" href="#qos">QoS</a>) guarantees. Completely distinct <a class="term" href="#asn">ASNs</a>.
 
 - Peak Performance: Stays ultra-stable 24/7. Latency remains flat and packet loss is near 0%, even during peak evening congestion.
 
@@ -1743,8 +1743,6 @@ Well-known computer firewall system used in China that filters outbound internet
 "Ji Chang" literally means "airport" in Chinese.
 
 In the proxy/VPN community, it commonly refers to subscription providers that sell access to multiple proxy nodes through a subscription system.
-
-The original document uses "Ji Chang" and "airport provider" interchangeably.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1767,8 +1765,7 @@ VLESS is a lightweight proxy protocol commonly associated with Xray.
 REALITY is an Xray transport/security mechanism designed to make
 the connection resemble legitimate TLS traffic.
 
-The original notes use "VLESS Reality" as one of the protocols to
-consider for cross-border connectivity.
+This protocol hides the traffic by looking like a normal web browsing traffic.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1777,16 +1774,7 @@ consider for cross-border connectivity.
 
 A VLESS + REALITY configuration using Vision-related transport settings in Xray.
 
-The original notes specify requirements and selection considerations for the domain and VPS environment.
-
-Original notes:
-
-    -needs domain that support TLS v1.3 http2 and ALPN compatibility
-    -match the vps provider, if use microsoft azure vps, then use microsoft domain
-    -match data center, if using cheap vps (usually in crowded datacenter), find large tech service or open source mirror or corporate portal that rent space nearing the vps datacenter
-    -use domains that are in close location proximity with the VPS location
-    -NO akamai, cloudflare, fastly
-    -avoid giants domain instead look for local sites that handle heavy traffic but arent wellknown for example:regional university portals, local govt infrastructure, major national bank login page, regional telecom provider homepage
+A more secure and safer protocol.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1807,8 +1795,6 @@ Shadowsocks is an encrypted proxy protocol.
 AEAD means Authenticated Encryption with Associated Data.
 
 AEAD encryption simultaneously provides confidentiality and authentication/integrity protection.
-
-The original notes mention Shadowsocks with AEAD as being used on corporate lines.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1819,7 +1805,7 @@ The original notes mention Shadowsocks with AEAD as being used on corporate line
 
 OpenWrt is an open-source Linux-based operating system designed primarily for routers and embedded networking devices.
 
-The original notes use OpenWrt with Passwall2 or OpenClash for sharing/proxying internet connections.
+It's very customizeable but difficult to find new products with this installed on the market.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1835,11 +1821,11 @@ It allows devices to communicate through a private virtual network without requi
 <pre id="split-tunneling" class="definition">
 <b>SPLIT TUNNELING</b>
 
-A configuration where only selected traffic uses the proxy or VPN.
+An automatic configuration where only selected traffic uses the proxy or VPN.
 
 Other traffic goes directly through the normal local connection.
 
-The original notes recommend this for keeping local traffic from being unnecessarily proxified.
+Example: opening https://www.boc.cn without proxy and opening foreign websites like https://www.youtube.com with proxy at the same time.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1850,20 +1836,23 @@ A virtual network interface mode used by proxy applications.
 
 Instead of requiring each individual application to understand proxy settings, the proxy application can capture and route network traffic through the virtual TUN interface.
 
-The original notes state:
-
-    TUN Mode only works with admin access.
-    It also enables software to use proxy.
-    Try mixed mode then gvisor.
+This will enable all software / tools / apps to use proxy.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
 <pre id="secure-dns" class="definition">
-<b>SECURE DNS</b>
+<b>SECURE / PRIVATE DNS</b>
 
-A DNS configuration that sends DNS queries through an encrypted protocol such as DNS-over-HTTPS or DNS-over-TLS.
+A DNS configuration that sends DNS queries through an encrypted protocol such as DNS-over-HTTPS (DOH) or DNS-over-TLS (DOT).
 
-The original notes recommend turning it off when troubleshooting proxy applications.
+Smartphones natively support DOH where web browsers natively support DOH.
+
+Example DOT: dns.adguard-dns.com
+
+Example DOH: https://dns.adguard.com/dns-query
+
+
+For proxy / VPN use, this should be turned off.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1872,9 +1861,13 @@ The original notes recommend turning it off when troubleshooting proxy applicati
 
 A DNS handling technique used by some proxy clients.
 
-Instead of returning the real destination IP directly to the operating system, the proxy application can assign a synthetic address and internally map it back to the original domain.
+Instead of returning the real destination IP directly to Windows 10/11, the proxy application can assign a synthetic address and internally map it back to the original domain.
 
-The original notes mention using fake-ip to avoid DNS leaks if possible.
+This is to prevent DNS leak by the Windows 10/11.
+
+You get faster response this way.
+
+You will be unable to get the real ping result by pinging a domain. Use IP. Or set ICMP protocol to DIRECT.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -1925,7 +1918,9 @@ A browser extension is a small add-on program that installs into your web browse
 
 A proxy application setting that allows other devices on the local network to connect to the proxy service running on the host.
 
-The original notes mention enabling ALLOW LAN when using sing-box.
+To use: from other device within the same LAN, point the IP of host proxy and the port.
+
+This is useful when using Sing-box at the same time.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2016,8 +2011,6 @@ This is applied to most of the traffic going out from China.
 Quality of Service.
 
 Network mechanisms used to prioritize or manage different classes of traffic.
-
-The original notes use QoS when describing premium/enterprise network characteristics.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
@@ -2027,8 +2020,6 @@ The original notes use QoS when describing premium/enterprise network characteri
 Great Firewall.
 
 A commonly used term for China's system of internet filtering, blocking and traffic interference.
-
-The original notes distinguish censorship/filtering from ordinary physical network congestion.
 <a class="back" href="#">&larr; Back</a>
 </pre>
 
