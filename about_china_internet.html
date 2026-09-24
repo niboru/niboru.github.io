@@ -296,21 +296,21 @@ And proxy IP is shown when using https://ip.me/.
 
 - Use https://github.com/Openwrt-Passwall/openwrt-passwall2 with minimum 512MB RAM or https://github.com/vernesong/openclash with minimum 256MB RAM via OpenWrt device.
 
-- <a class="term" href="#ics">"ICS</a> quirk fix while on sleep mode will not go up after resume
+- <a class="term" href="#ics">ICS</a> quirk fix while on sleep mode will not go up after resume
 	<code>New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\SharedAccess" -Name "EnableRebootPersistConnection" -Value 1 -PropertyType dword -Force</code>
 
 
-<b>Mobile hotspot settings to avoid always going back to sleep</b>
+<b><a href="https://support.microsoft.com/en-us/windows/experience/connectivity-networking/use-your-windows-device-as-a-mobile-hotspot" target="_blank" rel="noopener noreferrer">Mobile Hotspot</a> settings to avoid always going back to sleep</b>
 
-	1. set sleep on AC Power to never
+	1. <a href="https://www.hp.com/us-en/tech-takes/software/how-to/how-to-stop-laptop-from-sleeping-windows-11.html" target="_blank" rel="noopener noreferrer">set sleep on AC Power to never</a>
 	
-	2. set Wireless Power Saving to Maximum Performance
+	2. <a href="https://www.tenforums.com/tutorials/82794-change-power-saving-mode-wireless-adapters-windows-10-a.html" target="_blank" rel="noopener noreferrer">set Wireless Power Saving to Maximum Performance</a>
 	
-	3. set Link State Power Management to Moderate Power Saving: last 30 to 60mins, so better set it off
+	3. <a href="https://www.sevenforums.com/threads/pcie-link-state-power-management-turn-on-or-off-in-windows.292971/" target="_blank" rel="noopener noreferrer">set Link State Power Management to Moderate Power Saving</a>: last 30 to 60mins, so better set it off
 	
-	4. set desktop shortcut to turn off monitor without invoking sleep with: <code>C:\Windows\System32\scrnsave.scr /s</code>
+	4. <a href="https://www.elevenforum.com/t/create-show-desktop-shortcut-in-windows-11.13530/" target="_blank" rel="noopener noreferrer">set desktop shortcut</a> to turn off monitor without invoking sleep with: <code>C:\Windows\System32\scrnsave.scr /s</code>
 	
-	5. set screen monitor to auto off
+	5. <a href="https://www.elevenforum.com/t/change-screen-timeout-to-turn-off-display-after-in-windows-11.851/" target="_blank" rel="noopener noreferrer">set screen monitor</a> to auto off
 	
 	6. use Mypublicwifi for hotspot manager with router mode
 
@@ -337,79 +337,79 @@ And proxy IP is shown when using https://ip.me/.
 	
 		Sing-box
 		
-			so rules can be applied to wifi clients too.
+			- so rules can be applied to wifi clients too.
 			
-			not contain any DNS rules (geoip geosite), everything is controlled by the proxy client.
+			- not contain any DNS rules (geoip geosite), everything is controlled by the proxy client.
 			
-			capture all wifi-clients traffic and redirect it to proxy client in TUN mode.
+			- capture all wifi-clients traffic and redirect it to proxy client in TUN mode.
 			
-			enable global proxy, so the computer's running the sing-box doesn't have to set proxy ip:port manually.
+			- enable global proxy, so the computer's running the sing-box doesn't have to set proxy ip:port manually.
 			
-			add some processes bypass including for Sing-box and proxy clients to <a class="term" href="#direct">DIRECT</a> to avoid loop in catching it's own traffic.
+			- add some processes bypass including for Sing-box and proxy clients to <a class="term" href="#direct">DIRECT</a> to avoid loop in catching it's own traffic.
 			
-			bypass local <a class="term" href="#lanip">LAN IPs</a> and <a class="term" href="#tailscale">Tailscale</a> to DIRECT.
+			- bypass local <a class="term" href="#lanip">LAN IPs</a> and <a class="term" href="#tailscale">Tailscale</a> to DIRECT.
 			
-			no need to set MTU.
+			- no need to set MTU.
 			
-			before closing Sing-box, stop or close Mypublicwifi first.
+			- before closing Sing-box, stop or close Mypublicwifi first.
 			
-			when it's running properly Flclash should have ip 172.19.0.1 as internal IP.
+			- when it's running properly Flclash should have ip 172.19.0.1 as internal IP.
 		
 		
 		proxy client
 		
-			some software needs to disable TUN and use System proxy mode to work.
+			- some software needs to disable TUN and use System proxy mode to work.
 			
-			set allow LAN so Sing-box could work.
+			- set allow LAN so Sing-box could work.
 			
-			enable proxy port so Sing-box could redirect to it.
+			- enable proxy port so Sing-box could redirect to it.
 			
-			add clash subscription link here and rules from the subscription link will also get applied.
+			- add clash subscription link here and rules from the subscription link will also get applied.
 			
 			
 		Mypublicwifi (hotspot)
 		
-			set network connection to sing-box
+			- set network connection to sing-box
 			
-			set as router mode
+			- set as router mode
 			
 			
-		all steps needs to be done correctly, starting from proxy client &gt; start Sing-box &gt; then Mypublicwifi.
+		- all steps needs to be done correctly, starting from proxy client &gt; start Sing-box &gt; then Mypublicwifi.
 		
-		everytime you change rules, restart the proxy client.
+		- everytime you change rules, restart the proxy client.
 		
-		before updating or syncing subscription, disconnect from the current proxy first.
+		- before updating or syncing subscription, disconnect from the current proxy first.
 		
-		Shadowsocks protocol is much more friendly with Youtube since it will load video instantly most of the time.
+		- Shadowsocks protocol is much more friendly with Youtube since it will load video instantly most of the time.
 		
-		you can directly share internet without Sing-box by pointing to Ethernet/Wifi adapter, but no rules will be applied.
+		- you can directly share internet without Sing-box by pointing to Ethernet/Wifi adapter, but no rules will be applied.
 		
 		
 	Some quirks:
 	
-		Flclash with subscription rules can work when ONLY in proxy mode.
+		- Flclash with subscription rules can work when ONLY in proxy mode.
 		
-		Flclash with TUN mode will strip domain names and left with only IP, so domain-based rules do not work.
+		- Flclash with TUN mode will strip domain names and left with only IP, so domain-based rules do not work.
 			
 			https://github.com/clash-verge-rev/clash-verge-rev/issues/740
 			
-		To apply rules, combine with Sing-box.
+		- To apply rules, combine with Sing-box.
 			
-		Flclash tun mode will set 198.18.0.1 as intranet eventhough it's not host IP but Sing-box still can work. 
+		- Flclash tun mode will set 198.18.0.1 as intranet eventhough it's not host IP but Sing-box still can work. 
 
-		close Mypublicwifi this if no Sing-box running, if not your LAN/Wifi adapter will get assigned wrong ip (192.168.5.1), then you have to reset the ip and gateway back by reenabling Ethernet adapter.
+		- close Mypublicwifi this if no Sing-box running, if not your LAN/Wifi adapter will get assigned wrong ip (192.168.5.1), then you have to reset the ip and gateway back by reenabling Ethernet adapter.
 		
 			reset mapping between adapter: <code>Get-NetAdapter | Restart-NetAdapter</code>
 		
-		if you use other VPN like Easyconnect at the same time, bypass it's ip range from Sing-box to set to DIRECT.
+		- if you use other VPN like Easyconnect at the same time, bypass it's ip range from Sing-box to set to DIRECT.
 
-		different proxies can have different effect on Youtube android app playback start time, sometimes it can delay for 10 seconds.
+		- different proxies can have different effect on Youtube android app playback start time, sometimes it can delay for 10 seconds.
 		
 			if you set <a class="term" href="#mtu">MTU</a> on sing-box config with wrong value, it could stretch as far as 30 seconds.
 
-		Flclash/proxy/VPN TUN + Sing-box TUN will break Tailscale. Use ONLY proxy mode, but some apps can work well.
+		- Flclash/proxy/VPN TUN + Sing-box TUN will break Tailscale. Use ONLY proxy mode, but some apps can work well.
 		
-		The GFW aggressively kills idle TCP connections after 1–2 minutes. Phones connected to your MyPublicWiFi hotspot will stop receiving real-time push notifications (Google FCM, Telegram, WhatsApp) because their background socket dies.
+		- The GFW aggressively kills idle TCP connections after 1–2 minutes. Phones connected to your MyPublicWiFi hotspot will stop receiving real-time push notifications (Google FCM, Telegram, WhatsApp) because their background socket dies.
 		
 			Fix: In FlClash / <a class="term" href="#mihomo">Mihomo</a>, ensure keep-alive-interval is set to 15 or 30 seconds so the proxy regularly sends heartbeat packets to keep mobile connections alive.</pre>
 			
@@ -625,9 +625,9 @@ Do not rotate the proxies!</pre>
 - Cannot use proxy app TUN + Tailscale Exit NODE at the same time.
  
 - If expressvpn or any vpn software are being clingy to flclash or any proxy app, then reduce the metric by lowering the priority.
-	Get-NetIPInterface | Format-Table ifIndex,InterfaceAlias,InterfaceMetric,AddressFamily
+	<code>Get-NetIPInterface | Format-Table ifIndex,InterfaceAlias,InterfaceMetric,AddressFamily
 	Set-NetIPInterface -InterfaceAlias "ExpressVPNOpenVPN WinTUN Adapter" -InterfaceMetric 30
-	Set-NetIPInterface -InterfaceAlias ""ExpressVPNOpenVPN WinTUN Adapter" -AddressFamily IPv4 -AutomaticMetric Enabled
+	Set-NetIPInterface -InterfaceAlias ""ExpressVPNOpenVPN WinTUN Adapter" -AddressFamily IPv4 -AutomaticMetric Enabled</code>
 
 - Do not rotate proxy selection when using Remote Desktop software.
 
@@ -660,22 +660,26 @@ Do not rotate the proxies!</pre>
 <a href="https://www.websitepulse.com/tools/china-firewall-test#" target="_blank" rel="noopener noreferrer">https://www.websitepulse.com/tools/china-firewall-test#</a>
 <a href="https://en.greatfire.org/analyzer" target="_blank" rel="noopener noreferrer">https://en.greatfire.org/analyzer</a>
 
+
 <b>TEST IP CLEANLINESS --vital for using AI tools</b>
 <a href="https://ippure.com/" target="_blank" rel="noopener noreferrer">https://ippure.com/</a>
 <a href="https://ipsuper.com/" target="_blank" rel="noopener noreferrer">https://ipsuper.com/</a>
 <a href="https://geoiphub.com/tools/datacenter-ip-check" target="_blank" rel="noopener noreferrer">https://geoiphub.com/tools/datacenter-ip-check</a>
 <a href="https://ipfighter.com/" target="_blank" rel="noopener noreferrer">https://ipfighter.com/</a>
 <a href="https://ipcheck.ing/" target="_blank" rel="noopener noreferrer">https://ipcheck.ing/</a>
-https://ip.cx
+<a href="https://ip.cx" target="_blank" rel="noopener noreferrer">https://ip.cx/</a>
+
 
 <b>TEST IP PING</b>
 https://speedtest.hk --Hongkong
 https://speedtest.sg --Singapore
 https://yahoo.co.jp --Japan
 
+
 <b>Corporate Line Test</b>
 <a href="https://www.varidata.com/looking-glass/hong-kong-cn2/" target="_blank" rel="noopener noreferrer">https://www.varidata.com/looking-glass/hong-kong-cn2/</a>
 <a href="https://www.simcentric.com/looking-glass/" target="_blank" rel="noopener noreferrer">https://www.simcentric.com/looking-glass/</a>
+
 
 <b>Free VPN</b>
 <a href="https://au1rxx.github.io/free-vpn-subscriptions/" target="_blank" rel="noopener noreferrer">https://au1rxx.github.io/free-vpn-subscriptions/</a>
@@ -685,39 +689,48 @@ https://yahoo.co.jp --Japan
 <a href="https://github.com/rtwo2/FastNodes" target="_blank" rel="noopener noreferrer">https://github.com/rtwo2/FastNodes</a>
 <a href="https://github.com/proxifly/free-proxy-list" target="_blank" rel="noopener noreferrer">https://github.com/proxifly/free-proxy-list</a>
 
+
 <b><a class="term" href="#subscription-converter">Converter</a> --beware</b>
 <a href="https://sub-converter.neogrid.top" target="_blank" rel="noopener noreferrer">https://sub-converter.neogrid.top</a>
+
 
 <b>Tutorial installing VLESS Reality</b>
 <a href="https://habr.com/en/articles/990128/" target="_blank" rel="noopener noreferrer">https://habr.com/en/articles/990128/</a>
 <a href="https://habr.com/en/articles/990542/" target="_blank" rel="noopener noreferrer">https://habr.com/en/articles/990542/</a>
 
+
 <b>Alternative tools download</b>
 <a href="https://www.chonglangbiji.com/downloads/" target="_blank" rel="noopener noreferrer">https://www.chonglangbiji.com/downloads/</a>
 
-### DOWNLOAD USING MIRROR
-1. Prefix proxy (simplest & most recommended)
 
-Just put a proxy domain in front of the original GitHub link.
+### Download with mirror when in China
 
-Popular working proxies (try several if one is slow):
+Prefix proxy (simplest & most recommended)
 
-<a href="https://ghproxy.net/" target="_blank" rel="noopener noreferrer">https://ghproxy.net/</a>
-<a href="https://ghproxy.com/" target="_blank" rel="noopener noreferrer">https://ghproxy.com/</a>
-<a href="https://mirror.ghproxy.com/" target="_blank" rel="noopener noreferrer">https://mirror.ghproxy.com/</a>
-<a href="https://ghfast.top/" target="_blank" rel="noopener noreferrer">https://ghfast.top/</a>
-<a href="https://gh.llkk.cc/" target="_blank" rel="noopener noreferrer">https://gh.llkk.cc/</a>
-<a href="https://github.xxlab.tech/" target="_blank" rel="noopener noreferrer">https://github.xxlab.tech/</a> (web interface also available)
+	- Just put a proxy domain in front of the original GitHub link.
 
-How to use:
-Original link example (Hiddify):
+	- Popular working proxies (try several if one is slow):
 
-<a href="https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe" target="_blank" rel="noopener noreferrer">https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe</a>
+	<a href="https://ghproxy.net/" target="_blank" rel="noopener noreferrer">https://ghproxy.net/</a>
+	<a href="https://ghproxy.com/" target="_blank" rel="noopener noreferrer">https://ghproxy.com/</a>
+	<a href="https://mirror.ghproxy.com/" target="_blank" rel="noopener noreferrer">https://mirror.ghproxy.com/</a>
+	<a href="https://ghfast.top/" target="_blank" rel="noopener noreferrer">https://ghfast.top/</a>
+	<a href="https://gh.llkk.cc/" target="_blank" rel="noopener noreferrer">https://gh.llkk.cc/</a>
+	<a href="https://github.xxlab.tech/" target="_blank" rel="noopener noreferrer">https://github.xxlab.tech/</a> (web interface also available)
 
-Accelerated link:
-<a href="https://ghproxy.net/https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe" target="_blank" rel="noopener noreferrer">https://ghproxy.net/https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe</a>
+	
+	How to use:
+	
+		Original link example (Hiddify):
 
-Same for Sing-box, Mihomo, Karing, etc.
+		<a href="https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe" target="_blank" rel="noopener noreferrer">https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe</a>
+
+		Accelerated link:
+		
+		<a href="https://ghproxy.net/https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe" target="_blank" rel="noopener noreferrer">https://ghproxy.net/https://github.com/hiddify/hiddify-app/releases/download/v4.1.1/Hiddify-Windows-Setup-x64.exe</a>
+
+
+	Same for Sing-box, Mihomo, V2ray downloads.
 
 
 <span class="section-title">CHINA CARRIER NETWORKS & CROSS-BORDER ROUTING</span>
@@ -881,9 +894,7 @@ If you test a connection from Mainland China to Hong Kong, you will quickly noti
 - Pinging certain Hong Kong servers (literally next door): 250ms+ (Absurd)
 
 
-This guide breaks down the hidden mechanics, artificial bottlenecks, and 
-commercial gatekeeping that explain why cross-border networking between China 
-and Hong Kong feels intentionally broken.
+This guide breaks down the hidden mechanics, artificial bottlenecks, and commercial gatekeeping that explain why cross-border networking between China and Hong Kong feels intentionally broken.
 
 
 <b>1. THE CORE PARADOX: THE CALIFORNIA DETOUR</b>
@@ -1098,7 +1109,9 @@ The result is almost the same, day to day from August to September 2026.
 <span class="label">CHAPTER 1 - THE BIGGEST MISCONCEPTION</span>
 
 Many people believe:
+
 "My VPS is located in Singapore.
+
 Therefore packets travel directly from Singapore to China."
 
 Unfortunately, this is usually FALSE.
