@@ -132,2665 +132,1455 @@
 
 <main>
 <pre>
+================================================================
 WHY SOME SCREENS FEEL MUCH HARSHER THAN OTHERS
+VERSION 2 — SIMPLE DISPLAY SCIENCE GUIDE
+================================================================
 
-A SIMPLE CAUSAL GUIDE TO PWM, FRC, PIXEL RESPONSE,
-BRIGHTNESS, CONTRAST, SPECTRUM, SURFACE, AND THE “INK-LIKE” LOOK
-
-
-============================================================
-1. THE CENTRAL IDEA
-============================================================
-
-A screen does not simply “show an image.”
-
-A display produces light, controls that light, changes pixel
-values, processes colors, moves pixels through different states,
-and sends the resulting optical signal through the screen surface
-into your eyes.
-
-That means two displays can show exactly the same webpage,
-photograph, or text while producing a noticeably different
-visual experience.
-
-One screen may appear:
-
-    solid
-    clean
-    stable
-    natural
-    calm
-    ink-like
-
-Another may appear:
-
-    glowing
-    overly bright
-    grainy
-    sparkly
-    hazy
-    washed out
-    unstable
-    electrically intense
-
-There is no single specification that explains this.
-
-Not:
-
-    IPS
-    VA
-    TN
-    OLED
-    8-bit
-    8-bit + FRC
-    “flicker-free”
-    “low blue light”
-    1 ms
-    5 ms
-    high refresh rate
-    high contrast
-
-The useful question is:
-
-    WHAT IS THIS PARTICULAR DISPLAY ACTUALLY DOING?
-
-The goal is to separate the different physical mechanisms
-instead of blaming one technology label for everything.
-
-
-============================================================
-2. THE COMPLETE CAUSAL MODEL
-============================================================
-
-A useful simplified chain is:
-
-    DISPLAY HARDWARE
-          ↓
-    LIGHT SOURCE / OLED EMISSION
-          ↓
-    SPECTRAL DISTRIBUTION
-          ↓
-    LUMINANCE / BRIGHTNESS
-          ↓
-    BRIGHTNESS CONTROL
-          ↓
-    PWM OR DC DIMMING
-          ↓
-    COLOR PROCESSING
-          ↓
-    DITHERING / FRC
-          ↓
-    PIXEL RESPONSE
-          ↓
-    PIXEL / SUBPIXEL STRUCTURE
-          ↓
-    GAMMA / TONAL DISTRIBUTION
-          ↓
-    BLACK LEVEL + WHITE LEVEL + CONTRAST
-          ↓
-    SCREEN SURFACE
-          ↓
-    REFLECTION + SCATTERING + AG SPARKLE
-          ↓
-    FINAL OPTICAL IMAGE
-          ↓
-    LIGHT ENTERING THE EYE
-          ↓
-    RETINAL SIGNAL
-          ↓
-    VISUAL PROCESSING
-          ↓
-    FOCUS / TRACKING / BLINKING / ATTENTION
-          ↓
-    VISUAL WORKLOAD
-          ↓
-    PERCEIVED IMAGE CHARACTER
-          ↓
-    POSSIBLE DISCOMFORT
+PURPOSE
 
+A screen can cause visual discomfort for reasons that have nothing to do with obvious flicker.
 
-This chain contains several different problems.
+The important variables are PWM, temporal dithering, pixel response, brightness, contrast, spectrum, surface coating, spatial sharpness, motion, viewing distance, and room lighting.
 
-They should not be treated as one thing.
+These variables can interact, but they should be investigated separately.
 
+The goal is not to prove that modern displays are bad, but to understand why two technically functional displays can feel very different.
 
-============================================================
-3. FOUR MAJOR DIMENSIONS OF DISPLAY BEHAVIOR
-============================================================
 
-The easiest way to understand the whole subject is to divide it
-into four broad dimensions.
+================================================================
+1. THE BIG ILLUSION: A SCREEN IS NOT A STATIC PRINTED PAGE
+================================================================
 
-A. TEMPORAL BEHAVIOR
+A printed page normally reflects light from the room toward your eyes.
 
-    What changes over time?
+A display produces light itself and sends that light directly toward your eyes.
 
-    PWM
-    FRC
-    temporal dithering
-    pixel transitions
-    motion behavior
+A screen can therefore look completely still while its light output or pixel values are changing over time.
 
+The visual system receives the FINAL LIGHT OUTPUT, not the manufacturer's specification sheet.
 
-B. SPATIAL BEHAVIOR
+This is why display comfort is ultimately a question of what reaches the eye.
 
-    What changes across the physical image?
 
-    pixel structure
-    subpixels
-    gamma
-    edges
-    contrast
-    surface texture
-    AG sparkle
-    scattering
+================================================================
+2. THE MAIN DISPLAY VARIABLES
+================================================================
 
+PWM changes brightness by changing light output over time.
 
-C. OPTICAL INTENSITY
+FRC, or temporal dithering, changes pixel values over time to create additional apparent shades.
 
-    How strong is the optical stimulus?
+Pixel response determines how quickly a physical pixel can follow a requested change.
 
-    brightness
-    white luminance
-    contrast
-    spectral distribution
+Brightness determines how much light enters the eye.
 
+Contrast determines how strongly neighboring light and dark regions differ.
 
-D. FINAL PERCEPTION
+Color spectrum determines which wavelengths of light are being emitted.
 
-    What does all of this look like together?
+Surface coating changes how ambient light interacts with the screen surface.
 
-    solid
-    clean
-    stable
-    natural
-    ink-like
+Spatial sharpness determines how abruptly brightness changes at text and object edges.
 
-    OR:
+Motion determines how much visual tracking is required when information moves.
 
-    glowing
-    grainy
-    sparkly
-    hazy
-    unstable
-    harsh
-    electronic
+Viewing distance and room lighting change the optical conditions under which all of these mechanisms are experienced.
 
 
-This separation is important because a display can be good in one
-dimension and problematic in another.
+================================================================
+3. PWM: THE FIRST TEMPORAL MECHANISM
+================================================================
 
+PWM means Pulse-Width Modulation.
 
-============================================================
-4. THE SCREEN IS AN EMISSIVE OBJECT
-============================================================
+A PWM display can control brightness by rapidly switching its light source between ON and OFF states.
 
-Printed paper is mainly reflective.
+A simplified PWM sequence might look like:
 
-You normally have:
+    ON → ON → OFF → ON → ON → OFF
 
-    room light
-         ↓
-    paper
-         ↓
-    reflected light
-         ↓
-    eye
+The eye can perceive this as a steady intermediate brightness when the switching is sufficiently rapid.
 
-A monitor produces its own light:
+Lowering brightness on a PWM display can therefore mean increasing the proportion of time that the light is OFF rather than continuously producing weaker light.
 
-    electrical signal
-         ↓
-    display
-         ↓
-    emitted light
-         ↓
-    eye
+PWM frequency, modulation depth, waveform, brightness level, and individual sensitivity all influence how noticeable the modulation is.
 
-Therefore a white webpage on a monitor is not physically
-equivalent to a white sheet of paper.
+A person does not necessarily have to consciously see flicker for a display to feel uncomfortable.
 
-The monitor is producing light.
+Invisible flicker is therefore a possible source of visual discomfort, not proof that every invisible flicker is harmful.
 
-This is one reason brightness matters so much.
 
-A display can technically reproduce white correctly and still
-look very different from another display because its luminance,
-spectrum, surface, and tonal behavior are different.
+================================================================
+4. FRC: THE SECOND TEMPORAL MECHANISM
+================================================================
 
+FRC means Frame Rate Control.
 
-============================================================
-5. PWM: BRIGHTNESS CAN CHANGE OVER TIME
-============================================================
+FRC can create an intermediate shade by rapidly alternating between nearby shades that the physical panel cannot directly reproduce.
 
-PWM means:
+A simplified example is:
 
-    Pulse Width Modulation.
+    DARK GRAY → LIGHT GRAY → DARK GRAY → LIGHT GRAY
 
-A display using PWM can control brightness by rapidly changing
-the light source between ON and OFF states.
+The visual system can integrate these rapidly changing values and perceive an intermediate gray.
 
-Conceptually:
+FRC is mainly a COLOR-DEPTH TECHNIQUE, whereas PWM is mainly a BRIGHTNESS-CONTROL TECHNIQUE.
 
-    ON  ON  ON  OFF  OFF
-    ON  ON  ON  OFF  OFF
-    ON  ON  ON  OFF  OFF
+A display can therefore have PWM without FRC, FRC without significant PWM, both, or neither.
 
-The average light output can appear to be one steady brightness
-to the eye.
 
-But physically the light output is changing over time.
+================================================================
+5. WHY DISPLAYS USE FRC
+================================================================
 
-This is different from continuously reducing the output.
+Producing more native brightness and color levels can increase panel and electronics cost.
 
+A lower-bit panel can use temporal or spatial techniques to produce more apparent shades.
 
-============================================================
-6. DC DIMMING
-============================================================
+A 6-bit panel has 64 physical levels per color channel.
 
-DC dimming reduces the light output more continuously.
+An 8-bit channel has 256 physical levels per color channel.
 
-Conceptually:
+Native 8-bit RGB provides approximately 16.7 million possible RGB combinations.
 
-    HIGH OUTPUT
+An 8-bit + 2-bit FRC system can produce an apparent color range beyond what its physical 8-bit states alone provide.
+
+A specification such as “10-bit” therefore does not automatically mean every physical pixel has native 10-bit control.
+
+
+================================================================
+6. PWM AND FRC MUST NOT BE CONFUSED
+================================================================
+
+PWM primarily asks:
+
+    HOW MUCH LIGHT SHOULD THE DISPLAY PRODUCE?
+
+FRC primarily asks:
+
+    WHICH INTERMEDIATE COLOR OR BRIGHTNESS LEVEL SHOULD THE PIXEL APPEAR TO PRODUCE?
+
+PWM operates mainly at the light-output level.
+
+FRC operates mainly at the pixel-value or color-level.
+
+Both can produce temporal changes, but they are different mechanisms.
+
+
+================================================================
+7. PIXEL RESPONSE TIME CHANGES THE RESULT
+================================================================
+
+Pixel response time describes how quickly a pixel changes from one state to another.
+
+Older LCD panels commonly had slower transitions than modern fast LCDs and OLED displays.
+
+A slow pixel cannot follow a rapidly changing signal perfectly.
+
+A slow transition spreads the change across more time and can therefore make temporal changes appear less sharp.
+
+A fast pixel follows the requested change more quickly and can preserve more of the temporal structure.
+
+This means pixel speed can CHANGE HOW TEMPORAL MODULATION APPEARS.
+
+Slow response does NOT mean that FRC disappears.
+
+Fast response does NOT mean that FRC automatically becomes harmful.
+
+
+================================================================
+8. THE OLD LCD "PHYSICAL BLUR" IDEA
+================================================================
+
+Older LCDs often had response times around tens of milliseconds.
+
+Their slow liquid-crystal movement produced visible motion blur and ghosting.
+
+That physical response can also reduce the sharpness of some rapidly changing pixel-level signals.
+
+This can make a temporal artifact appear more spread out rather than sharply defined.
+
+It is more accurate to call this TEMPORAL SMOOTHING than to claim that old LCDs simply eliminated FRC.
+
+The same slow response that may soften temporal changes also creates motion blur.
+
+
+================================================================
+9. WHY EXTREMELY SLOW DISPLAYS ARE NOT THE ANSWER
+================================================================
+
+Very slow pixels can leave trails behind moving objects.
+
+Scrolling text can become blurred and smeared.
+
+The visual system then has to track less clearly defined moving shapes.
+
+This can create a different type of visual workload.
+
+The practical goal is therefore NOT:
+
+    MAKE THE PIXELS AS SLOW AS POSSIBLE.
+
+The practical goal is:
+
+    ENOUGH RESPONSE SPEED FOR CLEAR MOTION WITHOUT INTRODUCING AN UNCOMFORTABLE TEMPORAL CHARACTER.
+
+
+================================================================
+10. THE DISPLAY PIPELINE
+================================================================
+
+A modern display can be represented as:
+
+    APPLICATION
         ↓
-    MEDIUM OUTPUT
+    OPERATING SYSTEM / COMPOSITOR
         ↓
-    LOW OUTPUT
+    GPU / DISPLAY ENGINE
+        ↓
+    DISPLAY INTERFACE
+        ↓
+    DISPLAY CONTROLLER / TCON / DDIC
+        ↓
+    PIXELS
+        ↓
+    LIGHT
+        ↓
+    EYES
+        ↓
+    VISUAL SYSTEM
 
-rather than:
+Color processing or dithering can occur at different stages depending on the particular device.
 
-    FULL
-    OFF
-    FULL
-    OFF
-    FULL
-    OFF
+Operating systems do not automatically dither every frame.
 
-This is why PWM and DC dimming are different mechanisms.
+GPU drivers do not automatically dither every frame.
 
-However:
+Display driver ICs do not automatically use FRC for every displayed color.
 
-    DC DIMMING ≠ AUTOMATICALLY PERFECT
-
-A display using DC dimming can still have:
-
-    FRC
-    temporal dithering
-    surface sparkle
-    excessive brightness
-    strong contrast
-    poor tonal behavior
-    unsuitable spectral characteristics
-
-Therefore brightness modulation is only one part of the problem.
+The correct model is that DITHERING CAN OCCUR AT MULTIPLE STAGES, not that everything is always dithering.
 
 
-============================================================
-7. “FLICKER-FREE” HAS A LIMITED MEANING
-============================================================
+================================================================
+11. THE SMARTPHONE DITHERING HISTORY
+================================================================
 
-“Flicker-free” generally refers to reducing or avoiding detectable
-or problematic brightness modulation, usually associated with PWM.
+Early mobile LCDs sometimes used lower-bit panels because native high-bit display hardware was expensive and power-hungry.
 
-It does NOT automatically mean:
+Display-driver electronics could use spatial or temporal techniques to produce more apparent colors.
 
-    no FRC
-    no temporal dithering
-    no pixel instability
-    no surface sparkle
-    no haze
-    no excessive brightness
-    no harsh contrast
-    no spectral issues
-    no visual workload
+Modern smartphone display pipelines became increasingly sophisticated as operating systems added transparency, gradients, shadows, HDR, and wide-gamut color.
+
+OLED introduced another challenge because extremely dark brightness levels are difficult to control perfectly.
+
+Display electronics can use temporal techniques to make low-level shades appear smoother.
+
+Modern HDR pipelines can also require additional processing when the requested color depth exceeds the panel's native physical capability.
+
+The exact location and behavior of dithering depend on the specific phone, panel, driver, operating system, and content.
+
+
+================================================================
+12. WHY TWO FRC DISPLAYS CAN LOOK COMPLETELY DIFFERENT
+================================================================
+
+Two phones can both use FRC and still produce different visual experiences.
+
+Their temporal frequency can differ.
+
+Their modulation depth can differ.
+
+Their subpixel arrangement can differ.
+
+Their panel response can differ.
+
+Their brightness-control method can differ.
+
+Their color-processing pipeline can differ.
+
+Their low-gray processing can differ.
 
 Therefore:
 
-    FLICKER-FREE
-    ≠
-    VISUALLY PERFECT
+    BOTH USE FRC
+
+does NOT mean:
+
+    BOTH HAVE THE SAME TEMPORAL BEHAVIOR.
 
 
-============================================================
-8. PWM AND FRC ARE NOT THE SAME
-============================================================
+================================================================
+13. GRADIENT SMOOTHNESS IS NOT TEMPORAL STABILITY
+================================================================
 
-This distinction is fundamental.
+A smooth gradient does not prove that a display is temporally stable.
 
-PWM primarily concerns:
+A display can make a gradient smoother by using dithering.
 
-    LIGHT OUTPUT CHANGING OVER TIME.
+A display can show slight banding while using less temporal interpolation.
 
-FRC primarily concerns:
+Therefore gradient appearance answers:
 
-    PIXEL VALUES CHANGING OVER TIME
-    TO SIMULATE INTERMEDIATE COLORS.
+    HOW SMOOTH DOES THE GRADIENT LOOK?
 
-They can occur independently.
+Temporal testing asks:
 
-A display can be:
+    DOES AN APPARENTLY FIXED COLOR ACTUALLY STAY PHYSICALLY STABLE?
 
-    PWM-free + FRC-active
-
-or:
-
-    PWM-active + FRC-free
-
-or:
-
-    both
-
-or:
-
-    neither in a noticeable form.
+For FRC testing, temporal behavior is the more important question.
 
 
-============================================================
-9. FRC: SIMULATING COLOR LEVELS
-============================================================
+================================================================
+14. WHAT TEMPORAL DITHERING LOOKS LIKE IN PRINCIPLE
+================================================================
 
-FRC means:
+A temporally stable pixel might behave like:
 
-    Frame Rate Control.
+    GRAY
+    GRAY
+    GRAY
+    GRAY
 
-Suppose a panel cannot directly produce the exact shade that
-the image requests.
+A temporally dithered pixel might behave like:
 
-It may alternate between nearby shades:
+    DARKER
+    LIGHTER
+    DARKER
+    LIGHTER
 
-    A
-    B
-    A
-    B
-    A
-    B
+The viewer may perceive both as approximately the same gray.
 
-The visual system integrates the rapid sequence and can perceive
-an intermediate result.
+The important difference is that one physical output remains stable while the other changes over time.
 
-This is a form of temporal dithering.
+Possible visible clues include shimmer, crawling grain, unstable texture, or subtle movement in apparently fixed dark colors.
 
-The important point is:
-
-    THE IMAGE CAN LOOK STATIC WHILE THE PIXEL VALUES
-    ARE CHANGING OVER TIME.
+These clues are useful for testing but are not by themselves proof of a specific hardware implementation.
 
 
-============================================================
-10. WHY FRC CAN BE DIFFICULT TO SEE
-============================================================
+================================================================
+15. THE THIRD MAJOR VARIABLE: BRIGHTNESS
+================================================================
 
-FRC does not necessarily look like obvious flashing.
+A temporally stable display can still be uncomfortable if it is excessively bright.
 
-Depending on the implementation, it may appear as:
+Brightness increases the amount of light entering the eye.
 
-    subtle shimmer
-    crawling texture
-    fine grain
-    unstable dark tones
-    tiny moving noise
-    faint vibrating texture
+A bright screen can feel particularly harsh when the surrounding room is dark.
 
-Some people may not consciously notice it.
+The same display can therefore feel different after the room lighting changes.
 
-The effect can also depend on:
-
-    color
-    brightness
-    refresh rate
-    pixel response
-    viewing distance
-    image content
-    individual sensitivity
-
-Therefore a casual glance is not enough to establish temporal
-behavior.
+Brightness should be tested independently from PWM and FRC.
 
 
-============================================================
-11. GRADIENT SMOOTHNESS AND TEMPORAL STABILITY ARE DIFFERENT
-============================================================
+================================================================
+16. CONTRAST IS A DIFFERENT VARIABLE AGAIN
+================================================================
 
-This is one of the most important testing distinctions.
+Contrast describes the difference between light and dark areas.
 
-A smooth gradient means:
+White text on a black background produces a very strong local luminance transition.
 
-    the visible transition between colors is smooth.
+Strong transitions make edges extremely easy to detect.
 
-Temporal stability means:
+High contrast is useful for readability but can feel visually harsh to some people.
 
-    an apparently fixed color remains physically or perceptually
-    stable rather than alternating over time.
+High contrast therefore does not automatically mean better comfort.
 
-These are not the same.
+
+================================================================
+17. DARK MODE IS NOT AUTOMATICALLY EASIER
+================================================================
+
+Dark mode can reduce overall screen brightness in some situations.
+
+Dark mode can also create extremely strong local contrast when bright white text is placed on pure black.
+
+Some OLED displays additionally use specialized low-level processing around near-black shades.
+
+That processing can include temporal modulation depending on the particular panel and driver.
+
+A person sensitive to temporal artifacts may therefore notice grain, shimmer, or crawling texture in dark areas.
+
+Dark mode should therefore be evaluated by the actual display behavior rather than assumed to be universally easier.
+
+
+================================================================
+18. OLED: A SPECIAL CASE
+================================================================
+
+OLED pixels generate their own light.
+
+OLED can therefore produce extremely deep blacks by reducing or eliminating light from individual pixels.
+
+OLED pixels can also change state extremely quickly.
+
+Very low OLED brightness levels are technically difficult because the relationship between electrical drive and visible light is not perfectly simple near black.
+
+Display electronics may use additional processing or temporal techniques to make these low-level shades appear smoother.
+
+This is one reason that OLED behavior at low brightness can differ substantially between models.
+
+
+================================================================
+19. W-LED: THE MODERN LCD BACKLIGHT
+================================================================
+
+W-LED means WHITE LED.
+
+Many modern LCD monitors and laptops use white LEDs as their backlight source.
+
+A common W-LED design starts with a blue LED and uses a phosphor layer to convert part of that blue emission into broader longer-wavelength light.
+
+This produces a combined spectrum that the eye interprets as white.
+
+The resulting spectrum is NOT identical to the spectrum of an older CCFL backlight.
+
+Different W-LED implementations can also have different spectral shapes.
+
+
+================================================================
+20. W-LED VS CCFL
+================================================================
+
+Older CCFL LCDs commonly used fluorescent lamps with phosphor mixtures that produced broader spectral output.
+
+Many modern W-LED systems have a more pronounced blue emission peak.
+
+A commonly used blue-pump W-LED design has a strong emission region around the blue wavelengths.
+
+The exact spectrum varies by LED and phosphor design, so a specific monitor should be measured rather than judged solely from the term W-LED.
+
+W-LED itself does NOT mean that a display is harmful.
+
+It means the backlight uses white LED technology.
+
+
+================================================================
+21. BLUE LIGHT AND CHROMATIC ABERRATION
+================================================================
+
+Blue light has shorter wavelengths than green or red light.
+
+Shorter wavelengths interact differently with the optical system of the eye.
+
+The eye exhibits LONGITUDINAL CHROMATIC ABERRATION, meaning different wavelengths are not focused at exactly the same distance.
+
+This means blue and red portions of an image can have slightly different focal positions.
+
+The effect is part of normal human optics.
+
+It becomes more relevant when a display contains strong short-wavelength emission together with high brightness and fine high-contrast detail.
+
+It is NOT established that ordinary W-LED viewing automatically forces the ciliary muscle into harmful continuous contraction.
+
+A more defensible conclusion is that spectral composition can influence visual quality and comfort, particularly when brightness and contrast are also high.
+
+
+================================================================
+22. BLUE LIGHT IS NOT THE SAME AS SCREEN FLICKER
+================================================================
+
+Blue-light exposure and temporal flicker are separate physical properties.
 
 A display can have:
 
-    beautiful smooth gradients
-    + temporal dithering
-
-Another can have:
-
-    slight banding
-    + very stable pixel output
-
-Therefore:
-
-    SMOOTHNESS ≠ STABILITY
-
-and:
-
-    BANDING ≠ AUTOMATICALLY BAD.
-
-
-============================================================
-12. NATIVE 8-BIT VS 8-BIT + FRC
-============================================================
-
-8-bit per channel provides:
-
-    256 levels per color channel.
-
-An 8-bit + FRC implementation can use temporal alternation to
-simulate additional levels.
-
-This means:
-
-    native color depth
-
-and:
-
-    temporal behavior
-
-are related but not identical questions.
-
-A panel described as “8-bit” does not automatically prove that
-every stage of the display pipeline is temporally static.
-
-Likewise, “8-bit + FRC” does not automatically tell you how
-noticeable its temporal behavior will be.
-
-
-============================================================
-13. DITHERING CAN HAPPEN AT DIFFERENT STAGES
-============================================================
-
-Dithering may potentially be introduced at different points
-in the signal path:
-
-    application
-        ↓
-    operating system / compositor
-        ↓
-    GPU
-        ↓
-    display interface
-        ↓
-    monitor electronics / TCON
-        ↓
-    panel
-
-But this does NOT mean every modern device necessarily dithers
-at every stage.
-
-The actual implementation depends on the hardware and software.
-
-Therefore statements such as:
-
-    “the OS always dithers”
+    LOW BLUE OUTPUT + PWM
 
 or:
 
-    “the GPU always dithers”
+    HIGH BLUE OUTPUT + DC DIMMING
 
 or:
 
-    “the monitor always performs FRC”
+    LOW BLUE OUTPUT + LOW TEMPORAL MODULATION
 
-are too broad without evidence.
+Therefore reducing blue light does not automatically solve a PWM problem.
 
+Removing PWM does not automatically solve a spectral problem.
 
-============================================================
-14. GPU REGISTRY / DITHER SETTINGS
-============================================================
 
-Some GPU drivers or configurations expose values associated with
-dithering.
+================================================================
+23. HARDWARE LOW-BLUE-LIGHT MODES
+================================================================
 
-These can be useful as:
+Some displays use LEDs or optical filters designed to reduce short-wavelength output.
 
-    diagnostic clues
-    experimental variables
+Other displays reduce blue content through software color adjustment.
 
-For example, changing a driver-level dithering setting and
-observing whether a controlled test image changes can provide
-useful evidence.
+Hardware approaches can alter the emitted spectrum itself.
 
-But such a registry value is NOT automatically proof that:
+Software night modes mainly change the displayed RGB values.
 
-    FRC is occurring on the monitor.
+A certification can provide useful information about the tested spectral output, but the exact certification criteria should be checked rather than treating every "low blue light" label as equivalent.
 
-It is important to distinguish:
 
-    “this setting changes something”
+================================================================
+24. COLOR TEMPERATURE
+================================================================
 
-from:
+A cooler display generally contains relatively more blue-looking light.
 
-    “this proves the exact physical mechanism.”
+A warmer display shifts the visual balance toward yellow and red.
 
+A setting around 5000–6500 K can produce a warmer appearance than a very cool factory setting.
 
-============================================================
-15. PIXEL RESPONSE TIME
-============================================================
+Color temperature is a visual description of spectral balance, not a direct measurement of total blue-light hazard.
 
-Pixel response time describes how quickly a pixel changes from
-one state to another.
+A warm software tint also does not prove that the physical backlight has changed its emission spectrum.
 
-A slow transition can produce:
 
-    ghosting
-    trailing
-    motion blur
-    dark smearing
+================================================================
+25. THE FOURTH VARIABLE: SURFACE COATING
+================================================================
 
-A faster transition can produce:
+The screen surface affects how light is scattered before reaching your eyes.
 
-    cleaner motion
-    less trailing
-    sharper transitions
+A glossy surface reflects more distinct images of surrounding light sources.
 
-But:
+A matte anti-glare surface spreads reflected light over a wider area.
 
-    FAST ≠ AUTOMATICALLY MORE COMFORTABLE
+Anti-glare treatment can therefore reduce obvious reflections.
 
-and:
+But strong surface diffusion can introduce another visual effect commonly called AG SPARKLE.
 
-    SLOW ≠ AUTOMATICALLY MORE COMFORTABLE
 
-Pixel response and FRC are separate mechanisms.
+================================================================
+26. AG SPARKLE
+================================================================
 
+AG means ANTI-GLARE.
 
-============================================================
-16. SLOW PIXELS DO NOT AUTOMATICALLY REMOVE FRC
-============================================================
+A strongly textured matte coating contains microscopic variations in its surface.
 
-It is tempting to think:
+Light passing through or reflecting from these microscopic structures can be scattered unevenly.
 
-    “If the pixel is slow, it will average out FRC.”
+The result can be a fine grain or sparkle over the image.
 
-That is not a safe universal assumption.
+This can be especially noticeable on white backgrounds and fine text.
 
-Pixel response determines how the physical pixel transitions.
+The effect can make a smooth digital image look more like a textured physical surface.
 
-FRC determines how requested values may alternate.
 
-The two mechanisms interact, but one does not automatically
-cancel the other.
+================================================================
+27. THE "PAPER" OR "PAINT" EFFECT
+================================================================
 
-A slow panel may make temporal changes appear differently.
+A strong matte coating can make a display appear less optically clean.
 
-It does not automatically make the display temporally static.
+Instead of seeing:
 
-
-============================================================
-17. VERY SLOW RESPONSE AND MOTION
-============================================================
-
-Consider black text moving over a white background.
-
-A slow panel may produce:
-
-    black
-       ↓
-    gray transition
-       ↓
-    white
-
-The result can be a visible trail.
-
-A faster panel can produce a more distinct transition:
-
-    black
-       ↓
-    white
-
-For normal display quality, the target is not simply:
-
-    “slow”
-
-or:
-
-    “fast.”
-
-The target is:
-
-    CLEAN AND CONTROLLED TRANSITIONS.
-
-
-============================================================
-18. BRIGHTNESS
-============================================================
-
-Brightness determines how much light the display sends toward
-your eyes.
-
-A very bright white background can produce a strong optical
-stimulus.
-
-For example:
-
-    moderate white
-    → controlled
-
-versus:
-
-    extremely bright white
-    → much stronger illumination
-
-This can affect the visual character of the entire screen.
-
-Excessive brightness can make a display appear:
-
-    glowing
-    shiny
-    aggressive
-    electronic
-
-Controlled brightness can make the same content appear:
-
-    calmer
-    more solid
-    more natural
-    more ink-like
-
-Brightness is therefore both:
-
-    a measurable optical property
-
-and:
-
-    a major perceptual variable.
-
-
-============================================================
-19. BRIGHTNESS IS NOT THE SAME AS IMAGE QUALITY
-============================================================
-
-A screen being brighter does not automatically mean it is better.
-
-Modern displays may be designed to produce:
-
-    very high brightness
-    HDR highlights
-    strong white output
-
-Those are useful capabilities.
-
-But more optical output is not automatically preferable for every
-person or every task.
-
-The practical target is:
-
-    ENOUGH BRIGHTNESS TO SEE THE IMAGE CLEARLY
-
-without unnecessarily turning the entire display into a strong
-light source.
-
-
-============================================================
-20. CONTRAST
-============================================================
-
-Contrast describes the difference between dark and bright parts
-of the image.
-
-High contrast can make text and objects very distinct.
-
-For example:
-
-    black text
-    on
-    white background
-
-has strong local contrast.
-
-That can improve readability.
-
-However, very strong luminance differences can also make an image
-feel visually intense.
-
-This does NOT mean:
-
-    high contrast = harmful
-
-It means:
-
-    contrast is part of the optical signal being processed.
-
-
-============================================================
-21. LOCAL CONTRAST AND EDGE PROCESSING
-============================================================
-
-The visual system is particularly sensitive to edges.
-
-An edge can be:
-
-    BLACK | WHITE
-
-or:
-
-    DARK GRAY | SLIGHTLY LIGHTER GRAY
-
-The visual system emphasizes boundaries because they carry
-important information about objects.
-
-This is part of normal visual processing.
-
-Phenomena such as Mach bands demonstrate that perceived
-brightness near an edge can differ from the simple physical
-luminance values.
-
-The important practical point is:
-
-    STRONG LOCAL CONTRAST CAN MAKE EDGES FEEL MORE INTENSE.
-
-This does not mean that high contrast is inherently harmful.
-
-It means that contrast contributes to the final perceptual
-character of the screen.
-
-
-============================================================
-22. GAMMA
-============================================================
-
-Gamma affects how digital signal values are mapped to displayed
-luminance.
-
-Two monitors can have similar:
-
-    black level
-    white level
-    contrast ratio
-
-while still distributing intermediate tones differently.
-
-That can substantially change the appearance of an image.
-
-If dark tones are lifted too much:
-
-    black becomes gray
-    dark detail becomes hazy
-    the image can look washed out
-
-If tonal transitions are well controlled:
-
-    dark objects look solid
-    intermediate tones remain distinct
-    the image can look more natural.
-
-
-============================================================
-23. THE “WHITE VEIL” EFFECT
-============================================================
-
-A display can have blacks that are technically visible but still
-look cloudy.
-
-Instead of:
-
-    solid black
+    CLEAN PIXEL → CLEAN PIXEL → CLEAN PIXEL
 
 you may perceive:
 
-    black + gray haze
+    PIXEL + SURFACE GRAIN + SCATTERED LIGHT
+
+The image can therefore feel like it has a very fine paper or paint texture.
+
+This is sometimes described as the CRYSTALLINE EFFECT.
+
+The problem is not necessarily brightness or flicker; the surface itself can alter the perceived image.
+
+
+================================================================
+28. WHY AG SPARKLE CAN FEEL LIKE EXTRA VISUAL WORK
+================================================================
+
+The visual system normally tries to extract a clean image from the light entering the eye.
+
+Fine surface texture adds additional spatial variation to that image.
+
+When tiny surface variations overlap fine pixel structures, the eye may perceive unstable-looking grain or local brightness variation.
+
+This can make text and uniform backgrounds look less clean.
+
+The precise physiological mechanism behind this discomfort is less certain than the basic optical effect itself.
+
+Therefore AG sparkle should be treated primarily as an OPTICAL IMAGE-QUALITY ISSUE that can contribute to visual fatigue in susceptible users.
+
+
+================================================================
+29. GLOSSY VS MATTE IS A TRADE-OFF
+================================================================
+
+Glossy surfaces can provide a cleaner-looking pixel image when reflections are controlled.
+
+Glossy surfaces can become uncomfortable when they reflect windows, lamps, or bright room objects.
+
+Matte surfaces suppress those obvious reflections.
+
+Strong matte surfaces can instead introduce AG sparkle.
+
+A practical choice therefore depends on which optical problem is actually present in the room.
+
+
+================================================================
+30. INK-LIKE DISPLAY APPEARANCE
+================================================================
+
+INK-LIKE means that text and graphics appear visually calm, solid, and naturally integrated rather than glowing or aggressively outlined.
+
+An ink-like appearance is NOT produced by one specification.
+
+It is the combined result of:
+
+    suitable brightness
+    moderate local contrast
+    clean surface treatment
+    stable pixels
+    appropriate gamma
+    good text rendering
+    controlled spectral output
+    sufficient but not excessive sharpness
+
+A display can therefore be technically sharp while still looking harsh.
+
+A display can also be slightly softer while appearing more natural and paper-like.
+
+
+================================================================
+31. WHY OLDER DISPLAYS CAN SOMETIMES LOOK MORE "INK-LIKE"
+================================================================
+
+Older TN and CCFL displays often had softer optical and tonal characteristics.
+
+Their viewing-angle-dependent gamma could cause brightness and contrast to change across the screen.
+
+Their slower pixels produced more motion blur.
+
+Their CCFL backlights often had different spectral characteristics from modern W-LED systems.
+
+Some users therefore perceive certain older displays as softer, calmer, or more ink-like.
+
+This does NOT mean that all older displays were objectively easier on the eyes.
+
+It means their combination of optical characteristics can produce a different visual presentation.
+
+
+================================================================
+32. TN GAMMA AND VIEWING ANGLE
+================================================================
+
+TN means TWISTED NEMATIC.
+
+TN panels historically tend to show stronger viewing-angle-dependent changes in brightness and gamma than IPS.
+
+As the viewing angle changes, the apparent tone of a pixel can change.
+
+This can soften or alter luminance transitions across the image.
+
+That characteristic can contribute to an older display's softer visual appearance.
+
+It can also reduce image consistency and color accuracy.
+
+Therefore the "softness" of TN should not automatically be interpreted as superior image quality.
+
+
+================================================================
+33. IPS AND LOCAL EDGE CONTRAST
+================================================================
+
+IPS means IN-PLANE SWITCHING.
+
+Modern IPS displays can produce clean, consistent pixel transitions and sharp text.
+
+A sharp transition such as:
+
+    WHITE TEXT
+        ↓
+    BLACK BACKGROUND
+
+contains a strong local luminance boundary.
+
+The retina contains mechanisms that emphasize changes at edges.
+
+This can make already-sharp boundaries appear particularly crisp.
+
+The phenomenon is related to LATERAL INHIBITION and can contribute to perceived edge enhancement such as Mach-band effects.
+
+
+================================================================
+34. MACH BANDS
+================================================================
+
+Mach bands are a perceptual effect in which the visual system exaggerates brightness differences near boundaries.
+
+The eye is designed to detect edges efficiently.
+
+A high-contrast display can therefore produce edges that feel exceptionally pronounced.
+
+This does not mean that the retina is being physically damaged by the edge.
+
+It means the visual system is responding strongly to a high-contrast spatial transition.
+
+
+================================================================
+35. WHY "INK-LIKE" CAN FEEL DIFFERENT FROM "ULTRA-SHARP"
+================================================================
+
+Ultra-sharp text maximizes edge definition.
+
+Ink-like text aims for a clean edge without making the entire image feel excessively luminous or aggressive.
+
+A display can therefore be:
+
+    SHARP + HARSH
 
 or:
 
-    black + white veil
+    SHARP + CALM
 
-This reduces the feeling that objects are solid.
+depending on brightness, contrast, gamma, coating, spectrum, rendering, and viewing conditions.
 
-The image can therefore appear:
+The goal is not to make text blurry.
 
-    washed
-    cloudy
-    hazy
+The goal is to avoid unnecessary visual harshness while retaining sufficient clarity.
 
-rather than:
 
-    dense
-    solid
-    ink-like
+================================================================
+36. CONTRAST RATIO VS LOCAL CONTRAST
+================================================================
 
-This is one reason numerical contrast ratio alone does not tell
-the whole visual story.
+Static contrast ratio describes the difference between a display's dark and bright output under a measurement condition.
 
+Local contrast describes the difference between neighboring areas of an actual image.
 
-============================================================
-24. BLACK LEVEL AND WHITE LEVEL MUST BE CONSIDERED TOGETHER
-============================================================
+A monitor can have excellent static contrast while still displaying extremely strong local transitions.
 
-Imagine:
+Therefore a high contrast-ratio specification does not automatically predict visual comfort.
 
-    Display A
-        good black
-        controlled white
 
-and:
+================================================================
+37. IPS GLOW
+================================================================
 
-    Display B
-        grayish black
-        very bright white
+IPS LCDs can show brighter-looking regions when viewed off-axis, especially in dark scenes.
 
-Even if both display the same content, their visual character
-can be very different.
+This is commonly called IPS GLOW.
 
-Display B may appear more:
+It is a panel characteristic rather than the same thing as backlight brightness or PWM.
 
-    glowing
-    washed
-    electronically lit
+In a dark room, IPS glow can make black areas appear less uniformly black.
 
-The relationship between:
+That can change the perceived contrast of dark-mode content.
 
-    black
-    gray
-    white
 
-is important for perceived solidity.
+================================================================
+38. VA AS ANOTHER TRADE-OFF
+================================================================
 
+VA means VERTICAL ALIGNMENT.
 
-============================================================
-25. THE SPECTRUM OF THE LIGHT
-============================================================
+VA LCDs commonly provide substantially higher native static contrast than ordinary IPS panels.
 
-Not all display light has the same spectral composition.
+Higher native contrast can produce deeper blacks and less backlight glow.
 
-Different technologies can use different light sources and
-different mixtures of wavelengths.
+VA panels can also have slower dark-to-dark transitions on some models.
 
-For example, many LCD monitors use white LEDs whose spectral
-distribution differs from older CCFL systems.
+Those slow transitions can produce BLACK SMEARING during scrolling.
 
-This can change the character of the emitted light.
+Black smearing can create motion-related visual workload even when the display has little PWM.
 
-Shorter wavelengths also scatter more strongly in the eye than
-longer wavelengths.
 
-However, this should NOT be simplified into:
+================================================================
+39. IPS VS VA FOR COMFORT
+================================================================
 
-    “blue light automatically causes eye damage”
+IPS can provide cleaner motion and consistent viewing-angle behavior.
 
-or:
+VA can provide deeper blacks and higher native contrast.
 
-    “blue light automatically causes ciliary muscle spasms.”
+IPS can therefore be preferable for clean moving text for some users.
 
-Those claims are much stronger than the basic optical evidence.
+VA can provide a calmer dark background for some users.
 
-Spectrum should instead be treated as:
+Neither IPS nor VA can automatically be labeled as the more comfortable technology.
 
-    ANOTHER VARIABLE THAT CAN CHANGE THE VISUAL CHARACTER
-    OF THE DISPLAY.
+The actual panel implementation matters more than the category name alone.
 
 
-============================================================
-26. CHROMATIC ABERRATION
-============================================================
+================================================================
+40. WHY MODERN DISPLAYS FEEL DIFFERENT FROM OLD DISPLAYS
+================================================================
 
-The eye's optical system does not focus every wavelength at
-exactly the same location.
+Modern displays are not simply old displays made brighter.
 
-This is called:
+Modern panels commonly combine:
 
-    chromatic aberration.
-
-Different wavelengths can therefore have slightly different
-optical behavior.
-
-Shorter wavelengths also tend to scatter more strongly.
-
-These are real optical properties.
-
-But they should not automatically be converted into a specific
-medical explanation for every person's discomfort.
-
-The useful engineering approach is:
-
-    identify the spectrum
-    ↓
-    observe the actual display
-    ↓
-    compare displays
-    ↓
-    treat spectrum as one variable among many.
-
-
-============================================================
-27. COLOR TEMPERATURE IS NOT THE WHOLE SPECTRUM
-============================================================
-
-A monitor may provide settings such as:
-
-    6500 K
-    7500 K
-    9300 K
-
-These change the overall color balance.
-
-But color temperature is not a complete description of the
-physical spectral distribution.
-
-Two displays can both be:
-
-    6500 K
-
-and still produce different spectral distributions.
-
-Therefore:
-
-    COLOR TEMPERATURE
-    ≠
-    COMPLETE SPECTRAL DESCRIPTION.
-
-
-============================================================
-28. LOW-BLUE-LIGHT MODES
-============================================================
-
-Reducing short-wavelength output changes the spectral balance.
-
-That may change how the screen looks.
-
-But a display can have a low-blue-light mode and still have:
-
-    PWM
-    FRC
-    temporal dithering
-    excessive brightness
-    AG sparkle
-    poor gamma
-    washed blacks
-    excessive contrast
-
-Therefore:
-
-    LOW BLUE LIGHT
-    ≠
-    AUTOMATICALLY COMFORTABLE
-
-It is one variable, not a complete solution.
-
-
-============================================================
-29. HARDWARE LOW-BLUE-LIGHT VS SOFTWARE COLOR FILTERS
-============================================================
-
-A software color filter changes the image signal.
-
-A hardware-level spectral modification can change the actual
-light spectrum emitted by the display.
-
-These are not identical.
-
-Therefore a warm-looking image does not necessarily prove that
-the physical spectrum has been reduced in the same way as a
-hardware low-blue-light implementation.
-
-Again:
-
-    WHAT THE IMAGE LOOKS LIKE
-
-and:
-
-    WHAT THE DISPLAY PHYSICALLY EMITS
-
-are related but not identical questions.
-
-
-============================================================
-30. ANTI-GLARE SURFACES
-============================================================
-
-The screen surface affects the image after the pixels have
-already produced it.
-
-Anti-glare coatings scatter incoming light.
-
-Their purpose is to reduce reflections.
-
-This is useful in bright environments.
-
-However, some aggressive matte coatings can introduce visible
-surface texture.
-
-That can appear as:
-
-    grain
-    sparkle
-    crystalline texture
-    haze
-
-This is commonly described as:
-
-    AG SPARKLE
-
-where AG means:
-
-    anti-glare.
-
-
-============================================================
-31. AG SPARKLE
-============================================================
-
-Imagine a perfectly clean white area.
-
-On a smooth surface it may appear:
-
-    uniform white
-
-On a strongly textured matte surface it may appear:
-
-    white
-    + tiny variations
-    + grain
-    + sparkle
-
-The actual pixel values may be identical.
-
-The physical surface is changing how the light is scattered.
-
-This can reduce perceived image cleanliness.
-
-Therefore:
-
-    PIXEL QUALITY
-    +
-    SURFACE QUALITY
-
-both matter.
-
-
-============================================================
-32. MATTE VS GLOSSY
-============================================================
-
-Matte surfaces:
-
-    reduce reflections
-    work well in bright environments
-
-but can introduce:
-
-    grain
-    sparkle
-    scattering
-    haze
-
-Glossy or semi-gloss surfaces:
-
-    can preserve a cleaner-looking image
-    can produce stronger reflections
-
-Neither is universally superior.
-
-The environment matters.
-
-A glossy screen with a bright reflection may be worse than a
-matte screen.
-
-A heavily textured matte screen can look less clean than a
-smooth surface.
-
-The correct question is:
-
-    HOW MUCH REFLECTION CONTROL IS NEEDED
-    WITHOUT DESTROYING IMAGE CLEANLINESS?
-
-
-============================================================
-33. WHY SURFACE TEXTURE MATTERS TO TEXT
-============================================================
-
-Consider a black letter:
-
-    █
-
-A clean surface can make it look:
-
-    solid
-    uniform
-    sharply defined
-
-A heavily textured surface can make it look:
-
-    sharp
-    but grainy
-
-The letter is still technically sharp.
-
-Its visual surface is simply less uniform.
-
-This distinction becomes important for the “ink-like” quality.
-
-
-============================================================
-34. IPS, VA, AND TN
-============================================================
-
-Panel type changes the physical behavior of the display.
-
-IPS commonly offers:
-
-    good viewing angles
-    relatively consistent color across the screen
-
-VA commonly offers:
-
-    high native contrast
-    deeper blacks
-
-but can have:
-
-    slower dark transitions
-    dark smearing on some implementations
-
-TN commonly offers:
-
-    fast transitions
-    different viewing-angle behavior
-    different contrast/color characteristics
-
-These are general tendencies.
-
-They are NOT rules about visual comfort.
-
-There is no valid universal equation:
-
-    IPS = bad
-    VA = good
-    TN = good
-
-or the reverse.
-
-The actual implementation matters more than the label.
-
-
-============================================================
-35. VIEWING ANGLE AND GAMMA BEHAVIOR
-============================================================
-
-Different panel technologies can change appearance when viewed
-off-axis.
-
-TN panels can show stronger viewing-angle changes.
-
-This can cause:
-
-    brightness shifts
-    gamma shifts
-    color changes
-
-across the screen when your viewing angle changes.
-
-This is a display characteristic, not automatically an eye-health
-problem.
-
-It can nevertheless affect visual consistency and perceived
-image quality.
-
-
-============================================================
-36. PIXEL / SUBPIXEL STRUCTURE
-============================================================
-
-The final image is built from physical pixels and subpixels.
-
-Their structure affects:
-
-    text edges
-    fine detail
-    color boundaries
-    apparent sharpness
-
-The same resolution does not guarantee the same visual result.
-
-Two panels can both be:
-
-    1920 × 1080
-
-while producing different text appearance because of differences
-in:
-
-    subpixel arrangement
-    pixel geometry
-    rendering
-    coating
-    scaling
-    gamma
-
-
-============================================================
-37. SHARPNESS IS NOT THE SAME AS HARSHNESS
-============================================================
-
-This distinction is essential.
-
-A display can be:
-
-    SHARP + INK-LIKE
-
-Sharpness means:
-
-    clean, well-defined edges.
-
-Harshness can involve:
-
-    excessive brightness
-    strong luminance
-    sparkle
-    unstable pixels
-    aggressive contrast
-    glowing whites
-    distracting grain
-
-Therefore:
-
-    SHARP ≠ HARSH
-
-and:
-
-    SOFT ≠ COMFORTABLE
-
-The useful target is:
-
-    SHARP
-    +
-    SOLID
-    +
-    STABLE
-    +
-    CONTROLLED
-
-
-============================================================
-38. WHAT “INK-LIKE” MEANS
-============================================================
-
-“INK-LIKE” is not a standard technical specification.
-
-There is no universal measurement called:
-
-    ink-likeness.
-
-It is a description of the final visual appearance.
-
-An ink-like image tends to look:
-
-    solid
-    clean
-    stable
-    quiet
-    controlled
-    naturally integrated with the screen surface
-
-Text looks like a solid shape.
-
-Dark objects look dense rather than veiled.
-
-White areas look controlled rather than like a powerful light
-source.
-
-Edges are clean rather than glowing or sparkling.
-
-The image does not appear to contain unnecessary visual noise.
-
-
-============================================================
-39. INK-LIKE DOES NOT MEAN LOW CONTRAST
-============================================================
-
-This is another important distinction.
-
-“Ink-like” does NOT mean:
-
-    low contrast
-    blurry
-    dull
-    dim
-    soft
-
-Printed ink can have strong contrast.
-
-The target is:
-
-    CLEAN CONTRAST
-    without
-    EXCESSIVE LUMINANCE INTENSITY.
-
-
-============================================================
-40. INK-LIKE DOES NOT MEAN LOW SHARPNESS
-============================================================
-
-A good ink-like display can have extremely sharp text.
-
-The difference is that the letter looks:
-
-    solid
-    stable
-    clean
-
-rather than:
-
-    glowing
-    sparkling
-    crawling
-    blooming
-    electrically intense
-
-So the desirable combination is:
-
-    SHARP
-        +
-    STABLE
-        +
-    CLEAN
-        +
-    MODERATE LUMINANCE
-
-
-============================================================
-41. WHAT CONTRIBUTES TO THE INK-LIKE LOOK?
-============================================================
-
-There is no single cause.
-
-It can result from the combination of:
-
-    controlled brightness
-    controlled white luminance
-    good black level
-    controlled gamma
-    clean tonal transitions
-    appropriate contrast
-    stable pixel output
-    low unwanted temporal modulation
-    suitable pixel response
-    clean pixel/subpixel structure
-    low visible surface sparkle
-    suitable surface
-    suitable spectral character
-
-
-The important concept is:
-
-    INK-LIKE IS AN EMERGENT PERCEPTUAL RESULT.
-
-It is produced by many technical variables interacting.
-
-
-============================================================
-42. BRIGHTNESS AND THE INK-LIKE LOOK
-============================================================
-
-If white is excessively bright:
-
-    the page can feel emissive.
-
-If white is controlled:
-
-    the page can feel more like a stable visual surface.
-
-Therefore:
-
-    TOO BRIGHT
-    → glowing / electronic
-
-    CONTROLLED
-    → solid / natural
-
-This does not mean that an ink-like display must be dim.
-
-It means that its luminance should be appropriate to the
-environment and viewing task.
-
-
-============================================================
-43. CONTRAST AND THE INK-LIKE LOOK
-============================================================
-
-Very strong black-white contrast can make edges extremely
-prominent.
-
-But reducing contrast too far can make the image washed out.
-
-Therefore the target is not:
-
-    minimum contrast.
-
-It is:
-
-    CONTROLLED CONTRAST
-
-where:
-
-    black remains solid
-    white remains controlled
-    intermediate tones remain distinct
-    edges remain clear
-
-
-============================================================
-44. GAMMA AND THE INK-LIKE LOOK
-============================================================
-
-Good tonal distribution helps objects appear solid.
-
-Poorly controlled dark tones can create:
-
-    gray blacks
-    cloudy shadows
-    white veil
-    washed appearance
-
-The result feels less like ink.
-
-A useful simplified model is:
-
-    CONTROLLED TONES
-        ↓
-    SOLID OBJECTS
-        ↓
-    INK-LIKE
-
-while:
-
-    WASHED TONES
-        ↓
-    VEILED OBJECTS
-        ↓
-    LESS INK-LIKE
-
-
-============================================================
-45. SURFACE AND THE INK-LIKE LOOK
-============================================================
-
-A clean image can be damaged perceptually by a dirty-looking
-surface.
-
-Aggressive matte texture can introduce:
-
-    sparkle
-    grain
-    haze
-
-This can make text feel less like ink even when the panel itself
-is sharp.
-
-A smoother surface can preserve:
-
-    clean edges
-    uniform fills
-    clearer fine detail
-
-but may introduce reflections.
-
-Therefore surface quality is part of the ink-like equation.
-
-
-============================================================
-46. TEMPORAL STABILITY AND THE INK-LIKE LOOK
-============================================================
-
-An ink-like letter should look like:
-
-    one stable object.
-
-If the pixel values subtly alternate, the letter or surrounding
-area may appear to contain:
-
-    shimmer
-    crawling grain
-    unstable texture
-
-This can make the image feel less solid.
-
-Therefore:
-
-    TEMPORAL STABILITY
-    contributes to
-    PERCEIVED SOLIDITY.
-
-
-============================================================
-47. PIXEL RESPONSE AND THE INK-LIKE LOOK
-============================================================
-
-Very slow response can produce:
-
-    trailing
-    ghosting
-    smearing
-
-That makes moving objects less solid.
-
-Extremely fast response is not automatically a problem, but speed
-alone is not the goal.
-
-The useful target is:
-
-    CLEAN MOTION
-    +
-    STABLE STATIC IMAGE.
-
-
-============================================================
-48. THE TWO TYPES OF CLEANLINESS
-============================================================
-
-A useful combined model is:
-
-    TEMPORAL CLEANLINESS
-
-    +
-    
-    SPATIAL CLEANLINESS
-
-
-TEMPORAL CLEANLINESS:
-
-    stable light output
-    stable pixel values
-    low unwanted PWM
-    low unwanted temporal dithering
-    controlled pixel transitions
-
-
-SPATIAL CLEANLINESS:
-
-    clean pixel structure
-    clean subpixel rendering
-    controlled gamma
-    good tonal transitions
-    controlled contrast
-    low distracting surface texture
-    low AG sparkle
-
-
-Together:
-
-    TEMPORAL CLEANLINESS
-          +
-    SPATIAL CLEANLINESS
-          ↓
-    CLEAN IMAGE
-
-
-============================================================
-49. ADD OPTICAL INTENSITY
-============================================================
-
-Now add:
-
-    brightness
-    white luminance
-    contrast
-    spectrum
-
-These determine the strength and character of the optical signal.
-
-Therefore:
-
-    TEMPORAL CLEANLINESS
-          +
-    SPATIAL CLEANLINESS
-          +
-    OPTICAL CONTROL
-          ↓
-    SOLID + CLEAN + STABLE IMAGE
-          ↓
-    INK-LIKE CHARACTER
-
-
-============================================================
-50. WHY A TECHNICALLY GOOD MONITOR CAN STILL LOOK BAD
-============================================================
-
-Imagine a monitor with:
-
-    high refresh rate
-    very fast response
-    high brightness
-    wide color gamut
-    high contrast
-
-These are impressive specifications.
-
-But suppose it also has:
-
-    extremely bright white
-    aggressive matte sparkle
-    washed dark tones
-    strong local contrast
-    visible temporal instability
-
-The specification sheet can look excellent.
-
-The actual image can still look:
-
-    harsh
-    glowing
-    grainy
-    electronic
-
-
-This demonstrates:
-
-    SPECIFICATION QUALITY
-    ≠
-    PERCEPTUAL QUALITY.
-
-
-============================================================
-51. WHY AN OLDER SCREEN CAN SOMETIMES LOOK MORE NATURAL
-============================================================
-
-Older displays may have combinations such as:
-
-    CCFL backlighting
-    different coatings
-    lower peak brightness
-    different gamma
-    different contrast
-    slower response
-    different color characteristics
-
-A newer display may be technically more advanced while having a
-different visual character.
-
-This does NOT establish:
-
-    OLD = BETTER
-
-or:
-
-    NEW = WORSE
-
-It means that the combination of physical characteristics has
-changed.
-
-The important question remains:
-
-    WHICH CHARACTERISTICS PRODUCE THE APPEARANCE YOU ACTUALLY
-    PREFER?
-
-
-============================================================
-52. WHY “MORE ADVANCED” DOES NOT MEAN “NICER TO LOOK AT”
-============================================================
-
-Modern displays are often optimized for measurable performance:
-
-    high refresh rate
-    high brightness
+    faster pixel response
+    higher refresh rates
+    wider color gamut
     HDR
-    wide gamut
-    high contrast
-    very fast response
-    thin design
+    sophisticated color processing
+    LED or OLED light sources
+    stronger contrast
+    thinner optical stacks
 
-Those are useful engineering goals.
+Each improvement solves a particular engineering problem.
 
-But the preferred visual character may be different.
+The combination also creates a more complex visual environment.
+
+
+================================================================
+41. THE IMPORTANT HISTORICAL TRADE-OFF
+================================================================
+
+Older displays often had:
+
+    slower pixels
+    more motion blur
+    simpler color pipelines
+    narrower gamut
+    different backlights
+    different surface coatings
+
+Modern displays often have:
+
+    faster pixels
+    cleaner motion
+    more complex color processing
+    wider gamut
+    higher brightness
+    stronger contrast
+    different spectral output
+
+Therefore:
+
+    OLD ≠ AUTOMATICALLY GOOD
+
+and:
+
+    NEW ≠ AUTOMATICALLY BAD.
+
+The technologies simply move the trade-offs.
+
+
+================================================================
+42. WHY A "BETTER" SPECIFICATION CAN FEEL WORSE
+================================================================
+
+A faster panel can reduce ghosting while making temporal changes more sharply represented.
+
+A brighter panel can make HDR highlights more impressive while increasing visual intensity.
+
+A wider-gamut panel can reproduce more colors while producing a more saturated appearance.
+
+A stronger anti-glare coating can reduce reflections while adding sparkle.
+
+A higher-contrast panel can make blacks deeper while making white-on-black edges more pronounced.
+
+A higher resolution can make text finer and clearer while requiring more precise visual accommodation.
+
+This is why specifications must be interpreted as ENGINEERING FEATURES rather than comfort ratings.
+
+
+================================================================
+43. THE VISUAL SYSTEM
+================================================================
+
+The ciliary muscle changes the shape of the eye's lens to focus on objects.
+
+The iris changes pupil size in response to light.
+
+The retina converts incoming light into neural signals.
+
+The visual brain processes brightness, color, movement, edges, and spatial patterns.
+
+The trigeminal system carries sensory information from the eye and face.
+
+The blink system maintains the tear film over the eye surface.
+
+These systems can all contribute to what a person experiences as visual discomfort.
+
+
+================================================================
+44. ACCOMMODATION AND FOCUS
+================================================================
+
+Accommodation is the process of adjusting the eye's optical power to focus on a target.
+
+Fine text requires the visual system to maintain accurate focus.
+
+Small text, close viewing distance, high resolution, and strong edge contrast can increase the demand for precise visual processing.
+
+Temporary difficulty shifting focus after prolonged near work can occur as part of ordinary visual fatigue.
+
+This is different from claiming that screen flicker physically forces the ciliary muscle to contract hundreds of times per second.
+
+
+================================================================
+45. BLINKING AND DRY EYES
+================================================================
+
+People commonly blink less frequently or incompletely during concentrated screen work.
+
+Fewer or less complete blinks allow the tear film to break up more quickly.
+
+A disturbed tear film can cause:
+
+    dryness
+    burning
+    stinging
+    redness
+    fluctuating clarity
+
+Dry-eye symptoms can therefore occur even on a completely flicker-free display.
+
+This is one reason that not every screen-related symptom should be blamed on PWM or FRC.
+
+
+================================================================
+46. VISUAL MOTION AND THE BRAIN
+================================================================
+
+The visual system is highly sensitive to movement.
+
+Scrolling text creates continuous visual motion even when the body is stationary.
+
+Poor pixel response can turn that movement into ghosting or smearing.
+
+Rapid visual motion can cause discomfort or nausea in susceptible people.
+
+This is a separate mechanism from static brightness, PWM, or FRC.
+
+
+================================================================
+47. WHY A STILL PAGE CAN SOMETIMES FEEL UNSTABLE
+================================================================
+
+A page can appear stationary while individual pixels or subpixels undergo temporal changes.
+
+PWM can change overall light output.
+
+FRC can change individual color or brightness levels.
+
+Low-gray OLED processing can introduce additional temporal behavior.
+
+The viewer may therefore perceive shimmer, grain, crawling, or instability even though the page itself is not moving.
+
+
+================================================================
+48. THE "STACKED LOAD" IDEA
+================================================================
+
+A person may be exposed to several visual demands simultaneously.
 
 For example:
 
-    500-nit white
-
-is objectively more capable than:
-
-    250-nit white
-
-in terms of maximum luminance.
-
-But that does not mean the 500-nit display will look better
-for every person or every task.
-
-Likewise:
-
-    1 ms
-
-does not automatically look better than:
-
-    8 ms
-
-for every visual situation.
-
-
-============================================================
-53. WHAT CAN ACTUALLY BE INFERRED FROM TESTS?
-============================================================
-
-Different tests answer different questions.
-
-PWM test:
-
-    “Is the light output changing over time?”
-
-FRC / temporal test:
-
-    “Are apparently static colors showing temporal behavior?”
-
-Response-time test:
-
-    “How quickly do pixels transition?”
-
-Gradient test:
-
-    “How smoothly are tones represented?”
-
-But:
-
-    smooth gradient
-    ≠
-    temporal stability
-
-Surface inspection:
-
-    “Does the coating produce visible grain or sparkle?”
-
-Black-level test:
-
-    “Do dark areas remain solid or look gray/veiled?”
-
-White test:
-
-    “Does white look controlled or excessively luminous?”
-
-Text test:
-
-    “Do letters look solid and clean?”
-
-
-No single test answers all of these.
-
-
-============================================================
-54. TEST PWM SEPARATELY
-============================================================
-
-First determine whether brightness modulation is present.
-
-Do not combine this with an FRC conclusion.
-
-If PWM is absent, that means:
-
-    PWM is probably not the main temporal mechanism being
-    observed.
-
-It does NOT prove:
-
-    no temporal modulation of any kind.
-
-
-============================================================
-55. TEST FRC SEPARATELY
-============================================================
-
-Use controlled gradients and static color fields.
-
-Pay attention to:
-
-    dark gray
-    near-black
-    subtle gradients
-    intermediate colors
-
-Look for:
-
-    shimmer
-    crawling
-    moving grain
-    unstable texture
-
-The important question is:
-
-    DOES A SUPPOSEDLY STATIC COLOR REMAIN VISUALLY STABLE?
-
-
-============================================================
-56. WHY DARK COLORS ARE USEFUL FOR TEMPORAL TESTING
-============================================================
-
-Near-black and dark gray areas can be useful because small
-changes in luminance can become noticeable as texture.
-
-Use:
-
-    dark gray gradients
-    near-black gradients
-    dark neutral colors
-
-Then compare displays under the same conditions.
-
-Do not ask only:
-
-    “Which gradient is smoother?”
-
-Ask:
-
-    “Which gradient is more temporally stable?”
-
-
-============================================================
-57. TEST BRIGHT WHITE
-============================================================
-
-Open a mostly white webpage.
-
-Compare:
-
-    brightness
-    surface
-    white luminance
-    apparent glow
-
-Ask:
-
-    Does the white look like a clean visual surface?
-
-or:
-
-    Does it look like a powerful light source?
-
-
-============================================================
-58. TEST BLACK
-============================================================
-
-Open a dark image.
-
-Look at:
-
-    black
-    near-black
-    dark gray
-    medium gray
-
-Ask:
-
-    Are dark areas solid?
-
-or:
-
-    Are they gray, cloudy, or veiled?
-
-
-============================================================
-59. TEST TEXT
-============================================================
-
-Text combines many display properties simultaneously.
-
-It reveals:
-
-    pixel structure
-    subpixel behavior
-    gamma
-    brightness
-    local contrast
-    surface texture
-    temporal stability
-    scaling
-
-Look at:
-
-    black text on white
-    gray text on white
-    white text on dark gray
-    small text
-    medium text
-
-Ask:
-
-    Does the letter look solid?
-
-or:
-
-    Does it glow, sparkle, crawl, shimmer, or look hazy?
-
-
-============================================================
-60. TEST LARGE COLOR AREAS
-============================================================
-
-Use large fields of:
-
-    red
-    green
-    blue
-    gray
-    dark gray
-    near-black
-
-Do not judge only color accuracy.
-
-Look for:
-
-    grain
-    shimmer
-    brightness
-    instability
-    surface texture
-    excessive intensity
-
-A color can be technically accurate while still looking visually
-unpleasant.
-
-
-============================================================
-61. TEST MOTION SEPARATELY
-============================================================
-
-Moving objects reveal:
-
-    pixel response
-    ghosting
-    smearing
-    temporal artifacts
-
-Use moving text or controlled motion.
-
-Compare:
-
-    trailing
-    blur
-    overshoot
-    dark smearing
-
-Do not use motion performance as a direct measure of static-image
-comfort.
-
-
-============================================================
-62. ONE VARIABLE AT A TIME
-============================================================
-
-This is one of the most important practical rules.
-
-Do not simultaneously change:
-
-    brightness
-    contrast
-    color temperature
-    scaling
-    refresh rate
-    GPU settings
-
-and then conclude:
-
-    “This fixed the problem.”
-
-Instead:
-
-    CHANGE ONE VARIABLE
-        ↓
-    OBSERVE
-        ↓
-    RESTORE
-        ↓
-    CHANGE THE NEXT VARIABLE
-
-
-This allows you to identify causality instead of correlation.
-
-
-============================================================
-63. PERSONAL SENSITIVITY VARIES
-============================================================
-
-Different people can respond differently to the same display.
-
-One person may barely notice:
-
     PWM
-
-while another notices it immediately.
-
-One person may ignore:
-
-    AG sparkle
-
-while another finds the texture obvious.
-
-One person may prefer:
-
+        +
+    FRC
+        +
+    high brightness
+        +
     high contrast
-
-while another prefers:
-
-    softer tonal rendering.
-
-Therefore personal testing is useful.
-
-But personal observation should be used to identify:
-
-    “This particular display behaves badly for me”
-
-rather than to conclude:
-
-    “This technology is universally harmful.”
-
-
-============================================================
-64. DO NOT CONFUSE CORRELATION WITH CAUSATION
-============================================================
-
-If changing a monitor makes discomfort disappear, that tells you:
-
-    something about that display differs in a way that matters
-    to you.
-
-It does not automatically prove:
-
-    PWM caused it.
-
-It could involve:
-
-    brightness
-    spectrum
-    surface
-    FRC
-    gamma
-    contrast
-    pixel response
-    viewing angle
-    text rendering
-    multiple factors together.
-
-
-The strongest approach is:
-
-    OBSERVE
-        ↓
-    ISOLATE
-        ↓
-    TEST
-        ↓
-    COMPARE
-
-
-============================================================
-65. IMPORTANT CLAIMS THAT SHOULD NOT BE OVERSTATED
-============================================================
-
-Some explanations are often presented too strongly.
-
-For example, it is not appropriate to automatically claim:
-
-    “the retina processes invisible flicker up to exactly 200 Hz
-     in every relevant situation”
-
-or:
-
-    “the pupils rapidly dilate and constrict hundreds of times
-     per second because of PWM”
-
-or:
-
-    “FRC directly causes ciliary muscle spasms”
-
-or:
-
-    “the magnocellular pathway is being triggered nonstop”
-
-or:
-
-    “trigeminal dysphoria is the established mechanism of
-     screen-related pain.”
-
-These are much stronger claims than the basic display and optical
-facts establish.
-
-The safer engineering model is:
-
-    TEMPORAL MODULATION
-        ↓
-    DIFFERENT OPTICAL SIGNAL
-        ↓
-    DIFFERENT VISUAL PROCESSING DEMAND
-        ↓
-    SOME PEOPLE MAY PERCEIVE IT DIFFERENTLY
-
-
-This keeps the physical mechanism separate from speculation
-about a specific medical mechanism.
-
-
-============================================================
-66. WHY “3840 Hz PWM” IS NOT AUTOMATICALLY SAFE
-============================================================
-
-A high PWM frequency can reduce the visibility of modulation.
-
-But:
-
-    HIGH PWM FREQUENCY
-
-does not automatically mean:
-
-    PERFECTLY COMFORTABLE DISPLAY.
-
-The display may still have:
-
-    FRC
-    temporal dithering
-    excessive brightness
-    surface sparkle
-    spectral differences
-    strong contrast
-    poor tonal behavior
-
-Therefore the number alone should not be treated as a universal
-comfort guarantee.
-
-
-============================================================
-67. WHY A COLOR MODE DOES NOT NECESSARILY “STOP DITHERING”
-============================================================
-
-Changing to:
-
-    sRGB
-    Natural
-    Reading
-    Eye Saver
-    Warm
-
-can change image processing.
-
-But you should not automatically assume that a particular mode:
-
-    completely disables temporal dithering.
-
-A mode may change:
-
-    gamut
-    brightness
-    gamma
-    color balance
-
-without changing every stage of temporal processing.
-
-Again:
-
-    OBSERVED CHANGE
-    ≠
-    PROOF OF THE EXACT MECHANISM.
-
-
-============================================================
-68. WHY PANEL RESPONSE IS NOT A UNIVERSAL “LOW-PASS FILTER”
-============================================================
-
-It is tempting to say that a very slow LCD will automatically
-average away temporal modulation.
-
-Real displays are more complicated.
-
-The panel response has:
-
-    transition-dependent behavior
-    different behavior for different colors
-    different behavior for different directions of transition
-
-Therefore a slow response can change the appearance of temporal
-modulation, but it should not be treated as a guaranteed physical
-filter that eliminates FRC.
-
-
-============================================================
-69. THE DISPLAY PIPELINE IS THE IMPORTANT OBJECT
-============================================================
-
-Do not think of:
-
-    “the monitor”
-
-as a single simple component.
-
-Think:
-
-    SOURCE
-      ↓
-    APPLICATION
-      ↓
-    OPERATING SYSTEM
-      ↓
-    GPU
-      ↓
-    DISPLAY INTERFACE
-      ↓
-    MONITOR ELECTRONICS
-      ↓
-    TCON
-      ↓
-    PANEL
-      ↓
-    SURFACE
-      ↓
-    EYE
-
-
-Different forms of processing can occur at different stages.
-
-Therefore when troubleshooting temporal behavior, you are really
-trying to determine:
-
-    WHERE IS THE CHANGE BEING INTRODUCED?
-
-
-============================================================
-70. THE INK-LIKE TARGET
-============================================================
-
-The practical visual target can be summarized as:
-
-    STABLE LIGHT
         +
-    CONTROLLED BRIGHTNESS
+    fine text
         +
-    CONTROLLED WHITE
+    glossy reflections
         +
-    SOLID BLACK
+    long viewing time
+
+The individual factors do not have to be dangerous for their combination to feel uncomfortable.
+
+This is why a display that passes one test can still feel bad in real-world use.
+
+
+================================================================
+49. WHY INDIVIDUAL EXPERIENCE MATTERS
+================================================================
+
+People differ in their sensitivity to flicker, motion, brightness, contrast, surface texture, and visual workload.
+
+One person may comfortably use a display that another person quickly finds unpleasant.
+
+A personal reaction is therefore useful evidence about PERSONAL COMFORT.
+
+A personal reaction alone does not prove the exact physical mechanism responsible.
+
+Controlled comparison is more informative than guessing from symptoms alone.
+
+
+================================================================
+50. HOW TO TEST A DISPLAY WITHOUT MIXING VARIABLES
+================================================================
+
+Use the same content when comparing two displays.
+
+Keep viewing distance approximately equal.
+
+Keep room lighting approximately equal.
+
+Keep screen brightness approximately comparable.
+
+Test static text separately from moving text.
+
+Test brightness changes separately from color-mode changes.
+
+Test temporal stability separately from gradient smoothness.
+
+Change one variable at a time whenever possible.
+
+A controlled comparison is more useful than changing five display settings simultaneously.
+
+
+================================================================
+51. TEST A — BRIGHTNESS
+================================================================
+
+Reduce brightness gradually while keeping other settings unchanged.
+
+If discomfort changes substantially, brightness is likely an important variable.
+
+Do not assume that lower brightness means lower temporal modulation.
+
+Check whether the brightness-control method changes at different brightness levels.
+
+
+================================================================
+52. TEST B — PWM
+================================================================
+
+Investigate brightness modulation at several brightness settings.
+
+A display can change its PWM behavior as brightness changes.
+
+"Flicker-free" generally refers to brightness modulation and does not automatically prove that every form of temporal pixel modulation is absent.
+
+PWM testing therefore answers one question rather than the entire display-comfort question.
+
+
+================================================================
+53. TEST C — FRC / TEMPORAL DITHERING
+================================================================
+
+Display controlled gradients and flat colors.
+
+Look for:
+
+    shimmer
+    crawling grain
+    unstable dark shades
+    moving texture
+
+Do not judge only by whether the gradient looks smooth.
+
+The objective is to determine whether an apparently fixed color changes over time.
+
+
+================================================================
+54. TEST D — MOTION
+================================================================
+
+Scroll ordinary text.
+
+Look for:
+
+    ghosting
+    trailing
+    black smearing
+    smeared letters
+    difficulty following moving text
+
+This measures a different problem from FRC.
+
+
+================================================================
+55. TEST E — STATIC TEXT
+================================================================
+
+Read normal text for an extended period.
+
+Use realistic font sizes rather than only laboratory patterns.
+
+Observe whether discomfort appears during ordinary work.
+
+Real-world testing matters because the display is ultimately being used for real-world visual tasks.
+
+
+================================================================
+56. TEST F — SURFACE SPARKLE
+================================================================
+
+Display a large white or light-gray background.
+
+Move your head slightly while looking at the screen.
+
+Observe whether the surface produces visible grain or sparkle over otherwise uniform content.
+
+Compare the same content on a glossy, semi-gloss, and strongly matte surface when possible.
+
+This can reveal a coating problem that PWM testing cannot detect.
+
+
+================================================================
+57. TEST G — CONTRAST
+================================================================
+
+Compare:
+
+    WHITE TEXT ON PURE BLACK
+
+against:
+
+    LIGHT GRAY TEXT ON DARK CHARCOAL
+
+The second arrangement reduces the local luminance difference.
+
+If the softer version is more comfortable, local contrast may be contributing to the experience.
+
+
+================================================================
+58. TEST H — SPECTRAL BALANCE
+================================================================
+
+Compare the default display mode with a warmer or hardware low-blue-light mode.
+
+Keep brightness approximately equal during the comparison.
+
+If the warmer mode feels different, spectral balance may be relevant.
+
+Do not conclude from this test alone that blue light was the sole cause.
+
+
+================================================================
+59. THE "INK-LIKE" PRACTICAL TARGET
+================================================================
+
+A useful comfort target is:
+
+    CLEAN TEXT
         +
-    CLEAN TONAL TRANSITIONS
+    MODERATE BRIGHTNESS
         +
-    CONTROLLED CONTRAST
-        +
-    LOW UNWANTED TEMPORAL MODULATION
-        +
-    ADEQUATE PIXEL RESPONSE
-        +
-    CLEAN PIXEL / SUBPIXEL STRUCTURE
+    CONTROLLED LOCAL CONTRAST
         +
     LOW DISTRACTING SURFACE SPARKLE
         +
-    SUITABLE SPECTRUM
-        ↓
-    SOLID + CLEAN + STABLE IMAGE
-        ↓
-    INK-LIKE
+    STABLE TEMPORAL OUTPUT
+        +
+    ADEQUATE PIXEL RESPONSE
+        +
+    NATURAL-LOOKING COLOR
 
+This is what produces the practical feeling of a calm, ink-like image.
 
-This is a perceptual target, not a technical specification.
+The objective is NOT maximum softness.
 
+The objective is CLEAN INFORMATION WITHOUT UNNECESSARY VISUAL AGGRESSION.
 
-============================================================
-71. INK-LIKE VS ELECTRONIC-LOOKING
-============================================================
 
-INK-LIKE:
+================================================================
+60. FLICKER-FREE DOES NOT MEAN FRC-FREE
+================================================================
 
-    solid
-    stable
-    clean
-    controlled
-    natural
-    dense darks
-    controlled whites
-    clean edges
-    uniform surfaces
-    little distracting grain
-    little distracting shimmer
+"Flicker-Free" generally addresses brightness modulation.
 
+A display can be flicker-free and still use temporal dithering.
 
-ELECTRONIC / HARSH:
+A display can therefore pass a PWM test and still show temporal pixel behavior.
 
-    glowing
-    excessively bright
-    sparkly
-    grainy
-    hazy
-    unstable
-    washed
-    veiled
-    overly intense
-    visually noisy
+This distinction is essential when diagnosing a display.
 
 
-These are descriptions of perceived image character.
+================================================================
+61. NATIVE 8-BIT DOES NOT MEAN TEMPORALLY PERFECT
+================================================================
 
-They are NOT diagnoses of a particular hardware technology.
+Native 8-bit means the panel can directly represent 256 levels per color channel.
 
+Native 8-bit reduces the need for FRC to create ordinary 8-bit shades.
 
-============================================================
-72. THE FINAL FOUR-PART MODEL
-============================================================
+Native 8-bit does not automatically eliminate PWM.
 
-Think of a display as:
+Native 8-bit does not automatically eliminate all temporal processing.
 
-    LIGHT
-       +
-    TIME
-       +
-    SPACE
-       +
-    PERCEPTION
+Therefore native bit depth and temporal stability are separate measurements.
 
 
-LIGHT:
+================================================================
+62. "10-BIT" DOES NOT AUTOMATICALLY MEAN NATIVE 10-BIT
+================================================================
 
-    spectrum
-    brightness
-    white luminance
-    contrast
+A display can accept or process a 10-bit signal without having native 10-bit physical output at every pixel.
 
+8-bit + FRC can create additional apparent shades.
 
-TIME:
+The specification should therefore distinguish between:
 
-    PWM
-    DC dimming
-    FRC
-    temporal dithering
-    pixel response
-    motion
+    NATIVE 10-BIT
 
+and:
 
-SPACE:
+    8-BIT + FRC.
 
-    pixel structure
-    subpixels
-    gamma
-    black level
-    white level
-    local contrast
-    surface
-    AG sparkle
-    reflections
-    scattering
 
+================================================================
+63. HIGH REFRESH RATE DOES NOT AUTOMATICALLY SOLVE FLICKER
+================================================================
 
-PERCEPTION:
+Refresh rate describes how frequently the display updates frames.
 
-    edges
-    motion
-    focus
-    tracking
-    attention
-    blinking
-    visual workload
-    perceived stability
+PWM frequency is a separate parameter.
 
+FRC frequency is another parameter.
 
-All four combine into:
+A 120 Hz display can therefore still use PWM.
 
-    THE IMAGE YOU ACTUALLY SEE.
+A 240 Hz display can still use temporal dithering.
 
+Refresh rate alone cannot establish temporal stability.
 
-============================================================
-73. THE MOST USEFUL MENTAL MODEL
-============================================================
 
-Do not ask:
+================================================================
+64. HIGH BRIGHTNESS DOES NOT AUTOMATICALLY MEAN BETTER IMAGE QUALITY
+================================================================
 
-    “Is IPS bad?”
+High brightness helps HDR highlights remain visible in bright environments.
 
-Ask:
+Excessive brightness can make ordinary desktop content unnecessarily intense.
 
-    “What does this IPS panel actually do?”
+The comfortable brightness is determined by the actual environment and viewer.
 
-Do not ask:
+A screen should be bright enough for clear viewing without becoming the brightest object in the room unnecessarily.
 
-    “Is FRC bad?”
 
-Ask:
+================================================================
+65. VIEWING DISTANCE
+================================================================
 
-    “Is this display using temporal modulation, and can I
-     observe it?”
+The closer a screen is, the larger it appears to the visual system.
 
-Do not ask:
+Small text becomes more demanding when viewed very close.
 
-    “Is PWM bad?”
+A practical starting point for phones is roughly 35–40 cm when comfortable and readable.
 
-Ask:
+A practical starting point for larger displays is commonly around arm's length, adjusted for text size and personal comfort.
 
-    “Does this display's brightness modulation matter under
-     my actual viewing conditions?”
+Distance should be treated as a workload variable rather than as a special cure for flicker.
 
-Do not ask:
 
-    “Is high contrast bad?”
+================================================================
+66. ROOM LIGHTING
+================================================================
 
-Ask:
+A screen viewed in a completely dark room can become an extremely bright object against a dark background.
 
-    “Is the luminance relationship clean and comfortable
-     for this particular image?”
+Moderate ambient lighting reduces this extreme luminance difference.
 
-Do not ask:
+Good room lighting can therefore improve comfort without changing the display hardware.
 
-    “Is low blue light enough?”
+Avoid placing strong lamps or windows where they create distracting reflections on the screen.
 
-Ask:
 
-    “What are the brightness, spectrum, temporal behavior,
-     surface, and tonal behavior together?”
+================================================================
+67. LOWEST-REGRET DISPLAY TARGET
+================================================================
 
+If temporal sensitivity is suspected, look for evidence of LOW OR WELL-CONTROLLED PWM.
 
-============================================================
-74. THE CORRECT WAY TO EVALUATE A DISPLAY
-============================================================
+If FRC is a concern, investigate whether the panel is NATIVE 8-BIT rather than assuming a "10-bit" label means native 10-bit.
 
-STEP 1
+Choose a response time that provides clear text during scrolling without deliberately seeking extremely slow pixels.
 
-    Check brightness behavior.
+Choose brightness that is comfortable in the actual room.
 
-STEP 2
+Choose moderate local contrast instead of maximizing contrast everywhere.
 
-    Check PWM.
+Consider a semi-gloss or lightly matte surface if strong AG sparkle is visible.
 
-STEP 3
+Consider hardware low-blue-light implementations when spectral discomfort appears relevant.
 
-    Check temporal stability / FRC.
+Treat OLED, IPS, VA, TN, W-LED, and CCFL as TECHNOLOGIES WITH DIFFERENT TRADE-OFFS rather than automatic comfort rankings.
 
-STEP 4
 
-    Check pixel response and motion.
+================================================================
+68. PRACTICAL SETTINGS TO TRY
+================================================================
 
-STEP 5
+Start with moderate brightness rather than maximum brightness.
 
-    Check black level.
+Avoid using extremely bright white text on pure black if softer contrast feels better.
 
-STEP 6
+Try light gray text on charcoal instead of pure white text on pure black.
 
-    Check white luminance.
+Use a warmer color temperature if the default spectrum feels excessively cool.
 
-STEP 7
+Use Natural or sRGB modes when they produce a calmer and less saturated image.
 
-    Check gamma and tonal transitions.
+Do not assume Natural or sRGB disables FRC.
 
-STEP 8
+Do not assume a low-blue-light mode disables PWM.
 
-    Check local contrast and edges.
+Treat every setting as an experiment whose result should be observed rather than assumed.
 
-STEP 9
 
-    Check surface texture and AG sparkle.
+================================================================
+69. THE WINDOWS DITHERING REGISTRY CLUES
+================================================================
 
-STEP 10
+Windows graphics-driver registry areas can contain values such as:
 
-    Check pixel/subpixel rendering.
+    DitherUserMode
+    DitherMode
 
-STEP 11
+These values may be relevant to GPU-driver dithering behavior.
 
-    Check spectrum / color temperature.
+Their exact meaning depends on the specific graphics driver.
 
-STEP 12
+Finding such a value does NOT prove that visible FRC is currently occurring.
 
-    Look at real text and real images.
+Changing such a value can affect color processing or output behavior.
 
-STEP 13
+Registry changes should therefore be treated as controlled diagnostic experiments rather than universal fixes.
 
-    Compare the complete visual character.
 
-STEP 14
+================================================================
+70. WHY THE FINAL LIGHT OUTPUT MATTERS MOST
+================================================================
 
-    Ask:
+The display pipeline may contain many hidden calculations.
 
-        DOES IT LOOK SOLID, CLEAN, STABLE,
-        CONTROLLED AND NATURAL?
+The eye does not receive those calculations.
 
+The eye receives light.
 
-If yes, that is the visual quality commonly described as:
+Therefore the most useful practical question is:
 
-    INK-LIKE.
+    WHAT TEMPORAL, SPECTRAL, SPATIAL, AND LUMINANCE PATTERN IS ACTUALLY REACHING THE EYE?
 
 
-============================================================
-75. THE FINAL CAUSAL CHAIN
-============================================================
+================================================================
+71. THE COMPLETE CAUSAL MODEL
+================================================================
 
 DISPLAY HARDWARE
-      ↓
-BACKLIGHT / OLED EMISSION
-      ↓
-SPECTRUM
-      ↓
-BRIGHTNESS / LUMINANCE
-      ↓
+    ↓
+Panel technology, backlight, OLED emission, surface coating
+    ↓
 BRIGHTNESS CONTROL
-      ↓
-PWM / DC DIMMING
-      ↓
+    ↓
+PWM or DC-style control
+    ↓
 COLOR PROCESSING
-      ↓
-DITHERING / FRC
-      ↓
+    ↓
+Native bit depth, gamut mapping, FRC, HDR processing
+    ↓
 PIXEL RESPONSE
-      ↓
-PIXEL + SUBPIXEL STRUCTURE
-      ↓
-GAMMA
-      ↓
-BLACK LEVEL
-      ↓
-WHITE LEVEL
-      ↓
-LOCAL CONTRAST
-      ↓
-SCREEN SURFACE
-      ↓
-REFLECTION
-      ↓
-SCATTERING
-      ↓
-AG SPARKLE / HAZE
-      ↓
-FINAL OPTICAL IMAGE
-      ↓
-RETINAL SIGNAL
-      ↓
-VISUAL PROCESSING
-      ↓
-FOCUS / TRACKING / ATTENTION
-      ↓
-PERCEIVED IMAGE
-      ↓
-----------------------------------------------------
-STABLE + CLEAN + SOLID + CONTROLLED
-      ↓
-INK-LIKE
-----------------------------------------------------
-
-OR:
-
-UNSTABLE
-    +
-GLOWING
-    +
-GRAINY
-    +
-SPARKLY
-    +
-HAZY
-    +
-WASHED
-    +
-EXCESSIVELY INTENSE
-      ↓
-ELECTRONIC / HARSH VISUAL CHARACTER
+    ↓
+How quickly the physical display follows those changes
+    ↓
+OPTICAL OUTPUT
+    ↓
+Brightness, spectrum, contrast, spatial edges, surface scattering
+    ↓
+VIEWING CONDITIONS
+    ↓
+Distance, room lighting, reflections, text size, motion
+    ↓
+VISUAL INPUT
+    ↓
+Retina and visual processing
+    ↓
+Accommodation, blinking, motion tracking, edge detection, attention
+    ↓
+VISUAL WORKLOAD
+    ↓
+POSSIBLE DISCOMFORT
 
 
-============================================================
-76. THE FINAL RULE
-============================================================
+================================================================
+72. THE MOST IMPORTANT DISTINCTION
+================================================================
 
-Do not judge a display from one specification.
+A screen can be uncomfortable because it is TOO BRIGHT.
 
-Do not judge it from one technology label.
+A screen can be uncomfortable because its LIGHT OUTPUT MODULATES.
 
-Do not judge it from:
+A screen can be uncomfortable because its PIXEL VALUES MODULATE.
 
-    IPS
-    VA
-    TN
-    OLED
-    8-bit
-    8-bit + FRC
-    “flicker-free”
-    “low blue light”
-    high refresh rate
-    1 ms response
-    high contrast
-    high PWM frequency
+A screen can be uncomfortable because MOVING CONTENT IS SMEARED.
 
-Each specification describes only part of the system.
+A screen can be uncomfortable because CONTRAST IS EXTREME.
 
-Instead:
+A screen can be uncomfortable because the SURFACE SPARKLES.
 
-    IDENTIFY THE PHYSICAL BEHAVIOR
-          ↓
-    SEPARATE TEMPORAL FROM SPATIAL BEHAVIOR
-          ↓
-    CHECK OPTICAL INTENSITY
-          ↓
-    TEST ONE VARIABLE AT A TIME
-          ↓
-    MEASURE WHEN POSSIBLE
-          ↓
-    LOOK AT THE ACTUAL IMAGE
-          ↓
-    COMPARE THE COMPLETE VISUAL RESULT
+A screen can be uncomfortable because the SPECTRUM FEELS HARSH.
+
+A screen can be uncomfortable because TEXT IS TOO SMALL OR TOO CLOSE.
+
+Several of these can occur simultaneously.
 
 
-The ultimate practical question is not:
+================================================================
+73. THE FINAL MODEL FOR A 17-YEAR-OLD
+================================================================
 
-    “Does this monitor have the right specification?”
+Think of the screen as a machine that converts digital information into light.
 
-It is:
+The machine can change that light in TIME through PWM.
 
-    “WHAT DOES THE LIGHT ACTUALLY LOOK LIKE?”
+The machine can change pixel values in TIME through FRC.
 
-And then:
+The machine can change the SPEED of those changes through pixel response characteristics.
 
-    “DOES THE IMAGE LOOK STABLE, SOLID, CLEAN,
-     CONTROLLED, NATURAL, AND INK-LIKE?”
+The machine can change the INTENSITY through brightness.
+
+The machine can change the DIFFERENCE BETWEEN EDGES through contrast.
+
+The machine can change the COLOR MIX through its spectrum.
+
+The machine can change the SURFACE IMAGE through its anti-glare coating.
+
+Your eyes and brain then have to turn all of that light back into a stable picture.
+
+If the optical input is clean and comfortable, the visual system has less unnecessary work.
+
+If the input contains excessive brightness, distracting temporal modulation, strong reflections, sparkle, extreme contrast, or difficult motion, the visual workload can increase.
+
+That does not mean one particular technology is universally harmful.
+
+It means DISPLAY COMFORT IS THE RESULT OF THE WHOLE SYSTEM.
 
 
-That is the point where all the individual engineering
-variables come together.
+================================================================
+THE SIMPLEST TRUTH
+================================================================
 
-PWM, FRC, dithering, pixel response, brightness, contrast,
-gamma, spectrum, pixel structure, and surface coating are not
-separate final answers.
+Do not ask:
 
-They are different parts of the path that produces the final
-image seen by the eye.</pre>
+    "Is modern display technology bad?"
+
+Ask:
+
+    "WHAT IS THIS PARTICULAR DISPLAY DOING?"
+
+Separate the problem into:
+
+    PWM
+    FRC
+    PIXEL RESPONSE
+    BRIGHTNESS
+    CONTRAST
+    SPECTRUM
+    W-LED / OLED / CCFL
+    SURFACE COATING
+    AG SPARKLE
+    INK-LIKE APPEARANCE
+    MOTION
+    VIEWING DISTANCE
+    ROOM LIGHTING
+
+Then test the variables one at a time.
+
+A display does not need to be the newest, brightest, fastest, widest-gamut,
+highest-contrast, or highest-bit-depth model to produce a comfortable image.
+
+The lowest-regret target is a display whose FINAL LIGHT OUTPUT is stable,
+clear, moderate in intensity, free of distracting surface artifacts,
+and comfortable to the individual viewer.
+================================================================</pre>
 </main>
 </body>
 </html>
