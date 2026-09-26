@@ -146,7 +146,7 @@
 
 - Political Issues
 	
-	-The "Sensitive Period" Sweeps: During major political events in China (such as the National People's Congress, anniversaries, or periods of social unrest), the <a class="term" href="#gfw">GFW</a> heavily ramps up its automated filtering.
+	- The "Sensitive Period" Sweeps: During major political events in China (such as the National People's Congress, anniversaries, or periods of social unrest), the <a class="term" href="#gfw">GFW</a> heavily ramps up its automated filtering.
 	
 	- Blanket Bans: During these weeks, the firewall switches to an aggressive "block first, ask questions later" mode.
 	
@@ -602,11 +602,18 @@ Do not rotate the proxies!</pre>
 
 - Do not test proxy speed via speedtest sites, ex: speedtest.sg or speedtest.hk. The best way is just to download a file https://www.examplefile.com/video/mp4/50-mb-mp4.
 
-- Prefer proxy/vpn apps that support traffic splitting(SMART/RULE) because visiting popular or legitimate sites with different foreign IPs will make your accounts get flagged. You may need to re-authenticate with passport or face photo or simply get banned. Yes you can also turn on off the proxy/vpn which is a hassle.
+- Prefer proxy/vpn apps that support traffic splitting(SMART/RULE) because visiting popular or legitimate sites with different foreign IPs will make your accounts get flagged. You may need to re-authenticate with passport or face photo or simply get banned. Yes you can also turn on off the proxy/VPN which is a hassle.
 
 - Avoid using proxy/vpn on public Wi-Fi. The rule is stricter on local residents.
 
-- Before using any provider's app, it's better to do a https://www.virustotal.com scan on the file first.
+- Before installing any provider's APK app, it's better to scan the file using the following: 
+
+	- <a href="https://www.virustotal.com" target="_blank" rel="noopener noreferrer">https://www.virustotal.com</a>
+
+	- <a href="https://hybrid-analysis.com" target="_blank" rel="noopener noreferrer">https://hybrid-analysis.com</a>
+
+	- <a href="https://www.koodous.com" target="_blank" rel="noopener noreferrer">https://www.koodous.com</a> (need register) to scan the file.
+
 
 - Before refreshing servers for the fastest ping, disconnect first from the proxy/vpn. Fastest ping does not equal fast download.
 
@@ -616,15 +623,15 @@ Do not rotate the proxies!</pre>
 
 - Configure your web browsers to use "system proxy".
 
-- Western VPNs sometimes can be too aggresive with other proxy apps, uninstall if dont use and reboot/restart.
+- Western VPNs sometimes can be too aggresive with other proxy apps, uninstall if dont use then reboot/restart.
 
-- Often times GFW mess with subscription links thus inability to update or refresh. Most of the time the proxy servers are OK.
+- Often times GFW mess with subscription links thus inability to update or refresh the link. Most of the time the proxy servers are working just fine.
 
-- Prepare at least 2 proxy or vpn subscriptions. One premium and one cheap. Sometimes the cheap ones work better because of the novelty (1-10 RMB).
+- Prepare at least 2 proxy or VPN subscriptions. One premium and one cheap. Sometimes the cheap ones work better because of the novelty (1-10 RMB).
 
 - Disable Tailscale DNS when using vpn/clash apps.
 
-- Cannot use proxy app TUN + Tailscale Exit NODE at the same time.
+- Cannot use proxy app TUN MODE + Tailscale Exit NODE at the same time. Because both are using TUN and interfere with each other.
  
 - If expressvpn or any vpn software are being clingy to flclash or any proxy app, then reduce the metric by lowering the priority.
 	<code>Get-NetIPInterface | Format-Table ifIndex,InterfaceAlias,InterfaceMetric,AddressFamily
@@ -633,27 +640,33 @@ Do not rotate the proxies!</pre>
 
 - Do not rotate proxy selection when using Remote Desktop software.
 
-- Cannot share proxy RULES to myPublicWiFi clients for that need sing-box and turn off proxy app TUN and enable proxy mode.
+- To be able to share proxy RULES/Traffic Splitting for myPublicWiFi clients, we need Sing-box and only use Proxy Mode (NO TUN !).
 
 - Some proxies will have 10~ secs delay when opening www.youtube.com videos.
 
-- https://awesun.aweray.com/ cannot work when using western IPs.
+- <a href="https://awesun.aweray.com" target="_blank" rel="noopener noreferrer">https://awesun.aweray.com</a> cannot work when using western proxy IPs. --like Europe or America
 
-- Configure split tunneling</a> so that local traffic will not go through proxy.
+- Configure traffic splitting</a> so that local China traffic will not go through proxy.
 
-- <a class="term" href="#tun-mode">TUN Mode</a> only works with admin access. It also enables software to use proxy. Try mixed mode then gvisor.
+- <a class="term" href="#tun-mode">TUN Mode</a> only works if ran with Admin access. It also enables all software to use the proxy/VPN. Try mixed mode then gvisor.
 
-- Always turn off / disable <a class="term" href="#secure-dns">SECURE / PRIVATE DNS</a>.
+- Always turn off or disable <a class="term" href="#secure-dns">SECURE / PRIVATE DNS</a>.
 
 - Enable <a class="term" href="#fake-ip">fake-ip</a> to avoid dns leak if possible.
 
 - Do a <a class="term" href="#mtr">MTR</a> test.
 
-- To use sing-box, proxy apps need to enable <a class="term" href="#allow-lan">ALLOW LAN</a>.
+- To use Sing-box, proxy apps need to enable <a class="term" href="#allow-lan">ALLOW LAN</a>.
 
-- Microsoft Windows Defender sometimes will keep scanning proxy apps causing high cpu usage. Add the proxy apps folder to exclusion.
+- Microsoft Windows Defender sometimes will keep scanning proxy apps and causing high cpu usage. Add the proxy apps folder to Windows Defender exclusion.
 
-- Use https://www.geospoof.com <a class="term" href="#browserextension">browser extension</a> to block <a class="term" href="#webrtc">Web-RTC</a> and synchronize your computer geolocation with proxy/VPN IP. It's safer this way.</pre>
+- To avoid getting detected from using VPN, any of the following help:
+	- use <a href="https://www.geospoof.com" target="_blank" rel="noopener noreferrer">https://www.geospoof.com</a> <a class="term" href="#browserextension">browser extension</a> to block <a class="term" href="#webrtc">Web-RTC</a> and synchronize your computer geolocation with proxy/VPN IP.
+	- enable fake-ip.
+	- use good proxy IP reputation, preferably residential proxy IP.
+	- rarely changed proxy IP.
+	- using port 443 to blend with https traffic.
+	- block often leaked ipv6.</pre>
 <pre>
 <span class="section-title">Resources</span>
 
@@ -816,6 +829,7 @@ SUMMARY: "Tri-Net Premium BGP" means an infrastructure combines CT (CN2 GIA), CU
 File format/extension
 	Engine
 		Example apps
+		
 		
 .yaml
 	
