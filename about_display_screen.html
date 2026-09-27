@@ -246,7 +246,7 @@ Native 8-bit RGB provides approximately 16.7 million possible RGB combinations.
 
 An 8-bit + 2-bit FRC system can produce an apparent color range beyond what its physical 8-bit states alone provide.
 
-A specification such as “10-bit” therefore does not automatically mean every physical pixel has native 10-bit control.
+A specification such as "10-bit" therefore does not automatically mean every physical pixel has native 10-bit control.
 
 
 ================================================================
@@ -1589,7 +1589,482 @@ highest-contrast, or highest-bit-depth model to produce a comfortable image.
 The lowest-regret target is a display whose FINAL LIGHT OUTPUT is stable,
 clear, moderate in intensity, free of distracting surface artifacts,
 and comfortable to the individual viewer.
-================================================================</pre>
+================================================================
+
+
+
+
+
+<span class="section-title">THE ACTUAL QUESTION</span>
+
+The thing you are looking for is not simply:
+
+"How do I make the monitor darker?"
+
+It is:
+
+"How do I reduce the light output while preserving the monitor’s tonal mapping, especially the separation between dark shades?"
+
+This is important because OSD Brightness and image-level dimming are not the same thing.
+
+OSD BRIGHTNESS
+
+On a normal LCD monitor, OSD Brightness usually controls the physical backlight level.
+
+It reduces the amount of light coming through the entire LCD.
+
+So you can get:
+
+WHITE ↓
+MIDTONES ↓
+DARK TONES ↓
+BLACK ↓ somewhat
+
+But the panel's underlying contrast characteristics have not fundamentally changed.
+
+If the panel's minimum backlight level is still too bright, eventually you reach this situation:
+
+WHITE:
+less overwhelming
+
+BUT
+
+DARK COLORS:
+too dark / crushed / difficult to distinguish
+
+BLACK:
+still not as black as you want
+
+That is essentially the problem you have been describing.
+
+RTINGS explains that lowering LCD backlight brightness generally lowers both white and black luminance, while the native contrast ratio remains roughly similar.
+
+WHAT YOU ACTUALLY WANT
+
+You want something more like this:
+
+WHITE / BRIGHT COLORS
+        ↓
+   reduced strongly
+
+MIDTONES
+        ↓
+   remain readable
+
+DARK COLORS
+        ↓
+   remain separated
+
+BLACK
+        ↓
+   remain black
+
+
+NOT THIS:
+
+WHITE ↓
+MID ↓
+DARK ↓↓↓
+BLACK → crushed
+
+SOFTWARE / GAMMA
+
+Software or gamma controls can partially help.
+
+Gamma changes how the available image levels are distributed between black and white.
+
+Therefore, instead of simply making everything darker, gamma/tone-curve adjustment can redistribute the tonal range.
+
+This can potentially give you:
+
+less intense highlights
++
+still-readable midtones
++
+better separation of dark shades
+
+However, there is a hard limitation:
+
+Software cannot make the physical LCD backlight produce a lower physical black level.
+
+If the panel itself has too much light leakage / high minimum luminance / poor native contrast, software can only manipulate the signal going into the panel.
+
+So software is a secondary tool, not a substitute for the right panel.
+
+CAREUEYES / SOFTWARE OVERLAYS
+
+Programs such as CareUEyes can dim the overall image differently from the monitor's OSD brightness.
+
+That can be useful because the physical backlight does not necessarily have to be reduced as much.
+
+But it is still an image-level overlay/filter.
+
+The downside is exactly what you have already noticed:
+
+the entire image can become altered or uncomfortable even though the brightness reduction may be better.
+
+Therefore I would NOT make software dimming your primary solution.
+
+THE LEAST-REGRET BUYING STRATEGY
+
+For your particular requirement, keep the buying criteria very simple.
+
+1. VA PANEL FIRST
+
+Look at VA before conventional IPS.
+
+The reason is native contrast.
+
+VA generally provides much higher native contrast than conventional IPS.
+
+A high-contrast VA panel can produce:
+
+BLACK
+↓
+very dark gray
+↓
+dark gray
+↓
+medium gray
+
+with much better separation than a typical low-contrast IPS.
+
+RTINGS' measurements show a large typical native-contrast advantage for VA over IPS.
+
+For your requirement, I would look for:
+
+NATIVE CONTRAST >= 3000:1
+
+Higher is useful, but 3000:1 is already a meaningful target.
+
+2. CHECK MINIMUM SDR BRIGHTNESS
+
+This is extremely important.
+
+Do NOT primarily look at:
+
+"400 nits"
+"500 nits"
+"600 nits"
+
+Those are maximum-brightness numbers.
+
+You want to know:
+
+"How dim can this monitor actually become in normal SDR use?"
+
+Look for a review that measures:
+
+MINIMUM BRIGHTNESS
+
+As a practical target:
+
+<= 50 cd/m²
+
+is good.
+
+Around:
+
+20–30 cd/m²
+
+would be particularly interesting for your use case.
+
+Some displays can go even lower.
+
+This is much more relevant to you than a monitor advertising enormous peak brightness.
+
+3. CHECK BLACK UNIFORMITY
+
+Because you specifically dislike the:
+
+"white cloud"
+"gray veil"
+"washed black"
+
+effect.
+
+Look for measurements/reviews discussing:
+
+BLACK UNIFORMITY
+BACKLIGHT BLEED
+CLOUDING
+IPS GLOW
+
+A display can have a good contrast ratio in the center and still have ugly uneven dark areas.
+
+For your requirement, good black uniformity matters.
+
+4. AVOID CHASING MINI-LED AUTOMATICALLY
+
+Mini-LED can produce extremely good blacks and contrast because it has many independently controlled backlight zones.
+
+But that does not automatically make it suitable for you.
+
+Aggressive local dimming can cause:
+
+BLACK CRUSH
+HALOS
+BRIGHTNESS FLUCTUATION
+LOSS OF DARK-SHADE DETAIL
+
+So:
+
+GOOD VA WITHOUT LOCAL DIMMING
+
+may actually be preferable for you to:
+
+CHEAP/AGGRESSIVELY TUNED MINI-LED.
+
+Mini-LED is an option, not a requirement.
+
+5. LOOK FOR GAMMA CONTROLS
+
+Ideally the monitor has something like:
+
+Gamma 1
+Gamma 2
+Gamma 3
+
+or equivalent controls.
+
+This gives you some ability to alter the tonal curve instead of relying entirely on OSD Brightness.
+
+The goal is:
+
+DARK SHADES
+→ remain distinguishable
+
+while
+
+BRIGHT COLORS / WHITE
+→ remain controlled
+
+Gamma is specifically involved in how shades between black and white are distributed.
+
+6. DO NOT PRIORITIZE HDR
+
+For your purpose, specifications such as:
+
+1000 nits HDR
+1400 nits HDR
+1600 nits HDR
+
+are not particularly useful.
+
+You are trying to avoid excessive luminance.
+
+Your preferred operating condition is more like:
+
+SDR
++
+controlled luminance
++
+good contrast
++
+good tonal separation
+
+rather than:
+
+maximum brightness
++
+HDR
++
+spectacular highlights
+
+7. DO NOT PRIORITIZE GAMING SPECIFICATIONS
+
+These are secondary for your particular objective:
+
+144 Hz
+180 Hz
+240 Hz
+360 Hz
+1 ms
+HDR peak brightness
+wide-gamut percentage
+local-dimming zone count
+gaming modes
+
+They can be useful for other reasons, but they don't solve your main problem.
+
+THE FOUR MOST IMPORTANT REVIEW NUMBERS
+
+When evaluating a monitor, concentrate first on:
+
+1. NATIVE CONTRAST
+   Target: >= 3000:1
+   Higher is generally better for your black/ink requirement.
+
+2. MINIMUM SDR BRIGHTNESS
+   Target: <= 50 cd/m²
+   Preferably around 20–30 cd/m² or lower.
+
+3. BLACK UNIFORMITY
+   Look for a review measurement and photos.
+   Avoid obvious clouding/bleed/glow.
+
+4. GAMMA / TONAL BEHAVIOR
+   Look for good gamma tracking and adjustable gamma.
+   Check whether dark shades remain distinguishable.
+
+YOUR IDEAL DISPLAY, IN PLAIN LANGUAGE
+
+You are looking for a display that can do this:
+
+BRIGHT COLORS:
+bright enough to see,
+but not painfully intense.
+
+MIDTONES:
+clear and readable.
+
+DARK COLORS:
+dark,
+but still individually recognizable.
+
+BLACK:
+actually black or very close to it.
+
+DIMMING:
+you can reduce overall luminance substantially
+without destroying the dark and midtone information.
+
+IMAGE:
+looks like an "ink painting":
+clean boundaries,
+deep dark regions,
+controlled highlights,
+little or no white veil.
+
+THE HARDWARE/SOFTWARE MAP
+
+WHAT YOU SEE:
+Black looks gray
+→ Native contrast + black level
+
+Dark colors merge
+→ Gamma + near-black response + black crush
+
+White/gray veil in dark areas
+→ Low native contrast + black uniformity + backlight bleed/glow + reflections
+
+Bright colors are too intense
+→ Backlight luminance + tone curve + HDR/tone mapping
+
+Dimming makes the image unreadable
+→ Minimum backlight level + gamma/tone curve
+
+Dark regions lose detail
+→ Gamma + black-level setting + black crush
+
+Colors lose separation
+→ Panel + gamma + color processing + bit depth
+
+Gradient steps
+→ Bit depth + quantization + FRC/dithering + processing
+
+Shimmer/flicker
+→ PWM + temporal modulation + FRC + pixel inversion and other temporal behavior
+
+WHAT IS PHYSICAL HARDWARE?
+
+Mostly:
+
+PANEL TECHNOLOGY
+↓
+NATIVE CONTRAST
+↓
+BLACK LEVEL
+↓
+BACKLIGHT
+↓
+OPTICAL LAYER
+↓
+UNIFORMITY
+↓
+MAXIMUM/MINIMUM LUMINANCE
+
+WHAT IS FIRMWARE / MONITOR PROCESSING?
+
+Mostly:
+
+GAMMA
+↓
+BLACK LEVEL
+↓
+CONTRAST
+↓
+TONE CURVE
+↓
+LOCAL DIMMING
+↓
+HDR TONE MAPPING
+↓
+OVERDRIVE
+↓
+COLOR PROCESSING
+
+WHAT CAN GPU / SOFTWARE CHANGE?
+
+Potentially:
+
+GPU GAMMA
+RGB RANGE
+COLOR MANAGEMENT
+DITHERING
+HDR
+SCALING
+APPLICATION-LEVEL IMAGE PROCESSING
+
+BUT SOFTWARE HAS A PHYSICAL LIMIT:
+
+It cannot make a physically leaky LCD panel become a genuinely black panel.
+
+FINAL LEAST-REGRET FILTER
+
+If buying a new monitor specifically for your "ink-type" image preference:
+
+VA
++
+native contrast >= 3000:1
++
+measured minimum SDR brightness <= 50 cd/m²
++
+preferably 20–30 cd/m² or lower
++
+good black uniformity
++
+minimal backlight bleed/clouding
++
+adjustable gamma
++
+good near-black performance
++
+normal SDR mode
++
+avoid aggressive local dimming unless reviews show it is well behaved
+
+Then, only afterward, consider:
+
+refresh rate
+response time
+HDR
+wide gamut
+gaming features
+
+THE MOST IMPORTANT POINT
+
+Do NOT shop based on:
+
+"Can this monitor get very bright?"
+
+Shop based on:
+
+"Can this monitor get genuinely dim while keeping the picture intact?"
+
+That is the characteristic that most directly matches what you have been describing.
+
+RTINGS has measurements for native contrast, minimum brightness, black uniformity, gamma/tonal behavior and local dimming, so those reviews are particularly useful for filtering monitors according to this specific requirement.</pre>
 </main>
 </body>
 </html>
