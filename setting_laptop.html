@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>About China: Internet</title>
+    <title>Reinstall Windows</title>
     <meta name="robots" content="noindex, nofollow, nosnippet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -133,15 +133,15 @@
 <main>
 <pre>
 <h2>Reinstall windows 11 26100.3323</h2>
-enable recycle bin prompt before deleting: properties &gt; display delete confirmation dialog, yes
+- enable recycle bin prompt before deleting: properties &gt; display delete confirmation dialog, yes
 
 
-disable start up apps: press ctrl + shift + esc
+- disable start up apps: press ctrl + shift + esc
 
-	-all the things you know that you don't need to be started all the time
+	- all the things you know that you don't need to be started all the time
 
 
-disable and stop services.msc:
+- disable and stop services.msc:
 	- connected user experience and telemetry
 	- windows search --if you use everything file search
 	- sysmain
@@ -155,7 +155,7 @@ disable and stop services.msc:
 	- onedrive and filesynchelper
 	
 
-disable task scheduler:
+- disable task scheduler:
 	- OneDrive
 	- Task Scheduler Library &gt; Microsoft &gt; Windows &gt; Customer Experience Improvement Program
 	- disable all lenovo thing except lenovo udc monitor
@@ -164,14 +164,14 @@ disable task scheduler:
 	- office performance monitor
 
 
-disable etc:
+- disable etc:
 	- microsoft store auto update: settings &gt; app updates, disable
 	- uac, search uac: change user control account setting &gt; set to never notify
 	- OneDrive: unlink this PC &gt; then disable/uninstall
 	- fast startup: power options &gt; choose what power button does &gt; change settings that are currently unavailable &gt; turn on fast startup, untick
 
 
-add windows defender exception to lighten up CPU USAGE: --to find out which folder is high traffic, use https://www.autohotkey.com/boards/viewtopic.php?t=8384 autohotkey v1 then exclude those folders for indexing or monitoring
+- add windows defender exception to lighten up CPU USAGE: --to find out which folder is high traffic, use https://www.autohotkey.com/boards/viewtopic.php?t=8384 autohotkey v1 then exclude those folders for indexing or monitoring
 	- %localappdata%\Programs\Winhance\
 	- C:\Program Files\Windhawk\
 	- C:\ProgramData\Windhawk
@@ -179,7 +179,7 @@ add windows defender exception to lighten up CPU USAGE: --to find out which fold
 	- %localappdata%\Microsoft\Edge
 	- %localappdata%\Programs\Winhance
 	- %appdata%\kingsoft
-	- OTHER_vPN or things that might get inspected. HOW TO KNOW? Just run any program that you usually use and go to TASK MANAGER and if windows defender service keeps showing on the top of the list, just exclude this program as long you know the program is safe.
+	- OTHER VPN or things that might get inspected. HOW TO KNOW? Just run any program that you usually use and go to TASK MANAGER and if windows defender service keeps showing on the top of the list, just exclude this program as long you know the program is safe.
 
 
 <p>Windows 11 Settings</p>
@@ -2102,6 +2102,11 @@ Options
 → Settings
 → Advanced
 	→ Enable global shared memory (SNMP)
+
+or
+→ C:\Program Files\Core Temp\CoreTemp.ini
+→ SnmpSharedMemory=0; to SnmpSharedMemory=1;
+	
 	
 → Restart Core Temp
 	
