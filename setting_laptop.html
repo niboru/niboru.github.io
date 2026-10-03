@@ -1,0 +1,2714 @@
+
+<h2>Reinstall windows 11 26100.3323</h2>
+enable recycle bin prompt before deleting: properties &gt; display delete confirmation dialog, yes
+
+
+disable start up apps: press ctrl + shift + esc
+
+	-all the things you know that you don't need to be started all the time
+
+
+disable and stop services.msc:
+	- connected user experience and telemetry
+	- windows search --if you use everything file search
+	- sysmain
+	- amd crash defender service
+	- amd external events utility
+	- geolocation service
+	- diagnostic system host/diagnostic policy --will break battery usage
+	- phone service
+	- program compatibility assistant service
+	- universal device client service (lenovo)
+	- onedrive and filesynchelper
+	
+
+disable task scheduler:
+	- OneDrive
+	- Task Scheduler Library &gt; Microsoft &gt; Windows &gt; Customer Experience Improvement Program
+	- disable all lenovo thing except lenovo udc monitor
+	- office feature updates
+	- office feature updates logon
+	- office performance monitor
+
+
+disable etc:
+	- microsoft store auto update: settings &gt; app updates, disable
+	- uac, search uac: change user control account setting &gt; set to never notify
+	- OneDrive: unlink this PC &gt; then disable/uninstall
+	- fast startup: power options &gt; choose what power button does &gt; change settings that are currently unavailable &gt; turn on fast startup, untick
+
+
+add windows defender exception to lighten up CPU USAGE: --to find out which folder is high traffic, use https://www.autohotkey.com/boards/viewtopic.php?t=8384 autohotkey v1 then exclude those folders for indexing or monitoring
+	- %localappdata%\Programs\Winhance\
+	- C:\Program Files\Windhawk\
+	- C:\ProgramData\Windhawk
+	- %localappdata%\BraveSoftware\Brave-Browser
+	- %localappdata%\Microsoft\Edge
+	- %localappdata%\Programs\Winhance
+	- %appdata%\kingsoft
+	- OTHER_vPN or things that might get inspected. HOW TO KNOW? Just run any program that you usually use and go to TASK MANAGER and if windows defender service keeps showing on the top of the list, just exclude this program as long you know the program is safe.
+
+
+<p>Windows 11 Settings</p>
+
+	<span class="label">- system</span>
+	
+		&gt; sound &gt; speakers &gt; audio enhancements &gt; Off (to save battery)
+		
+    		&gt; notifications
+			&gt; do not disturb: enabled
+			&gt; additional settings: untick all
+			
+		&gt; power & battery
+			&gt; power mode: both balanced
+			&gt; energy saver
+				&gt; always use energy saver: off
+				&gt; turn energy saver on automatically when battery level is at 30%: change to always
+				&gt; lower screen brightness when using energy saver: off
+				
+		&gt; storage &gt; storage sense
+			&gt; run storage sense: low disk space change to every month
+			&gt; delete files in recycle bin if they have been there for over: 30 days change to 60 days
+			&gt; content will become online only if not opened more than: 30 days to never
+			
+		&gt; about &gt; advanced system settings &gt; advanced
+			&gt; performance &gt; settings &gt; visual effects &gt; adjust for best performance
+				&gt; smooth edges of screen fonts: yes
+			&gt; remote &gt; allow remote assistance connections to this computer: no
+			
+		&gt; clipboard &gt; clipboard history: enable
+			
+			
+	<span class="label">- bluetooth & device</span>
+	
+		&gt; bluetooth: off
+		
+		&gt; autoplay: disable
+		
+		&gt; mouse
+			&gt; enhance printer precision, disable
+		
+		&gt; touch pad
+			&gt; cursor speed: 6
+			&gt; touchpad &gt; advanced gesture &gt; configure three-finger gestures &gt; tap: nothing
+		&gt; usb	&gt; all enabled
+		
+		
+	<span class="label">- network & internet</span>
+	
+		&gt; Wi-Fi	&gt; (SSID) properties &gt; metered connection: on
+				
+		&gt; Ethernet &gt; metered connection: on
+		
+		<b>use registry key to set all networking devices to metered connection</b>
+		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\DefaultMediaCost
+			&gt; Default: 2
+			&gt; WiFi: 2
+			&gt; Ethernet: 2
+			
+		use PowerRun https://www.sordum.org/downloads/?power-run to set the value ( need trusted installer access )
+			&gt; click + sign
+				&gt; file location &gt; regedit
+				&gt; name &gt; regedit
+				&gt; click apply list &gt; double click the new list
+		
+				
+	<span class="label">- personalization</span>
+	
+		&gt; colors
+			&gt; mode: dark
+			&gt; transparency effect: off
+			
+		&gt; dynamic lightning
+			&gt; use dynamic lightning on my devices: off
+			
+		&gt; lock screen
+			&gt; personalize your lock screen &gt; picture
+			&gt; get fun fact, tips, tricks and more on your lock screen: untick
+			&gt; lock screen status: Dev Home
+			
+			
+	<span class="label">- start</span>
+	
+		&gt; show most used apps: off to on
+	
+	
+	<span class="label">- taskbar</span>
+	
+		&gt; search, search box to hide
+		
+		&gt; widgets, off
+		
+		&gt; task bar behavior
+			&gt; taskbar alignment: left
+			&gt; automatically hide the taskbar: untick to tick or vice versa
+			&gt; combine taskbar buttons and hide labels: always
+			&gt; show flashing on taskbar apps / show badges: uncheck this IF YOU TURN ON TASKBAR-AUTOHIDE feature, because it will not work if there's a flashing app that needs attention.
+			
+			
+	<span class="label">- apps</span>
+	
+		&gt; advanced app settings
+			&gt; choose where to get apps: anywhere
+			
+			
+	<span class="label">- accounts</span>
+	
+		&gt; other users &gt; add other user &gt; add account 
+		
+		&gt; sign-in options
+			&gt; pin &gt; change pin
+			&gt; for improved security only allow windows hello sign-in for microsoft accounts: on
+			&gt; if you have been away when should windows require you to sign in again: 15 mins (def)
+			
+			
+	<span class="label">- time & language</span>
+	
+		&gt; date & time &gt; sync now
+		
+		&gt; language & region &gt; add language
+		
+			
+	<span class="label">- gaming &gt; game bar: off</span>
+	
+	
+	<span class="label">- accessibility</span>
+	
+		&gt; text size
+		
+		&gt; visual effects
+			&gt; animation effect: on to off
+		
+			
+	<span class="label">- privacy & security</span>
+	
+		&gt; windows security
+			&gt; device security &gt; core isolation details &gt; memory integrity: off
+			
+		&gt; device encryption
+			&gt; device encryption: off to on or vice versa
+			
+		&gt; general
+			&gt; disable all except let Windows improve Start and search results by tracking app launches
+		
+			
+	<span class="label">- Windows Update</span>
+	
+		&gt; Pause and Off all
+		
+		&gt; pause indefinitely
+			&gt; regedit.exe &gt; HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings
+				&gt; PauseUpdatesExpiryTime, STRING 2051-12-31T00:00:00Z
+				&gt; PauseUpdatesStartTime, STRING 2025-01-01T00:00:00Z
+				&gt; PauseQualityUpdatesStartTime, STRING 2025-01-01T00:00:00Z
+				&gt; PauseQualityUpdatesEndTime, STRING 2051-12-31T00:00:00Z
+				&gt; PauseFeatureUpdatesStartTime, STRING 2025-01-01T00:00:00Z
+				&gt; PauseFeatureUpdatesEndTime, STRING 2051-12-31T00:00:00Z
+				&gt; PausedQualityDate, STRING 2025-01-01T00:00:00Z
+				&gt; PausedFeatureDate, STRING 2025-01-01T00:00:00Z
+
+
+<p>Windows 11 Install</p>
+
+	<span class="label">- visual c++ redist</span>
+		https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/
+	
+	
+	<span class="label">- 7zip &gt; tools &gt; options</span>
+		
+		&gt; remove "extract all" from context menu for .zip file
+			&gt; regedit.exe
+				&gt; Computer\HKEY_CLASSES_ROOT\CompressedFolder\ShellEx\ContextMenuHandlers\, delete this key {b8cdcb65-b1bf-4b42-9428-1dfdb7ee92af}
+				&gt; Computer\HKEY_CLASSES_ROOT\CompressedFolder\ShellEx\-ContextMenuHandlers\, add this key {b8cdcb65-b1bf-4b42-9428-1dfdb7ee92af}
+				&gt; Computer\HKEY_CLASSES_ROOT\SystemFileAssociations\.zip\shellex\ContextMenuHandlers\, delete key {b8cdcb65-b1bf-4b42-9428-1dfdb7ee92af}
+				&gt; Computer\HKEY_CLASSES_ROOT\SystemFileAssociations\.zip\shellex\-ContextMenuHandlers\, add key {b8cdcb65-b1bf-4b42-9428-1dfdb7ee92af}
+				&gt; --or use windows context menu manager https://github.com/BluePointLilac/ContextMenuManager/releases
+				&gt; file type &gt; the currently selected file extension is &gt; click on paper button on the right &gt; please select file extension, zip &gt; ok
+		
+		&gt; remove "extract all" from context menu for .rar
+			&gt; HKEY_CLASSES_ROOT\SystemFileAssociations\.rar\shellex\ContextMenuHandlers, delete key {EE07CEF5-3441-4CFB-870A-4002C724783A}
+		
+		&gt; remove "extract all" for 7z
+			&gt; HKEY_CLASSES_ROOT\SystemFileAssociations\.7z\shellex\ContextMenuHandlers\{EE07CEF5-3441-4CFB-870A-4002C724783, delete key {EE07CEF5-3441-4CFB-870A-4002C724783A}
+
+		&gt; system &gt; click "+" button &gt; apply
+		
+		&gt; 7-zip
+			&gt; cascaded context menu: untick
+			&gt; context menu items
+				&gt; untick number: 2 6 9 10 11 12 13 14
+				&gt; to take advantage of the shortcut: first compress with level 9 first
+	
+	
+	<span class="label">- brave browser</span>
+	
+		// battery saver browser
+		
+		&gt; restore from old UserData, paste here C:\Users\your_username\Appdata\Local\BraveSoftware\Brave-Browser
+		
+		&gt; windows + i &gt; settings &gt; apps &gt; default apps &gt; brave &gt; make brave your default browser &gt; set default
+		
+		&gt; untick, send diagnostic reports and share product insights
+		
+		&gt; use default settings, good enough
+		
+		&gt; settings &gt; privacy and security
+			&gt; data collection &gt; automatically send daily usage ping to brave: disable
+		
+		&gt; leo &gt; disable all
+		
+		&gt; search &gt; improve search suggestion: disable
+		
+		&gt; system
+			&gt; memory saver: enable balanced
+			&gt; energy saver: turn on when your computer is unplugged
+		
+		&gt; main page settings &gt; cards: disable all
+		
+		&gt; extension
+			&gt; geospoof
+			&gt; chatgpt lightsession 	
+			&gt; free download manager
+			&gt; volume master
+			&gt; translate web page (twp) or Linguist - web page translator (brave translator is worse compared with msedge)
+				&gt; showing 3 languages button instead of 1
+					&gt; settings
+						&gt; languages
+							&gt; favorite language 1: chinese (simplified)
+							&gt; favorite language 2: english
+							&gt; favorite language 3: indonesian
+							&gt; never translate this language: indonesian
+						&gt; privacy
+							&gt; select translation service you want to use: bing and deepl
+		&gt; debloat
+			
+			Windows Registry Editor Version 5.00
+
+			[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\BraveSoftware\Brave]
+			"BraveRewardsDisabled"=dword:00000001
+			"BraveWalletDisabled"=dword:00000001
+			"BraveVPNDisabled"=dword:00000001
+			"BraveAIChatEnabled"=dword:00000000
+			"BraveStatsPingEnabled"=dword:00000000
+			"BraveNewsDisabled"=dword:00000001
+			"BraveTalkDisabled"=dword:00000001
+			"TorDisabled"=dword:00000001
+			"BraveP3AEnabled"=dword:00000000
+			"UrlKeyedAnonymizedDataCollectionEnabled"=dword:00000000
+			"SafeBrowsingExtendedReportingEnabled"=dword:00000000
+			"MetricsReportingEnabled"=dword:00000000
+			"DefaultBrowserSettingEnabled"=dword:00000000
+
+		&gt; check history &gt; brave://settings/content/all
+
+		
+	<span class="label">- Microsoft Edge</span>
+	
+		// battery saver browser
+		
+		--highlight a text then select hide menu to always (mini menu)
+	
+		&gt; edit auto update scheduler via taskschd.msc
+	
+			&gt; MicrosoftEdgeUpdateTaskMachineUA
+			
+				&gt; Triggers &gt; Edit
+					&gt; Weekly, set at night time on Sat and Sun
+					&gt; Repeat task every: 30 mins
+						&gt; for a duration of: 1 hour
+					Stop the task if it runs longer than: disable
+					
+				&gt; Conditions
+					&gt; start the task only if the computer is on AC power: enable
+					&gt; stop if the computer switches to battery power: enable
+					
+				&gt; Settings
+					&gt; run task as soon as possible after a scheduled start is missed: enable
+					&gt; Stop the task if it runs longer than: 25 minutes
+					&gt; if the running task does not end when requestion, force it to stop: enable
+					&gt; if the task is already running, then the following rules applies: stop the existing instance
+					
+			&gt; MicrosoftEdgeUpdateTaskMachineCore
+			
+				&gt; Triggers &gt; Daily
+					&gt; Change to Weekly Sat and Sun at night
+					&gt; Conditions, same like the above
+					&gt; Settings
+						&gt; stop the task if it runs longer than: 15 mins
+						&gt; if the task is already running, then the following rule applies: stop the existing instance
+					
+		&gt; main page &gt; disable all
+		
+		&gt; ... &gt; settings
+		
+			&gt; profiles
+			
+				&gt; sync
+					&gt; personal info: disable
+					&gt; feature usage: disable
+				&gt; share browsing data with other windows feature &gt; disable
+				
+			&gt; privaacy, search, services
+				&gt; search and connected experiences,, disable all
+				
+			&gt; copilot and ai &gt; show copilot button in toolbar: disable
+			
+			&gt; start, home, and new tab page
+				&gt; on startup, open tabs from the previous session
+				&gt; preload your new tab page: disable
+				
+			&gt; system and performance
+			
+				&gt; system
+					&gt; startup boost: disable
+					&gt; continue running background extension and apps when Edge is closed: disable
+					
+				&gt; performance
+					&gt; preload pages for faster browsing and searching: disable
+					&gt; use energy saver even when connected to power: disable
+					&gt; automatically put tabs to sleep: enable
+					
+		&gt; extension
+			&gt; translate web pages (twp) instead immersive translate
+				get twp from https://chromewebstore.google.com/
+			&gt; ublock origin lite
+			&gt; vantage llm
+			&gt; summary web page
+			&gt; free download manager
+			
+		&gt; enable dark mode for web pages
+			&gt; edge://flags &gt; Auto Dark Mode for Web Contents: enabled
+
+		&gt; prevent the settings from reset
+			Windows Registry Editor Version 5.00
+
+			[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+			"BackgroundModeEnabled"=dword:00000000
+			"AllowPrelaunch"=dword:00000000
+			"StartupBoostEnabled"=dword:00000000
+
+			
+			From https://github.com/christitustech/winutil:
+
+			Windows Registry Editor Version 5.00
+
+			[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\EdgeUpdate]
+			"CreateDesktopShortcutDefault"=dword:00000000
+			
+			[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
+			"PersonalizationReportingEnabled"=dword:00000000
+			"ShowRecommendationsEnabled"=dword:00000000
+			"HideFirstRunExperience"=dword:00000001
+			"UserFeedbackAllowed"=dword:00000000
+			"ConfigureDoNotTrack"=dword:00000001
+			"AlternateErrorPagesEnabled"=dword:00000000
+			"EdgeCollectionsEnabled"=dword:00000000
+			"EdgeShoppingAssistantEnabled"=dword:00000000
+			"MicrosoftEdgeInsiderPromotionEnabled"=dword:00000000
+			"ShowMicrosoftRewards"=dword:00000000
+			"WebWidgetAllowed"=dword:00000000
+			"DiagnosticData"=dword:00000000
+			"EdgeAssetDeliveryServiceEnabled"=dword:00000000
+			"WalletDonationEnabled"=dword:00000000
+			"DefaultBrowserSettingsCampaignEnabled"=dword:00000000
+
+			[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallBlocklist]
+			"1"="ofefcgjbeghpigppfmkologfjadafddi"
+
+		
+	<span class="label">- o&o shutup oosu.exe</span>
+	
+		// disable Windows advertisement and enhance privacy
+	
+		&gt; Apply only recommended settings, but still check what it's needed
+		
+		AI &gt;
+			&gt; disable copilot
+			&gt; remove copilot
+		
+		
+	<span class="label">- free download manager</span>
+	
+		&gt; preferences
+		
+			&gt; general &gt; launch at startup: no
+			
+			&gt; default download folder &gt; fixed default download folder: select the folder
+			
+			&gt; browser integration &gt; start downloading without confirmation: yes
+			
+			&gt; antivirus
+				select antivirus &gt; windows defender antivirus
+				automatically perform virus check when download is finished: yes
+				
+			&gt; advanced
+				&gt; notifications
+					&gt; all disable
+					&gt; Use sounds: yes
+						&gt; Downloads completed &gt; Set sound, select from C:\Windows\Media\Windows Unlock.wav
+				&gt; backup the list of download every 1 day
+				&gt; show special offer: no
+				&gt; click on the close button to hide FDM and keep it running in the background: no
+				
+		// elephant extension to download videos
+		
+			https://github.com/meowcateatrat/elephant/releases/latest/download/elephant.fda
+			
+			go to preference &gt; Add-ons &gt; wheel icon &gt; Install add-on from file... &gt; select elephant.fda
+			
+				complete deno dependency download and install first
+							
+	
+	<span class="label">- amd adrenaline &gt; enable hypr-rx eco to save battery</span>
+	
+		&gt; settings
+		
+			&gt; system &gt; issue detection: disable
+			&gt; hotkeys &gt; use hotkeys: disable
+			&gt; preferences
+				&gt; toast notification: disable
+				&gt; tutorials, disable
+				&gt; animation & effects: disable
+				
+		&gt; debloat &gt; taskschd.msc
+			&gt; amd install manager, disable
+			&gt; amdscoupportypeupdate, disable
+			&gt; modifylinkupdate
+			&gt; startcn
+			&gt; startdvr
+			
+		&gt; auto run
+			&gt; amdnoisesuppression: disable
+			
+		&gt; services.msc
+			&gt; amd crash defender service: disable
+			
+			
+	<span class="label">- lenovo vantage</span>
+	
+		&gt; download from ms store
+		
+		&gt; device settings &gt;power
+			&gt; conservation mode: enable
+			&gt; always on usb: disable
+			
+			
+	<span class="label">- everything 1.5</span>
+	
+		// file search indexer
+		
+		--better to use windows search + flow launcher --everything + flow launcher often disconnected --if your have small SSD/HDD and files are not in the millions, just use windows search --index working data NOT stored data for effiency --usually Users folder --not sure but still better to use everything if no bug (apparently everything.exe should have 2 in the task manager for it to work, so the UI should always run in the background for it to connects to explorer flow launcher plugin). SOMETIMES there's bug with admin access with indexing, you need to update or wait for the fix.
+	
+		tools &gt; options
+		
+			&gt; general
+				&gt; start everything on system startup, ok --if you use flow launcher
+				&gt; everything service, ok
+				&gt; run as admin or run indexing service as admin, UNTICK --check warning of admin in Indexes &gt; NFTS 
+				
+			&gt; UI
+				&gt; run in background, Yes if you use flow launcher (avoid disconnection)
+				
+			&gt; home
+				&gt; run in background, ok --if you use flow launcher
+				&gt; search &gt; use last value
+				
+			&gt; indexes &gt; exclude
+				&gt; C:\Users\user_name\AppData\Local\BraveSoftware\Brave-Browser\User Data
+				&gt; C:\Users\user_name\AppData\Local\Microsoft\Edge
+				&gt; C:\Users\user_name\AppData\Local\Temp
+				&gt; C:\Windows\Temp
+				&gt; C:\Windows\WinSxS
+				
+				or
+					
+				&gt; C:\Windows\
+				&gt; C:\ProgramData\
+				&gt; %LocalAppdata%\Temp
+				&gt; %AppData%\Microsoft
+				&gt; %LocalAppData%\Microsoft
+				&gt; %LocalAppData%\BraveSoftware
+				&gt; C:\$Recycle.Bin
+				
+	
+	<span class="label">- flow launcher</span>
+	
+		// simple search popup menu
+	
+		settings
+			&gt; hide flow launcher at startup, enable
+			
+		plugins
+			&gt; currencyPP
+			
+				&gt; edit the settings in %APPDATA%\FlowLauncher\Settings\Plugins\CurrencyPP\Settings.json
+					because if you edit from flow launcher, it doesnt get saved
+					
+				&gt; change to 
+					{
+					"app_id": "",
+					"input_cur": "CNY",
+					"destination_separators": "and \u0026 ,",
+					"aliases": "USD = $ dollar dollars bucks\nEUR = euro euros",
+					"output_cur": "IDR USD",
+  					"update_freq": "daily",
+  					"separators": "to in : ."
+					}
+					
+			&gt; timer
+			
+			&gt; explorer
+			
+				&gt; general settings
+					&gt; index search engine, set to everything
+					&gt; content search engine, set to everything
+					&gt; directory recursive set to everything
+					
+				&gt; everything setting
+					&gt; sort option, run count (arrow down)
+					&gt; everything path, C:\Program Files\Everything\Everything.exe
+					&gt; excluded file types
+						&gt; js,json,xml,yml,yaml,pdb,ilk,suo,user,tmp,temp,cache,log,bak,old,~,crdownload,part,etl,dmp,idx,~$*doc*,~$*xls*,~$*ppt*,dll,sys,drv,ocx,msi,msp,ini,cfg,reg,manifest,inf,js,cab,otf,ttf
+						
+				&gt; customized action keywords
+				
+					&gt; Search:, set to disable, it includes folder, we dont want that messy thing
+						&gt; Click Edit, uncheck Enabled &gt; Done
+						
+					&gt; File Search:, set to enable
+						&gt; Click Edit
+							&gt; Current Action Keyword, set to * (default)
+							&gt; Check Enable
+							
+					&gt; Folder Search:, set to enable
+						&gt; Click Edit
+							&gt; Current Action Keyword, set to folder:
+							&gt; Check Enable
+								Type folder: folder_to_search
+								
+					&gt; File Content Search, DISABLE THIS, will cause error because we don't use Windows Search
+					
+			&gt; program
+				&gt; hide uninstaller: tick
+				&gt; hide duplicated apps: tick
+				
+	
+	<span class="label">- open-shell &gt; settings &gt; show all settings: ticked</span>
+	
+		// Windows simple start menu replacement
+	
+		&gt; start menu style &gt; classic with two columns
+		
+		&gt; basic settings
+			&gt; computer &gt; display as a list of drives
+			&gt; control panel &gt; display as a 
+			
+		&gt; skin
+			&gt; small icons: yes
+			&gt; Center user name: yes
+			&gt; show user picture: no
+			&gt; text size: 14
+			
+		&gt; special items
+			&gt; user files &gt; display as a menu
+			&gt; user documents &gt; display as a menu
+			&gt; user pictures &gt; don't display this item
+			&gt; network connections &gt; display as a menu
+			&gt; printers &gt; display as a menu
+			&gt; show search menu, untick
+			&gt; show help & support, untick
+			&gt; sort recent documents &gt; by date
+			
+		&gt; customize start menu
+			&gt; add direct menu to sleep, lock and display off
+				&gt; for display off use C:\Windows\System32\scrnsave.scr /s, put in command field
+					&gt; this is the only working trick on modern laptop to emulate display off that doesnt get the laptop to sleep
+				&gt; use & on label for keyboard shortcut (ex: S&leep, now press windows + l to sleep)
+				
+				
+	<span class="label">- break timer</span>
+	
+	
+	<span class="label">- python &gt; add to path</span>
+	
+	
+	<span class="label">- farstone image viewer</span>
+	
+		&gt; settings &gt; theme &gt; grey
+		
+		&gt; settings &gt; settings
+			&gt; thumbnail &gt; thumbnail size &gt; 400 x 300
+			
+			
+	<span class="label">- crystaldisk info</span>
+	
+		// Check SSD/HDD health or HDD Sentinel.
+	
+		&gt; function
+			&gt; auto refresh &gt; 60 mins
+			&gt; keep running in system tray: uncheck
+			&gt; startup: check
+			
+		&gt; right click on the tray menu &gt; show temperature icon only: check
+	core temp
+	
+		&gt; options &gt; settings
+		
+			&gt; general
+				&gt; temperature polling interval: 5000 ms
+				&gt; start coretemp with windows: yes
+				
+			&gt; display
+				&gt; start core temp minimized: yes
+				&gt; close core temp to the notification area: yes
+				
+			&gt; notification area
+				&gt; all cores: select
+				&gt; sensors: select battery status or others as needed
+				&gt; select font: bahnschrift light condensed 16pt
+				
+	
+	<span class="label">- lenovo diagnostic</span>
+	
+	
+	<span class="label">- k-lite codec pack</span>
+	
+		&gt; set default apps to open mp4, avi, and mkv files to Media Classic
+	Media Player Classic - k-lite
+	
+		&gt; view &gt; options
+		
+			&gt; player &gt; general
+				&gt; history: yes to all
+				
+			&gt; internal filters &gt; audio switcher
+				&gt; normalize: yes
+				&gt; max amplification: 400
+				&gt; regain volume: yes
+				
+		&gt; view &gt; playlist: enable
+		
+		&gt; on playlist &gt; right click &gt; hide on full screen: yes
+		
+		
+	<span class="label">- revo uninstaller portable</span>
+		// DO NOT SELECT ADVANCED MODE! it will break your Windows 11
+		
+		
+	<span class="label">-ShareX</span>
+	
+		// Print screen and video capture
+	
+		&gt; application settings &gt; general
+		
+			&gt; minimize to tray on start: yes
+			&gt; automatically check for updates: no
+			
+		&gt; theme &gt; dark
+		
+		&gt; paths &gt; use custom screenshots folder, yes
+			&gt; select %Desktop%
+			&gt; remove all from Sub folder 
+			
+		&gt; task settings &gt; region capture &gt; use multi region mode, yes
+		
+			&gt; screen recorder &gt; screen recording options
+				&gt; install visual c++ redist: https://www.techpowerup.com/download/visual-c-redistributable-runtime-package-all-in-one/
+				&gt; install recorder device: click
+				&gt; video source: dshow (screen capture recorder)
+				&gt; audio source: dshow (virtual audio capturer)
+				
+			&gt; ocr &gt;
+			
+		&gt; hotkey settings
+			&gt; change alt + print screen to tools &gt; ocr
+			
+			
+	<span class="label">- sumatra PDF</span>
+	
+		&gt; settings &gt; theme &gt; darker
+			&gt; advanced options &gt; CheckForUpdates: set to False
+			
+		&gt; shortcut
+			&gt; stabilo: highlight text and press a
+			&gt; underline: highlight text and press u
+			&gt; edit change color or delete annotation: ctrl + click on the annotation
+		
+			
+	<span class="label">- audacity</span>
+		// audio editor
+	
+	
+	<span class="label">- adobe acrobat</span>
+		--always updating so skip unless needed
+	
+	
+	<span class="label">- easeus partition master</span>
+	
+		&gt; menu &gt; settings
+		
+			&gt; automatically check for updates: no
+			&gt; join customer experience improvement program: no
+			&gt; display discovery channel: no
+			
+			
+	<span class="label">- pdf gear</span>
+	
+		&gt; main function is to edit pdf (using ocr)
+		
+		&gt; bottom center menu &gt; appearance
+			theme &gt; dark
+			background &gt; night mode
+			
+			
+	<span class="label">- pdf 24</span>
+		&gt; rearrange pdf files, merge and compress
+		&gt; set pdf 24 printer service to manual in services.msc
+
+
+	<span class="label">- john's background switcher</span>
+	
+		// auto-change background wallpaper
+	
+		&gt; picture mode &gt; stretch picture to fit the screen
+		
+		&gt; add, click &gt; a folder on your computer &gt; select the folder containing wallpaper
+		
+		&gt; settings &gt; more &gt; advanced &gt; periodiclaly check for a newer version, uncheck
+	notepad (preinstalled)
+	
+		&gt; settings 
+			&gt; opening files: open in a new window
+			&gt; when notepad starts: open a new window
+
+	
+	<span class="label">- notepad++</span>
+	
+		// text editor
+	
+		&gt; settings &gt; style configurator
+			&gt; select theme &gt; danlerush dark
+			&gt; font style &gt; calibri
+			&gt; font size &gt; 11
+			
+		&gt; settings &gt; preferences &gt; dark mode &gt; follow windows / dark mode
+		
+		&gt; settings &gt; backup &gt; remember current session for next launch: uncheck
+		
+		&gt; settings &gt; misc &gt; auto-updater: disable
+
+	
+	<span class="label">- windows defragmenter (default)</span>
+	
+		&gt; do not touch anything especially while on SSD, it will just do auto-trim monthly
+		
+		&gt; start &gt; search, defragment and optimize drives &gt; change settings &gt; frequency, monthly
+		
+		
+	<span class="label">- Microsoft office 2024</span>
+	
+		// Office 2016 also doable
+	
+		&gt; reinstall &gt; open account.microsoft.com and login &gt; subscriptions &gt; office home 2024 &gt; install, click &gt; choose a version &gt; offline installer
+
+	
+	<span class="label">- windhawk</span>
+	
+		// Windows tweaks
+	
+		&gt; settings &gt; advanced settings &gt; hide tray icon: enable
+		
+		&gt; disappearing tray icon fix
+			&gt; to fix win 11 bug with disappearing icons from apps
+			
+		&gt; windows 11 taskbar styler
+			&gt; settings &gt; theme: aeris / lucent (accented bar)
+			
+		&gt; better file sizez in explorer details
+			&gt; default setting
+			
+		&gt; macos minimize animation
+			&gt; default setting
+			
+		&gt; multirow taskbar for windows 11
+		
+			&gt; rows: 2
+			
+			&gt; bug! thumbnail wrong position when hovering bottom taskbar tab, fix! disable thumbnail &gt; use disable taskbar thumbnails plugin &gt; preview on hover or click, disable on hover thumbnails on click
+			
+		&gt; taskbar height and icon size
+		
+			&gt; taskbar height: 52 (def)
+			
+			&gt; icon size: 32 (def) to 20
+			
+			&gt; taskbar button width: 44 (def) to 34
+			
+			&gt; small icon size: 16 (def)
+			
+			&gt; small taskbar button width: 32 (def)
+			
+		&gt; taskbar volume control &gt; default setting
+		
+		&gt; taskbar tray icon spacing and grid
+			&gt; tray icon width: 24 (def) to 26
+			&gt; tray icon row: 1 (def)
+			&gt; tray overflow icon width: 32 (def)
+			&gt; tray overflow icons per row: 5 (def)
+			
+		&gt; taskbar labels for windows 11
+			&gt; mode: hide labels combine taskbar buttons (def) to show labels dont combine taskbar buttons
+			&gt; taskbar item width: 160 (def) or 72
+			
+		&gt; invisible window borders &gt; default setting
+			
+		&gt; open pinned items with double click --CANCEL
+			&gt; default setting
+			
+		&gt; magnifier headless mode &gt; default setting
+			
+		&gt; disable grouping on the taskbar
+			&gt; pinned items mode: running items replaced pinned items (def) to pinned items remain in place
+			
+		&gt; winui context menu animation &gt; default setting
+		
+		&gt; windows 11 file explorer styler
+			&gt; theme: tabless
+			
+		&gt; resource redirect
+			&gt; icon theme: solus / buuf / bonny / bouquet / janguru orange / gnome human
+			
+		&gt; windows 11 notification center styler
+			&gt; theme: layermicaui
+			
+		&gt; fix white flashes in explorer
+		
+		&gt; taskbar on top for windows 11
+		
+		&gt; alt + tab window delayer &gt; default setting
+			
+		&gt; always show all taskbar tray icons
+			&gt; this is better than tweaking via winhance &gt; customizations &gt; taskbar &gt; system tray icons: show all icons.
+			
+		&gt; taskbar tray system icon tweaks
+			&gt; hide volume icon: ok
+			
+		&gt; folder hover menu
+		
+		&gt; name explorer windows
+		
+		&gt; taskbar auto-hide when maximized
+			&gt; auto-hide when a window is maximized or intersect the taskbar
+			&gt; apply only to foreground window: ok
+			
+
+	<span class="label">- winhance</span>
+	
+		// Windows tweaks
+	
+		&gt; optimizations
+		
+			&gt; power
+			
+				&gt; turn off display: 5 and 3 (def)
+				
+				&gt; desktop background slide show: active (def) set to paused
+				
+				&gt; put computer to sleep: 5 and 3 (def)
+					# set to other value then default
+						&gt; windows key &gt; search for: power options &gt; change when computer sleep &gt; change advanced power settings
+							&gt; display &gt; turn off display after: change to any value (in mins)
+							&gt; sleep &gt; sleep after: same
+							
+				&gt; wireless adapter setting &gt; power saving mode: low power and medium power saving
+				
+				&gt; usb settings &gt; usb hub selective suspend timeout: 1000 and 1000
+				
+				&gt; link state power management: off and maximum power saving (if you use hotspot then use OFF, max power saving 15-25mins then sleep, moderate around 1 hour)
+				
+				&gt; processor power management &gt; minimum processor state: 80 (default) to 10
+				
+				&gt; processor performance boost mode: aggressive and aggressive (default)
+				
+				&gt; processor performance increase policy: rocket and ideal (default)
+				
+				&gt; processor performance decrease policy: single and ideal (default)
+				
+				&gt; cpu core parking minimum cores: 100 and 25 (default)
+				
+				&gt; processor energy performance preference: 25 and 60 (default)
+				
+				&gt; processor performance increase threshold: 30 and 90 (default)
+				
+				&gt; processor performance decrease threshold: 10 and 30 (default)
+				
+				&gt; power throttling: off (default)	
+				
+			&gt; privacy & security
+			
+				&gt; Wi-Fi Sense: off
+				
+				&gt; automatic maintenance: off (def)
+				
+				&gt; powershell execution policy: restricted (def) to remotesigned
+				
+				&gt; ads, suggestions, and promotional content: custom (def) to deny
+				
+				&gt; let apps show me personalized ads by using my advertising id: on (def) to off
+				
+				&gt; let windows improve start and search results by tracking app launches: on (def) -- needed for open-shell frequent apps
+				
+				&gt; send diagnostic data: on (def) to off
+				
+				&gt; allow windows to ask you for feedback: on (def) to off
+				
+				&gt; search permission: ALL off
+				
+				&gt; windows ai ??
+					&gt; recall saving snapshots: off
+					
+				&gt; microsoft edge ai ??
+				
+				&gt; microsoft office ai ??
+				
+			&gt; update
+				&gt; windows update policy: security updates only
+				
+				&gt; delivery optimization: windows default (def) to disabled
+				
+				&gt; auto update microsoft store apps: on (def) to off
+				
+				&gt; get the latest update as soon as they're available: on (def) to off --this block preview (buggy) updates
+				
+				&gt; automatic restart after update: on (def) to off
+				
+				&gt; driver updates via windows update: on (def) to off
+				
+				&gt; driver co-installers: on (def) to off
+				
+				&gt; home version cannot differenciate between critical and normal updates so it's best to disable it. When set to pause for a long time and set back to security only, this HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\ SettingsPageVisibility hide:windowsupdate doesnt get removed so the GUI for windows update is missing
+					&gt; this to Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UsoSvc, Start from 4 set to 2
+
+			&gt; gaming & performance
+			
+				&gt; background app permission: user in control(default) (def) to force deny
+				
+				&gt; optimize background services: off (def) to on
+				
+				&gt; microsoft compatibility appraiser task: on (def) to off
+				
+				&gt; disk diagnostic data collector task:  on (def) to off
+				
+				&gt; feedback dmclient task: on (def) to off
+				
+				&gt; feedback dmclient scenario download task: on (def) to off
+				
+				&gt; windows error reporting queue task: on (def) to off
+				
+				&gt; software quality metrics task: on (def) to off
+				
+				&gt; MAR: on (def) to off
+				
+				&gt; maps update task: off
+				
+				&gt; power efficiency diagnostic task: off
+				
+				&gt; show files from office.com: off
+				
+				&gt; display the full path in the title bar: on
+				
+				&gt; show desktop in This PC: on
+				
+				&gt; show home folder: off
+				
+				&gt; show gallery: off
+					
+		&gt; customizations
+		
+			&gt; explorer
+			
+				&gt; use classic context menu: on
+				
+				&gt; add sfc /scannow to context menu: on
+				
+				&gt; add repair windows image to context menu: on
+				
+				&gt; add chkdsk to context menu: on
+				
+				&gt; use dynamic lightning on my devices: off
+				
+				&gt; autoplay: off
+				
+				&gt; open file explorer to: home (def) set to This PC
+				
+			&gt; start menu
+				&gt; recommended section: hide
+				
+			&gt; taskbar
+			
+				&gt; search in taskbar: hide
+				
+				&gt; copilot companion button: off
+				
+				&gt; copilot pwa pin: off
+				
+				&gt; recall pin: off
+				
+				&gt; show widget: off
+				
+				&gt; combine taskbar buttons and hide labels: always
+				
+				&gt; system tray icons: hide all icons (def) to show all icons
+				
+				&gt; enable end task in taskbar: off (def) to on
+				
+				&gt; auto-hide disable
+				
+	
+	<span class="label">- gimp</span>
+		// image editor
+		&gt; edit &gt; preferences &gt; system resources &gt; check for updates: disable
+		
+	
+	<span class="label">- paint.net</span>
+		// image editor
+		&gt; gear icon &gt; updates &gt; automatically check for updates when paint.net start: uncheck
+
+	
+	<span class="label">- tera copy</span>
+		// enable to queue multiple file coyping
+		&gt; preferences
+			&gt; use teracopy as default copy handler: tick
+			&gt; add to explorer context menu: untick
+			&gt; automatic updates &gt; do not check for updates automatically
+	
+	<span class="label">- speed crunch</span>
+		// calculator
+		&gt; settings &gt; display
+			&gt; color scheme: sublime
+			&gt; font: 20
+			
+	<span class="label">- qalculate</span>
+		// calculator
+		&gt; edit &gt; preferences
+			&gt; look & feel &gt; theme: dark
+			&gt; fonts & colors &gt; tick all and set default font + 2
+	
+	
+	<span class="label">- awesun</span>
+		// remote desktop alternative from China
+		&gt; depends on tray icon (awesun.exe + awesun_guard), awesunservice to get deviceid set to manual, the service will be started when we run awesun anyway and will stop when we close tray icon
+		
+		&gt; --- &gt; options
+		
+			&gt; general &gt; start awesun with system: no
+			
+			&gt; security &gt; passcode refresh: after controlled (def) to never
+			
+			
+	<span class="label">- ms one note</span>
+		&gt; file &gt; options &gt; advanced &gt; optimize for the following battery life: maximum battery life
+		&gt; turn off sync
+	
+	
+	<span class="label">- ms excel and word</span>
+		// office work data input
+		&gt; file &gt; more &gt; save
+			&gt; autosave files stored in the cloud by default in excel
+			&gt; save to computer by default: tick
+
+	
+	<span class="label">- localsend via wifi- share file</span>
+		// share files over LAN
+		&gt; prerequisite: guest isolation off
+		&gt; settings
+			&gt; minimize to system tray when closing: no
+			&gt; autostart after login: no
+			&gt; animations: no
+			
+			
+	<span class="label">- awake</span>
+		// prevent laptop from sleeping
+		&gt; https://github.com/gdegeneve/Awake
+		&gt; lock screen &gt; turn off the display once
+
+	
+	<span class="label">- feem via wifi</span>
+		// share files over LAN with Wi-Fi Direct which bypass AP Isolation
+		&gt; can work with guest isolation on
+		&gt; similar with localsend
+		&gt; interface like chatting app
+
+	
+	<span class="label">- windows context menu manager</span>
+		&gt; based on category
+			&gt; file types &gt; perceived file type &gt; the currently selected perceived file type &gt; click on 3 brick layer on the right &gt; please select a perceived file type,
+		&gt; based on file extension
+			&gt; file types &gt; specific file type &gt; &gt; &gt;
+			&gt; home &gt; directory &gt; remove add to mpc and play with mpc
+
+	<span class="label">- change cursor</span>
+		&gt; https://www.deviantart.com/arteffect10520/art/Glib-Cursors-v3-Rounded-962087214
+				
+				
+	<span class="label">- wps office</span>
+	
+		// Microsoft Office alternative but too many advertisements
+		
+		--good in china --have cloud backup --use virtual drive, just dump the files there
+		
+		download the files in the cloud from android by opening docs.wps.com in DESKTOP MODE and login
+		
+		global settings
+		
+			&gt; settings
+				&gt; open backup center &gt; local backup settings -&gt; scheduled backup: 1 min (def) to 5 mins
+				&gt; notifications &gt; file received &gt; monitored folders: disable all
+				
+			&gt; configuration and repair tools &gt; advanced
+				&gt; customized features
+					&gt; tick all of them
+				&gt; update settings &gt;  remind me when updates are available: tick
+
+		access yunbox settings -&gt; right click WPS (blue cloud) icon &gt; click on wheel icon on top right &gt; select Yunbox settings &gt; now you're at settings page
+		
+			&gt; cloud feature settings --to optimze battery life since we need the cloud backup 1GB
+			
+				&gt; cloud sync: disable
+				
+				&gt; sync folder: disable all
+				
+				&gt; display wps drive entry on this pc: enable --for easy access
+				
+				&gt; start: disable
+				
+				&gt; file right-click menu: enable all
+				
+				&gt; notification: enable all
+				
+		kebanyakan iklan dan cloud sync &gt; rename these files by adding .bak &gt; wpscloudsvr.exe (use powershell script and it also practically neutered aggressive 30 mins task scheduler that keeps calling wpscloudsvr.exe
+		block firewall to these:  &gt; updateself.exe, wpsupdate.exe, updatepolicy.exe
+	
+		firewall
+		ls -r C:\Users\$($ENV:UserName)\AppData\Local\Kingsoft\WPS Office -file -filter *.exe | select -expandproperty fullname | % { iex "netsh advfirewall firewall add rule name='WPS Office' dir=in action=block program='$_' enable=yes" }
+
+		Get-NetFirewallRule -DisplayName "WPS Office" | Select-Object Direction, @{Name="Program"; Expression={(Get-NetFirewallApplicationFilter -AssociatedNetFirewallRule $_).Program}}
+
+
+	<span class="label">- one drive</span>
+		
+		// sync local data to cloud
+		
+		--often hangs, better not use this
+	
+		- use folder in C:\users\user_name\OneDrive --dump your files here
+			open file explorer, by default it's pinned on top left
+			
+		&gt; resume sync &gt; options
+		
+			&gt; sync and backup
+			
+				&gt; manage backup
+				
+					&gt; select which default folders to backup, -desktop, documents, pictures --best to avoid using these folders --sync loop when files in use --better to use OneDrive folder only
+					
+					&gt; exclude file extension &gt; excude &gt;
+					
+				&gt; pause sync while on battery mode, on
+				
+				&gt; pause sync while on metered network, off --because we'll be metered all the time &gt; account
+				
+				&gt; choose folders, here you can change folder &gt; make sure to tick "files not in a folder"
+				
+		
+	<span class="label">- windows update minitool</span>
+		
+		-- WARNING, DO NOT USE THIS TOOL because the disable option will break windows update because it's setting SYSTEM access to DENY
+		
+		&gt; disable automatic update, if you want to enable this back &gt; Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU, remove this DWORD NoAutoUpdate
+
+	
+	<span class="label">- foobar2000</span>
+		// audio player
+		file &gt; preferences &gt; keyboard shortcuts &gt; add new
+			&gt; action &gt; playback, play or pause
+			&gt; key &gt; press space bar
+
+	
+	<span class="label">- tailscale</span>
+	
+		// join multiple devices into one LAN over the internet
+		
+		admin console
+			&gt; enable manually add device/user
+		disable auto log nonstop (checked via autohotkey folder watch v1)
+			&gt; go C:\ProgramData\Tailscale\ and add a new file tailscaled-env.txt and paste the following TS_NO_LOGS_NO_SUPPORT=true, and save.
+	
+
+
+<p>Tweaks further</p>
+
+- disable for performance: virtualization based security (VBS) + memory integrity (HVCI) and memory compression
+
+- Disable automatic folder discovery - open explorer using general view only
+	Windows Registry Editor Version 5.00
+
+	[-HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags]
+	[-HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\BagsMRU]
+
+	[HKEY_CURRENT_USER\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags\AllFolders\Shell]
+	"FolderType"="NotSpecified"
+
+- limit windows update: incontrol &gt; take control
+		
+- control software update: unigetui -&gt; installed packages &gt; click on the left of package name label to select all packages &gt; ignore selected packages &gt; then only enable social media like whatsapp and wechat to be updated
+
+- clean taskscheduler:
+	- use taskschedulerview
+	- ignore daily task, focus on triggers &gt; specific time &gt; filter last run and next run that are too close to each other
+
+- file explorer
+
+	&gt; sort
+		&gt; date modified
+		&gt; descending
+		&gt; group by &gt; none
+		
+	&gt; view &gt; show
+		&gt; compact view
+		&gt; file name extensions
+		
+	... &gt; options
+	
+		&gt; view
+			&gt; always show icons never thumbnail: yes
+			 restore previous folder windows at logon: yes
+			&gt; launch folder windows in a separate process: yes
+			
+		&gt; general
+			&gt; open file explorer to: home (def) to this pc
+			&gt; privacy &gt; untick all
+			
+		&gt; privacy &gt; show frequently used folders: yes
+		
+	&gt; click folder called downloads or documents on left paner, and right click &gt; properties &gt; customize &gt; optimize this folder for, general items &gt; also apply this template to all subfolders: TICK
+
+
+- task manager
+	&gt; performance
+		&gt; CPU &gt; right click &gt; change graph to &gt; logical processor
+
+- disable memory compression &gt; powershell.exe &gt; get-mmagent, disable-mmagent
+
+
+<p>Installing SSH server on Windows 11 for troubleshooting backup</p>
+
+<b>Setting up</b>
+
+	- Get the file from <a href="https://github.com/PowerShell/Win32-OpenSSH/releases" target="_blank" rel="noopener noreferrer">https://github.com/PowerShell/Win32-OpenSSH/releases</a>, select .msi file and install it.
+	
+	- Run the service <code>Start-Service sshd</code>
+	
+	- Set the service to auto run on windows startup <code>Set-Service -Name sshd -StartupType 'Automatic'</code>
+	
+	- Set the firewall to only allow SSH connection via Tailscale for security <code>New-NetFirewallRule -DisplayName "SSH Tailscale" -Direction Inbound -Protocol TCP -LocalPort 22 -InterfaceAlias "Tailscale" -Action Allow</code>
+	
+		Find firewall rule: <code>Get-NetFirewallRule | Where-Object DisplayName -like "*SSH*"</code>
+	
+	- Check if port 22 is listening for connection <code>Get-NetTCPConnection -LocalPort 22 -State Listen</code>
+	
+	- To connect, from powershell do <code>ssh username@tailscale_ip</code>
+	
+		or directly connected to powershell <code> ssh username@tailscale_ip "powershell.exe -noprofile"
+		
+	- Check SSH logs <code>Get-WinEvent -LogName "OpenSSH/Operational" -MaxEvents 50</code>
+
+
+<b>Troubleshooting</b>
+
+<span class="label">Check internet path</span>
+
+ping 8.8.8.8
+
+nslookup google.com --if this failed then dns resolver has problem or blocked
+	
+nslookup google.com 8.8.8.8
+
+powershell -command "Resolve-DnsName google.com"
+
+ping (to one of result from nslookup) --if the ip can be pinged but actually timed-out then the internet path is blocked
+
+tracert 8.8.8.8
+
+pathping 8.8.8.8
+
+
+Tracing route to dns.google [8.8.8.8]
+over a maximum of 30 hops:
+
+  1    <1 ms    <1 ms    <1 ms  192.168.111.1
+  2     1 ms    <1 ms    <1 ms  10.5.64.1
+  3     1 ms     1 ms    <1 ms  192.168.99.1
+  4     1 ms     2 ms     1 ms  192.168.40.1
+  5     *        *        *     Request timed out.
+  6     *        *        *     Request timed out.
+  7     *        *        *     Request timed out.
+  8     *       11 ms     *     221.183.89.21
+  9     *        *        *     Request timed out.
+ 10     *        *        *     Request timed out.
+ 11     *        *        *     Request timed out.
+ 12     *        *        *     Request timed out.
+ 13     *        *        *     Request timed out.
+ 14     *        *        *     Request timed out.
+ 15     *        *        *     Request timed out.
+ 16    39 ms    39 ms    39 ms  dns.google [8.8.8.8]
+
+
+<b>Test network connectivity</b>
+Test-NetConnection 1.1.1.1
+Test-NetConnection 8.8.8.8
+Test-NetConnection google.com
+Test-NetConnection 1.1.1.1 -Port 443
+Test-NetConnection 8.8.8.8 -Port 53
+
+
+<b>DNS Diagnosis</b>
+ipconfig /displaydns
+ipconfig /flushdns
+Resolve-DnsName google.com
+Resolve-DnsName cloudflare.com
+Get-DnsClientServerAddress
+
+
+<b>Change DNS</b>
+# First find the exact interface name:
+Get-NetAdapter
+
+# Example:
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses ("1.1.1.1","1.0.0.1")
+
+# Google DNS example:
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses ("8.8.8.8","8.8.4.4")
+
+# Return to DHCP-provided DNS:
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ResetServerAddresses
+
+
+<b>Restart Ethernet Adapter</b>
+Get-NetAdapter
+Disable-NetAdapter -Name "Ethernet" -Confirm:$false
+Enable-NetAdapter -Name "Ethernet" -Confirm:$false
+
+
+<b>Restart Wi-Fi Adapter</b>
+Disable-NetAdapter -Name "Wi-Fi" -Confirm:$false
+Enable-NetAdapter -Name "Wi-Fi" -Confirm:$false
+
+
+<b>Check Network Configuration</b>
+netsh interface show interface
+netsh interface ip show config
+netsh winsock show catalog
+netsh int ipv4 show interfaces
+netsh int ipv6 show interfaces
+
+
+<b>Check Routing</b>
+Get-NetRoute -AddressFamily IPv4
+route print
+Get-NetIPConfiguration
+
+
+<b>Winsock Repair</b>
+ipconfig /flushdns
+netsh winsock reset
+netsh int ip reset
+ipconfig /release
+ipconfig /renew
+
+
+<b>Tailscale</b>
+tailscale status
+tailscale ip
+tailscale netcheck
+tailscale ping <TAILSCALE-IP>
+tailscale ping <TAILSCALE-HOSTNAME>
+
+
+<span class="label">Others</span>
+
+<b>Basic Info</b>
+hostname
+Get-ComputerInfo
+Get-CimInstance Win32_OperatingSystem |
+    Select-Object Caption,Version,BuildNumber,OSArchitecture
+
+Get-CimInstance Win32_ComputerSystem |
+    Select-Object Manufacturer,Model,TotalPhysicalMemory
+
+timezone
+date
+w32tm /query /status
+w32tm /query /peers
+w32tm /resync
+
+Get-LocalUser
+Get-LocalGroup
+Get-LocalGroupMember Administrators
+
+whoami
+whoami /all
+whoami /groups
+whoami /priv
+
+winver
+Get-ComputerInfo |
+    Select-Object WindowsProductName,
+                  WindowsVersion,
+                  OsBuildNumber
+                  
+[Environment]::GetEnvironmentVariable("Path","Machine")
+[Environment]::GetEnvironmentVariable("Path","User")
+                  
+Get-WindowsOptionalFeature -Online |
+    Where-Object State -eq "Enabled"
+    
+(Get-Date) - (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+
+Restart-Computer
+Restart-Computer -Force
+
+Stop-Computer
+
+
+<b>Attention !!</b>
+Before doing anything, log your work via SSH to keep track of what was executed and what was the result:
+
+Start-Transcript -Path "$env:USERPROFILE\Desktop\SSH-session.txt" -Append
+
+Do your work. At the end:
+Stop-Transcript
+
+Or before changing any service, log the state:
+Get-CimInstance Win32_Service -Filter "Name='Spooler'" |
+    Select-Object Name,State,StartMode,StartName,PathName |
+    Export-Csv C:\Temp\Spooler-before.csv -NoTypeInformation
+    
+Do some changes:
+Set-Service Spooler -StartupType Disabled
+Stop-Service Spooler
+
+Verify:
+Get-Service Spooler
+Get-CimInstance Win32_Service -Filter "Name='Spooler'" |
+    Select-Object Name,State,StartMode
+    
+
+<b>Things that can break SSH connectivity</b>
+Disable-NetAdapter -Name "Ethernet" -Confirm:$false
+Set-NetIPAddress
+Remove-NetIPAddress
+New-NetIPAddress
+Set-DnsClientServerAddress
+netsh winsock reset
+netsh int ip reset
+Restart-Computer
+
+
+<b>Create SSH profile for easy connection</b>
+In C:\Users\<YourUser>\.ssh\ create a file called config
+
+Paste this: <code>Host mylaptop
+    HostName 100.x.x.x
+    User your_windows_username
+    Port 22
+    ServerAliveInterval 30
+    ServerAliveCountMax 3</code>
+    
+Save it.
+
+Then type: ssh mylaptop
+
+
+BUT It's better to use PUTTY because of formatting issue.
+
+
+<b>Network Diagnostic</b>
+Get-Content C:\Windows\System32\drivers\etc\hosts
+
+Get-NetAdapter
+
+Get-NetAdapter |
+    Format-Table Name,InterfaceDescription,Status,LinkSpeed,MacAddress
+
+Get-NetIPConfiguration
+Get-NetIPAddress
+Get-NetRoute
+Get-DnsClientServerAddress
+Get-DnsClient
+Get-NetIPInterface
+
+
+Get-NetTCPConnection
+Get-NetTCPConnection -State Listen
+Get-NetTCPConnection -State Established
+Get-NetTCPConnection |
+    Select-Object LocalAddress,
+                  LocalPort,
+                  RemoteAddress,
+                  RemotePort,
+                  State,
+                  OwningProcess
+
+Get-Process -Id 1234
+Get-NetTCPConnection -State Listen |
+    Sort-Object LocalPort |
+    Format-Table LocalAddress,LocalPort,OwningProcess
+
+
+<b>Software</b>
+Get-AppxPackage |Select-Object Name,Version | Sort-Object Name
+Get-AppxPackage | Where-Object Name -like "*Xbox*"
+
+Get-AppxPackage "*PackageName*" | Remove-AppxPackage
+
+    
+# LIST INSTALLED SOFTWARE
+Get-ItemProperty `
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" |
+    Where-Object DisplayName |
+    Select-Object DisplayName,
+                  DisplayVersion,
+                  Publisher,
+                  InstallDate,
+                  UninstallString |
+    Sort-Object DisplayName |
+    Format-Table -AutoSize
+
+* 32 BIT
+Get-ItemProperty `
+    "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" |
+    Where-Object DisplayName |
+    Select-Object DisplayName,
+                  DisplayVersion,
+                  Publisher,
+                  InstallDate,
+                  UninstallString |
+    Sort-Object DisplayName |
+    Format-Table -AutoSize
+
+Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" |
+    Where-Object DisplayName |
+    Select DisplayName,DisplayVersion,Publisher
+
+Get-ItemProperty "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" |
+    Where-Object DisplayName |
+    Select DisplayName,DisplayVersion,Publisher
+
+# FIND SOFTWARE
+Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" ,
+                 "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" |
+    Where-Object DisplayName -like "*Chrome*" |
+    Select DisplayName,DisplayVersion,Publisher,UninstallString
+    
+Get-ItemProperty `
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" ,
+    "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" ,
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" |
+    Where-Object {
+        $_.DisplayName -like "*Firefox*"
+    } |
+    Select-Object DisplayName,
+                  DisplayVersion,
+                  Publisher,
+                  UninstallString
+
+# GET UNINSTALL INFORMATION
+Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*" ,
+                 "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*" |
+    Where-Object DisplayName -like "*Chrome*" |
+    Select DisplayName,UninstallString,QuietUninstallString
+
+
+# UNINSTALL USING WINGET
+winget list
+winget uninstall "Google Chrome"
+
+# Or use the exact ID
+winget uninstall --id Google.Chrome
+
+# REPAIR / MODIFY (if supported)
+winget list
+winget upgrade
+
+
+<b>Windows Service</b>
+Get-Service
+Get-Service |
+    Sort-Object Status,DisplayName |
+    Format-Table Status,Name,DisplayName
+Get-CimInstance Win32_Service |
+    Select-Object Name,DisplayName,State,StartMode |
+    Sort-Object StartMode,DisplayName |
+    Format-Table -AutoSize
+
+Get-Service wuauserv
+Restart-Service wuauserv
+Start-Service wuauserv
+Stop-Service wuauserv
+
+Important Windows Service
+<code>Get-Service `
+    wuauserv, `
+    BITS, `
+    Dhcp, `
+    Dnscache, `
+    EventLog, `
+    Winmgmt, `
+    Schedule, `
+    LanmanWorkstation, `
+    LanmanServer</code>
+
+
+Set-Service -Name "ServiceName" -StartupType Manual
+
+Set-Service -Name "ServiceName" -StartupType Automatic
+    
+sc.exe config "ServiceName" start= delayed-auto
+
+# Find service related to a program
+Get-CimInstance Win32_Service |
+    Where-Object {
+        $_.DisplayName -like "*ProgramName*" -or
+        $_.Name -like "*ProgramName*"
+    } |
+    Select-Object Name,DisplayName,State,StartMode,PathName
+
+
+<b>Windows Update</b>
+Get-Service wuauserv
+Get-Service BITS
+Get-HotFix |
+    Sort-Object InstalledOn -Descending |
+    Select-Object -First 20
+
+Get-WindowsUpdateLog
+
+Get-HotFix
+Get-HotFix | Sort-Object InstalledOn -Descending
+
+
+<b>Windows Event Logs</b>
+Get-WinEvent -LogName System -MaxEvents 50
+Get-WinEvent -LogName Application -MaxEvents 50
+Get-WinEvent -LogName System -MaxEvents 100 | Where-Object LevelDisplayName -in "Error","Critical"
+Get-WinEvent -LogName Application -MaxEvents 100 | Where-Object LevelDisplayName -in "Error","Critical"
+
+
+Find event from last 72 hours
+<code>$start = (Get-Date).AddDays(-3)
+
+Get-WinEvent -FilterHashtable @{
+    LogName = "System"
+    StartTime = $start
+} |
+Where-Object LevelDisplayName -in "Error","Critical" |
+Select-Object TimeCreated,Id,ProviderName,Message</code>
+
+
+<b>Process</b>
+Get-Process
+Get-Process | Sort-Object CPU -Descending | Select-Object -First 20 Name,ID,CPU
+Get-Process |
+    Sort-Object WorkingSet64 -Descending |
+    Select-Object -First 20 Name,ID,
+        @{Name="RAM_MB";Expression={[math]::Round($_.WorkingSet64/1MB,1)}}
+
+Stop-Process -Name "program" -Force
+Stop-Process -Id 1234 -Force
+
+
+<b>Storage Info</b>
+Get-Volume
+Get-PSDrive -PSProvider FileSystem
+Get-CimInstance Win32_LogicalDisk |
+    Select-Object DeviceID,
+        @{Name="SizeGB";Expression={[math]::Round($_.Size/1GB,1)}},
+        @{Name="FreeGB";Expression={[math]::Round($_.FreeSpace/1GB,1)}}
+        
+Get-Disk
+Get-PhysicalDisk
+Get-Partition
+Get-Volume
+
+
+<b>Some Repairs</b>
+chkdsk c:
+chkdsk c: /f
+chkdsk c: /r
+sfc /scannow
+DISM /Online /Cleanup-Image /CheckHealth
+DISM /Online /Cleanup-Image /ScanHealth
+DISM /Online /Cleanup-Image /RestoreHealth
+
+
+<b>List Startup Items and Task Scheduler</b>
+<span class="label">Startup</span>
+Get-CimInstance Win32_StartupCommand | Select-Object Name,Command,Location,User
+Get-CimInstance Win32_StartupCommand | Select-Object Name,Command,Location,User | Format-Table -AutoSize
+    
+# Registry startup locations
+Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run"
+Get-ItemProperty "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run"
+Get-ItemProperty "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Run"
+    
+# Startup folders
+Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+Get-ChildItem "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Startup"
+
+# Example: remove a user's Run entry
+Remove-ItemProperty `
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
+    -Name "ProgramName"
+
+# If you previously removed it, recreate the registry value:
+New-ItemProperty `
+    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" `
+    -Name "ProgramName" `
+    -Value "C:\Path\Program.exe" `
+    -PropertyType String `
+    -Force
+    
+<span class="label">Scheduled Task</span>
+Get-ScheduledTask
+Get-ScheduledTask | Where-Object State -eq "Running"
+    
+Get-ScheduledTask |
+    Where-Object {
+        $_.Triggers |
+        Where-Object {
+            $_.CimClass.CimClassName -match "Boot|Logon"
+        }
+    } |
+    Select-Object TaskName,TaskPath,State
+
+# Search by program name
+Get-ScheduledTask |
+    Where-Object {
+        $_.Actions.Execute -like "*ProgramName*"
+    } |
+    Select-Object TaskName,TaskPath,State,
+        @{Name="Command";Expression={$_.Actions.Execute}}
+        
+# Search by description
+Get-ScheduledTask |
+    Where-Object {
+        $_.Description -like "*keyword*"
+    } |
+    Select-Object TaskName,TaskPath,State,Description
+    
+# Get Enabled
+Get-ScheduledTask | Where-Object State -ne "Disabled" | Select-Object TaskName,TaskPath,State
+
+# Get Disabled
+Get-ScheduledTask | Where-Object State -eq "Disabled" | Select-Object TaskName,TaskPath,State
+
+Get-ScheduledTask | Where-Object TaskName -like "*Update*"
+Get-ScheduledTask -TaskName "TaskName" -TaskPath "\Path\" | Format-List *
+Disable-ScheduledTask -TaskName "TaskName" -TaskPath "\Path\"
+Enable-ScheduledTask -TaskName "TaskName" -TaskPath "\Path\"
+Start-ScheduledTask -TaskName "TaskName" -TaskPath "\Path\"
+Stop-ScheduledTask -TaskName "TaskName" -TaskPath "\Path\"
+Get-ScheduledTaskInfo -TaskName "TaskName" -TaskPath "\Path\"
+
+# Cmd
+schtasks /query /fo LIST /v
+schtasks /query /fo LIST /v | Select-String "Update"
+schtasks /change /tn "\Task\Name" /disable
+schtasks /change /tn "\Task\Name" /enable
+schtasks /run /tn "\Task\Name"
+schtasks /end /tn "\Task\Name"
+
+
+<b>PowerCfg</b>
+powercfg /a
+powercfg /getactivescheme
+powercfg /list
+powercfg /query
+powercfg /hibernate on
+powercfg /hibernate off
+powercfg /energy
+powercfg /sleepstudy
+
+Get-CimInstance Win32_Battery
+powercfg /batteryreport
+
+
+<b>Firewall</b>
+# FIREWALL STATUS
+Get-NetFirewallProfile
+
+# LIST ENABLED RULES
+Get-NetFirewallRule |
+    Where-Object Enabled -eq "True" |
+    Select DisplayName,Direction,Action,Profile
+
+# FIND SSH RULES
+Get-NetFirewallRule |
+    Where-Object DisplayName -like "*SSH*" |
+    Format-Table DisplayName,Enabled,Direction,Action
+
+# FIND RULE BY NAME
+Get-NetFirewallRule -DisplayName "*SSH*"
+
+# ADD RULE
+New-NetFirewallRule `
+    -DisplayName "Allow SSH TCP 22" `
+    -Direction Inbound `
+    -Protocol TCP `
+    -LocalPort 22 `
+    -Action Allow `
+    -Profile Any
+
+# EDIT / ENABLE / DISABLE
+Set-NetFirewallRule -DisplayName "Allow SSH TCP 22" -Action Allow
+Set-NetFirewallRule -DisplayName "Allow SSH TCP 22" -Enabled True
+Set-NetFirewallRule -DisplayName "Allow SSH TCP 22" -Enabled False
+
+# REMOVE RULE
+Remove-NetFirewallRule -DisplayName "Allow SSH TCP 22"
+
+# BACKUP FIREWALL
+netsh advfirewall export "$env:USERPROFILE\Desktop\firewall-backup.wfw"
+
+# RESTORE FIREWALL
+netsh advfirewall import "$env:USERPROFILE\Desktop\firewall-backup.wfw"
+
+
+<b>Drivers</b>
+# LIST DEVICES
+Get-PnpDevice | Select Status,Class,FriendlyName,InstanceId
+
+# DEVICES WITH PROBLEMS
+Get-PnpDevice |
+    Where-Object Status -ne "OK" |
+    Select Status,Class,FriendlyName,InstanceId
+
+# DRIVER VERSION / MANUFACTURER
+Get-CimInstance Win32_PnPSignedDriver |
+    Select DeviceName,DriverVersion,Manufacturer,InfName
+
+# FIND A SPECIFIC DEVICE
+Get-PnpDevice -FriendlyName "*Wi-Fi*"
+Get-PnpDevice -FriendlyName "*Bluetooth*"
+Get-PnpDevice -FriendlyName "*Wi-Fi*" |
+    Get-PnpDeviceProperty |
+    Select KeyName,Data
+
+# RESTART DEVICE
+Get-PnpDevice -FriendlyName "*Wi-Fi*" |
+    Disable-PnpDevice -Confirm:$false
+Get-PnpDevice -FriendlyName "*Wi-Fi*" |
+    Enable-PnpDevice -Confirm:$false
+
+# RESCAN HARDWARE
+pnputil /scan-devices
+
+# LIST INSTALLED DRIVER PACKAGES
+pnputil /enum-drivers
+
+# REMOVE A DRIVER PACKAGE
+pnputil /delete-driver oem42.inf /uninstall
+
+# UPDATE DRIVER FROM A LOCAL INF
+pnputil /add-driver "C:\Drivers\driver.inf" /install
+
+        
+# NETWORK DRIVER
+Get-NetAdapter |
+    Select-Object Name,
+                  InterfaceDescription,
+                  DriverInformation,
+                  DriverFileName,
+                  DriverVersion
+                  
+                  
+                  
+<b>REGISTRY</b>
+# Read a setting:
+Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer"
+
+# Read machine-wide setting:
+Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion"
+
+# Create a registry value:
+New-ItemProperty `
+    -Path "HKCU:\Software\Example" `
+    -Name "ExampleSetting" `
+    -PropertyType DWORD `
+    -Value 1 `
+    -Force
+
+# Change it:
+Set-ItemProperty -Path "HKCU:\Software\Example" -Name "ExampleSetting" -Value 0
+
+# Backup and restore registry
+reg export "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer" "$env:USERPROFILE\Desktop\Explorer-backup.reg" /y
+reg export "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" "$env:USERPROFILE\Desktop\Explorer-Advanced-backup.reg" /y
+reg import "$env:USERPROFILE\Desktop\Explorer-backup.reg"
+Stop-Process -Name explorer -Force
+Start-Process explorer.exe
+
+
+<b>Find average CPU usage over 5 seconds period</b>
+[math]::Round(((Get-Counter '\Processor(_Total)\% Processor Time' -SampleInterval 1 -MaxSamples 5).CounterSamples.CookedValue | Measure-Object -Average).Average,2)
+
+
+<b>Core Temp to get CPU TEMPERATURE (might want to add Windows Defender exclusion on C:\Program Files\Core Temp)</b>
+Options
+→ Settings
+→ Advanced
+	→ Enable global shared memory (SNMP)
+	
+→ Restart Core Temp
+	
+# Cmd to extract CPU temp:
+<code>$m=[IO.MemoryMappedFiles.MemoryMappedFile]::OpenExisting("CoreTempMappingObjectEx");$s=$m.CreateViewStream();$r=[IO.BinaryReader]::new($s);$s.Position=1536;$cores=$r.ReadUInt32();$s.Position=1544;$t=1..$cores|%{$r.ReadSingle()};$s.Dispose();$m.Dispose();"CORES: $cores";"TEMPS_C: "+(($t|%{"{0:F1}"-f $_}) -join ", ");"AVERAGE_C: "+("{0:F1}"-f (($t|Measure-Object -Average).Average))</code>
+
+# Result
+<code>CORES: 4
+TEMPS_C: 39.0, 38.0, 41.0, 39.0
+AVERAGE_C: 39.3</code>
+
+
+<b>Find RAM Total</b>
+$o=Get-CimInstance Win32_OperatingSystem;"TOTAL_GB: $([math]::Round($o.TotalVisibleMemorySize/1MB,2))";"FREE_GB: $([math]::Round($o.FreePhysicalMemory/1MB,2))";"USED_GB: $([math]::Round(($o.TotalVisibleMemorySize-$o.FreePhysicalMemory)/1MB,2))"
+
+
+<p>Additional info</p>
+
+- Disable QUIC on browser.
+
+- As of July 2026. If you want more control over your computer for debloating, set up it using the "Ireland" region. You can change it right back after you reach the desktop. It allows additional options that are required in the EU, like being able to disable web results in the start menu.
+
+- If you live outside Europe, you can still easily force-remove apps like Microsoft Edge using popular open-source software tools (such as Win Toys via the Microsoft Store or the Chris Titus Tech Windows Utility). These scripts essentially "trick" Windows into activating European DMA mode momentarily or strip the application package natively.
+
+- Lenovo v14 g4 can get internet from 2.4Ghz wifi and share with 5Ghz wifi at the same time. but it's glitchy sometimes doesnt want to run.
+
+- Browser plugin WebRTC Control or geospoof to prevent IP leaks.
+
+- Windows 11 step by step install screen options: set All either skip or off
+
+- Set ntp to ntp.aliyun.com for time synchronization if you're in China
+
+- Show hidden unattended sleep timeout
+
+	HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Power\PowerSettings\238C9FA8-0AAD-41ED-83F4-97BE242C8F20\7bc4a2f9-d8fc-4469-b07b-33eb785aaca0 &gt; Attributes, change to 2
+	Go to Power Options &gt; Change advanced power settings &gt; Sleep &gt; system unattended sleep timeout &gt; plugged in, set to 0
+
+- Patch so wifi hotspot keeps working after resuming from sleep
+	
+	Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SharedAccess &gt; dword 32bit, EnableRebootPersistConnection &gt; set to 1
+
+- Set any software to be launched as admin via regedit
+	
+	Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers
+	&gt; add new string value &gt; add full path of the .exe file &gt; set "~ RUNASADMIN" as the value without double quotes
+
+- Apps ( download software from ms store if you can, so we can utilize background permission apps to force deny | ms store is better than UWP (ms edge install) )
+	-auto update office monthly
+	-auto update edge monthly
+
+- optional:
+	debloat brave dan msedge
+	remove xbox and onedrive
+
+- remove windows app from pre-install list so when you do dism/sfc, it will not come back
+
+	Single removal
+		Get-AppxPackage -AllUsers "*Outlook*" | Remove-AppxPackage -AllUsers
+		Get-AppxProvisionedPackage -Online | Where-Object {$_.PackageName -like "*Outlook*"} | Remove-AppxProvisionedPackage -Online
+		Get-AppxPackage -AllUsers "*msteams*" | Remove-AppxPackage -AllUsers
+		Get-AppxProvisionedPackage -Online | Where-Object {$_.PackageName -like "*msteams*"} | Remove-AppxProvisionedPackage -Online
+
+	Multi removal
+		$packages = @(
+   			"Microsoft.BingNews",
+    			"Microsoft.BingSearch",
+    			"Microsoft.BingWeather",
+    			""Microsoft.OutlookForWindows",
+    			"Microsoft.Windows.DevHome",
+    			"Microsoft.ZuneMusic",
+    			"MicrosoftCorporationII.MicrosoftFamily",
+    			"Microsoft.PowerAutomateDesktop",
+    			"Microsoft.WindowsFeedbackHub",
+    			"Microsoft.YourPhone",
+    			"MicrosoftCorporationII.QuickAssist",
+    			"Microsoft.GetHelp",
+    			"MsTeams"
+		)
+
+		foreach ($pkg in $packages) {
+			$appx = Get-AppxPackage -AllUsers "*$pkg*"
+    			if ($appx) {
+        			$appx | Remove-AppxPackage -AllUsers
+        			Write-Host "Removed installed package: $pkg" -ForegroundColor Green
+    			}
+
+    			$prov = Get-AppxProvisionedPackage -Online |
+        		Where-Object PackageName -like "*$pkg*"
+			if ($prov) {
+        			$prov | Remove-AppxProvisionedPackage -Online
+        			Write-Host "Removed provisioned package: $pkg" -ForegroundColor Cyan
+    			}
+		}
+	
+	Check
+		$packages | ForEach-Object {
+    			$installed = Get-AppxPackage -AllUsers "*$_*"
+    			$provisioned = Get-AppxProvisionedPackage -Online |
+        		Where-Object PackageName -like "*$_*"
+
+    			[PSCustomObject]@{
+        			Package = $_
+        			Installed = [bool]$installed
+        			Provisioned = [bool]$provisioned
+    			}
+		}
+	
+
+<p>Windows update minitool bugs explained</p>
+
+I think we've finally reconstructed the sequence.
+
+Initial state:
+
+UsoSvc Service
+    normal ACL (Access Control List)
+
+↓
+
+Click MiniTool Disable
+
+set UsoSvc Start = 4 in registry
+
+set SYSTEM Deny FullControl
+
+↓
+
+Windows Update components begin failing.
+
+↓
+
+Click MiniTool Enable
+
+Attempts to remove the Deny.
+
+Fails.
+
+UI gets stuck.
+
+Leaves the Deny behind.
+
+↓
+
+SCM later refuses to work correctly with the service.
+
+↓
+
+Settings crashes.
+
+↓
+
+In-place upgrade rebuilds ACLs.
+
+Everything works again.
+
+
+In short:
+winUpdateMiniTool's Disable AU feature modifies the ACLs on HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc and WaaSMedicSvc.
+It adds an explicit SYSTEM: Deny FullControl ACE.
+If its re-enable path doesn't complete successfully (which you observed as the button getting stuck), the explicit deny remains.
+The Service Control Manager may then stop recognizing those services, leading to sc qc/Get-Service returning 1060 even though the registry keys still exist.
+Removing the explicit deny ACE restored WaaSMedicSvc, and then UsoSvc, without needing an in-place upgrade.
+
+
+
+<b>TO FIX the bug</b>
+# check usosvc
+(Get-Acl "HKLM:\SYSTEM\CurrentControlSet\Services\UsoSvc").Access |
+Where-Object IdentityReference -like "*SYSTEM*"
+
+# then change accesstype from deny to allow
+$key = "HKLM:\SYSTEM\CurrentControlSet\Services\UsoSvc"
+
+$acl = Get-Acl $key
+
+$denyRules = $acl.Access | Where-Object {
+    $_.IdentityReference -eq "NT AUTHORITY\SYSTEM" -and
+    $_.AccessControlType -eq "Deny" -and
+    -not $_.IsInherited
+}
+
+if ($denyRules.Count -eq 0) {
+    Write-Host "No explicit SYSTEM Deny rule found."
+} else {
+    foreach ($rule in $denyRules) {
+        Write-Host "Removing:"
+        $rule | Format-List IdentityReference,AccessControlType,RegistryRights,IsInherited
+
+        $null = $acl.RemoveAccessRuleSpecific($rule)
+    }
+
+    Set-Acl -Path $key -AclObject $acl
+    Write-Host "ACL updated."
+
+    Get-Acl $key | Select-Object -ExpandProperty Access |
+        Where-Object IdentityReference -eq "NT AUTHORITY\SYSTEM" |
+        Format-List IdentityReference,AccessControlType,RegistryRights,IsInherited
+}
+
+
+# check waasmedicsvc
+$key = "HKLM:\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc"
+
+(Get-Acl $key).Access |
+Where-Object {
+    $_.IdentityReference -eq "NT AUTHORITY\SYSTEM"
+} |
+Format-List IdentityReference,AccessControlType,RegistryRights,IsInherited
+
+
+# change from deny to allow
+$key = "HKLM:\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc"
+
+$acl = Get-Acl $key
+
+$denyRule = $acl.Access | Where-Object {
+    $_.IdentityReference -eq "NT AUTHORITY\SYSTEM" -and
+    $_.AccessControlType -eq "Deny" -and
+    $_.RegistryRights -eq [System.Security.AccessControl.RegistryRights]::FullControl -and
+    -not $_.IsInherited
+}
+
+if ($denyRule) {
+    foreach ($rule in $denyRule) {
+        $acl.RemoveAccessRuleSpecific($rule)
+    }
+    Set-Acl -Path $key -AclObject $acl
+    Write-Host "Explicit SYSTEM Deny ACE removed from WaaSMedicSvc."
+} else {
+    Write-Host "No matching explicit SYSTEM Deny ACE found."
+}
+
+
+
+
+
+
+
+rustdesk --both computer has to login with the same email account to use public relay server
+
+for saving bandwidth
+
+	&gt; on target PC &gt; settings &gt;
+	
+		&gt; security &gt; permission
+			&gt; enable audio: untick
+			&gt; keep screen awake during incoming sessions: untick --to save battery by turning screen off but not go to sleep
+			
+		&gt; general
+			&gt; enable hardware codec: tick
+			&gt; adaptive bitrate: on
+			&gt; remove wallpaper during incoming session: on
+			&gt; keep screen awake during outgoing sessions: on
+			
+		&gt; display
+			&gt; scale adaptive
+			&gt; image quality
+				&gt; custom: 10%, 10 fps
+			&gt; default codec: v9 (for compatibility with Windhawk)
+
+		&gt; show remote cursor: disable
+		
+		&gt; relog windows if the background wallpaper and resolution do not get resetted back
+
+	
+
+# WINDOWS DEFENDER
+Things that are blocked out of nowhere:
+- proxy client
+- rufus
+- some cert utility
+- browser with proxy
+- powershell script
+- debloater, activator
+
+
+Software that auto save to critical folders like Documents, Downloads, Desktop will be blocked by Controlled Folder Access (From RansomWare Protection)
+- but sometimes Microsoft automatically whitelists well-known software through its cloud reputation engine.
+- some need manual intervention
+
+ADD SOME FOLDERS for exclusion
+
+sometimes it's not enough especially for vpn software, the msmpeg keeps running in the background, so we also need to exclude the actual vpn software that's running
+
+
+<p>Watchfolder autohotkey v1</p>
+
+<b>watchfolder.ahk</b>
+; ==================================================================================================================================
+; Function:       Notifies about changes within folders.
+;                 This is a rewrite of HotKeyIt's WatchDirectory() released at
+;                    http://www.autohotkey.com/board/topic/60125-ahk-lv2-watchdirectory-report-directory-changes/
+; Tested with:    AHK 1.1.23.01 (A32/U32/U64)
+; Tested on:      Win 10 Pro x64
+; Usage:          WatchFolder(Folder, UserFunc[, SubTree := False[, Watch := 3]])
+; Parameters:
+;     Folder      -  The full qualified path of the folder to be watched.
+;                    Pass the string "**PAUSE" and set UserFunc to either True or False to pause respectively resume watching.
+;                    Pass the string "**END" and an arbitrary value in UserFunc to completely stop watching anytime.
+;                    If not, it will be done internally on exit.
+;     UserFunc    -  The name of a user-defined function to call on changes. The function must accept at least two parameters:
+;                    1: The path of the affected folder. The final backslash is not included even if it is a drive's root
+;                       directory (e.g. C:).
+;                    2: An array of change notifications containing the following keys:
+;                       Action:  One of the integer values specified as FILE_ACTION_... (see below).
+;                                In case of renaming Action is set to FILE_ACTION_RENAMED (4).
+;                       Name:    The full path of the changed file or folder.
+;                       OldName: The previous path in case of renaming, otherwise not used.
+;                       IsDir:   True if Name is a directory; otherwise False. In case of Action 2 (removed) IsDir is always False.
+;                    Pass the string "**DEL" to remove the directory from the list of watched folders.
+;     SubTree     -  Set to true if you want the whole subtree to be watched (i.e. the contents of all sub-folders).
+;                    Default: False - sub-folders aren't watched.
+;     Watch       -  The kind of changes to watch for. This can be one or any combination of the FILE_NOTIFY_CHANGES_...
+;                    values specified below.
+;                    Default: 0x03 - FILE_NOTIFY_CHANGE_FILE_NAME + FILE_NOTIFY_CHANGE_DIR_NAME
+; Return values:
+;     Returns True on success; otherwise False.
+; Change history:
+;     1.0.03.00/2021-10-14/just me        -  bug-fix for addding, removing, or updating folders.
+;     1.0.02.00/2016-11-30/just me        -  bug-fix for closing handles with the '**END' option.
+;     1.0.01.00/2016-03-14/just me        -  bug-fix for multiple folders
+;     1.0.00.00/2015-06-21/just me        -  initial release
+; License:
+;     The Unlicense -&gt; http://unlicense.org/
+; Remarks:
+;     Due to the limits of the API function WaitForMultipleObjects() you cannot watch more than MAXIMUM_WAIT_OBJECTS (64)
+;     folders simultaneously.
+; MSDN:
+;     ReadDirectoryChangesW          msdn.microsoft.com/en-us/library/aa365465(v=vs.85).aspx
+;     FILE_NOTIFY_CHANGE_FILE_NAME   = 1   (0x00000001) : Notify about renaming, creating, or deleting a file.
+;     FILE_NOTIFY_CHANGE_DIR_NAME    = 2   (0x00000002) : Notify about creating or deleting a directory.
+;     FILE_NOTIFY_CHANGE_ATTRIBUTES  = 4   (0x00000004) : Notify about attribute changes.
+;     FILE_NOTIFY_CHANGE_SIZE        = 8   (0x00000008) : Notify about any file-size change.
+;     FILE_NOTIFY_CHANGE_LAST_WRITE  = 16  (0x00000010) : Notify about any change to the last write-time of files.
+;     FILE_NOTIFY_CHANGE_LAST_ACCESS = 32  (0x00000020) : Notify about any change to the last access time of files.
+;     FILE_NOTIFY_CHANGE_CREATION    = 64  (0x00000040) : Notify about any change to the creation time of files.
+;     FILE_NOTIFY_CHANGE_SECURITY    = 256 (0x00000100) : Notify about any security-descriptor change.
+;     FILE_NOTIFY_INFORMATION        msdn.microsoft.com/en-us/library/aa364391(v=vs.85).aspx
+;     FILE_ACTION_ADDED              = 1   (0x00000001) : The file was added to the directory.
+;     FILE_ACTION_REMOVED            = 2   (0x00000002) : The file was removed from the directory.
+;     FILE_ACTION_MODIFIED           = 3   (0x00000003) : The file was modified.
+;     FILE_ACTION_RENAMED            = 4   (0x00000004) : The file was renamed (not defined by Microsoft).
+;     FILE_ACTION_RENAMED_OLD_NAME   = 4   (0x00000004) : The file was renamed and this is the old name.
+;     FILE_ACTION_RENAMED_NEW_NAME   = 5   (0x00000005) : The file was renamed and this is the new name.
+;     GetOverlappedResult            msdn.microsoft.com/en-us/library/ms683209(v=vs.85).aspx
+;     CreateFile                     msdn.microsoft.com/en-us/library/aa363858(v=vs.85).aspx
+;     FILE_FLAG_BACKUP_SEMANTICS     = 0x02000000
+;     FILE_FLAG_OVERLAPPED           = 0x40000000
+; ==================================================================================================================================
+WatchFolder(Folder, UserFunc, SubTree := False, Watch := 0x03) {
+   Static DummyObject := {Base: {__Delete: Func("WatchFolder").Bind("**END", "")}}
+   Static TimerID := "**" . A_TickCount
+   Static TimerFunc := Func("WatchFolder").Bind(TimerID, "")
+   Static MAXIMUM_WAIT_OBJECTS := 64
+   Static MAX_DIR_PATH := 260 - 12 + 1
+   Static SizeOfLongPath := MAX_DIR_PATH &lt;&lt; !!A_IsUnicode
+   Static SizeOfFNI := 0xFFFF ; size of the FILE_NOTIFY_INFORMATION structure buffer (64 KB)
+   Static SizeOfOVL := 32     ; size of the OVERLAPPED structure (64-bit)
+   Static WatchedFolders := {}
+   Static EventArray := []
+   Static WaitObjects := 0
+   Static BytesRead := 0
+   Static Paused := False
+   ; ===============================================================================================================================
+   If (Folder = "")
+      Return False
+   SetTimer, % TimerFunc, Off
+   RebuildWaitObjects := False
+   ; ===============================================================================================================================
+   If (Folder = TimerID) { ; called by timer
+      If (ObjCount := EventArray.Count()) &amp;&amp; !Paused {
+         ObjIndex := DllCall("WaitForMultipleObjects", "UInt", ObjCount, "Ptr", &amp;WaitObjects, "Int", 0, "UInt", 0, "UInt")
+         While (ObjIndex &gt;= 0) &amp;&amp; (ObjIndex &lt; ObjCount) {
+            Event := NumGet(WaitObjects, ObjIndex * A_PtrSize, "UPtr")
+            Folder := EventArray[Event]
+            If DllCall("GetOverlappedResult", "Ptr", Folder.Handle, "Ptr", Folder.OVLAddr, "UIntP", BytesRead, "Int", True) {
+               Changes := []
+               FNIAddr := Folder.FNIAddr
+               FNIMax := FNIAddr + BytesRead
+               OffSet := 0
+               PrevIndex := 0
+               PrevAction := 0
+               PrevName := ""
+               Loop {
+                  FNIAddr += Offset
+                  OffSet := NumGet(FNIAddr + 0, "UInt")
+                  Action := NumGet(FNIAddr + 4, "UInt")
+                  Length := NumGet(FNIAddr + 8, "UInt") // 2
+                  Name   := Folder.Name . "\" . StrGet(FNIAddr + 12, Length, "UTF-16")
+                  IsDir  := InStr(FileExist(Name), "D") ? 1 : 0
+                  If (Name = PrevName) {
+                     If (Action = PrevAction)
+                        Continue
+                     If (Action = 1) &amp;&amp; (PrevAction = 2) {
+                        PrevAction := Action
+                        Changes.RemoveAt(PrevIndex--)
+                        Continue
+                     }
+                  }
+                  If (Action = 4)
+                     PrevIndex := Changes.Push({Action: Action, OldName: Name, IsDir: 0})
+                  Else If (Action = 5) &amp;&amp; (PrevAction = 4) {
+                     Changes[PrevIndex, "Name"] := Name
+                     Changes[PrevIndex, "IsDir"] := IsDir
+                  }
+                  Else
+                     PrevIndex := Changes.Push({Action: Action, Name: Name, IsDir: IsDir})
+                  PrevAction := Action
+                  PrevName := Name
+               } Until (Offset = 0) || ((FNIAddr + Offset) &gt; FNIMax)
+               If (Changes.Length() &gt; 0)
+                  Folder.Func.Call(Folder.Name, Changes)
+               DllCall("ResetEvent", "Ptr", Event)
+               DllCall("ReadDirectoryChangesW", "Ptr", Folder.Handle, "Ptr", Folder.FNIAddr, "UInt", SizeOfFNI
+                                              , "Int", Folder.SubTree, "UInt", Folder.Watch, "UInt", 0
+                                              , "Ptr", Folder.OVLAddr, "Ptr", 0)
+            }
+            ObjIndex := DllCall("WaitForMultipleObjects", "UInt", ObjCount, "Ptr", &amp;WaitObjects, "Int", 0, "UInt", 0, "UInt")
+            Sleep, 0
+         }
+      }
+   }
+   ; ===============================================================================================================================
+   Else If (Folder = "**PAUSE") { ; called to pause/resume watching
+      Paused := !!UserFunc
+      RebuildObjects := Paused
+   }
+   ; ===============================================================================================================================
+   Else If (Folder = "**END") { ; called to stop watching
+      For Event, Folder In EventArray {
+         DllCall("CloseHandle", "Ptr", Folder.Handle)
+         DllCall("CloseHandle", "Ptr", Event)
+      }
+      WatchedFolders := {}
+      EventArray := []
+      Paused := False
+      Return True
+   }
+   ; ===============================================================================================================================
+   Else { ; called to add, update, or remove folders
+      Folder := RTrim(Folder, "\")
+      VarSetCapacity(LongPath, MAX_DIR_PATH &lt;&lt; !!A_IsUnicode, 0)
+      If !DllCall("GetLongPathName", "Str", Folder, "Ptr", &amp;LongPath, "UInt", MAX_DIR_PATH)
+         Return False
+      VarSetCapacity(LongPath, -1)
+      Folder := LongPath
+      If (WatchedFolders.HasKey(Folder)) { ; update or remove
+         Event :=  WatchedFolders[Folder]
+         FolderObj := EventArray[Event]
+         DllCall("CloseHandle", "Ptr", FolderObj.Handle)
+         DllCall("CloseHandle", "Ptr", Event)
+         EventArray.Delete(Event)
+         WatchedFolders.Delete(Folder)
+         RebuildWaitObjects := True
+      }
+      If InStr(FileExist(Folder), "D") &amp;&amp; (UserFunc &lt;&gt; "**DEL") &amp;&amp; (EventArray.Count() &lt; MAXIMUM_WAIT_OBJECTS) {
+         If (IsFunc(UserFunc) &amp;&amp; (UserFunc := Func(UserFunc)) &amp;&amp; (UserFunc.MinParams &gt;= 2)) &amp;&amp; (Watch &amp;= 0x017F) {
+            Handle := DllCall("CreateFile", "Str", Folder . "\", "UInt", 0x01, "UInt", 0x07, "Ptr",0, "UInt", 0x03
+                                          , "UInt", 0x42000000, "Ptr", 0, "UPtr")
+            If (Handle &gt; 0) {
+               Event := DllCall("CreateEvent", "Ptr", 0, "Int", 1, "Int", 0, "Ptr", 0)
+               FolderObj := {Name: Folder, Func: UserFunc, Handle: Handle, SubTree: !!SubTree, Watch: Watch}
+               FolderObj.SetCapacity("FNIBuff", SizeOfFNI)
+               FNIAddr := FolderObj.GetAddress("FNIBuff")
+               DllCall("RtlZeroMemory", "Ptr", FNIAddr, "Ptr", SizeOfFNI)
+               FolderObj["FNIAddr"] := FNIAddr
+               FolderObj.SetCapacity("OVLBuff", SizeOfOVL)
+               OVLAddr := FolderObj.GetAddress("OVLBuff")
+               DllCall("RtlZeroMemory", "Ptr", OVLAddr, "Ptr", SizeOfOVL)
+               NumPut(Event, OVLAddr + 8, A_PtrSize * 2, "Ptr")
+               FolderObj["OVLAddr"] := OVLAddr
+               DllCall("ReadDirectoryChangesW", "Ptr", Handle, "Ptr", FNIAddr, "UInt", SizeOfFNI, "Int", SubTree
+                                              , "UInt", Watch, "UInt", 0, "Ptr", OVLAddr, "Ptr", 0)
+               EventArray[Event] := FolderObj
+               WatchedFolders[Folder] := Event
+               RebuildWaitObjects := True
+            }
+         }
+      }
+      If (RebuildWaitObjects) {
+         VarSetCapacity(WaitObjects, MAXIMUM_WAIT_OBJECTS * A_PtrSize, 0)
+         OffSet := &amp;WaitObjects
+         For Event In EventArray
+            Offset := NumPut(Event, Offset + 0, 0, "Ptr")
+      }
+   }
+   ; ===============================================================================================================================
+   If (EventArray.Count() &gt; 0)
+      SetTimer, % TimerFunc, -100
+   Return (RebuildWaitObjects) ; returns True on success, otherwise False
+}
+
+
+<b>watchfolder-gui.ahk</b>
+
+#NoEnv
+#Warn
+#Include WatchFolder.ahk
+SetBatchLines, -1
+
+FolderCounter := {}
+
+; ----------------------------------------------------------------------------------------------------------------------------------
+Gui, Margin, 20, 20
+Gui, Add, Text, , Watch Folder:
+Gui, Add, Edit, xm y+3 w730 vWatchedFolder cGray +ReadOnly, Select a folder ...
+Gui, Add, Button, x+m yp w50 hp +Default vSelect gSelectFolder, ...
+Gui, Add, Text, xm y+5, Watch Changes:
+Gui, Add, Checkbox, xm y+3 vSubTree, In Sub-Tree
+Gui, Add, Checkbox, x+5 yp vFiles Checked, Files
+Gui, Add, Checkbox, x+5 yp vFolders Checked, Folders
+Gui, Add, Checkbox, x+5 yp vAttr, Attributes
+Gui, Add, Checkbox, x+5 yp vSize, Size
+Gui, Add, Checkbox, x+5 yp vWrite, Last Write
+Gui, Add, Checkbox, x+5 yp vAccess, Last Access
+Gui, Add, Checkbox, x+5 yp vCreation, Creation
+Gui, Add, Checkbox, x+5 yp vSecurity, Security
+Gui, Add, ListView, xm w800 r15 vLV, Count|TickCount|Folder|Action|Name|IsDir|OldName|%A_Space%
+Gui, Add, Button, xm w100 gStartStop vAction +Disabled, Start
+Gui, Add, Button, x+m yp wp gPauseResume vPause +Disabled, Pause
+Gui, Add, Button, x+m yp wp gCLear, Clear
+Gui, Add, Text, xm y+10, Folder Statistics
+Gui, Add, ListView, xm w800 r8 vLVStats Grid, Events|Folder
+Gui, Show, , Watch Folder
+GuiControl, Focus, Select
+Return
+; ----------------------------------------------------------------------------------------------------------------------------------
+GuiClose:
+ExitApp
+; ----------------------------------------------------------------------------------------------------------------------------------
+Clear:
+   LV_Delete()
+Return
+; ----------------------------------------------------------------------------------------------------------------------------------
+PauseResume:
+   GuiControlGet, Caption, , Pause
+   If (Caption = "Pause") {
+      WatchFolder("**PAUSE", True)
+      GuiControl, Disable, Action
+      GuiControl, , Pause, Resume
+   }
+   ELse {
+      WatchFolder("**PAUSE", False)
+      GuiControl, Enable, Action
+      GuiControl, , Pause, Pause
+   }
+Return
+; ----------------------------------------------------------------------------------------------------------------------------------
+StartStop:
+   Gui, +OwnDialogs
+   Gui, Submit, NoHide
+   If !InStr(FileExist(WatchedFolder), "D") {
+      MsgBox, 0, Error, "%WatchedFolder%" isn't a valid folder name!
+      Return
+   }
+   GuiControlGet, Caption, , Action
+   If (Caption = "Start") {
+      Watch := 0
+      Watch |= Files ? 1 : 0
+      Watch |= Folders ? 2 : 0
+      Watch |= Attr ? 4 : 0
+      Watch |= Size ? 8 : 0
+      Watch |= Write ? 16 : 0
+      Watch |= Access ? 32 : 0
+      Watch |= Creation ? 64 : 0
+      Watch |= Security ? 256 : 0
+      If (Watch = 0) {
+         GuiControl, , Files, 1
+         GuiControl, , Folders, 1
+         Watch := 3
+      }
+      If !WatchFolder(WatchedFolder, "MyUserFunc", SubTree, Watch) {
+         MsgBox, 0, Error, Call of WatchFolder() failed!
+         Return
+      }
+      GuiControl, , Action, Stop
+      GuiControl, Disable, Select
+      GuiControl, Enable, Pause
+   }
+   Else {
+      WatchFolder(WatchedFolder, "**DEL")
+      GuiControl, , Action, Start
+      GuiControl, Enable, Select
+      GuiControl, Disable, Pause
+   }
+Return
+; ----------------------------------------------------------------------------------------------------------------------------------
+SelectFolder:
+   FileSelectFolder, WatchedFolder
+   If !(ErrorLevel) {
+      GuiControl, +cDefault, WatchedFolder
+      GuiControl, , WatchedFolder, %WatchedFolder%
+      GuiControl, Enable, Action
+   }
+Return
+; ----------------------------------------------------------------------------------------------------------------------------------
+MyUserFunc(Folder, Changes) {
+    Global FolderCounter
+
+    Static Actions := ["1 (added)", "2 (removed)", "3 (modified)", "4 (renamed)"]
+
+    TickCount := A_TickCount
+
+    ; Update statistics
+    if !FolderCounter.HasKey(Folder)
+        FolderCounter[Folder] := 0
+
+    FolderCounter[Folder] += Changes.Length()
+
+    ; Add normal log entries
+    GuiControl, -Redraw, LV
+
+   ; For Each, Change In Changes
+   ; LV_Modify(LV_Add("", TickCount, Folder, Actions[Change.Action], Change.Name, Change.IsDir, Change.OldName, ""), "Vis")
+
+For Each, Change In Changes
+{
+    Bucket := GetTrafficBucket(Change.Name)
+
+    if !FolderCounter.HasKey(Bucket)
+        FolderCounter[Bucket] := 0
+
+    FolderCounter[Bucket]++
+
+    Row := LV_Add("", TickCount
+        , Folder
+        , Actions[Change.Action]
+        , Change.Name
+        , Change.IsDir
+        , Change.OldName
+        , "")
+
+    LV_Modify(Row, "Vis")
+}
+
+    GuiControl, +Redraw, LV
+
+    UpdateStats()
+}
+UpdateStats() {
+    Global FolderCounter
+
+    Gui, ListView, LVStats
+
+    LV_Delete()
+
+    Temp := []
+
+    for Folder, Count in FolderCounter
+        Temp.Push({Folder: Folder, Count: Count})
+
+    ; Sort descending
+    Loop % Temp.Length() {
+        Swapped := false
+        Loop % Temp.Length()-A_Index {
+            if (Temp[A_Index].Count &lt; Temp[A_Index+1].Count) {
+                T := Temp[A_Index]
+                Temp[A_Index] := Temp[A_Index+1]
+                Temp[A_Index+1] := T
+                Swapped := true
+            }
+        }
+        if !Swapped
+            break
+    }
+
+    for Each, Item in Temp
+        LV_Add("", Item.Count, Item.Folder)
+
+    LV_ModifyCol(1, "Integer SortDesc AutoHdr")
+    LV_ModifyCol(2, "AutoHdr")
+
+    Gui, ListView, LV
+}
+GetTrafficBucket(Path)
+{
+    ; Remove filename
+    SplitPath, Path, , Dir
+
+    ; Normalize separators
+    StringReplace, Dir, Dir, /, \, All
+
+    Parts := StrSplit(Dir, "\")
+
+    ; Need at least Drive + Folder
+    if (Parts.Length() &lt; 2)
+        return Dir
+
+    ; --------------------------------------------------
+    ; C:\Users\&lt;User&gt;\AppData\Local\&lt;Vendor&gt;\&lt;Product&gt;
+    ; --------------------------------------------------
+    if (Parts.Length() &gt;= 7
+        &amp;&amp; Parts[2] = "Users"
+        &amp;&amp; Parts[4] = "AppData"
+        &amp;&amp; Parts[5] = "Local")
+    {
+        return Parts[1] "\" Parts[2] "\" Parts[3] "\" Parts[4] "\" Parts[5] "\" Parts[6] "\" Parts[7]
+    }
+
+    ; --------------------------------------------------
+    ; C:\Users\&lt;User&gt;\AppData\Roaming\&lt;Vendor&gt;\&lt;Product&gt;
+    ; --------------------------------------------------
+    if (Parts.Length() &gt;= 7
+        &amp;&amp; Parts[2] = "Users"
+        &amp;&amp; Parts[4] = "AppData"
+        &amp;&amp; Parts[5] = "Roaming")
+    {
+        return Parts[1] "\" Parts[2] "\" Parts[3] "\" Parts[4] "\" Parts[5] "\" Parts[6] "\" Parts[7]
+    }
+
+    ; --------------------------------------------------
+    ; C:\Program Files\&lt;Vendor&gt;
+    ; --------------------------------------------------
+    if (Parts.Length() &gt;= 3 &amp;&amp; Parts[2] = "Program Files")
+        return Parts[1] "\" Parts[2] "\" Parts[3]
+
+    ; --------------------------------------------------
+    ; C:\Program Files (x86)\&lt;Vendor&gt;
+    ; --------------------------------------------------
+    if (Parts.Length() &gt;= 3 &amp;&amp; Parts[2] = "Program Files (x86)")
+        return Parts[1] "\" Parts[2] "\" Parts[3]
+
+    ; --------------------------------------------------
+    ; C:\ProgramData\&lt;Vendor&gt;
+    ; --------------------------------------------------
+    if (Parts.Length() &gt;= 3 &amp;&amp; Parts[2] = "ProgramData")
+        return Parts[1] "\" Parts[2] "\" Parts[3]
+
+    ; --------------------------------------------------
+    ; C:\Windows\&lt;Folder&gt;
+    ; --------------------------------------------------
+    if (Parts.Length() &gt;= 3 &amp;&amp; Parts[2] = "Windows")
+        return Parts[1] "\" Parts[2] "\" Parts[3]
+
+    ; --------------------------------------------------
+    ; Other drives
+    ; Return first two folders if possible
+    ; --------------------------------------------------
+    if (Parts.Length() &gt;= 3)
+        return Parts[1] "\" Parts[2] "\" Parts[3]
+
+    return Dir
+}
