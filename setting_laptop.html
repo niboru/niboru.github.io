@@ -2845,6 +2845,38 @@ GetTrafficBucket(Path)
 
     return Dir
 }
+
+<p>Windows 26100.3323 bug</p
+
+- Slow file explorer and often crashed.
+
+- Taskbar icons often disappear or wrong icons.
+
+- Notepad pointer keeps jumping around when using ALT + TAB or Ctrl + F.
+
+- With open-shell, do not copy or drag links from Apps folder to Program Files for the sake combining them, it will create double entry in shell:appsFolder that causes missing blank white icon on the associated app.
+
+- "Restore previous folder windows at logon" often makes taskbar icons missing on reboot and also files aren't shown if there are too many.
+
+- After installing/updating an app (especially one that uses modern UI frameworks like Avalonia/WinUI, which UniGetUI now does), the Windows shell (explorer.exe) sometimes gets confused with the taskbar icon registration. The program is still running, but clicking the pinned taskbar icon does nothing. This is more frequent after updates that change icons, the main window, or how the app registers itself with the taskbar.
+
+- Long sleep especially overnight can crash Windhawk on resume because Modern Standby (S0) is one of the hardest environments for Explorer modifications because many COM objects, graphics objects, shell extensions, and window handles become invalid after several hours.
+
+- New files often do not appear when the Download folder is already opened. Refresh by presing F5.
+
+- Storage permission error when opening WeChat.	A known Windows 11 system bug tied to app permission logs (CapabilityAccessManager.db-wal) can bloat storage and trigger access errors on the C drive. Fix: Windows Security → Virus & threat protection → Manage ransomware protection > Click Allow an app through Controlled folder access > blocked app > Select it.
+
+- After installing software, taskbar often freezes, including already opened one. This is explorer dan ShellExperienceHost bug. The freezing isn't tied to one specific app, but rather to how certain software installers interact with the Windows Shell (explorer.exe). In Build 26100.3323, specific background actions during installation trigger the thread deadlock like: Software that Adds Context Menus & Shell Extensions, Installers using UAC Elevation & Focus-Stealing, Software with Desktop or Taskbar Overlays and Security & Real-Time Scanners.
+
+- When taskbar is auto hiding and a program needs attention by being highlighted, you cannot get the taskbar back by moving cursor to the bottom, instead you need to press windows key and take care of that program first. This fix might not work: by turning off show flashing in taskbar behavior in Windows + i.
+
+- Windows Explorer (explorer.exe) frequently fails to detect mouse hover events at the absolute bottom edge of the screen when an application is fully maximized, a known focus management bug in Windows 11 Build 26100.3323. So auto-hide taskbar stays hidden.
+
+- Win defender blocks Free Download Manager integration with MS Edge and others. Add to exclusion.
+
+- Resuming from sleep sometimes takes around 20 seconds or so where normally it would be less than 1 second.
+
+- Window size will not be persistent when closed.
 </pre>
 </main>
 </body>
