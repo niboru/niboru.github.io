@@ -2123,6 +2123,9 @@ AVERAGE_C: 39.3</code>
 $o=Get-CimInstance Win32_OperatingSystem;"TOTAL_GB: $([math]::Round($o.TotalVisibleMemorySize/1MB,2))";"FREE_GB: $([math]::Round($o.FreePhysicalMemory/1MB,2))";"USED_GB: $([math]::Round(($o.TotalVisibleMemorySize-$o.FreePhysicalMemory)/1MB,2))"
 
 
+<b>Download Speed Test</b>
+irm asheroto.com/speedtest | iex
+
 <p>Additional info</p>
 
 - Disable QUIC on browser.
