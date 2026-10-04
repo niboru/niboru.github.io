@@ -1862,6 +1862,9 @@ Get-Process |
 Stop-Process -Name "program" -Force
 Stop-Process -Id 1234 -Force
 
+# List all running processes
+Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -notlike "*\Windows\System32\*" -and $_.ExecutablePath -notlike "*\Windows\SysWOW64\*" -and $_.ExecutablePath -ne $null } | Select-Object Name, ProcessId, ExecutablePath
+
 
 <b>Storage Info</b>
 Get-Volume
