@@ -2126,6 +2126,10 @@ or
 # Cmd to extract CPU temp:
 <code>$m=[IO.MemoryMappedFiles.MemoryMappedFile]::OpenExisting("CoreTempMappingObjectEx");$s=$m.CreateViewStream();$r=[IO.BinaryReader]::new($s);$s.Position=1536;$cores=$r.ReadUInt32();$s.Position=1544;$t=1..$cores|%{$r.ReadSingle()};$s.Dispose();$m.Dispose();"CORES: $cores";"TEMPS_C: "+(($t|%{"{0:F1}"-f $_}) -join ", ");"AVERAGE_C: "+("{0:F1}"-f (($t|Measure-Object -Average).Average))</code>
 
+or
+
+<code>try{$m=[IO.MemoryMappedFiles.MemoryMappedFile]::OpenExisting("CoreTempMappingObjectEx");$s=$m.CreateViewStream();$r=[IO.BinaryReader]::new($s);$s.Position=1536;$cores=$r.ReadUInt32();$s.Position=1544;$t=1..$cores|%{$r.ReadSingle()};$r.Dispose();$s.Dispose();$m.Dispose();"CORES: $cores";"TEMPS_C: "+(($t|%{"{0:F1}"-f $_})-join ", ");"AVERAGE_C: "+("{0:F1}"-f (($t|Measure-Object -Average).Average))}catch{"CORETEMP: UNAVAILABLE"};$cpu=(Get-Counter '\Processor(_Total)\% Processor Time' -SampleInterval 1 -MaxSamples 1).CounterSamples.CookedValue;$os=Get-CimInstance Win32_OperatingSystem;$used=$os.TotalVisibleMemorySize-$os.FreePhysicalMemory;$total=$os.TotalVisibleMemorySize;"CPU_LOAD: "+("{0:F1}"-f $cpu)+"%";"MEMORY: "+("{0:F1}"-f ($used/$total*100))+"% USED ("+("{0:F1}"-f ($used/1MB))+" GB / "+("{0:F1}"-f ($total/1MB))+" GB)"</code>
+
 # Result
 <code>CORES: 4
 TEMPS_C: 39.0, 38.0, 41.0, 39.0
