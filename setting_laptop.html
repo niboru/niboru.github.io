@@ -1865,6 +1865,12 @@ Stop-Process -Id 1234 -Force
 # List all running processes
 Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -notlike "*\Windows\System32\*" -and $_.ExecutablePath -notlike "*\Windows\SysWOW64\*" -and $_.ExecutablePath -ne $null } | Select-Object Name, ProcessId, ExecutablePath
 
+# List all running process including RAM usage
+Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -notlike "*\Windows\System32\*" -and $_.ExecutablePath -notlike "*\Windows\SysWOW64\*" -and $_.ExecutablePath -ne $null } | Select-Object Name, ProcessId, @{Name="WorkingSetSize_MB"; Expression={[math]::round($_.WorkingSetSize / 1MB, 2)}}, ExecutablePath | Format-Table -AutoSize
+
+# Calculate how much memory Microsoft Edge currently use
+Get-CimInstance Win32_Process | Where-Object { $_.Name -eq "msedge.exe" } | Measure-Object -Property WorkingSetSize -Sum | Select-Object @{Name="Total_Edge_Memory_MB"; Expression={[math]::round($_.Sum / 1MB, 2)}}
+
 
 <b>Storage Info</b>
 Get-Volume
@@ -2131,9 +2137,12 @@ or
 <code>try{$m=[IO.MemoryMappedFiles.MemoryMappedFile]::OpenExisting("CoreTempMappingObjectEx");$s=$m.CreateViewStream();$r=[IO.BinaryReader]::new($s);$s.Position=1536;$cores=$r.ReadUInt32();$s.Position=1544;$t=1..$cores|%{$r.ReadSingle()};$r.Dispose();$s.Dispose();$m.Dispose();"CORES: $cores";"TEMPS_C: "+(($t|%{"{0:F1}"-f $_})-join ", ");"AVERAGE_C: "+("{0:F1}"-f (($t|Measure-Object -Average).Average))}catch{"CORETEMP: UNAVAILABLE"};$cpu=(Get-Counter '\Processor(_Total)\% Processor Time' -SampleInterval 1 -MaxSamples 1).CounterSamples.CookedValue;$os=Get-CimInstance Win32_OperatingSystem;$used=$os.TotalVisibleMemorySize-$os.FreePhysicalMemory;$total=$os.TotalVisibleMemorySize;"CPU_LOAD: "+("{0:F1}"-f $cpu)+"%";"MEMORY: "+("{0:F1}"-f ($used/$total*100))+"% USED ("+("{0:F1}"-f ($used/1MB))+" GB / "+("{0:F1}"-f ($total/1MB))+" GB)"</code>
 
 # Result
-<code>CORES: 4
-TEMPS_C: 39.0, 38.0, 41.0, 39.0
-AVERAGE_C: 39.3</code>
+<code>TEMPS_CORES: 4
+TEMPS_C: 42.0, 42.0, 42.0, 42.0
+AVERAGE_C: 42.0
+CPU_LOAD: 6.7%
+MEMORY: 72.5% USED (10.0 GB / 13.8 GB)
+</code>
 
 
 <b>Find RAM Total</b>
