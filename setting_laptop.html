@@ -2153,6 +2153,12 @@ MEMORY: 72.5% USED (10.0 GB / 13.8 GB)
 irm asheroto.com/speedtest | iex
 
 
+<b>Updating Rust Desk</b>
+$url = ((Invoke-RestMethod -Uri "https://api.github.com/repos/rustdesk/rustdesk/releases/latest").assets | Where-Object name -like "*x86_64.exe").browser_download_url; Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\rustdesk_latest.exe"; $proc = Start-Process -FilePath "$env:TEMP\rustdesk_latest.exe" -ArgumentList "--silent-install" -PassThru; $proc.WaitForExit(30000); Remove-Item "$env:TEMP\rustdesk_latest.exe" -Force -ErrorAction SilentlyContinue; Start-Service -Name "RustDesk" -ErrorAction SilentlyContinue; (Get-Item "C:\Program Files\RustDesk\rustdesk.exe").VersionInfo.FileVersion
+
+--Running background service is enough.
+
+
 <p>Additional info</p>
 
 - Disable QUIC on browser.
