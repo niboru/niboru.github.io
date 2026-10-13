@@ -170,6 +170,7 @@ animestream
 	
 9anime
 subbedanime
+https://anicult.vercel.app/
 
 <p>Manga Manhua</p>
 
@@ -409,6 +410,8 @@ streamxtv
 actvid
 https://www.aurawatch.fun/
 https://luxen.watch/
+framextv
+pelis24
 
 
 <span class="label">Streaming TV</span>
@@ -763,6 +766,7 @@ https://www.spawn.co/
 https://playbay.games/
 https://wavedash.com/
 https://www.prmdues.com/
+https://mindblown.ai/explore/
 
 
 https://gamehub.xiaoji.com/en/
@@ -778,13 +782,19 @@ https://bunnyhop.lol/
 https://pes6.optijuegos.net/ → PES 6
 https://shar-wasm.cjoseph.workers.dev/?skipmovie
 https://vel.gg/bo1z → Black Ops 1 Zombies
+https://vibeslops.luckeysystems.com → Black Ops 2
 https://cheese-cube.pages.dev/zm_ccube → Black Ops 3
-https://vibeslops.luckeysystems.com/
+https://zombies.bitcoinsapi.com → Call of Duty: World at War Zombies (Nacht der Untoten)
+https://generals.wasm.ltd → Command & Conquer: Generals Zero Hour 
+https://chronodivide.com → Command & Conquer: Red Alert 2
+
 https://johnimril.github.io/diablo_web/ → Diablo
 https://x8bitrain.github.io/webXash/ → Half Life &amp; Counter Strike
 https://pixelsuft.github.io/hl/ → Half Life
 https://rtcw.pieter.com/ → Return to Castle Wolfenstein
 https://ut.pieter.com/ → Unreal Tournament
+GTA Chinatown Wars - https://gta-chinatown-wars.pages.dev
+GTA III - https://wasmarcade.com/gta3
 https://joncodeofficial.github.io/gta-vice-city-wasm/ → GTA Vice City
 https://q1.pieter.com/ → Quake 1	
 https://q2.pieter.com/
@@ -807,6 +817,9 @@ https://fortniteog.lol/
 https://johannruiz.github.io/Daytona-USA-Web/
 https://vibesail.com/
 https://wavedash.com/games/vector-anti-gravity-racing
+https://indie.fun/play/mecha-royale
+https://stillwater.zavrenn.chatgpt.site/
+https://play.voxelrush.app/ - Roblox FPS
 
 https://github.com/SpeedBreakerProject/speedbreaker
 
@@ -1123,6 +1136,176 @@ https://webhacklist.com/
             textNode.parentNode.replaceChild(fragment, textNode);
         }
     })();
+</script>
+<!--
+  LINK SUGGESTION WIDGET (open to everyone, moderated). Paste just before </body>.
+  Setup: 1) run supabase-setup.sql  2) fill in SUPABASE_URL and SUPABASE_ANON_KEY below
+         (Dashboard > Project Settings > API). The anon key is meant to be public; the
+         database rules in the SQL file are what protect you.
+  Moderation: Table Editor > links > tick "approved" on good ones. Delete spam rows.
+-->
+<section id="ls-widget" aria-labelledby="ls-title">
+  <h2 id="ls-title">Suggest a link</h2>
+  <form id="ls-form" novalidate>
+    <label>Title <input id="ls-name" type="text" maxlength="100" autocomplete="off" required></label>
+    <label>URL <input id="ls-url" type="url" maxlength="500" placeholder="https://example.com" autocomplete="off" required></label>
+    <label>Short description (optional) <textarea id="ls-desc" maxlength="300" rows="3"></textarea></label>
+    <!-- Honeypot: invisible to people, bots fill it in. -->
+    <div style="position:absolute;left:-9999px" aria-hidden="true">
+      <label>Leave empty <input id="ls-hp" type="text" tabindex="-1" autocomplete="off"></label>
+    </div>
+    <button id="ls-submit" type="submit">Submit for review</button>
+    <p id="ls-msg" role="status" aria-live="polite"></p>
+  </form>
+
+  <h3>Community links</h3>
+  <ul id="ls-list"></ul>
+  <p id="ls-status" role="status" aria-live="polite"></p>
+</section>
+
+<style>
+  #ls-widget{max-width:640px;margin:48px auto 24px;padding:0 16px;font:inherit;position:relative}
+  #ls-widget label{display:block;margin:10px 0;font-size:.9em}
+  #ls-widget input,#ls-widget textarea{display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:8px;
+    font:inherit;color:inherit;background:transparent;border:1px solid currentColor;border-radius:6px;opacity:.9}
+  #ls-widget button{font:inherit;padding:8px 16px;border-radius:6px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer}
+  #ls-widget button:disabled{opacity:.5;cursor:not-allowed}
+  #ls-widget ul{list-style:none;padding:0;margin:0}
+  #ls-widget li{padding:10px 0;border-bottom:1px solid rgba(128,128,128,.35)}
+  #ls-widget li a{font-weight:600;overflow-wrap:anywhere}
+  #ls-widget .ls-d{margin:2px 0 0;font-size:.9em;opacity:.8;overflow-wrap:anywhere}
+  #ls-widget .ls-m{font-size:.75em;opacity:.6}
+  #ls-widget .err{color:#c0392b}
+</style>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ---------- CONFIG: edit these ---------- */
+  const SUPABASE_URL = "https://bypfgvbykzgqbdckxqln.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable__IK07a9-Y6NZyyRR9L4SrQ_Mp7pv03O";
+  /* ---------------------------------------- */
+
+  const TABLE = `${SUPABASE_URL}/rest/v1/links`;
+  const TIMEOUT_MS = 8000;
+  const MIN_FILL_MS = 3000;          // forms submitted faster than this are almost certainly bots
+  const COOLDOWN_MS = 30000;         // one submission per 30s per visitor
+  const MAX_TITLE = 100, MAX_URL = 500, MAX_DESC = 300;
+  const SEEN_KEY = "ls-sent-v1";     // remembers recent submissions to block repeat-posting from one browser
+  const MAX_PER_DAY = 5;
+
+  const $ = (id) => document.getElementById(id);
+  const form = $("ls-form"), nameEl = $("ls-name"), urlEl = $("ls-url"), descEl = $("ls-desc"), hp = $("ls-hp");
+  const btn = $("ls-submit"), msg = $("ls-msg"), listEl = $("ls-list"), status = $("ls-status");
+  const openedAt = Date.now();
+  let lastSubmit = 0, busy = false;
+
+  const setText = (n, t, err) => { n.textContent = t || ""; n.classList.toggle("err", !!err); };
+  const clean = (s) => String(s ?? "").replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim();
+
+  /** http(s) only, no credentials, host must contain a dot. Returns normalized URL or null. */
+  function safeUrl(input) {
+    const raw = String(input ?? "").trim();
+    if (!raw || raw.length > MAX_URL) return null;
+    let u; try { u = new URL(raw); } catch { return null; }
+    if (!/^https?:$/.test(u.protocol) || u.username || u.password || !u.hostname.includes(".")) return null;
+    return u.href;
+  }
+
+  /** fetch with a timeout so a slow service can't hang the page. */
+  async function api(url, opts) {
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), TIMEOUT_MS);
+    try {
+      return await fetch(url, { ...opts, signal: ctl.signal, headers: {
+        apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}`, ...(opts && opts.headers) } });
+    } finally { clearTimeout(t); }
+  }
+
+  /* Per-browser daily limit (soft: blocks casual repeat posting; real limits live in the database). */
+  function sentToday() {
+    try { const a = JSON.parse(localStorage.getItem(SEEN_KEY) || "[]");
+          return (Array.isArray(a) ? a : []).filter((t) => Number.isFinite(t) && Date.now() - t < 864e5); }
+    catch { return []; }
+  }
+  function markSent() { try { localStorage.setItem(SEEN_KEY, JSON.stringify([...sentToday(), Date.now()])); } catch {} }
+
+  /* ---------- submit ---------- */
+  form.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    if (busy) return;
+    setText(msg, "");
+
+    // Spam traps: pretend success so bots learn nothing.
+    if (hp.value || Date.now() - openedAt < MIN_FILL_MS) { setText(msg, "Thanks! Your link will appear once it's approved."); form.reset(); return; }
+
+    const title = clean(nameEl.value), url = safeUrl(urlEl.value), desc = clean(descEl.value);
+    if (!title) return setText(msg, "Please enter a title.", true);
+    if (title.length > MAX_TITLE) return setText(msg, `Title must be at most ${MAX_TITLE} characters.`, true);
+    if (!url) return setText(msg, "Please enter a valid http(s) URL, e.g. https://example.com.", true);
+    if (desc.length > MAX_DESC) return setText(msg, `Description must be at most ${MAX_DESC} characters.`, true);
+    if (/https?:\/\/|www\./i.test(title + " " + desc)) return setText(msg, "Please put the link in the URL field only.", true);
+    if (SUPABASE_URL.includes("YOUR-")) return setText(msg, "Site owner: fill in the Supabase settings first.", true);
+
+    const wait = COOLDOWN_MS - (Date.now() - lastSubmit);
+    if (wait > 0) return setText(msg, `Please wait ${Math.ceil(wait / 1000)}s before submitting again.`, true);
+    if (sentToday().length >= MAX_PER_DAY) return setText(msg, "Daily submission limit reached. Please come back tomorrow.", true);
+
+    busy = true; btn.disabled = true;
+    try {
+      const res = await api(TABLE, { method: "POST",
+        headers: { "Content-Type": "application/json", Prefer: "return=minimal" },
+        body: JSON.stringify({ title, url, description: desc }) });   // "approved" is never sent; DB forces false
+      if (res.status === 201 || res.status === 204) {
+        lastSubmit = Date.now(); markSent(); form.reset();
+        setText(msg, "Thanks! Your link will appear once it's approved.");
+      } else if (res.status === 409) {
+        setText(msg, "That link has already been submitted. Thanks anyway!");
+      } else if (res.status === 429) {
+        setText(msg, "Too many requests. Please try again in a few minutes.", true);
+      } else {
+        const body = await res.text().catch(() => "");
+        setText(msg, /queue_full/.test(body) ? "The review queue is full right now. Please try again later."
+                                              : "Couldn't submit your link. Please try again.", true);
+      }
+    } catch (e) {
+      // Network down, timeout or CORS failure. The form keeps the user's input.
+      setText(msg, e.name === "AbortError" ? "The request timed out. Please try again."
+                                          : "Couldn't reach the server. Check your connection and retry.", true);
+    } finally { busy = false; btn.disabled = false; }
+  });
+
+  /* ---------- list ---------- */
+  async function load() {
+    try {
+      const res = await api(`${TABLE}?select=title,url,description,created_at&approved=eq.true&order=created_at.desc&limit=200`);
+      if (!res.ok) throw new Error("http");
+      const rows = await res.json();
+      if (!Array.isArray(rows)) throw new Error("shape");
+
+      listEl.replaceChildren();
+      for (const r of rows) {
+        const url = safeUrl(r && r.url), title = clean(r && r.title).slice(0, MAX_TITLE);
+        if (!url || !title) continue;                      // treat server data as untrusted too
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.textContent = title; a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer nofollow ugc";
+        li.append(a);
+        const desc = clean(r.description).slice(0, MAX_DESC);
+        if (desc) { const p = document.createElement("p"); p.className = "ls-d"; p.textContent = desc; li.append(p); }
+        const d = new Date(r.created_at);
+        if (!isNaN(d)) { const m = document.createElement("div"); m.className = "ls-m";
+          m.textContent = "Added " + d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }); li.append(m); }
+        listEl.append(li);
+      }
+      setText(status, listEl.children.length ? "" : "No community links yet. Be the first to suggest one!");
+    } catch {
+      setText(status, "Couldn't load community links right now.", true);
+    }
+  }
+  if (!SUPABASE_URL.includes("YOUR-")) load();
+})();
 </script>
 
 
