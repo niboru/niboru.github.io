@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Reinstall Windows</title>
+    <title>Reinstall Windows & SSH</title>
     <meta name="robots" content="noindex, nofollow, nosnippet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2157,6 +2157,10 @@ irm asheroto.com/speedtest | iex
 $url = ((Invoke-RestMethod -Uri "https://api.github.com/repos/rustdesk/rustdesk/releases/latest").assets | Where-Object name -like "*x86_64.exe").browser_download_url; Invoke-WebRequest -Uri $url -OutFile "$env:TEMP\rustdesk_latest.exe"; $proc = Start-Process -FilePath "$env:TEMP\rustdesk_latest.exe" -ArgumentList "--silent-install" -PassThru; $proc.WaitForExit(30000); Remove-Item "$env:TEMP\rustdesk_latest.exe" -Force -ErrorAction SilentlyContinue; Start-Service -Name "RustDesk" -ErrorAction SilentlyContinue; (Get-Item "C:\Program Files\RustDesk\rustdesk.exe").VersionInfo.FileVersion
 
 --Running background service is enough.
+
+
+<b>Check online devices on LAN --broadcast to idling smartphones in low power mode(usually cannot be pinged)</b>
+$s=((Get-NetIPAddress -AddressFamily IPv4|Where-Object {$_.IPAddress -notmatch '^(127\.|169\.)'}|Select-Object -First 1).IPAddress) -replace '\.\d+$','.255'; [System.Net.NetworkInformation.Ping]::new().Send($s, 200) | Out-Null; Start-Sleep -Milliseconds 500; Get-NetNeighbor -AddressFamily IPv4 | Where-Object { $_.State -in 'Reachable','Stale','Delay','Probe' -and $_.IPAddress -notmatch '^(127\.|169\.254\.|224\.|255\.)' } | ForEach-Object { [PSCustomObject]@{ IPAddress=$_.IPAddress; MACAddress=$_.LinkLayerAddress; DeviceName=try{[System.Net.Dns]::GetHostEntry($_.IPAddress).HostName}catch{"Unknown"} } } | Format-Table -AutoSize
 
 
 <p>Additional info</p>
