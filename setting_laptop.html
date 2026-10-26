@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Reinstall Windows & SSH</title>
+    <title>Reinstall Windows</title>
     <meta name="robots" content="noindex, nofollow, nosnippet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1867,6 +1867,10 @@ Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -notlike "*\Win
 
 # List all running process including RAM usage
 Get-CimInstance Win32_Process | Where-Object { $_.ExecutablePath -notlike "*\Windows\System32\*" -and $_.ExecutablePath -notlike "*\Windows\SysWOW64\*" -and $_.ExecutablePath -ne $null } | Select-Object Name, ProcessId, @{Name="WorkingSetSize_MB"; Expression={[math]::round($_.WorkingSetSize / 1MB, 2)}}, ExecutablePath | Format-Table -AutoSize
+
+# List all running processes from user applications
+Get-Process | Where-Object { $_.Company -ne "Microsoft Corporation" -and $_.Company -notlike "*Microsoft*" } | Format-Table Name, Id, Company
+
 
 # Calculate how much memory Microsoft Edge currently use
 Get-CimInstance Win32_Process | Where-Object { $_.Name -eq "msedge.exe" } | Measure-Object -Property WorkingSetSize -Sum | Select-Object @{Name="Total_Edge_Memory_MB"; Expression={[math]::round($_.Sum / 1MB, 2)}}
