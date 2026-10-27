@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Strict Content Security Policy: Blocks external network calls, remote scripts, and data exfiltration -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; blob:;">
-  <title>Hardened Delimited Data Explorer</title>
+  <title>Data Viewer</title>
   <style>
     :root {
       --bg-base: #0f172a;
@@ -24,9 +23,6 @@
       --danger-bg: #450a0a;
       --danger-border: #dc2626;
       --danger-text: #fecaca;
-      --ok-bg: #052e16;
-      --ok-border: #16a34a;
-      --ok-text: #bbf7d0;
     }
 
     * { box-sizing: border-box; }
@@ -54,31 +50,18 @@
 
     .app-title {
       font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .badge {
-      font-size: 11px;
       font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: var(--ok-bg);
-      border: 1px solid var(--ok-border);
-      color: var(--ok-text);
+      letter-spacing: 0.2px;
     }
 
     .toolbar {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 12px;
+      gap: 14px;
       background: var(--bg-panel);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 14px;
+      padding: 14px 16px;
       margin-bottom: 14px;
     }
 
@@ -167,7 +150,7 @@
       color: #ffffff;
     }
 
-    .guardrail-banner {
+    .notice-banner {
       display: none;
       padding: 14px 16px;
       border-radius: 8px;
@@ -175,14 +158,14 @@
       border: 1px solid transparent;
     }
 
-    .guardrail-banner.warn {
+    .notice-banner.warn {
       display: block;
       background: var(--warn-bg);
       border-color: var(--warn-border);
       color: var(--warn-text);
     }
 
-    .guardrail-banner.danger {
+    .notice-banner.danger {
       display: block;
       background: var(--danger-bg);
       border-color: var(--danger-border);
@@ -190,9 +173,9 @@
     }
 
     .banner-title {
-      font-weight: 700;
+      font-weight: 600;
       font-size: 14px;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .banner-actions {
@@ -217,13 +200,12 @@
     .status-metrics {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 18px;
     }
 
     .metric-val {
       color: var(--text-main);
       font-weight: 600;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
 
     .table-container {
@@ -232,7 +214,7 @@
       background: var(--bg-panel);
       border: 1px solid var(--border);
       border-radius: 8px;
-      max-height: 65vh;
+      max-height: 68vh;
       overflow-y: auto;
     }
 
@@ -283,7 +265,7 @@
     tbody td.row-num-cell {
       text-align: right;
       color: var(--text-muted);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-variant-numeric: tabular-nums;
       font-size: 12px;
       background: #172133;
     }
@@ -329,63 +311,44 @@
       gap: 4px;
       align-items: center;
     }
-
-    .checkbox-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
 
   <header class="app-header">
-    <div class="app-title">
-      <span>Delimited File Explorer</span>
-      <span class="badge">Memory &amp; XSS Guardrails Active</span>
-    </div>
+    <div class="app-title">Data Viewer</div>
     <div class="control-row">
-      <button id="loadDemoBtn" type="button">Load Security Test Dataset</button>
-      <label class="checkbox-label" title="Prefixes =, +, -, @ with a single quote on CSV export to block spreadsheet execution">
-        <input type="checkbox" id="sanitizeExportToggle" checked>
-        Sanitize Formula Export
-      </label>
-      <button id="exportBtn" type="button" class="btn-primary" disabled>Export View</button>
+      <button id="loadSampleBtn" type="button">Sample Data</button>
+      <button id="exportBtn" type="button" class="btn-primary" disabled>Export CSV</button>
     </div>
   </header>
 
   <section class="toolbar">
-    <!-- 1. File Upload Control -->
     <div class="control-group">
-      <span class="control-label">1. Source File (Warn &gt;10MB, Stop &gt;50MB)</span>
+      <span class="control-label">File</span>
       <div class="control-row">
         <input type="file" id="fileInput" accept=".csv,.tsv,.txt,.log,.dat">
       </div>
     </div>
 
-    <!-- 2. Explicit Delimiter Variable Control -->
     <div class="control-group">
-      <span class="control-label">2. Delimiter Variable (<code id="delimVarDisplay">activeDelimiter = ","</code>)</span>
+      <span class="control-label">Delimiter</span>
       <div class="control-row">
-        <button type="button" class="delim-preset active-preset" data-delim=",">Comma (,)</button>
-        <button type="button" class="delim-preset" data-delim="&#9;">Tab (\t)</button>
-        <button type="button" class="delim-preset" data-delim=";">Semi (;)</button>
-        <button type="button" class="delim-preset" data-delim="|">Pipe (|)</button>
-        <input type="text" id="customDelimInput" value="," maxlength="10" style="width: 70px;" title="Custom delimiter string (max 10 chars)">
-        <button type="button" id="autoDetectBtn" title="Scan first 20 lines to infer delimiter">Auto</button>
+        <button type="button" id="autoDetectBtn" class="active-preset">Auto</button>
+        <button type="button" class="delim-preset" data-delim=",">Comma</button>
+        <button type="button" class="delim-preset" data-delim="&#9;">Tab</button>
+        <button type="button" class="delim-preset" data-delim=";">Semicolon</button>
+        <button type="button" class="delim-preset" data-delim="|">Pipe</button>
+        <input type="text" id="customDelimInput" placeholder="Custom" maxlength="10" style="width: 72px;" title="Custom delimiter">
       </div>
     </div>
 
-    <!-- 3. Search & Pagination Size -->
     <div class="control-group">
-      <span class="control-label">3. Global Search &amp; Page Density</span>
+      <span class="control-label">Search &amp; View</span>
       <div class="control-row">
-        <input type="text" id="searchInput" placeholder="Filter across all columns..." style="flex: 1; min-width: 160px;">
-        <button type="button" id="clearSearchBtn" title="Clear search filter">Clear</button>
-        <select id="pageSizeSelect" title="Rows rendered per page">
+        <input type="text" id="searchInput" placeholder="Search all columns..." style="flex: 1; min-width: 160px;">
+        <button type="button" id="clearSearchBtn">Clear</button>
+        <select id="pageSizeSelect" title="Rows per page">
           <option value="10">10 / page</option>
           <option value="25" selected>25 / page</option>
           <option value="50">50 / page</option>
@@ -396,38 +359,34 @@
     </div>
   </section>
 
-  <!-- Dynamic Guardrail Banner for Oversize Files or Truncation Warnings -->
-  <div id="guardrailBanner" class="guardrail-banner" role="alert">
+  <div id="noticeBanner" class="notice-banner" role="alert">
     <div id="bannerTitle" class="banner-title"></div>
     <div id="bannerDesc"></div>
     <div id="bannerActions" class="banner-actions"></div>
   </div>
 
-  <!-- Telemetry & Security Metrics Bar -->
   <div class="status-bar">
     <div class="status-metrics">
       <span>File: <span id="metaFileName" class="metric-val">None</span></span>
       <span>Size: <span id="metaFileSize" class="metric-val">0 B</span></span>
-      <span>Delimiter: <span id="metaDelimiter" class="metric-val">","</span></span>
-      <span>Total Rows: <span id="metaTotalRows" class="metric-val">0</span></span>
-      <span>Filtered: <span id="metaFilteredRows" class="metric-val">0</span></span>
-      <span>Sort: <span id="metaSortState" class="metric-val">Original Order</span></span>
+      <span>Delimiter: <span id="metaDelimiter" class="metric-val">Auto</span></span>
+      <span>Rows: <span id="metaTotalRows" class="metric-val">0</span></span>
+      <span>Matching: <span id="metaFilteredRows" class="metric-val">0</span></span>
+      <span>Sort: <span id="metaSortState" class="metric-val">Default</span></span>
     </div>
   </div>
 
-  <!-- Data Table Container -->
   <div class="table-container">
     <table id="dataTable">
       <thead id="tableHead"></thead>
       <tbody id="tableBody">
         <tr>
-          <td class="empty-state">Select a local file above or click "Load Security Test Dataset" to inspect data safely.</td>
+          <td class="empty-state">Choose a file above to view its contents.</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <!-- Pagination Footer -->
   <div class="pagination-bar">
     <div class="page-buttons">
       <button type="button" id="firstPageBtn" disabled>&laquo; First</button>
@@ -438,7 +397,7 @@
     </div>
     <div class="control-row">
       <span id="pageSummaryText" style="color: var(--text-muted); font-size: 13px;">Page 0 of 0</span>
-      <input type="number" id="jumpPageInput" min="1" placeholder="Page #" style="width: 76px;" disabled>
+      <input type="number" id="jumpPageInput" min="1" placeholder="Page" style="width: 72px;" disabled>
       <button type="button" id="jumpPageBtn" disabled>Go</button>
     </div>
   </div>
@@ -446,44 +405,38 @@
   <script>
     "use strict";
 
-    // =========================================================================
-    // 1. SECURITY & MEMORY GUARDRAIL CONSTANTS
-    // =========================================================================
-    const WARN_FILE_BYTES   = 10 * 1024 * 1024; // 10 MB: Pause & prompt user before reading
-    const STOP_FILE_BYTES   = 50 * 1024 * 1024; // 50 MB: HARD STOP full load to prevent V8 OOM crash
-    const SAFE_SLICE_BYTES  = 5 * 1024 * 1024;  // 5 MB: Safe disk slice size for previewing huge files
-    const MAX_ROW_COUNT     = 200000;           // Hard row ceiling in memory
-    const MAX_COL_COUNT     = 500;              // Hard column ceiling per row
-    const MAX_CELL_CHARS    = 32768;            // 32 KB cap per individual cell
-    const MAX_SEARCH_CHARS  = 256;              // Cap search string length
+    // Safety limits
+    const WARN_FILE_BYTES  = 10 * 1024 * 1024; // 10 MB
+    const STOP_FILE_BYTES  = 50 * 1024 * 1024; // 50 MB
+    const SAFE_SLICE_BYTES = 5 * 1024 * 1024;  // 5 MB preview slice
+    const MAX_ROW_COUNT    = 200000;
+    const MAX_COL_COUNT    = 500;
+    const MAX_CELL_CHARS   = 32768;
+    const MAX_SEARCH_CHARS = 256;
 
-    // =========================================================================
-    // 2. APPLICATION STATE (INCLUDING EXPLICIT DELIMITER VARIABLE)
-    // =========================================================================
-    let activeDelimiter = ","; // Explicit variable holding user's chosen delimiter
+    // State variables
+    let activeDelimiter = ",";
+    let isAutoDelimiter = true;
     let rawFileText     = "";
     let headers         = [];
-    let allRows         = [];  // Each element: { __index: number, cells: string[] }
-    let viewRows        = [];  // Filtered and sorted subset of allRows
+    let allRows         = [];
+    let viewRows        = [];
     let currentPage     = 1;
     let sortColIndex    = -1;
-    let sortDirection   = "none"; // "none" | "asc" | "desc"
-    let pendingFile     = null;
+    let sortDirection   = "none";
 
-    // DOM References
+    // DOM elements
     const fileInput            = document.getElementById("fileInput");
-    const customDelimInput     = document.getElementById("customDelimInput");
-    const delimVarDisplay      = document.getElementById("delimVarDisplay");
-    const presetButtons        = document.querySelectorAll(".delim-preset");
     const autoDetectBtn        = document.getElementById("autoDetectBtn");
+    const customDelimInput     = document.getElementById("customDelimInput");
+    const presetButtons        = document.querySelectorAll(".delim-preset");
     const searchInput          = document.getElementById("searchInput");
     const clearSearchBtn       = document.getElementById("clearSearchBtn");
     const pageSizeSelect       = document.getElementById("pageSizeSelect");
-    const loadDemoBtn          = document.getElementById("loadDemoBtn");
+    const loadSampleBtn        = document.getElementById("loadSampleBtn");
     const exportBtn            = document.getElementById("exportBtn");
-    const sanitizeExportToggle = document.getElementById("sanitizeExportToggle");
 
-    const guardrailBanner      = document.getElementById("guardrailBanner");
+    const noticeBanner         = document.getElementById("noticeBanner");
     const bannerTitle          = document.getElementById("bannerTitle");
     const bannerDesc           = document.getElementById("bannerDesc");
     const bannerActions        = document.getElementById("bannerActions");
@@ -506,33 +459,116 @@
     const jumpPageInput        = document.getElementById("jumpPageInput");
     const jumpPageBtn          = document.getElementById("jumpPageBtn");
 
-    // =========================================================================
-    // 3. DELIMITER VARIABLE MANAGEMENT (ZERO-LENGTH LOOP PROTECTION)
-    // =========================================================================
-    function setSafeDelimiter(rawInput) {
+    function describeDelimiter(delim, isAuto) {
+      const names = {
+        ",": "Comma (,)",
+        "\t": "Tab",
+        ";": "Semicolon (;)",
+        "|": "Pipe (|)",
+        ":": "Colon (:)"
+      };
+      const label = names[delim] || `"${delim}"`;
+      return isAuto ? `Auto (${label})` : label;
+    }
+
+    function updateDelimiterUI() {
+      autoDetectBtn.classList.toggle("active-preset", isAutoDelimiter);
+      presetButtons.forEach(btn => {
+        const match = !isAutoDelimiter && btn.getAttribute("data-delim") === activeDelimiter;
+        btn.classList.toggle("active-preset", match);
+      });
+      metaDelimiter.textContent = describeDelimiter(activeDelimiter, isAutoDelimiter);
+    }
+
+    function setManualDelimiter(rawInput) {
+      isAutoDelimiter = false;
       if (typeof rawInput !== "string" || rawInput.length === 0) {
-        activeDelimiter = ","; // Never allow 0-length string to prevent tokenizer infinite loop
+        activeDelimiter = ",";
       } else {
         const unescaped = rawInput === "\\t" ? "\t" : rawInput;
         activeDelimiter = unescaped.slice(0, 10);
       }
+      updateDelimiterUI();
+    }
 
-      const displayStr = activeDelimiter === "\t" ? "\\t" : activeDelimiter;
-      customDelimInput.value = displayStr;
-      delimVarDisplay.textContent = `activeDelimiter = "${displayStr}"`;
-      metaDelimiter.textContent = `"${displayStr}"`;
+    // Quote-aware delimiter auto-detection
+    function detectDelimiterFromSample(text) {
+      if (!text) return ",";
+      const sample = text.slice(0, 16384);
+      const lines = [];
+      let currentLine = "";
+      let inQuotes = false;
 
-      presetButtons.forEach(btn => {
-        const btnDelim = btn.getAttribute("data-delim");
-        btn.classList.toggle("active-preset", btnDelim === activeDelimiter);
+      for (let i = 0; i < sample.length && lines.length < 20; i++) {
+        const ch = sample[i];
+        if (ch === '"') {
+          inQuotes = !inQuotes;
+          currentLine += ch;
+        } else if ((ch === "\n" || ch === "\r") && !inQuotes) {
+          if (currentLine.trim().length > 0) {
+            lines.push(currentLine);
+          }
+          currentLine = "";
+          if (ch === "\r" && i + 1 < sample.length && sample[i + 1] === "\n") {
+            i++;
+          }
+        } else {
+          currentLine += ch;
+        }
+      }
+      if (currentLine.trim().length > 0 && lines.length < 20) {
+        lines.push(currentLine);
+      }
+
+      if (lines.length === 0) return ",";
+
+      const candidates = [",", "\t", ";", "|", ":"];
+      let bestDelim = ",";
+      let bestScore = -1;
+
+      candidates.forEach(cand => {
+        const counts = lines.map(line => {
+          let count = 0;
+          let quoted = false;
+          for (let i = 0; i < line.length; i++) {
+            if (line[i] === '"') quoted = !quoted;
+            else if (!quoted && line[i] === cand) count++;
+          }
+          return count;
+        });
+
+        const firstCount = counts[0];
+        if (firstCount > 0) {
+          const consistent = counts.every(c => c === firstCount);
+          const avg = counts.reduce((a, b) => a + b, 0) / counts.length;
+          const score = consistent ? firstCount * 15 : avg;
+          if (score > bestScore) {
+            bestScore = score;
+            bestDelim = cand;
+          }
+        }
       });
 
-      return activeDelimiter;
+      return bestDelim;
     }
+
+    autoDetectBtn.addEventListener("click", () => {
+      isAutoDelimiter = true;
+      customDelimInput.value = "";
+      if (rawFileText) {
+        activeDelimiter = detectDelimiterFromSample(rawFileText);
+        updateDelimiterUI();
+        currentPage = 1;
+        parseAndProcessText();
+      } else {
+        updateDelimiterUI();
+      }
+    });
 
     presetButtons.forEach(btn => {
       btn.addEventListener("click", () => {
-        setSafeDelimiter(btn.getAttribute("data-delim"));
+        customDelimInput.value = "";
+        setManualDelimiter(btn.getAttribute("data-delim"));
         if (rawFileText) {
           currentPage = 1;
           parseAndProcessText();
@@ -541,8 +577,8 @@
     });
 
     customDelimInput.addEventListener("input", () => {
-      if (customDelimInput.value.length === 0) return; // Wait until user types or blurs
-      setSafeDelimiter(customDelimInput.value);
+      if (customDelimInput.value.length === 0) return;
+      setManualDelimiter(customDelimInput.value);
       if (rawFileText) {
         currentPage = 1;
         parseAndProcessText();
@@ -550,42 +586,11 @@
     });
 
     customDelimInput.addEventListener("blur", () => {
-      if (customDelimInput.value.length === 0) {
-        setSafeDelimiter(",");
-        if (rawFileText) parseAndProcessText();
+      if (customDelimInput.value.length === 0 && !isAutoDelimiter) {
+        updateDelimiterUI();
       }
     });
 
-    autoDetectBtn.addEventListener("click", () => {
-      if (!rawFileText) return;
-      const sample = rawFileText.slice(0, 8192);
-      const candidates = [",", "\t", ";", "|", ":"];
-      let bestDelim = ",";
-      let bestScore = -1;
-
-      const sampleLines = sample.split(/\r?\n/).filter(l => l.trim().length > 0).slice(0, 15);
-      if (sampleLines.length > 0) {
-        candidates.forEach(cand => {
-          const counts = sampleLines.map(line => line.split(cand).length - 1);
-          const firstCount = counts[0];
-          if (firstCount > 0) {
-            const consistent = counts.every(c => c === firstCount);
-            const score = consistent ? firstCount * 10 : firstCount;
-            if (score > bestScore) {
-              bestScore = score;
-              bestDelim = cand;
-            }
-          }
-        });
-      }
-      setSafeDelimiter(bestDelim);
-      currentPage = 1;
-      parseAndProcessText();
-    });
-
-    // =========================================================================
-    // 4. THREE-TIER FILE SIZE GUARDRAIL (DECISION ENGINE FOR BIG FILES)
-    // =========================================================================
     function formatBytes(bytes) {
       if (bytes < 1024) return bytes + " B";
       if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
@@ -593,14 +598,14 @@
     }
 
     function hideBanner() {
-      guardrailBanner.className = "guardrail-banner";
+      noticeBanner.className = "notice-banner";
       bannerTitle.textContent = "";
       bannerDesc.textContent = "";
       bannerActions.textContent = "";
     }
 
     function showBanner(level, titleText, descText, actionButtons) {
-      guardrailBanner.className = `guardrail-banner ${level}`;
+      noticeBanner.className = `notice-banner ${level}`;
       bannerTitle.textContent = titleText;
       bannerDesc.textContent = descText;
       bannerActions.textContent = "";
@@ -617,30 +622,27 @@
     fileInput.addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      pendingFile = file;
       hideBanner();
 
       const size = file.size;
-      const estRam = formatBytes(size * 6);
 
-      // TIER 3: > 50 MB -> HARD STOP FULL FILE LOAD
+      // Over 50 MB: Stop full load, offer preview or cancel
       if (size > STOP_FILE_BYTES) {
         showBanner(
           "danger",
-          `HARD STOP: File Size (${formatBytes(size)}) Exceeds 50 MB Memory Safety Limit`,
-          `Full in-memory parsing is blocked because allocating ${formatBytes(size)} into UTF-16 strings and array objects requires ~${estRam} of browser heap and risks an uncatchable tab crash. Choose whether to abort completely or inspect a safe 5 MB disk slice.`,
+          `File Too Large (${formatBytes(size)})`,
+          `This file exceeds the 50 MB limit for full in-browser loading. You can stop the process or preview the first 5 MB safely.`,
           [
             {
-              label: "Stop & Abort Process",
+              label: "Cancel",
               className: "btn-danger",
               onClick: () => {
                 fileInput.value = "";
-                pendingFile = null;
                 hideBanner();
               }
             },
             {
-              label: "Inspect Safe 5 MB Slice Only (File.slice)",
+              label: "Preview First 5 MB",
               className: "btn-primary",
               onClick: () => loadSafeFileSlice(file, SAFE_SLICE_BYTES)
             }
@@ -649,28 +651,27 @@
         return;
       }
 
-      // TIER 2: 10 MB to 50 MB -> PAUSE & WARN BEFORE PROCESSING
+      // 10 MB to 50 MB: Warn and ask user before loading
       if (size > WARN_FILE_BYTES) {
         showBanner(
           "warn",
-          `LARGE FILE WARNING: ${file.name} (${formatBytes(size)})`,
-          `Processing this entire file in memory will consume approximately ${estRam} of RAM and may briefly pause the UI during sorting. How would you like to proceed?`,
+          `Large File Selected (${formatBytes(size)})`,
+          `Opening this entire file may slow down your browser. Would you like to preview the first 5 MB or load the complete file?`,
           [
             {
-              label: "Stop & Cancel",
+              label: "Cancel",
               onClick: () => {
                 fileInput.value = "";
-                pendingFile = null;
                 hideBanner();
               }
             },
             {
-              label: "Load Safe 5 MB Preview Slice",
+              label: "Preview First 5 MB",
               className: "btn-primary",
               onClick: () => loadSafeFileSlice(file, SAFE_SLICE_BYTES)
             },
             {
-              label: "Proceed with Full File Load",
+              label: "Load Complete File",
               onClick: () => loadFullFile(file)
             }
           ]
@@ -678,7 +679,6 @@
         return;
       }
 
-      // TIER 1: <= 10 MB -> SAFE IMMEDIATE PROCESSING
       loadFullFile(file);
     });
 
@@ -688,12 +688,16 @@
         metaFileName.textContent = file.name;
         metaFileSize.textContent = formatBytes(file.size);
         rawFileText = await file.text();
+        if (isAutoDelimiter) {
+          activeDelimiter = detectDelimiterFromSample(rawFileText);
+        }
+        updateDelimiterUI();
         currentPage = 1;
         sortColIndex = -1;
         sortDirection = "none";
         parseAndProcessText();
       } catch (err) {
-        showBanner("danger", "File Read Error", String(err.message || err), []);
+        showBanner("danger", "Unable to Read File", String(err.message || err), []);
       }
     }
 
@@ -702,15 +706,18 @@
         const blobSlice = file.slice(0, sliceBytes);
         let sliceText = await blobSlice.text();
 
-        // Trim incomplete trailing line so the last row isn't half-cut
         const lastNewline = sliceText.lastIndexOf("\n");
         if (lastNewline > 0) {
           sliceText = sliceText.slice(0, lastNewline);
         }
 
-        metaFileName.textContent = `${file.name} [5 MB Slice]`;
+        metaFileName.textContent = `${file.name} (Preview)`;
         metaFileSize.textContent = `${formatBytes(sliceText.length)} of ${formatBytes(file.size)}`;
         rawFileText = sliceText;
+        if (isAutoDelimiter) {
+          activeDelimiter = detectDelimiterFromSample(rawFileText);
+        }
+        updateDelimiterUI();
         currentPage = 1;
         sortColIndex = -1;
         sortDirection = "none";
@@ -718,21 +725,18 @@
 
         showBanner(
           "warn",
-          "Partial File Slice Active (Memory Guardrail)",
-          `Showing rows parsed from the first ${formatBytes(sliceBytes)} of ${file.name}. Full file allocation was skipped to protect browser memory stability.`,
-          [{ label: "Dismiss Notice", onClick: hideBanner }]
+          "Preview Mode Active",
+          `Showing the first ${formatBytes(sliceBytes)} of ${file.name}.`,
+          [{ label: "Dismiss", onClick: hideBanner }]
         );
       } catch (err) {
-        showBanner("danger", "Slice Read Error", String(err.message || err), []);
+        showBanner("danger", "Unable to Read File", String(err.message || err), []);
       }
     }
 
-    // =========================================================================
-    // 5. BOUNDED QUOTE-AWARE TOKENIZER (NO INFINITE LOOPS OR CELL OVERFLOWS)
-    // =========================================================================
     function parseDelimitedSafe(text, delimiter) {
       const safeDelim = (typeof delimiter === "string" && delimiter.length > 0) ? delimiter : ",";
-      const delimLen = safeDelim.length; // Guaranteed >= 1
+      const delimLen = safeDelim.length;
 
       const rows = [];
       let currentRow = [];
@@ -844,7 +848,7 @@
 
       headers = parsed[0].map((h, idx) => {
         const clean = h.trim();
-        return clean.length > 0 ? clean : `Column_${idx + 1}`;
+        return clean.length > 0 ? clean : `Column ${idx + 1}`;
       });
 
       const bodySlice = parsed.slice(1);
@@ -857,13 +861,13 @@
 
       if (result.truncatedByRowCap || result.truncatedByColCap || result.truncatedByCellCap) {
         const notices = [];
-        if (result.truncatedByRowCap) notices.push(`Row limit capped at ${MAX_ROW_COUNT.toLocaleString()} rows`);
-        if (result.truncatedByColCap) notices.push(`Column limit capped at ${MAX_COL_COUNT} columns`);
-        if (result.truncatedByCellCap) notices.push(`Oversize cells truncated at ${MAX_CELL_CHARS} chars`);
+        if (result.truncatedByRowCap) notices.push(`Displayed rows capped at ${MAX_ROW_COUNT.toLocaleString()}`);
+        if (result.truncatedByColCap) notices.push(`Displayed columns capped at ${MAX_COL_COUNT}`);
+        if (result.truncatedByCellCap) notices.push(`Long cells trimmed at ${MAX_CELL_CHARS.toLocaleString()} characters`);
         showBanner(
           "warn",
-          "Structural Memory Guardrail Triggered",
-          notices.join(" | "),
+          "Display Limit Reached",
+          notices.join(" • "),
           [{ label: "Dismiss", onClick: hideBanner }]
         );
       }
@@ -871,13 +875,9 @@
       applyFilterAndSort();
     }
 
-    // =========================================================================
-    // 6. REDOS-FREE SEARCH & TYPE-AWARE SORTING
-    // =========================================================================
     function applyFilterAndSort() {
       const rawQuery = searchInput.value.slice(0, MAX_SEARCH_CHARS).trim().toLowerCase();
 
-      // Filter using literal indexOf (Zero RegExp construction = Zero ReDoS risk)
       if (rawQuery.length === 0) {
         viewRows = allRows.slice();
       } else {
@@ -892,7 +892,6 @@
         });
       }
 
-      // Sort if active
       if (sortColIndex >= 0 && sortDirection !== "none") {
         const dirMultiplier = sortDirection === "asc" ? 1 : -1;
         const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: "base" });
@@ -905,7 +904,6 @@
           if (rawA === "") return 1;
           if (rawB === "") return -1;
 
-          // Numeric / Currency check
           const numA = Number(rawA.replace(/[$,%\s]/g, ""));
           const numB = Number(rawB.replace(/[$,%\s]/g, ""));
           if (!Number.isNaN(numA) && !Number.isNaN(numB) && rawA !== "" && rawB !== "") {
@@ -915,10 +913,10 @@
           return collator.compare(rawA, rawB) * dirMultiplier;
         });
 
-        const colName = headers[sortColIndex] || `Col ${sortColIndex + 1}`;
-        metaSortState.textContent = `${colName} (${sortDirection.toUpperCase()})`;
+        const colName = headers[sortColIndex] || `Column ${sortColIndex + 1}`;
+        metaSortState.textContent = `${colName} (${sortDirection === "asc" ? "A–Z" : "Z–A"})`;
       } else {
-        metaSortState.textContent = "Original Order";
+        metaSortState.textContent = "Default";
       }
 
       metaTotalRows.textContent = allRows.length.toLocaleString();
@@ -943,9 +941,6 @@
       renderAll();
     });
 
-    // =========================================================================
-    // 7. XSS-PROOF DOM RENDERING (ZERO INNERHTML)
-    // =========================================================================
     function renderSafeHighlightedCell(td, cellText, queryLower) {
       const text = String(cellText ?? "");
       if (!queryLower || queryLower.length === 0) {
@@ -988,14 +983,13 @@
         const tr = document.createElement("tr");
         const td = document.createElement("td");
         td.className = "empty-state";
-        td.textContent = "No data loaded.";
+        td.textContent = "Choose a file above to view its contents.";
         tr.appendChild(td);
         tableBody.appendChild(tr);
         updatePaginationControls(0, 1);
         return;
       }
 
-      // Render Header Row
       const headTr = document.createElement("tr");
       const numTh = document.createElement("th");
       numTh.className = "row-num-header";
@@ -1025,7 +1019,6 @@
       });
       tableHead.appendChild(headTr);
 
-      // Calculate Pagination Slice
       const pageSize = parseInt(pageSizeSelect.value, 10) || 25;
       const totalPages = Math.max(1, Math.ceil(viewRows.length / pageSize));
       if (currentPage > totalPages) currentPage = totalPages;
@@ -1036,7 +1029,7 @@
         const td = document.createElement("td");
         td.colSpan = headers.length + 1;
         td.className = "empty-state";
-        td.textContent = "No rows match your current search filter.";
+        td.textContent = "No matching records found.";
         tr.appendChild(td);
         tableBody.appendChild(tr);
         updatePaginationControls(0, 1);
@@ -1071,9 +1064,6 @@
       updatePaginationControls(viewRows.length, totalPages);
     }
 
-    // =========================================================================
-    // 8. PAGINATION NAVIGATION CONTROLS
-    // =========================================================================
     function updatePaginationControls(totalItems, totalPages) {
       pageButtonsContainer.textContent = "";
 
@@ -1098,8 +1088,8 @@
       jumpPageInput.max = String(totalPages);
 
       const windowRadius = 2;
-      let startPage = Math.max(1, currentPage - windowRadius);
-      let endPage = Math.min(totalPages, currentPage + windowRadius);
+      const startPage = Math.max(1, currentPage - windowRadius);
+      const endPage = Math.min(totalPages, currentPage + windowRadius);
 
       for (let p = startPage; p <= endPage; p++) {
         const btn = document.createElement("button");
@@ -1131,13 +1121,10 @@
       }
     });
 
-    // =========================================================================
-    // 9. FORMULA-SAFE CSV EXPORT (CLOSES DDE / MACRO EXPLOIT VECTOR)
-    // =========================================================================
-    function formatCellForExport(value, delimiter, sanitizeFormulas) {
+    function formatCellForExport(value, delimiter) {
       let str = String(value ?? "");
-      if (sanitizeFormulas && /^[=+\-@\t\r]/.test(str)) {
-        str = "'" + str; // Prefix single quote to disarm spreadsheet formulas
+      if (/^[=+\-@\t\r]/.test(str)) {
+        str = "'" + str;
       }
       if (str.includes('"') || str.includes("\n") || str.includes("\r") || str.includes(delimiter)) {
         return '"' + str.replace(/"/g, '""') + '"';
@@ -1147,12 +1134,11 @@
 
     exportBtn.addEventListener("click", () => {
       if (headers.length === 0) return;
-      const sanitize = sanitizeExportToggle.checked;
       const lines = [];
 
-      lines.push(headers.map(h => formatCellForExport(h, activeDelimiter, sanitize)).join(activeDelimiter));
+      lines.push(headers.map(h => formatCellForExport(h, activeDelimiter)).join(activeDelimiter));
       viewRows.forEach(rowObj => {
-        const rowStr = headers.map((_, c) => formatCellForExport(rowObj.cells[c] ?? "", activeDelimiter, sanitize)).join(activeDelimiter);
+        const rowStr = headers.map((_, c) => formatCellForExport(rowObj.cells[c] ?? "", activeDelimiter)).join(activeDelimiter);
         lines.push(rowStr);
       });
 
@@ -1160,30 +1146,31 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `exported_view_${Date.now()}.csv`;
+      a.download = `data_export_${Date.now()}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     });
 
-    // =========================================================================
-    // 10. SECURITY VERIFICATION DATASET (TESTS QUOTES, XSS, & FORMULA PAYLOADS)
-    // =========================================================================
-    loadDemoBtn.addEventListener("click", () => {
+    loadSampleBtn.addEventListener("click", () => {
       hideBanner();
-      setSafeDelimiter(",");
-      const demoLines = [
-        'Node_ID,Location,Latency_ms,Throughput_Mbps,Security_Payload_Test,Notes',
-        'SRV-101,"Nanjing, CN",14.2,"$1,240.00","Normal clean record","Baseline gateway"',
-        'SRV-102,"Jakarta, ID",48.7,"$980.50","<img src=x onerror=alert(1)>","DOM XSS payload rendered safely as literal text"',
-        'SRV-103,"Singapore, SG",22.1,"$2,150.75","=cmd|\' /C calc\'!A0","CSV Formula Injection neutralized on export"',
-        'SRV-104,"Tokyo, JP",31.0,"$1,620.00","<script>fetch(\'https://evil.tld\')<\/script>","Blocked by both textNode rendering and CSP"',
-        'SRV-105,"Surabaya, ID",52.4,"$840.00","([+*{Regex_Meta_Chars}*+])","Safe to search without ReDoS crash"',
-        'SRV-106,"Frankfurt, DE",165.8,"$3,400.00","Quoted ""inner quotes"" and, comma","RFC 4180 quote parser test"'
+      fileInput.value = "";
+      isAutoDelimiter = true;
+      customDelimInput.value = "";
+      const sampleLines = [
+        'Order_ID,Client,Location,Category,Amount,Status',
+        'ORD-1041,"Meridian Health, Ltd.","Nanjing, CN",Medical Supplies,"$1,420.00",Completed',
+        'ORD-1042,"Nusantara Logistics","Jakarta, ID",Freight & Customs,"$980.50",In Transit',
+        'ORD-1043,"Apex Semiconductor","Singapore, SG",Hardware,"$3,640.00",Completed',
+        'ORD-1044,"Pacific Clinical Lab","Surabaya, ID",Diagnostics,"$2,150.75",Processing',
+        'ORD-1045,"Kansai Biotech","Osaka, JP",Reagents,"$1,890.00",Completed',
+        'ORD-1046,"EuroMed Distribution","Frankfurt, DE",Equipment,"$5,120.00",Pending'
       ];
-      metaFileName.textContent = "security_verification_demo.csv";
-      rawFileText = demoLines.join("\n");
+      rawFileText = sampleLines.join("\n");
+      activeDelimiter = detectDelimiterFromSample(rawFileText);
+      updateDelimiterUI();
+      metaFileName.textContent = "sample_orders.csv";
       metaFileSize.textContent = formatBytes(rawFileText.length);
       currentPage = 1;
       sortColIndex = -1;
@@ -1191,8 +1178,7 @@
       parseAndProcessText();
     });
 
-    // Load verification dataset on initial launch so the interface is immediately testable
-    loadDemoBtn.click();
+    loadSampleBtn.click();
   </script>
 </body>
 </html>
