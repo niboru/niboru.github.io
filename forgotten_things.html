@@ -1,1100 +1,815 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KnowledgeCore // Tactical Notes & Field Manual</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            slate: {
-              850: '#151f32',
-              900: '#0f172a',
-              950: '#090d16',
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Reference Knowledge Base</title>
   <style>
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface-hover: #283548;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --code-bg: #090d16;
+      --tag-bg: #0284c7;
+      --tag-text: #ffffff;
+      --warn: #fb923c;
     }
-    ::-webkit-scrollbar-track {
-      background: #0f172a;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    .card-glow:hover {
-      box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.08), 0 8px 10px -6px rgba(56, 189, 248, 0.08);
-    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.5; padding: 12px; max-width: 860px; margin: 0 auto; padding-bottom: 80px; }
+
+    /* Header & Controls */
+    header { margin-bottom: 16px; position: sticky; top: 0; background: var(--bg); padding-top: 8px; padding-bottom: 10px; z-index: 100; border-bottom: 1px solid var(--border); }
+    h1 { font-size: 1.25rem; font-weight: 700; margin-bottom: 8px; color: var(--accent); }
+    
+    .search-bar { width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: #fff; font-size: 1rem; outline: none; margin-bottom: 8px; }
+    .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-glow); }
+
+    .nav-pills { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+    .nav-pills a, .btn { display: inline-block; white-space: nowrap; font-size: 0.75rem; background: var(--surface); color: var(--text-muted); padding: 6px 10px; border-radius: 6px; text-decoration: none; border: 1px solid var(--border); font-weight: 600; cursor: pointer; }
+    .nav-pills a:hover, .btn:hover { color: #fff; border-color: var(--accent); }
+
+    /* Sections */
+    section { margin-top: 24px; }
+    h2 { font-size: 1.1rem; color: var(--accent); padding-bottom: 6px; border-bottom: 2px solid var(--border); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    .counter { font-size: 0.75rem; color: var(--text-muted); font-weight: normal; }
+
+    /* Collapsible Items */
+    details { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; overflow: hidden; transition: background 0.15s ease; }
+    details[open] { border-color: #475569; background: #1a2436; }
+    summary { padding: 12px 14px; font-weight: 600; font-size: 0.95rem; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "＋"; font-size: 1rem; color: var(--text-muted); font-weight: bold; margin-left: 8px; }
+    details[open] summary::after { content: "−"; color: var(--accent); }
+    summary:hover { background-color: var(--surface-hover); }
+
+    .content { padding: 12px 14px; border-top: 1px solid var(--border); font-size: 0.9rem; color: #cbd5e1; background: var(--code-bg); word-break: break-word; }
+    .content p { margin-bottom: 8px; }
+    .content p:last-child { margin-bottom: 0; }
+    .content ul { margin-left: 20px; margin-top: 6px; margin-bottom: 6px; }
+    .content li { margin-bottom: 4px; }
+
+    /* Tables & Pre blocks */
+    .table-container { width: 100%; overflow-x: auto; margin: 8px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    th, td { padding: 6px 10px; border: 1px solid var(--border); }
+    th { background: #1e293b; color: var(--accent); }
+    
+    code, pre { background: #111827; color: #38bdf8; padding: 2px 5px; border-radius: 4px; font-size: 0.85rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    pre { padding: 8px; margin: 6px 0; overflow-x: auto; white-space: pre-wrap; word-break: break-all; color: #e2e8f0; border-left: 3px solid var(--accent); }
+    .tag { display: inline-block; font-size: 0.7rem; font-weight: 700; background: var(--tag-bg); color: var(--tag-text); padding: 1px 6px; border-radius: 4px; vertical-align: middle; margin-right: 6px; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-sky-500/30 selection:text-sky-200">
+<body>
 
-  <!-- Top Sticky Navigation Bar -->
-  <header class="sticky top-0 z-30 bg-slate-900/80 backdrop-blur-md border-b border-slate-800/80 transition-colors">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 gap-4">
-        
-        <!-- Logo & Title -->
-        <div class="flex items-center gap-3 shrink-0">
-          <div class="w-9 h-9 rounded-lg bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-md shadow-sky-500/20">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <h1 class="font-bold text-base tracking-tight text-white">Knowledge<span class="text-sky-400">Core</span></h1>
-              <span class="text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-sky-950 text-sky-400 border border-sky-800/60 font-semibold">Field Manual</span>
-            </div>
-            <p class="text-xs text-slate-400 hidden sm:block">Tactical reminders, physical somatic rules & fast recall</p>
-          </div>
-        </div>
-
-        <!-- Real-Time Search Bar -->
-        <div class="relative flex-1 max-w-md hidden md:block">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <input 
-            type="text" 
-            id="searchInput" 
-            placeholder="Search entries, keywords, tags... (Press '/' to focus)" 
-            class="w-full pl-9 pr-16 py-1.5 bg-slate-800/80 hover:bg-slate-800 focus:bg-slate-900 border border-slate-700/80 focus:border-sky-500 rounded-lg text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-sky-500 transition-all"
-          />
-          <div class="absolute inset-y-0 right-0 pr-2.5 flex items-center gap-1">
-            <button id="clearSearchBtn" class="hidden text-slate-400 hover:text-slate-200 p-0.5 rounded">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-              </svg>
-            </button>
-            <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-700/60 rounded border border-slate-600/60">/</kbd>
-          </div>
-        </div>
-
-        <!-- Quick Action Buttons -->
-        <div class="flex items-center gap-2">
-          <button 
-            id="openAddModalBtn" 
-            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-slate-950 font-semibold text-xs transition shadow-sm shadow-sky-500/20"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
-            </svg>
-            <span>Add Entry</span>
-          </button>
-
-          <button 
-            id="exportDataBtn" 
-            title="Export knowledge base to JSON"
-            class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 active:bg-slate-850 text-slate-300 hover:text-white border border-slate-700/70 text-xs font-medium transition"
-          >
-            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-            </svg>
-            <span class="hidden sm:inline">Export</span>
-          </button>
-        </div>
-
-      </div>
-
-      <!-- Mobile Search Bar (< md screens) -->
-      <div class="pb-3 md:hidden">
-        <div class="relative w-full">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <input 
-            type="text" 
-            id="mobileSearchInput" 
-            placeholder="Search entries or tags..." 
-            class="w-full pl-9 pr-8 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-sky-500"
-          />
-        </div>
-      </div>
+  <header>
+    <h1>Knowledge & Operating Manual</h1>
+    <input type="text" id="search" class="search-bar" placeholder="Type to search anything (e.g. citric, salt, bolt, neck)..." oninput="liveSearch()">
+    <div class="nav-pills">
+      <button class="btn" onclick="toggleAll(true)">Expand All</button>
+      <button class="btn" onclick="toggleAll(false)">Collapse All</button>
+      <a href="#health">Health & Somatics</a>
+      <a href="#mind">Mind & Behavior</a>
+      <a href="#cleaning">Home & Cleaning</a>
+      <a href="#hardware">Hardware & Living</a>
+      <a href="#glossary">Glossary</a>
     </div>
   </header>
 
-  <!-- Sub-Header: Category Pills & Stats Bar -->
-  <section class="border-b border-slate-800/80 bg-slate-900/50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        
-        <!-- Category Filter Pills (Scrollable on small mobile) -->
-        <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar pb-1 sm:pb-0" id="categoryContainer">
-          <!-- Dynamic Category buttons populated by JS -->
-        </div>
-
-        <!-- Active Counter Badge -->
-        <div class="flex items-center gap-2 shrink-0 self-end sm:self-auto text-xs text-slate-400 font-mono">
-          <span id="counterBadge" class="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700/80 text-slate-300 font-medium">Loading...</span>
-          <button id="resetDefaultsBtn" class="text-slate-500 hover:text-slate-300 underline text-[11px] transition">Reset Defaults</button>
-        </div>
-
+  <!-- =========================================================================
+    HOW TO ADD NEW ENTRIES:
+    Simply copy-paste this block into the matching <section> below:
+    
+    <details>
+      <summary>Your Short Title Here</summary>
+      <div class="content">
+        Your full raw notes, explanations, or numbers here.
       </div>
-    </div>
+    </details>
+  ========================================================================== -->
+
+  <!-- 1. HEALTH, SOMATICS & BODY -->
+  <section id="health">
+    <h2>1. Body & Somatics <span class="counter">(18 items)</span></h2>
+
+    <details>
+      <summary>Sore Throat / Cold Drafts</summary>
+      <div class="content">
+        <p>Sore throat caused by wind/cold hitting collar bone/chest and dry nasal mucosa. <strong>(!) Wear a mask and a hoodie. Cover your neck and chest.</strong></p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Stomachache Recovery Protocol</summary>
+      <div class="content">
+        <p>After having a stomachache, <strong>stand and sway your body gently left and right</strong> to help recovery.</p>
+        <p><strong>Do not lay down</strong>; it will make everything worse.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Tension Headache Protocol</summary>
+      <div class="content">
+        <p><strong>Tension headache:</strong> keep head straight and look to the top left; massage your whole head, chin, temple; press pressure points on your shoulder and the back of neck. Relax tongue.</p>
+        <p><em>Root Cause:</em> Caused by playing smartphone while lying down.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Diving Reflex & Vagus Nerve Stimulation (Anxiety/Tension)</summary>
+      <div class="content">
+        <p><strong>The diving reflex</strong> is a natural response in humans and other mammals that helps them conserve oxygen while underwater. Give it a try when you feel a little more anxious than usual by dipping/splashing your face into/with cold water.</p>
+        <p><strong>Humming or sighing:</strong> let tensions go by stimulating parasympathetic nervous system.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Heat Flush / Rapid Cooling</summary>
+      <div class="content">
+        <p>Pour lukewarm or cold water on the back of your neck if you feel warm for instant cooling.</p>
+        <p>In an enclosed space you feel warm/hot because the air is stagnant.</p>
+        <p>Sugar blood spike can make you feel warm.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Swelling, Pain & Injury Compresses</summary>
+      <div class="content">
+        <p><strong>Cold compress</strong> for swollen/pain, and after that <strong>hot compress</strong> to boost recovery.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Postural Mechanics & Baseline Rule</summary>
+      <div class="content">
+        <p><strong>Body holds the posture that you're used to/familiar with</strong> whether it's good/bad posture.</p>
+        <p><strong>Stand / sit properly:</strong> push your hip forward a bit. This straightens your back for easier breathing too. Happens when you sit a lot.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Exercise Volume, Pain & Rest Days</summary>
+      <div class="content">
+        <p>When exercising: <strong>stop when you feel slight pain</strong>, stop when you feel tired and cannot maintain your good posture.</p>
+        <ul>
+          <li>Light exercise: rest for 1 day</li>
+          <li>Medium exercise: rest for 2 days</li>
+          <li>After you got your strength, maintain it by reducing your exercise a bit.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Proper Push-up Form</summary>
+      <div class="content">
+        <p><strong>Do the right push up:</strong> wrist and both legs slightly open, back straight, armpit close, shoulder in front of supporting hand.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Breathing & Feldenkrais Muscle Reset</summary>
+      <div class="content">
+        <p>Do a <strong>rib cage breathing</strong> if tension is too high even for belly breathing.</p>
+        <p>When you are stiff or over-using your muscle, do a <strong>feldenkrais movement</strong> to reintroduce how to use muscles properly.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Frequent Urination & Full Electrolyte Depletion Protocol</summary>
+      <div class="content">
+        <p>Frequent urination can wash out <strong>sodium fastest, magnesium moderately, calcium least</strong>; re-supplement body calcium, magnesium, and sodium.</p>
+        <pre>
+(Easy daily resupply)
+Water 1 L + salt 1/4 tsp (≈500 mg sodium) sip slowly;
+Food sources:
+- Electrolytes + water: bananas, oranges, tomatoes
+- Calcium (Ca): yogurt, milk, sardines, tofu
+- Magnesium (Mg): pumpkin seeds, nuts, beans, greens
+Optional supplements:
+- Mg glycinate or citrate: 200–300 mg elemental/day
+- Ca pill: only if intake < 800 mg/day (prefer calcium citrate 300–500 mg/day split doses)
+
+(One-shot DIY electrolyte drink)
+1 L water + 1/4 tsp salt + 1/2 tsp sugar or honey + squeeze lemon/orange; no heavy need for Ca in drinks.
+
+(Edge cases)
+- Heavy sweat / exercise: add another 1/4 tsp salt per sweaty hour
+- Hot climate / fever: same
+- Diarrhea / vomiting: OralRehydrationPackets preferred (Oralit)
+        </pre>
+      </div>
+    </details>
+
+    <details>
+      <summary>Drinking Technique & Hydration Retention</summary>
+      <div class="content">
+        <p><strong>Avoid drinking water quickly (gulping down);</strong> take sip by sip slowly is much better.</p>
+        <p>Avoid cold water; avoid drinking when eating (do it after or before). Don't skip before bed. Too much is not good for kidney.</p>
+        <p><strong>To reduce urination frequency:</strong> take water with salt and honey or something sweet (Cola)? This prevents the body from quickly discharging water.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Medicine & Vitamin Spacing</summary>
+      <div class="content">
+        <p>Take medicine/vitamin <strong>one hour in between</strong>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Diet: MSG (Monosodium Glutamate)</summary>
+      <div class="content">
+        <p>MSG is ok, accompanying food that go with it problematic. MSG is a flavor enhancer, so the quality of the food that use it is quite low.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Diet: Egg Quality vs Labels</summary>
+      <div class="content">
+        <p>Benefit from eggs depends more on <strong>feed quality and farm hygiene</strong> than the "free-range" label itself.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Diet: Milo & Seasonal Foods</summary>
+      <div class="content">
+        <p>On rainy season, drink warm water or soup to avoid sluggishness.</p>
+        <p>Milo is warm, not good taken for a long time. Can clash with soymilk.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Calluses Treatment</summary>
+      <div class="content">
+        <p>Use <strong>aloe vera gel</strong> for calluses.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Mental Fatigue & Grounding Mechanics</summary>
+      <div class="content">
+        <p>Reduce screen time, rest occasionally, write notes to reduce brain load, feel grateful, grounding time.</p>
+        <p>Don't get too focused on something; it'll drain you.</p>
+        <p>Clean bed is better for sleeping.</p>
+        <p>Step on soil to get better psychologically.</p>
+      </div>
+    </details>
   </section>
 
-  <!-- Main Content Grid -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Active Tag Banner (shown when filtering by tag) -->
-    <div id="activeTagBanner" class="hidden mb-6 p-2.5 rounded-lg bg-sky-950/60 border border-sky-800/60 flex items-center justify-between">
-      <div class="flex items-center gap-2 text-xs text-sky-300">
-        <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5a1.99 1.99 0 011.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-        </svg>
-        <span>Filtered by tag: <strong id="activeTagName" class="text-white"></strong></span>
+  <!-- 2. MIND & BEHAVIOR -->
+  <section id="mind">
+    <h2>2. Mindset, Stress & Principles <span class="counter">(11 items)</span></h2>
+
+    <details>
+      <summary>Neutral Attention (Inward vs Outward Focus)</summary>
+      <div class="content">
+        <p>Don't focus your mind too much outwardly or inwardly. Inward focus creates and maintains mental rumination and will get worse if your body is already not feeling good. Meanwhile focusing outward takes more toll on your mind for the extra processing needed from your senses.</p>
+        <p><strong>The best way is to be right in the middle:</strong> move gently and feel the movement.</p>
       </div>
-      <button id="clearTagBtn" class="text-xs text-sky-400 hover:text-sky-200 underline font-medium">Clear tag filter</button>
-    </div>
+    </details>
 
-    <!-- Cards Grid -->
-    <div id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- Cards dynamically rendered here -->
-    </div>
-
-    <!-- Empty State -->
-    <div id="emptyState" class="hidden text-center py-20">
-      <div class="w-14 h-14 rounded-2xl bg-slate-800/80 border border-slate-700/80 flex items-center justify-center mx-auto mb-4 text-slate-400">
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+    <details>
+      <summary>Soft Attention Movement Guidance</summary>
+      <div class="content">
+        <p>Move with soft attention, neither monitoring yourself nor the object, just feeling the motion and letting it happen. Use sensation as guidance, not control. Gentle and stable move. Soft fingers, wrist, gaze, and knee.</p>
       </div>
-      <h3 class="text-base font-semibold text-slate-200">No matching entries found</h3>
-      <p class="text-sm text-slate-400 mt-1 max-w-sm mx-auto">Try refining your keyword query or switch to another category filter.</p>
-      <button id="clearFiltersBtn" class="mt-4 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs text-sky-400 transition font-medium">Clear all filters</button>
-    </div>
-  </main>
+    </details>
 
-  <!-- Add New Entry Modal -->
-  <div id="addModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-slate-900 border border-slate-700/90 rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden transform transition-all">
-      <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800">
-        <div class="flex items-center gap-2">
-          <div class="w-2.5 h-2.5 rounded-full bg-sky-400"></div>
-          <h3 class="text-base font-semibold text-white">Add Knowledge Entry</h3>
-        </div>
-        <button id="closeAddModalBtn" class="text-slate-400 hover:text-slate-200 p-1 rounded-md transition">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+    <details>
+      <summary>Stopping Rumination & Memory Mechanics</summary>
+      <div class="content">
+        <p>To avoid rumination, <strong>do not attach sensation/feeling/conversation to a story</strong>, especially with "what if" and "when".</p>
+        <p>Human body <strong>cannot differentiate between a real event and the memory of the event</strong>.</p>
       </div>
+    </details>
 
-      <form id="addEntryForm" class="p-6 space-y-4">
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1.5">Category <span class="text-rose-400">*</span></label>
-          <select id="entryCategory" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-sky-500">
-            <option value="Health & Somatics">Health & Somatics</option>
-            <option value="Mindset & Principles">Mindset & Principles</option>
-            <option value="Living & Maintenance">Living & Maintenance</option>
-            <option value="Hardware & Tech">Hardware & Tech</option>
-            <option value="Vocabulary & Glossary">Vocabulary & Glossary</option>
-          </select>
+    <details>
+      <summary>Baseline Stress Management</summary>
+      <div class="content">
+        <p>Base line stress has to be low enough so when you feel physical discomfort you can just ignore and focus on doing other things instead of focusing on the uncomfortableness which makes everything worse.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Execution: Lowest Viable Outcome & Pressure</summary>
+      <div class="content">
+        <p>Thinking about practicality and the need to do it will give pressure.</p>
+        <p><strong>Whenever you want to do something:</strong> first decide roughly when to do it, set the lowest possible outcome that is still worth doing or how long to do it. This is done to reduce the accumulated tensions later on.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Integrity & Subtle Hypocrisy (Confucian / Stoic)</summary>
+      <div class="content">
+        <p><strong>Hypocrisy:</strong> Subtle life rules are only enforced to others and not to yourself.</p>
+        <p><strong>Confucian and Stoic ideas of inner integrity:</strong> virtue means harmony between what you expect of others and what you demand of yourself. Integrity is not about perfection but about consistency between principle and practice.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Immediate Boundaries (Rudeness)</summary>
+      <div class="content">
+        <p>If someone is rude, <strong>tell them right away nicely</strong>, don't wait and get mad. That way, everyone plays fair!</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>The Cobra Effect</summary>
+      <div class="content">
+        <p><strong>Cobra Effect:</strong> A classic example of how well-meaning incentives can backfire, producing the exact opposite of the intended outcome.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Sensory Irritants / Upsetting Triggers</summary>
+      <div class="content">
+        <p><strong>Upsetting things:</strong> smell of burning incense stick, smoke from smokers, dog/animal sound, pungent/acrid/smelly smell, loud noise.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Cognitive Re-framing</summary>
+      <div class="content">
+        <p>Re-Framing your thinking to look things from a different perspective and feel better.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Product Marketing & Perception Filter</summary>
+      <div class="content">
+        <p>When buying something, focus on whether it's <strong>easy to maintain</strong>.</p>
+        <p><strong>Standard of product pricing in Indo:</strong> below standard value is marketed as standard price, thus giving perception it's the standard value; meanwhile standard value is marketed as premium price and slap a nice logo on top of that.</p>
+        <p>Products on the market are made to attract you with cuteness, nice looking design, or simple things that's supposedly to help with daily life. But these products are made not to last long mostly or too prematurely made.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 3. HOME & CLEANING CHEMISTRY -->
+  <section id="cleaning">
+    <h2>3. Home Maintenance & Cleaning Chemistry <span class="counter">(10 items)</span></h2>
+
+    <details>
+      <summary>Toilet Bowl Mineral Ring (Citric Acid)</summary>
+      <div class="content">
+        <p>Clean yellowish hard mineral stain on toilet bowl using <strong>citric acid</strong>; dump around <strong>4-5 spoons directly to the water bowl</strong>; wait for 30 to 60 mins and brush with non-scratching brush.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Buckets & Scaled Water Flasks (Citric Acid)</summary>
+      <div class="content">
+        <p>Clean dirty buckets or any water containers using <strong>citric acid and a little bit of water</strong>. Apply it then wait 15 mins. Your dirty buckets will all be cleaned magically.</p>
+        <p><strong>White small debris in glass flasks:</strong> That can only be seen with bright light after pouring water from glass flask is calcium and magnesium carbonate naturally occurring from hard water. It's safe but better clean your flask thoroughly with citric acid + brush.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Kitchenware Cleaning (Calcium Carbonate & Toothpaste)</summary>
+      <div class="content">
+        <p>Clean kitchenware using <strong>calcium carbonate cream</strong>.</p>
+        <p>Toothpaste works as a universal safe cleaner, but leaves residue.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Odor Removal & Acid Neutralization (Baking Soda)</summary>
+      <div class="content">
+        <p>Remove odor or neutralize acid; use <strong>baking soda</strong>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Electrical Contact Oxidation</summary>
+      <div class="content">
+        <p>Clean oxidation with <strong>99% alcohol and a brush</strong>; optionally use <strong>dielectric grease</strong> to prevent re-oxidation especially if using contact cleaner.</p>
+        <p>Eraser and Fiberglass brushes are also possible. Oxidation is apparent near sea environment; blackening pins.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Cleaning Cloths & Scrubbers</summary>
+      <div class="content">
+        <p>Use <strong>green scrub</strong> on stubborn stains.</p>
+        <p>Use <strong>microfiber</strong> for cleaning cloth.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Teak Utensil Care (Beeswax vs Mineral Oil vs Varnish)</summary>
+      <div class="content">
+        <p><strong>Teak spatula finishing:</strong></p>
+        <ul>
+          <li>Varnish (glossy shiny) - <em>Avoid toxic varnish</em></li>
+          <li>Beeswax (matte, smooth) - <em>Beeswax is the best</em></li>
+          <li>Mineral oil (deepens color) - <em>Combines well with beeswax</em></li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Avocado Ripeness Test</summary>
+      <div class="content">
+        <p><strong>Good avocado:</strong> Press twice on the same spot; both occasions should be soft/tender; need very little energy to cut.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Storage Boxes & Small Part Management</summary>
+      <div class="content">
+        <p>Use <strong>transparent box and thinwall</strong> for small storage.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Toilet Trap / Dry Bowl Gas Hazard</summary>
+      <div class="content">
+        <p><strong>Do not dry toilet bowl more than 5 mins;</strong> caution the smell and dangerous gas.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 4. HARDWARE, GADGETS & LIVING -->
+  <section id="hardware">
+    <h2>4. Hardware, Gadgets & Living Logistics <span class="counter">(13 items)</span></h2>
+
+    <details>
+      <summary>Bolt & Washer Assembly Sequence</summary>
+      <div class="content">
+        <p><strong>Correct assembly sequence:</strong></p>
+        <pre>Bolt ➔ Metal Washer ➔ Silicon Washer ➔ Nut / Lock Nut</pre>
+      </div>
+    </details>
+
+    <details>
+      <summary>3M VHB Adhesive Hooks: Load Ratings & Rules</summary>
+      <div class="content">
+        <p><strong>Surface requirements:</strong> Needs smooth, non-porous clean surface (glass/ceramic); clean with alcohol; use 3M VHB tape.</p>
+        <p><strong>Installation:</strong> Press hard for 10 seconds. Multiple adhesive pads give higher total load. Usually fails in the <em>peel direction</em> (the hook pulling away). Avoid painted walls (3M Primers can help). Avoid constant temperature change.</p>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Pad Dimension</th><th>Max Weight Load</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>3 × 3 cm</td><td>80 gr</td></tr>
+              <tr><td>4 × 4 cm</td><td>140 gr</td></tr>
+              <tr><td>5 × 5 cm</td><td>220 gr</td></tr>
+              <tr><td>6 × 6 cm</td><td>320 gr</td></tr>
+              <tr><td>8 × 8 cm</td><td>560 gr</td></tr>
+              <tr><td>10 × 10 cm</td><td>880 gr</td></tr>
+              <tr><td>12 × 12 cm</td><td>1.26 kg</td></tr>
+              <tr><td>15 × 15 cm</td><td>1.96 kg</td></tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+    </details>
 
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1.5">Title / Subject <span class="text-rose-400">*</span></label>
-          <input 
-            type="text" 
-            id="entryTitle" 
-            placeholder="e.g. Toothpaste cleaning limits or Fasting rule" 
-            required
-            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500"
-          />
-        </div>
+    <details>
+      <summary>Coastal Living Storage & Air Coolers</summary>
+      <div class="content">
+        <p><strong>Portable Air Cooler:</strong> If you live near sea, do not buy portable air cooler. It is useless when the humidity is already high.</p>
+        <p><strong>Coastal Storage:</strong> Every stuff needs to be put inside sealed storage boxes with silica gel. Replace silica gel every 1-2 years.</p>
+        <p><strong>Plastics off-gassing:</strong> Plastics leave odour and exhume VOC in closed containers; thus melting. Need to air it occasionally.</p>
+      </div>
+    </details>
 
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1.5">Key Takeaway / Core Principle</label>
-          <input 
-            type="text" 
-            id="entryTakeaway" 
-            placeholder="Quick 1-line rule or summary" 
-            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500"
-          />
-        </div>
+    <details>
+      <summary>Battery Selection Matrix & Phone Charging</summary>
+      <div class="content">
+        <p><strong>Cheap batteries (Carbon-Zinc) for:</strong> TV/AC remote, simple wall clock, cheap calculator, basic LED lights, toys without motor.</p>
+        <p><strong>For everything else:</strong> Use alkaline or rechargeable battery.</p>
+        <p><strong>Battery Charging Rule:</strong> Fast charging doesn't ruin battery; <strong>heat is</strong>. Charge 20–80%.</p>
+      </div>
+    </details>
 
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1.5">Full Details / Execution Steps <span class="text-rose-400">*</span></label>
-          <textarea 
-            id="entryDetails" 
-            rows="4" 
-            required
-            placeholder="Detailed notes, steps, ratios, or mechanical rationale..." 
-            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 font-mono text-xs"
-          ></textarea>
-        </div>
+    <details>
+      <summary>Android Phone Architecture Priority</summary>
+      <div class="content">
+        <p><strong>Android phone:</strong> Idle management is the most important thing; little cores are important because they are used for general tasks.</p>
+      </div>
+    </details>
 
-        <div>
-          <label class="block text-xs font-medium text-slate-300 mb-1.5">Tags (comma-separated)</label>
-          <input 
-            type="text" 
-            id="entryTags" 
-            placeholder="health, quick-fix, formula" 
-            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500 text-xs font-mono"
-          />
-        </div>
+    <details>
+      <summary>Legal to F4 Paper Scaling</summary>
+      <div class="content">
+        <p>When you change page size from legal to f4, you practically scale it down, no matter using whatever software. <strong>So just simply scale to 85% when printing.</strong></p>
+      </div>
+    </details>
 
-        <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
-          <button 
-            type="button" 
-            id="cancelAddModalBtn" 
-            class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition"
-          >
-            Cancel
-          </button>
-          <button 
-            type="submit" 
-            class="px-4 py-2 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold text-xs transition shadow-sm"
-          >
-            Save Entry
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
+    <details>
+      <summary>Clearing Printer Jams</summary>
+      <div class="content">
+        <p>Slip a thick paper from the bottom side of your printer to push debris out. <strong>Careful with the sensor.</strong></p>
+      </div>
+    </details>
 
-  <!-- Toast Notification Box -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 shadow-xl text-sm">
-    <div id="toastIcon" class="text-emerald-400">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-      </svg>
-    </div>
-    <span id="toastMessage" class="font-medium text-xs">Action completed</span>
-  </div>
+    <details>
+      <summary>Thermos Bottle Thermodynamics (Glass vs Stainless)</summary>
+      <div class="content">
+        <p>Stainless steel thermos cannot preserve heat long with little volume compared with glass thermos.</p>
+      </div>
+    </details>
 
-  <!-- Application Logic -->
+    <details>
+      <summary>Airflow Dynamics (Narrow Passages & Stagnation)</summary>
+      <div class="content">
+        <p>Air will flow faster the narrower the passage is (door/hall, or whatever).</p>
+        <p>In an enclosed space you feel warm/hot because the air is stagnant.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Apartment Floor Selection Trade-Offs</summary>
+      <div class="content">
+        <ul>
+          <li>Ladder reach up to 6–7 floors</li>
+          <li>Smoke is worse at top floors</li>
+          <li>Easy stair access on lower floors</li>
+          <li>Less sway on lower floors (less motion sickness)</li>
+          <li>Mid floors are cooler</li>
+          <li>Top floors windier</li>
+          <li>Less time elevator waiting on lower floors</li>
+          <li>Higher floors more dusty in windy environment</li>
+          <li>Lower floors more humid and noisy</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Driving Behind Trucks</summary>
+      <div class="content">
+        <p><strong>Stop your car off-center</strong> when a truck ahead.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Baseline Domestic Water Metric</summary>
+      <div class="content">
+        <p>Normal water use for a person is <strong>10 m³</strong>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Proper Knife Sharpening</summary>
+      <div class="content">
+        <p>Proper knife sharpening.</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 5. TECHNICAL GLOSSARY & WORDS TO RECALL -->
+  <section id="glossary">
+    <h2>5. Technical Glossary & Words to Recall <span class="counter">(33 items)</span></h2>
+
+    <details>
+      <summary><span class="tag">HW</span> Hardware Washers, Fasteners & Materials</summary>
+      <div class="content">
+        <p>Spacer washer, flange, nylon flange, nylon spacer, shoulder washer, spring washer, lock washer (added nylon), teflon washer, cap nut, silicon washer, metal washer, bolt, ring matahari (one of lock washer), food grade, stainless ss 304 or 316.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">NET</span> Power over Ethernet (POE)</summary>
+      <div class="content">
+        <p>Give power via ethernet cable to router without the need of power cable.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">NET</span> Powerline Adapter</summary>
+      <div class="content">
+        <p>Share internet via electrical cable.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">NET</span> Ethernet Splitter</summary>
+      <div class="content">
+        <p>Split one ethernet input to two ethernet output, speed will degrade.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">NET</span> Fiber Optic Ethernet Switch</summary>
+      <div class="content">
+        <p>Connect from switch to switch via fiber optic cable and share internet via ethernet port.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">NET</span> Media Converter</summary>
+      <div class="content">
+        <p>Convert ethernet connection to fiber optic.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">NET</span> pfSense</summary>
+      <div class="content">
+        <p>Free firewall system based on FreeBSD.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">NET</span> Captive Portal</summary>
+      <div class="content">
+        <p>Login prompt for wifi.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">AUDIO</span> Audio Normalization</summary>
+      <div class="content">
+        <p>Normalize the audio so it's not too loud nor too quiet.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">AUDIO</span> USB DAC</summary>
+      <div class="content">
+        <p>Warm tone from audio.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">AUDIO</span> Force Smartphone Audio Output</summary>
+      <div class="content">
+        <p>Force smartphone audio output to speaker app.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">VIDEO</span> x264 Video Encoding</summary>
+      <div class="content">
+        <p>x264 video encoding.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">IMG</span> Upscaling & Image Upscaling</summary>
+      <div class="content">
+        <p><strong>Upscaling:</strong> Increase the size or quality of a picture or video.</p>
+        <p><strong>Image upscaling:</strong> Improve / enlarge the image quality.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">GRAPHIC</span> Content-Aware Fill</summary>
+      <div class="content">
+        <p>Photoshop function to replace a detail with a similar surrounding.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">SYS</span> Remote Desktop</summary>
+      <div class="content">
+        <p>Software used to connect from phone/pc to phone/pc.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">SYS</span> UMA Frame Buffer Size</summary>
+      <div class="content">
+        <p>UMA frame buffer size.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">HW</span> USB Panel / Expansion / Header</summary>
+      <div class="content">
+        <p>usb 2 / usb 3 / usb type c panel | expansion | header | bracket</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">DEV</span> Op Codes / Hex / Assembly</summary>
+      <div class="content">
+        <p>op codes / hex / assembly</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">DEV</span> Machine Learning</summary>
+      <div class="content">
+        <p>Process to learn and refine/improve result based on given data.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">DEV</span> OpenCV</summary>
+      <div class="content">
+        <p>Open source library for object detection in video feed.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">DEV</span> Pandas</summary>
+      <div class="content">
+        <p>Python data analysis library.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">DEV</span> Web Scraping</summary>
+      <div class="content">
+        <p>Extract data from a website.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">AI</span> Speech Recognition</summary>
+      <div class="content">
+        <p>Able to recognize human voice and output in text.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">AI</span> TTS (Text to Speech)</summary>
+      <div class="content">
+        <p>TTS (text to speech)</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">SEC</span> OSINT (Open Source Intelligence)</summary>
+      <div class="content">
+        <p>osint (open source intelligence)</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">SYS</span> Parental Control</summary>
+      <div class="content">
+        <p>Parental control</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">MEDIA</span> Dubbing</summary>
+      <div class="content">
+        <p>Changing original language to other language.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">MECH</span> Valve / Steam Valve</summary>
+      <div class="content">
+        <p>valve / steam valve</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">BODY</span> Acupressure</summary>
+      <div class="content">
+        <p>Stimulate body function by pressing certain points for well being.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class="tag">BODY</span> Nasal Congestion</summary>
+      <div class="content">
+        <p>nasal congestion</p>
+      </div>
+    </details>
+  </section>
+
   <script>
-    // Initial Curated Dataset extracted directly from User Notes
-    const INITIAL_KNOWLEDGE_BASE = [
-      // 1. HEALTH & SOMATICS
-      {
-        id: "health-sore-throat",
-        category: "Health & Somatics",
-        title: "Sore Throat Prevention & Acute Shielding",
-        takeaway: "Cover neck and collarbone against wind/cold drafts; hydrate dry mucosa.",
-        details: "Sore throat is frequently triggered by wind/cold air hitting the exposed collar bone or upper chest, coupled with dry nasal mucosa.\n• Immediate action: Wear a mask and a hoodie.\n• Keep neck and chest insulated.\n• Prevents dry nasal airway constriction and secondary inflammation.",
-        tags: ["throat", "respiratory", "cold", "prevention"]
-      },
-      {
-        id: "health-posture-alignment",
-        category: "Health & Somatics",
-        title: "Posture Baseline & Hip-Forward Alignment",
-        takeaway: "Push hips slightly forward to straighten spine and open the rib cage.",
-        details: "The human body holds whatever posture you are most habituated with (good or bad).\n• Standing/Sitting fix: Push your hip slightly forward.\n• Instantly decompresses the lumbar curve, straightens the upper back, and makes full diaphragmatic breathing much easier.\n• Crucial reset for prolonged desk sitting.",
-        tags: ["posture", "spine", "breathing", "ergonomics"]
-      },
-      {
-        id: "health-stomachache-recovery",
-        category: "Health & Somatics",
-        title: "Post-Stomachache Recovery Protocol",
-        takeaway: "Stand upright and sway gently left and right; NEVER lie down flat.",
-        details: "After an acute stomachache episode:\n• Stand upright and sway your body gently side-to-side (lateral swinging).\n• DO NOT lie down: lying down induces fluid stagnation and gastrointestinal cramps, making everything significantly worse.",
-        tags: ["stomach", "digestion", "emergency", "recovery"]
-      },
-      {
-        id: "health-hydration-electrolytes",
-        category: "Health & Somatics",
-        title: "Hydration Mechanics & Daily Electrolyte Resupply",
-        takeaway: "Sip slowly; never gulp down water. Add salt + honey to reduce urination frequency.",
-        details: "Frequent urination rapidly flushes Sodium fastest, Magnesium moderately, and Calcium least.\n\n• DAILY RESUPPLY FORMULA (1 Liter):\n  - 1L clean water\n  - 1/4 tsp Salt (~500mg Sodium)\n  - 1/2 tsp Honey or Sugar (aids sodium cotransport)\n  - Fresh lemon or orange squeeze\n\n• DIETARY REPLENISHMENT:\n  - Sodium: Table salt / soups\n  - Potassium: Bananas, oranges, tomatoes\n  - Magnesium: Pumpkin seeds, nuts, beans, dark greens\n  - Calcium: Yogurt, milk, sardines, tofu\n\n• DRINKING RULES: Avoid cold water and drinking heavily while eating. Never skip hydration before bed.",
-        tags: ["electrolytes", "hydration", "sodium", "recipe"]
-      },
-      {
-        id: "health-instant-cooling",
-        category: "Health & Somatics",
-        title: "Instant Core Cooling Point",
-        takeaway: "Pour cool or lukewarm water onto the back of the neck.",
-        details: "When feeling flushed or overheated in warm environments:\n• Pour lukewarm or cold water directly onto the nape of your neck.\n• Provides instant neural and vascular cooling via large blood vessels near the brainstem.",
-        tags: ["heat", "cooling", "body-temp", "first-aid"]
-      },
-      {
-        id: "health-sprain-compress",
-        category: "Health & Somatics",
-        title: "Cold Compress First, Hot Compress Second",
-        takeaway: "Cold for acute swelling/pain; heat afterwards to boost tissue recovery.",
-        details: "For soft tissue injuries, swelling, and acute inflammation:\n1. Apply Cold Compress immediately to constrict blood vessels and limit edema/pain.\n2. Once acute swelling settles, switch to Hot Compress to enhance local microcirculation and accelerate cellular recovery.",
-        tags: ["injury", "pain", "swelling", "first-aid"]
-      },
-      {
-        id: "health-diving-reflex",
-        category: "Health & Somatics",
-        title: "Mammalian Diving Reflex for Acute Anxiety",
-        takeaway: "Splash/dip face into cold water to immediately stimulate parasympathetic tone.",
-        details: "The mammalian dive reflex slows cardiac output and resets autonomic nervous system overload.\n• When feeling intense anxiety, heart spikes, or sudden panic: submerge or splash face in a bowl of cold water for 15-30 seconds.\n• Combine with gentle humming or deep sighing to further stimulate vagus nerve activity.",
-        tags: ["anxiety", "vagus-nerve", "calm", "somatics"]
-      },
-      {
-        id: "health-tension-headache",
-        category: "Health & Somatics",
-        title: "Tension Headache Trigger Point Reset",
-        takeaway: "Head straight, gaze top-left, massage temples/chin/shoulders, relax tongue.",
-        details: "Often triggered by staring down at smartphones while lying down.\n• Protocol:\n  1. Keep head straight and consciously look up to the top left.\n  2. Massage temples, jawline/chin, and the base of the skull.\n  3. Press shoulder trigger points (trapezius).\n  4. Consciously drop and relax the tongue away from the roof of the mouth.",
-        tags: ["headache", "ergonomics", "massage", "neck"]
-      },
-      {
-        id: "health-rib-cage-breathing",
-        category: "Health & Somatics",
-        title: "Rib Cage Breathing for High Tension",
-        takeaway: "Expand lateral rib cage when baseline tension locks diaphragmatic breathing.",
-        details: "When internal nervous tension is too acute, standard belly/diaphragmatic breathing feels forced and creates pressure.\n• Switch to lateral rib cage breathing: place hands on the sides of your ribs and feel the ribcage widen outward horizontally with soft attention.",
-        tags: ["breathing", "tension", "somatics", "calm"]
-      },
-      {
-        id: "health-workout-stopping",
-        category: "Health & Somatics",
-        title: "Exercise Stopping Criteria & Muscle Re-Education",
-        takeaway: "Stop immediately on sharp pain or posture breakdown. Rest 1-2 days.",
-        details: "• When exercising: Stop the moment you feel sharp pain or cannot maintain flawless posture.\n• Recovery cycle: Light workout = 1 day rest; Medium workout = 2 days rest.\n• Once strength is built, maintain by reducing volume slightly.\n• If muscles are stiff or overused: do small Feldenkrais exploratory movements to reintroduce healthy neural firing patterns.",
-        tags: ["fitness", "recovery", "posture", "feldenkrais"]
-      },
-      {
-        id: "health-dietary-supplement-rules",
-        category: "Health & Somatics",
-        title: "Nutrition & Supplement Rules",
-        takeaway: "Stagger meds/vitamins 1hr apart. MSG is safe; accompanying low-grade food is the culprit.",
-        details: "• Stagger medicines and vitamin supplements by at least 1 hour.\n• MSG: Pure MSG is harmless; it is a flavor enhancer, meaning ultra-cheap/low-quality food relies on it heavily.\n• Eggs: Egg quality and health benefits depend on hen feed and farm hygiene, not just the 'free-range' marketing label.\n• Milo: Produces internal heat; avoid chronic daily consumption and avoid mixing with soymilk.\n• Calluses: Use pure Aloe Vera gel to soften and heal hard skin.\n• Rainy season: Drink warm water and soups to ward off metabolic sluggishness.",
-        tags: ["nutrition", "supplements", "msg", "food"]
-      },
+    // Live Search Functionality
+    function liveSearch() {
+      const query = document.getElementById('search').value.toLowerCase().trim();
+      const allDetails = document.querySelectorAll('details');
 
-      // 2. MINDSET & PRINCIPLES
-      {
-        id: "mindset-soft-attention",
-        category: "Mindset & Principles",
-        title: "Soft Attention (The Neutral Ground)",
-        takeaway: "Balance attention right in the middle: avoid deep inward rumination or outward sensory overload.",
-        details: "• Inward over-focus fuels mental rumination and magnifies minor bodily discomforts.\n• Outward over-focus drains sensory processing capacity and exhausts the nervous system.\n• The Golden Rule: Stay in the middle. Move with soft attention—neither aggressively monitoring yourself nor obsessing over objects.\n• Use sensation as gentle guidance: keep soft fingers, loose wrists, soft gaze, and relaxed knees.",
-        tags: ["focus", "attention", "rumination", "stoicism"]
-      },
-      {
-        id: "mindset-decouple-sensations",
-        category: "Mindset & Principles",
-        title: "Decouple Sensations from Catastrophic Stories",
-        takeaway: "Never attach bodily sensations or awkward encounters to 'what if' / 'when' narratives.",
-        details: "• The human nervous system cannot differentiate between a real present event and the vivid memory/imagination of one.\n• When an uncomfortable sensation or social encounter occurs, experience the bare sensation without spinning a story.\n• Cut off hypothetical 'what if' loops before they trigger autonomic distress.",
-        tags: ["psychology", "rumination", "mental-clarity", "stoicism"]
-      },
-      {
-        id: "mindset-baseline-stress",
-        category: "Mindset & Principles",
-        title: "Maintain Low Baseline Stress Threshold",
-        takeaway: "Keep chronic background stress low so physical discomforts can be ignored.",
-        details: "• When your baseline nervous tension is consistently low, temporary physical discomfort is trivial and easily brushed off.\n• When baseline stress is high, every minor twinge or ache is amplified by hyper-vigilance into panic.\n• Step barefoot on natural soil/grounding to discharge nervous overload.",
-        tags: ["stress", "nervous-system", "grounding", "wellness"]
-      },
-      {
-        id: "mindset-minimum-viable-outcome",
-        category: "Mindset & Principles",
-        title: "Setting Minimum Viable Outcomes",
-        takeaway: "Fix the execution timeframe and lowest acceptable outcome upfront to eliminate resistance.",
-        details: "• Overthinking practicality and the absolute need for perfection produces immense starting pressure.\n• Whenever you need to do something: decide roughly when you will start, set the lowest possible outcome that is still worth doing, and set a hard time limit.\n• Eradicates task resistance and accumulated tension.",
-        tags: ["productivity", "execution", "habits", "discipline"]
-      },
-      {
-        id: "mindset-inner-integrity",
-        category: "Mindset & Principles",
-        title: "Inner Integrity & Consistent Standards",
-        takeaway: "Virtue means harmony between what you demand of others and what you expect of yourself.",
-        details: "• Hypocrisy begins when subtle life rules are strictly enforced upon others but silently excused for yourself.\n• Confucian & Stoic view: Integrity is not flawless perfection; it is unwavering consistency between principle and practice.",
-        tags: ["stoicism", "integrity", "ethics", "philosophy"]
-      },
-      {
-        id: "mindset-immediate-boundaries",
-        category: "Mindset & Principles",
-        title: "Immediate & Polite Boundary Setting",
-        takeaway: "If someone is rude, address it right away calmly. Never harbor delayed resentment.",
-        details: "• If someone crosses a line or acts rudely, tell them immediately and politely in the moment.\n• Do not wait, swallow it, and get angry hours later.\n• Immediate feedback ensures clarity and keeps everyone playing on fair ground.",
-        tags: ["boundaries", "communication", "relationships", "clarity"]
-      },
-      {
-        id: "mindset-cobra-effect",
-        category: "Mindset & Principles",
-        title: "The Cobra Effect (Incentive Traps)",
-        takeaway: "Well-meaning incentives can backfire and produce the exact opposite outcome.",
-        details: "• Historical origin: British government offered a bounty for dead cobras in Delhi. People started breeding cobras for income. When the bounty was cancelled, breeders released them, increasing wild cobras.\n• Mental Model: Always examine the second-order incentives of any rule, system, or metric you set.",
-        tags: ["mental-model", "incentives", "systems", "thinking"]
-      },
-      {
-        id: "mindset-sensory-irritants",
-        category: "Mindset & Principles",
-        title: "Sensory Irritants Protection Filter",
-        takeaway: "Proactively isolate yourself from known nervous system triggers.",
-        details: "Key biological triggers that disproportionately drain energy:\n• Burning incense sticks\n• Tobacco smoke\n• Repetitive dog barking / animal shrieks\n• Pungent / acrid chemical fumes\n• Constant low-frequency loud noise\n• Practice cognitive re-framing when exposure is unavoidable.",
-        tags: ["environment", "sensory", "irritants", "peace"]
-      },
-
-      // 3. LIVING & MAINTENANCE
-      {
-        id: "maint-citric-acid-cleaning",
-        category: "Living & Maintenance",
-        title: "Citric Acid Cleaning Matrix",
-        takeaway: "Dissolves stubborn calcium/magnesium hard water mineral deposits magically.",
-        details: "• TOILET BOWL MINERAL RING: Dump 4-5 tablespoons of citric acid powder directly into the standing toilet bowl water. Wait 30-60 minutes, then brush with a non-scratch scrub.\n• DIRTY BUCKETS & WATER CONTAINERS: Dissolve citric acid with a splash of water, apply onto mineral-crusted surfaces, wait 15 minutes, and wipe clean.\n• GLASS FLASKS: Removes white chalky hard water mineral deposits instantly.",
-        tags: ["cleaning", "citric-acid", "minerals", "diy"]
-      },
-      {
-        id: "maint-chemical-agents",
-        category: "Living & Maintenance",
-        title: "Specialized Household Cleaners",
-        takeaway: "Calcium carbonate cream for metal; Baking soda for odors & acid neutralization.",
-        details: "• KITCHENWARE & COOKWARE: Use Calcium Carbonate cream for gentle, scratch-free polishing. (Toothpaste acts as a quick universal cleaner, but leaves residue).\n• ODOR REMOVAL & ACID NEUTRALIZATION: Baking Soda (Sodium Bicarbonate).\n• STUBBORN STAINS: Green scouring pads.\n• GLASS & DELICATE SURFACES: Microfiber cloths only.",
-        tags: ["cleaning", "chemistry", "kitchen", "home"]
-      },
-      {
-        id: "maint-contact-oxidation",
-        category: "Living & Maintenance",
-        title: "Electrical Contact Oxidation Restoration",
-        takeaway: "99% Isopropyl Alcohol + fiberglass brush/eraser, sealed with dielectric grease.",
-        details: "Oxidation turns pins black, especially in salty marine/coastal environments.\n• Protocol:\n  1. Scrub pins with 99% Isopropyl alcohol and a fiberglass brush or pencil eraser.\n  2. Apply a thin film of dielectric grease to block air/humidity and prevent re-oxidation.\n  3. Essential for audio plugs, battery terminals, and header pins.",
-        tags: ["electronics", "oxidation", "repair", "maintenance"]
-      },
-      {
-        id: "maint-3m-vhb-loads",
-        category: "Living & Maintenance",
-        title: "3M VHB Tape & Adhesive Hook Weight Matrix",
-        takeaway: "Smooth non-porous surface, clean with alcohol, press hard for 10s. Fails in peel.",
-        details: "• Load Bearing Limits:\n  - 3x3 cm = 80 g\n  - 4x4 cm = 140 g\n  - 5x5 cm = 220 g\n  - 6x6 cm = 320 g\n  - 8x8 cm = 560 g\n  - 10x10 cm = 880 g\n  - 12x12 cm = 1.26 kg\n  - 15x15 cm = 1.96 kg\n\n• Crucial Rules: Must clean surface with 99% alcohol. Avoid painted walls (use 3M Primer if necessary). Multiple pads distribute total load. Most failures happen in the PEEL direction (pulling outward) rather than direct shear.",
-        tags: ["adhesives", "3m-vhb", "hardware", "specs"]
-      },
-      {
-        id: "maint-bolt-assembly-sequence",
-        category: "Living & Maintenance",
-        title: "Proper Bolt & Washer Assembly Sequence",
-        takeaway: "Bolt ➔ Metal Washer ➔ Silicone/Rubber Washer ➔ Material ➔ Nut / Lock Nut",
-        details: "Correct stack prevents thread loosening and preserves mating surface integrity:\n\n[ Bolt Head ]\n      ↓\n[ Metal Washer ] (Distributes mechanical torque)\n      ↓\n[ Silicone/Nylon Washer ] (Dampens vibration & seals)\n      ↓\n  [ Joint / Material ]\n      ↓\n[ Lock Washer / Lock Nut ] (Prevents back-off)",
-        tags: ["hardware", "mechanics", "fasteners", "diy"]
-      },
-      {
-        id: "maint-teak-wood-care",
-        category: "Living & Maintenance",
-        title: "Teak & Wood Utensil Conditioning",
-        takeaway: "Beeswax + mineral oil blend is best. Avoid toxic glossy varnishes.",
-        details: "• Glossy Varnish: Shiny but chips and introduces toxic sealants into food.\n• Mineral Oil: Deepens grain color and hydrates fibers.\n• Beeswax: Matte, water-repellent, silky smooth finish.\n• The Best Finish: A warm combination of food-grade beeswax and mineral oil buffed into dry grain.",
-        tags: ["woodwork", "kitchen", "finishes", "natural"]
-      },
-      {
-        id: "maint-coastal-living",
-        category: "Living & Maintenance",
-        title: "Coastal Living & Humidity Defense",
-        takeaway: "Airtight storage + silica gel; vent plastics periodically; NO evaporative coolers.",
-        details: "• PORTABLE AIR COOLERS: Completely useless near the sea—evaporative cooling fails when ambient humidity is already saturated.\n• ELECTRONICS & TOOLS: Store inside airtight sealed boxes with Silica Gel. Recharge/replace silica beads every 1-2 years.\n• PLASTIC VOC OFF-GASSING: Plastics trapped in sealed containers release volatile organic compounds (VOCs) that melt rubberized coatings. Open and air containers periodically.",
-        tags: ["coastal", "humidity", "storage", "silica-gel"]
-      },
-      {
-        id: "maint-avocado-test",
-        category: "Living & Maintenance",
-        title: "Avocado Ripeness Diagnostic",
-        takeaway: "Press the exact same spot twice; both should yield tenderly with light pressure.",
-        details: "To detect perfectly ripe avocados without bruising the fruit:\n• Press gently with your thumb on one spot.\n• Release and press the EXACT same spot a second time.\n• Both presses should feel tender and yielding under minimal effort. If springy, it needs more days.",
-        tags: ["food", "avocado", "kitchen", "technique"]
-      },
-      {
-        id: "maint-apartment-floor-tradeoffs",
-        category: "Living & Maintenance",
-        title: "Apartment Floor Height Trade-Offs",
-        takeaway: "Lower floors: fast stairs/less sway; Higher floors: windier, but beyond ladder reach.",
-        details: "• Lower Floors: Fast stair access, zero elevator wait time, minimal sway during tremors/wind (less motion sickness), but higher street noise and humidity.\n• Mid Floors: Optimal balance of natural cooling and stair access.\n• Upper Floors (Above Floor 6-7): Fire department ladders cannot reach beyond 6-7 floors; smoke accumulates more densely; wind drives fine dust; heavy elevator dependency.",
-        tags: ["housing", "safety", "fire-safety", "urban"]
-      },
-      {
-        id: "maint-thermos-physics",
-        category: "Living & Maintenance",
-        title: "Thermos Physics: Stainless Steel vs Glass",
-        takeaway: "Stainless steel flasks lose heat fast at low liquid volume; glass inserts insulate better.",
-        details: "• When holding only a small volume of hot water, stainless steel thermos bottles lose heat rapidly through conductive neck leakage.\n• Glass-lined vacuum carafes preserve heat far longer with small liquid volumes due to superior emissivity and insulating barrier.",
-        tags: ["thermal", "physics", "kitchen", "appliances"]
-      },
-      {
-        id: "maint-plumbing-gas-safety",
-        category: "Living & Maintenance",
-        title: "Plumbing Sewer Gas Safety Warning",
-        takeaway: "Never leave a toilet drain unsealed for more than 5 minutes.",
-        details: "• When replacing or repairing a toilet bowl: never leave the open waste pipe uncovered for >5 minutes.\n• Sewer gas contains Hydrogen Sulfide (H2S) and Methane—toxic, flammable, foul-smelling, and immediately rises up into living quarters.\n• Temporarily seal pipe openings with a wet rag or tape.",
-        tags: ["plumbing", "safety", "sewer-gas", "hazards"]
-      },
-
-      // 4. HARDWARE & TECH
-      {
-        id: "tech-battery-matrix",
-        category: "Hardware & Tech",
-        title: "Battery Chemistry Allocation Matrix",
-        takeaway: "Cheap Carbon-Zinc for ultra-low draw; Alkaline/NiMH for motorized devices.",
-        details: "• CHEAP CARBON-ZINC BATTERIES:\n  Use strictly for: TV/AC remotes, simple quartz wall clocks, cheap calculators, low-drain status LEDs, static toys without motors.\n\n• ALKALINE / RECHARGEABLE (NiMH or Li-ion):\n  Use for everything else: motorized toys, flashlights, wireless gamepads, digital audio recorders, high-drain transmitters.",
-        tags: ["batteries", "electronics", "hardware", "power"]
-      },
-      {
-        id: "tech-lithium-battery-health",
-        category: "Hardware & Tech",
-        title: "Lithium-Ion Battery Health & Longevity",
-        takeaway: "Heat degrades lithium cells, not fast charging. Keep charge between 20% and 80%.",
-        details: "• Myth: Fast charging inherently destroys battery longevity.\n• Reality: Excessive internal HEAT generated during charging breaks down electrolyte and electrode coatings.\n• Best Practice: Avoid using the phone while fast charging; maintain state-of-charge within the 20% to 80% band for maximum lifespan.",
-        tags: ["smartphones", "batteries", "charging", "tech"]
-      },
-      {
-        id: "tech-legal-to-f4-scale",
-        category: "Hardware & Tech",
-        title: "Legal to F4 Paper Print Scaling",
-        takeaway: "Directly scale down to 85% in print options regardless of software.",
-        details: "• When converting or printing documents formatted for US Legal (216x356mm) onto Southeast Asian F4/Folio (215x330mm):\n• You are effectively scaling down the print canvas.\n• Simply input 85% scaling in your printer dialog box for seamless margin fit.",
-        tags: ["printing", "paper", "office", "f4"]
-      },
-      {
-        id: "tech-android-efficiency",
-        category: "Hardware & Tech",
-        title: "Android Architecture & Idle Management",
-        takeaway: "Idle background management and little cores govern real-world fluidity and endurance.",
-        details: "• High-performance prime cores only activate during bursts (heavy games, camera processing).\n• Everyday responsiveness, thermal balance, and screen-off battery endurance depend on aggressive idle task management and low-power LITTLE cores.",
-        tags: ["android", "cpu", "performance", "mobile"]
-      },
-      {
-        id: "tech-printer-jam-fix",
-        category: "Hardware & Tech",
-        title: "Safe Printer Debris Removal Technique",
-        takeaway: "Slide thick cardstock upward from bottom feed path. Mind the optical sensor.",
-        details: "• To clear micro-debris, jammed paper scraps, or dust:\n• Gently insert a piece of thick cardstock paper from the bottom paper feed side and slide upward to nudge trapped foreign objects out.\n• Avoid sharp metal tools; exercise extreme caution around optical paper feed sensors.",
-        tags: ["printer", "hardware", "troubleshooting", "maintenance"]
-      },
-      {
-        id: "tech-narrow-passage-airflow",
-        category: "Hardware & Tech",
-        title: "Venturi Airflow Dynamics in Living Spaces",
-        takeaway: "Air speeds up through narrow bottlenecks; enclosed rooms feel hot due to air stagnation.",
-        details: "• Continuity principle: Air velocity increases as the cross-sectional passage narrows (hallways, doorways, cracked windows).\n• You feel uncomfortably warm in enclosed spaces primarily because air is stagnant (boundary layer traps body heat), not solely because the room air temperature is higher.",
-        tags: ["physics", "ventilation", "airflow", "cooling"]
-      },
-
-      // 5. VOCABULARY & GLOSSARY
-      {
-        id: "vocab-networking-poe",
-        category: "Vocabulary & Glossary",
-        title: "PoE & Powerline Adapters",
-        takeaway: "PoE powers devices via Ethernet; Powerline turns AC wall wiring into network lines.",
-        details: "• Power over Ethernet (PoE): Delivers electrical operating current through standard twisted-pair Ethernet cables directly to APs, cameras, and switches—eliminating external power bricks.\n• Powerline Adapter: Transmits ethernet data signals directly across existing domestic 220V/110V copper electrical wiring.",
-        tags: ["networking", "ethernet", "poe", "hardware"]
-      },
-      {
-        id: "vocab-media-converters-fiber",
-        category: "Vocabulary & Glossary",
-        title: "Fiber Optic Switches & Media Converters",
-        takeaway: "Converts copper pulses to light; splits Ethernet pairs (capping speed to 100Mbps).",
-        details: "• Media Converter: Transceiver hardware that converts copper Ethernet electrical signals into light pulses for fiber optic cables.\n• Fiber Optic Switch: Interconnects switches using fiber transceivers (SFP/SFP+) for long-distance, lightning-immune data trunks.\n• Ethernet Splitter: Divides an 8-pin Ethernet cable into two 4-pin channels; degrades connection speed to 100 Mbps maximum.",
-        tags: ["networking", "fiber", "hardware", "telecom"]
-      },
-      {
-        id: "vocab-pfsense-osint",
-        category: "Vocabulary & Glossary",
-        title: "pfSense, Captive Portal & OSINT",
-        takeaway: "Enterprise routing, captive wifi logins, and public investigative intelligence.",
-        details: "• pfSense: Free and open-source firewall and routing platform based on FreeBSD.\n• Captive Portal: Web authentication screen presented to newly connected Wi-Fi users before granted internet access.\n• OSINT (Open Source Intelligence): The practice of gathering, cross-referencing, and analyzing publicly available data for cybersecurity and investigations.",
-        tags: ["security", "firewall", "osint", "networking"]
-      },
-      {
-        id: "vocab-audio-dsp-dac",
-        category: "Vocabulary & Glossary",
-        title: "Audio Normalization & USB DACs",
-        takeaway: "Normalizes perceived loudness (LUFS); external DAC isolates clean analog audio.",
-        details: "• Audio Normalization: Digital signal processing algorithm that scales dynamic audio levels so media isn't jarringly loud or faint.\n• USB DAC (Digital-to-Analog Converter): External sound processing chip that converts digital bits into analog audio outside computer chassis, eliminating motherboard electromagnetic hiss.",
-        tags: ["audio", "sound", "dsp", "dac"]
-      },
-      {
-        id: "vocab-opencv-pandas",
-        category: "Vocabulary & Glossary",
-        title: "OpenCV, Pandas & Video Encoding",
-        takeaway: "Computer vision, tabular data structures, and x264 video compression.",
-        details: "• OpenCV: Open-source computer vision library engineered for real-time image analysis, face tracking, and object detection.\n• Pandas: Python data science library centered around DataFrames for tabular data manipulation.\n• x264: Benchmark open-source library for encoding video streams into H.264/MPEG-4 AVC format.\n• UMA Frame Buffer: System RAM allocated strictly to integrated GPUs for display buffers.",
-        tags: ["code", "python", "ai", "video"]
-      },
-      {
-        id: "vocab-washers-fasteners",
-        category: "Vocabulary & Glossary",
-        title: "Industrial Washers & Fasteners Glossary",
-        takeaway: "Spring, lock nut, ring matahari (toothed), and marine stainless grades.",
-        details: "• Spring Washer: Split ring that exerts continuous spring tension against vibrations.\n• Lock Washer / Nylon Nut: Contains internal polymer collar to resist backing out.\n• Ring Matahari (Toothed Lock Washer): Internal/external serrations bite into metal to preserve electrical grounding and friction.\n• Flange / Shoulder Washer: Stepped non-conductive washer isolating bolts from metal chassis.\n• Stainless 304 vs 316: SS 304 is standard corrosion resistant; SS 316 contains molybdenum for true salt-water marine resistance.",
-        tags: ["hardware", "washers", "mechanical", "fasteners"]
-      }
-    ];
-
-    // Category Configuration & Colors
-    const CATEGORIES = [
-      { name: "All", color: "sky", icon: "M4 6h16M4 12h16M4 18h16" },
-      { name: "Health & Somatics", color: "emerald", icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" },
-      { name: "Mindset & Principles", color: "violet", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
-      { name: "Living & Maintenance", color: "amber", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
-      { name: "Hardware & Tech", color: "cyan", icon: "M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" },
-      { name: "Vocabulary & Glossary", color: "rose", icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" }
-    ];
-
-    // State Variables
-    let currentCategory = "All";
-    let searchQuery = "";
-    let activeTag = null;
-    let knowledgeBase = [];
-
-    // Local Storage Helpers
-    const STORAGE_KEY = "knowledge_core_entries_v2";
-
-    function loadKnowledgeBase() {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        try {
-          knowledgeBase = JSON.parse(stored);
-        } catch (e) {
-          knowledgeBase = [...INITIAL_KNOWLEDGE_BASE];
-        }
-      } else {
-        knowledgeBase = [...INITIAL_KNOWLEDGE_BASE];
-        saveKnowledgeBase();
-      }
-    }
-
-    function saveKnowledgeBase() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(knowledgeBase));
-    }
-
-    // UI Toast System
-    function showToast(message, isError = false) {
-      const toast = document.getElementById("toast");
-      const toastMsg = document.getElementById("toastMessage");
-      const toastIcon = document.getElementById("toastIcon");
-
-      toastMsg.textContent = message;
-      if (isError) {
-        toastIcon.innerHTML = `<svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
-      } else {
-        toastIcon.innerHTML = `<svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`;
-      }
-
-      toast.classList.remove("translate-y-20", "opacity-0");
-      setTimeout(() => {
-        toast.classList.add("translate-y-20", "opacity-0");
-      }, 2500);
-    }
-
-    // Clipboard Copy Helper (Handles iframe constraints safely)
-    function copyToClipboard(text) {
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast("Copied to clipboard!");
-        }).catch(() => {
-          fallbackCopyText(text);
-        });
-      } else {
-        fallbackCopyText(text);
-      }
-    }
-
-    function fallbackCopyText(text) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        showToast("Copied to clipboard!");
-      } catch (err) {
-        showToast("Failed to copy text", true);
-      }
-      document.body.removeChild(textArea);
-    }
-
-    // Render Category Pills
-    function renderCategoryPills() {
-      const container = document.getElementById("categoryContainer");
-      container.innerHTML = "";
-
-      CATEGORIES.forEach(cat => {
-        const isActive = currentCategory === cat.name;
-        const btn = document.createElement("button");
-        
-        btn.className = `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-150 ${
-          isActive 
-            ? "bg-sky-500 text-slate-950 font-semibold shadow-sm shadow-sky-500/20" 
-            : "bg-slate-800/90 text-slate-400 hover:text-slate-200 hover:bg-slate-800 border border-slate-700/60"
-        }`;
-
-        btn.innerHTML = `
-          <svg class="w-3.5 h-3.5 ${isActive ? "text-slate-950" : "text-slate-400"}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${cat.icon}" />
-          </svg>
-          <span>${cat.name}</span>
-        `;
-
-        btn.addEventListener("click", () => {
-          currentCategory = cat.name;
-          renderCategoryPills();
-          renderCards();
-        });
-
-        container.appendChild(btn);
-      });
-    }
-
-    // Helper to get Category Badge styles
-    function getCategoryBadgeStyles(category) {
-      switch (category) {
-        case "Health & Somatics":
-          return "bg-emerald-950/80 text-emerald-400 border-emerald-800/60";
-        case "Mindset & Principles":
-          return "bg-violet-950/80 text-violet-400 border-violet-800/60";
-        case "Living & Maintenance":
-          return "bg-amber-950/80 text-amber-400 border-amber-800/60";
-        case "Hardware & Tech":
-          return "bg-cyan-950/80 text-cyan-400 border-cyan-800/60";
-        case "Vocabulary & Glossary":
-          return "bg-rose-950/80 text-rose-400 border-rose-800/60";
-        default:
-          return "bg-slate-800 text-slate-300 border-slate-700";
-      }
-    }
-
-    // Render Cards in Main Grid
-    function renderCards() {
-      const grid = document.getElementById("cardsGrid");
-      const emptyState = document.getElementById("emptyState");
-      const counterBadge = document.getElementById("counterBadge");
-      const activeTagBanner = document.getElementById("activeTagBanner");
-      const activeTagName = document.getElementById("activeTagName");
-
-      // Handle Tag Filter Banner
-      if (activeTag) {
-        activeTagBanner.classList.remove("hidden");
-        activeTagName.textContent = `#${activeTag}`;
-      } else {
-        activeTagBanner.classList.add("hidden");
-      }
-
-      // Filter Logic
-      const filtered = knowledgeBase.filter(item => {
-        const matchesCategory = currentCategory === "All" || item.category === currentCategory;
-        
-        const q = searchQuery.toLowerCase().trim();
-        const matchesSearch = !q || (
-          item.title.toLowerCase().includes(q) ||
-          item.takeaway.toLowerCase().includes(q) ||
-          item.details.toLowerCase().includes(q) ||
-          (item.tags && item.tags.some(t => t.toLowerCase().includes(q)))
-        );
-
-        const matchesTag = !activeTag || (item.tags && item.tags.includes(activeTag));
-
-        return matchesCategory && matchesSearch && matchesTag;
-      });
-
-      // Update Counter
-      counterBadge.textContent = `${filtered.length} of ${knowledgeBase.length} entries`;
-
-      if (filtered.length === 0) {
-        grid.innerHTML = "";
-        emptyState.classList.remove("hidden");
-        return;
-      }
-
-      emptyState.classList.add("hidden");
-      grid.innerHTML = "";
-
-      filtered.forEach(item => {
-        const card = document.createElement("article");
-        card.className = "bg-slate-900 border border-slate-800/90 hover:border-slate-700 rounded-2xl p-5 shadow-sm transition-all duration-200 card-glow flex flex-col justify-between relative group";
-
-        const badgeClass = getCategoryBadgeStyles(item.category);
-
-        // Render card tags HTML
-        const tagsHtml = (item.tags || []).map(tag => `
-          <button 
-            data-tag="${tag}" 
-            class="tag-pill text-[11px] font-mono px-2 py-0.5 rounded bg-slate-800/80 hover:bg-slate-700 text-slate-400 hover:text-sky-300 border border-slate-700/60 transition"
-          >
-            #${tag}
-          </button>
-        `).join("");
-
-        // Format details with line breaks and highlight lists
-        const formattedDetails = item.details
-          .replace(/\n/g, '<br/>')
-          .replace(/•/g, '<span class="text-sky-400 font-bold">•</span>')
-          .replace(/(\b[A-Z0-9\s/]{3,}:)/g, '<strong class="text-slate-200 tracking-wide">$1</strong>');
-
-        card.innerHTML = `
-          <div>
-            <!-- Card Top: Category Badge & Quick Copy -->
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <span class="text-[10px] font-mono uppercase font-semibold px-2 py-0.5 rounded-full border ${badgeClass}">
-                ${item.category}
-              </span>
-              
-              <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
-                <button 
-                  title="Copy note content"
-                  class="copy-btn p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
-                >
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                  </svg>
-                </button>
-                <button 
-                  title="Delete entry"
-                  class="delete-btn p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-rose-950/30 transition"
-                >
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            <!-- Card Title -->
-            <h3 class="text-base font-semibold text-slate-100 group-hover:text-sky-300 transition-colors leading-snug">
-              ${item.title}
-            </h3>
-
-            <!-- Key Takeaway Callout -->
-            ${item.takeaway ? `
-              <div class="mt-2.5 p-2 rounded-lg bg-slate-800/60 border-l-2 border-sky-400 text-xs text-sky-200/90 font-medium">
-                ${item.takeaway}
-              </div>
-            ` : ''}
-
-            <!-- Card Body / Instructions -->
-            <div class="mt-3 text-xs text-slate-300 leading-relaxed font-normal bg-slate-950/40 p-3 rounded-lg border border-slate-800/80 overflow-x-auto font-sans">
-              ${formattedDetails}
-            </div>
-          </div>
-
-          <!-- Card Footer: Tags -->
-          <div class="mt-4 pt-3 border-t border-slate-800/60 flex flex-wrap items-center gap-1.5">
-            ${tagsHtml}
-          </div>
-        `;
-
-        // Copy button event
-        card.querySelector(".copy-btn").addEventListener("click", () => {
-          const exportText = `${item.title.toUpperCase()}\n${item.takeaway ? `Rule: ${item.takeaway}\n` : ''}\n${item.details}`;
-          copyToClipboard(exportText);
-        });
-
-        // Delete button event
-        card.querySelector(".delete-btn").addEventListener("click", () => {
-          deleteEntry(item.id);
-        });
-
-        // Tag pill click event to trigger tag filter
-        card.querySelectorAll(".tag-pill").forEach(tagBtn => {
-          tagBtn.addEventListener("click", (e) => {
-            const selectedTag = e.currentTarget.getAttribute("data-tag");
-            activeTag = selectedTag;
-            renderCards();
-          });
-        });
-
-        grid.appendChild(card);
-      });
-    }
-
-    // Delete an entry
-    function deleteEntry(id) {
-      knowledgeBase = knowledgeBase.filter(i => i.id !== id);
-      saveKnowledgeBase();
-      renderCards();
-      showToast("Entry removed");
-    }
-
-    // Reset default dataset
-    function resetToDefaults() {
-      knowledgeBase = [...INITIAL_KNOWLEDGE_BASE];
-      saveKnowledgeBase();
-      currentCategory = "All";
-      searchQuery = "";
-      activeTag = null;
-      document.getElementById("searchInput").value = "";
-      document.getElementById("mobileSearchInput").value = "";
-      renderCategoryPills();
-      renderCards();
-      showToast("Reset to curated defaults");
-    }
-
-    // Export knowledge base as JSON file
-    function exportJSON() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(knowledgeBase, null, 2));
-      const downloadAnchor = document.createElement("a");
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `knowledge_core_backup_${new Date().toISOString().slice(0,10)}.json`);
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
-      showToast("Exported JSON file");
-    }
-
-    // Modal Control
-    const addModal = document.getElementById("addModal");
-    const openAddModalBtn = document.getElementById("openAddModalBtn");
-    const closeAddModalBtn = document.getElementById("closeAddModalBtn");
-    const cancelAddModalBtn = document.getElementById("cancelAddModalBtn");
-    const addEntryForm = document.getElementById("addEntryForm");
-
-    function openModal() {
-      addModal.classList.remove("hidden");
-      document.getElementById("entryTitle").focus();
-    }
-
-    function closeModal() {
-      addModal.classList.add("hidden");
-      addEntryForm.reset();
-    }
-
-    // Event Listeners
-    window.addEventListener("DOMContentLoaded", () => {
-      loadKnowledgeBase();
-      renderCategoryPills();
-      renderCards();
-
-      // Search Inputs
-      const searchInput = document.getElementById("searchInput");
-      const mobileSearchInput = document.getElementById("mobileSearchInput");
-      const clearSearchBtn = document.getElementById("clearSearchBtn");
-
-      function handleSearch(val) {
-        searchQuery = val;
-        if (searchQuery.trim().length > 0) {
-          clearSearchBtn.classList.remove("hidden");
-        } else {
-          clearSearchBtn.classList.add("hidden");
-        }
-        renderCards();
-      }
-
-      searchInput.addEventListener("input", (e) => handleSearch(e.target.value));
-      mobileSearchInput.addEventListener("input", (e) => handleSearch(e.target.value));
-
-      clearSearchBtn.addEventListener("click", () => {
-        searchInput.value = "";
-        mobileSearchInput.value = "";
-        handleSearch("");
-        searchInput.focus();
-      });
-
-      // '/' Hotkey for Search
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "/" && document.activeElement !== searchInput && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") {
-          e.preventDefault();
-          searchInput.focus();
-        } else if (e.key === "Escape") {
-          if (!addModal.classList.contains("hidden")) {
-            closeModal();
-          } else {
-            searchInput.value = "";
-            mobileSearchInput.value = "";
-            handleSearch("");
-            activeTag = null;
-            renderCards();
+      allDetails.forEach(detail => {
+        const text = detail.textContent.toLowerCase();
+        if (text.includes(query)) {
+          detail.style.display = '';
+          if (query.length > 2) {
+            detail.open = true; // Auto-expand matching items if search query is specific
           }
+        } else {
+          detail.style.display = 'none';
         }
       });
 
-      // Clear Active Tag Filter
-      document.getElementById("clearTagBtn").addEventListener("click", () => {
-        activeTag = null;
-        renderCards();
+      // Hide empty section headers during search
+      document.querySelectorAll('section').forEach(sec => {
+        const visibleItems = sec.querySelectorAll('details:not([style*="display: none"])');
+        sec.style.display = visibleItems.length === 0 ? 'none' : '';
       });
+    }
 
-      document.getElementById("clearFiltersBtn").addEventListener("click", () => {
-        currentCategory = "All";
-        searchQuery = "";
-        activeTag = null;
-        searchInput.value = "";
-        mobileSearchInput.value = "";
-        renderCategoryPills();
-        renderCards();
+    // Toggle All Functionality
+    function toggleAll(expand) {
+      document.querySelectorAll('details').forEach(detail => {
+        detail.open = expand;
       });
-
-      // Reset Defaults
-      document.getElementById("resetDefaultsBtn").addEventListener("click", () => {
-        resetToDefaults();
-      });
-
-      // Export
-      document.getElementById("exportDataBtn").addEventListener("click", exportJSON);
-
-      // Modal Triggers
-      openAddModalBtn.addEventListener("click", openModal);
-      closeAddModalBtn.addEventListener("click", closeModal);
-      cancelAddModalBtn.addEventListener("click", closeModal);
-
-      // Handle Add Entry Form Submit
-      addEntryForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        
-        const category = document.getElementById("entryCategory").value;
-        const title = document.getElementById("entryTitle").value.trim();
-        const takeaway = document.getElementById("entryTakeaway").value.trim();
-        const details = document.getElementById("entryDetails").value.trim();
-        const rawTags = document.getElementById("entryTags").value.trim();
-
-        if (!title || !details) return;
-
-        const tags = rawTags 
-          ? rawTags.split(",").map(t => t.trim().toLowerCase()).filter(t => t.length > 0)
-          : [];
-
-        const newEntry = {
-          id: "custom-" + Date.now(),
-          category,
-          title,
-          takeaway,
-          details,
-          tags
-        };
-
-        knowledgeBase.unshift(newEntry);
-        saveKnowledgeBase();
-        
-        // Match category view so user sees new card immediately
-        currentCategory = category;
-        renderCategoryPills();
-        renderCards();
-        
-        closeModal();
-        showToast("New entry saved!");
-      });
-    });
+    }
   </script>
 </body>
 </html>
