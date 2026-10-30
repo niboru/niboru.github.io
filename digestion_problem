@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digestive & GI Health Reference</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        html { font-size: 100%; scroll-behavior: smooth; }
+
+        /* ========================================================= */
+        /* DARKER-TONE PASTEL BLUE LIGHT MODE                        */
+        /* Page: #8eaec9 | Title: #9fc0db | Data: #b0cce4            */
+        /* ========================================================= */
+        html.theme-light,
+        body.theme-light,
+        #appWrapper.theme-light {
+            color-scheme: light !important;
+            background-color: #8eaec9 !important;
+            background-image: none !important;
+            color: #0b1d30 !important;
+        }
+        #appWrapper.theme-light .controls-container {
+            background-color: #8eaec9 !important;
+            border-bottom: 1px solid #6b92b5 !important;
+        }
+        #appWrapper.theme-light #searchBox {
+            background-color: #9fc0db !important; /* Deeper pastel blue for high contrast */
+            color: #0b1d30 !important;
+            border: 2px solid #6b92b5 !important;
+        }
+        #appWrapper.theme-light #searchBox::placeholder {
+            color: black !important;
+          	opacity: 1 !important;
+    		font-weight: 500 !important;
+        }
+        #appWrapper.theme-light #searchBox:focus {
+            background-color: #bdd6eb !important;
+            border-color: #133b5c !important;
+        }
+        #appWrapper.theme-light .quick-index-container {
+            background-color: #b0cce4 !important;
+            border: 1px solid #6b92b5 !important;
+        }
+        #appWrapper.theme-light .quick-index-header {
+            background-color: #8ab0d0 !important;
+            border-bottom: 1px solid #6b92b5 !important;
+            color: #0b1d30 !important;
+        }
+        #appWrapper.theme-light .quick-index-list {
+            background-color: #b0cce4 !important;
+        }
+        #appWrapper.theme-light .quick-chip {
+            background-color: #9fc0db !important;
+            color: #0b1d30 !important;
+            border: 1px solid #6b92b5 !important;
+        }
+        #appWrapper.theme-light .quick-chip:hover {
+            background-color: #82a8c9 !important;
+            border-color: #133b5c !important;
+            color: #05101c !important;
+        }
+        #appWrapper.theme-light button.ctrl-btn {
+            background-color: #9fc0db !important;
+            color: #0b1d30 !important;
+            border: 1px solid #6b92b5 !important;
+        }
+        #appWrapper.theme-light button.ctrl-btn:hover {
+            background-color: #82a8c9 !important;
+            color: #05101c !important;
+        }
+        #appWrapper.theme-light details.data-island {
+            background-color: #b0cce4 !important;
+            border: 1px solid #6b92b5 !important;
+            color: #0b1d30 !important;
+        }
+        #appWrapper.theme-light details.data-island > summary {
+            background-color: #9fc0db !important;
+            color: #0b1d30 !important;
+        }
+        #appWrapper.theme-light details.data-island > summary .island-title {
+            background-color: transparent !important;
+            color: #0b1d30 !important;
+        }
+        #appWrapper.theme-light details.data-island > summary::after {
+            color: black !important;
+        }
+        #appWrapper.theme-light details.data-island[open] > summary {
+            background-color: #8ab0d0 !important;
+            border-bottom: 1px solid #6b92b5 !important;
+        }
+        #appWrapper.theme-light .island-content,
+        #appWrapper.theme-light .island-text,
+        #appWrapper.theme-light .island-media,
+        #appWrapper.theme-light .island-text p,
+        #appWrapper.theme-light .island-text li,
+        #appWrapper.theme-light .island-text ul,
+        #appWrapper.theme-light .island-text ol {
+            background-color: #b0cce4 !important;
+            color: #0b1d30 !important;
+        }
+        #appWrapper.theme-light .tip-box,
+        #appWrapper.theme-light .tip-box strong {
+            background-color: #97bad8 !important;
+            border-left: 4px solid #133b5c !important;
+            color: #071524 !important;
+        }
+        #appWrapper.theme-light .iframe-container {
+            background-color: #9fc0db !important;
+            border: 1px solid #6b92b5 !important;
+        }
+
+        /* ========================================================= */
+        /* EXPLICIT DARK MODE COLORS                                 */
+        /* ========================================================= */
+        html.theme-dark,
+        body.theme-dark,
+        #appWrapper.theme-dark {
+            color-scheme: dark !important;
+            background-color: #11151c !important;
+            background-image: none !important;
+            color: #e2e8f0 !important;
+        }
+        #appWrapper.theme-dark .controls-container {
+            background-color: #11151c !important;
+            border-bottom: 1px solid #2d3748 !important;
+        }
+        #appWrapper.theme-dark #searchBox {
+            background-color: #1b222d !important;
+            color: #e2e8f0 !important;
+            border: 2px solid #2d3748 !important;
+        }
+        #appWrapper.theme-dark #searchBox::placeholder {
+            color: #94a3b8 !important;
+        }
+        #appWrapper.theme-dark #searchBox:focus {
+            border-color: #63b3ed !important;
+        }
+        #appWrapper.theme-dark .quick-index-container {
+            background-color: #1b222d !important;
+            border: 1px solid #2d3748 !important;
+        }
+        #appWrapper.theme-dark .quick-index-header {
+            background-color: #222b38 !important;
+            border-bottom: 1px solid #2d3748 !important;
+            color: #cbd5e0 !important;
+        }
+        #appWrapper.theme-dark .quick-index-list {
+            background-color: #1b222d !important;
+        }
+        #appWrapper.theme-dark .quick-chip {
+            background-color: #263040 !important;
+            color: #e2e8f0 !important;
+            border: 1px solid #334155 !important;
+        }
+        #appWrapper.theme-dark .quick-chip:hover {
+            background-color: #1e3a5f !important;
+            border-color: #63b3ed !important;
+            color: #90cdf4 !important;
+        }
+        #appWrapper.theme-dark button.ctrl-btn {
+            background-color: #263040 !important;
+            color: #e2e8f0 !important;
+            border: 1px solid #334155 !important;
+        }
+        #appWrapper.theme-dark button.ctrl-btn:hover {
+            background-color: #323f52 !important;
+            color: #ffffff !important;
+        }
+        #appWrapper.theme-dark details.data-island {
+            background-color: #1b222d !important;
+            border: 1px solid #2d3748 !important;
+            color: #e2e8f0 !important;
+        }
+        #appWrapper.theme-dark details.data-island > summary {
+            background-color: #1b222d !important;
+            color: #e2e8f0 !important;
+        }
+        #appWrapper.theme-dark details.data-island > summary .island-title {
+            background-color: transparent !important;
+            color: #e2e8f0 !important;
+        }
+        #appWrapper.theme-dark details.data-island > summary::after {
+            color: #94a3b8 !important;
+        }
+        #appWrapper.theme-dark details.data-island[open] > summary {
+            background-color: #222b38 !important;
+            border-bottom: 1px solid #2d3748 !important;
+        }
+        #appWrapper.theme-dark .island-content,
+        #appWrapper.theme-dark .island-text,
+        #appWrapper.theme-dark .island-media,
+        #appWrapper.theme-dark .island-text p,
+        #appWrapper.theme-dark .island-text li,
+        #appWrapper.theme-dark .island-text ul,
+        #appWrapper.theme-dark .island-text ol {
+            background-color: #1b222d !important;
+            color: #cbd5e0 !important;
+        }
+        #appWrapper.theme-dark .tip-box,
+        #appWrapper.theme-dark .tip-box strong {
+            background-color: #1a365d !important;
+            border-left: 4px solid #63b3ed !important;
+            color: #bee3f8 !important;
+        }
+        #appWrapper.theme-dark .iframe-container {
+            background-color: #161c24 !important;
+            border: 1px solid #2d3748 !important;
+        }
+
+        /* ========================================================= */
+        /* COMPACT STICKY BAR & CORE LAYOUT                          */
+        /* ========================================================= */
+        body { line-height: 1.6; }
+        #appWrapper {
+            min-height: 100vh;
+            width: 100%;
+            padding: 0 12px 40px 12px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        main { max-width: 800px; margin: 0 auto; }
+
+        /* Slimmed Sticky Controls */
+        .controls-container {
+            position: sticky; top: 0;
+            padding: 8px 0 8px 0; z-index: 100;
+            margin-bottom: 16px;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .controls-container.unpinned {
+            position: static !important;
+        }
+        #searchBox {
+            width: 100%; padding: 8px 12px; border-radius: 8px;
+            font-size: 0.95rem; outline: none;
+        }
+
+        /* Quick-Look Index Area under Search Bar */
+        .quick-index-container {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .quick-index-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 5px 10px;
+            font-size: 0.8rem; font-weight: 600;
+            cursor: pointer; user-select: none;
+        }
+        .quick-index-list {
+            max-height: 110px;
+            overflow-y: auto;
+            resize: vertical;
+            padding: 6px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .quick-index-list.collapsed { display: none !important; }
+        .quick-chip {
+            flex: 0 1 auto;
+            padding: 3px 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        /* Compact Action & Utility Buttons */
+        .action-buttons {
+            display: flex; flex-wrap: wrap; gap: 5px;
+        }
+        button.ctrl-btn {
+            flex: 1 1 auto; padding: 5px 8px;
+            border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+            white-space: nowrap;
+        }
+        .font-controls {
+            display: flex; gap: 4px; flex: 0 0 auto;
+        }
+        .flag-svg {
+            width: 16px; height: 11px; border-radius: 2px;
+            border: 1px solid rgba(128,128,128,0.4);
+            display: inline-block; vertical-align: middle; flex-shrink: 0;
+        }
+
+        /* Data Island */
+        details.data-island {
+            border-radius: 10px; margin-bottom: 14px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        details.data-island.flash-target {
+            outline: 3px solid #133b5c;
+        }
+        details.data-island > summary {
+            list-style: none; padding: 14px 18px; font-weight: 700; font-size: 1.05rem;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none;
+        }
+        details.data-island > summary::-webkit-details-marker { display: none; }
+        details.data-island > summary::after { content: '+'; font-size: 1.4rem; font-weight: 400; margin-left: 12px; }
+        details.data-island[open] > summary::after { content: '-'; }
+
+        .island-content { padding: 18px; font-size: 0.95rem; }
+        .island-text p { margin-bottom: 14px; }
+        .island-text ul, .island-text ol { margin-left: 20px; margin-bottom: 14px; }
+        .island-text li { margin-bottom: 6px; }
+        .island-content a, details.data-island > summary a { color: #0a3d62 !important; text-decoration: none; word-break: break-all; }
+        #appWrapper.theme-dark .island-content a, #appWrapper.theme-dark details.data-island > summary a { color: #63b3ed !important; }
+        .island-content a:hover, details.data-island > summary a:hover { text-decoration: underline; }
+
+        .tip-box {
+            padding: 10px 14px; margin-bottom: 14px; border-radius: 0 4px 4px 0;
+            font-size: 0.9rem;
+        }
+
+        img { display: block; max-width: 100%; height: auto; margin: 15px auto; border-radius: 8px; }
+        .iframe-container {
+            position: relative; width: 100%; overflow: hidden; border-radius: 8px;
+            margin-top: 15px; height: 450px;
+        }
+        iframe { width: 100%; height: 100%; border: 0; }
+
+        /* Responsive wrapper for Blogger native video objects */
+        .blogger-vid-slot {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        .BLOG_video_class, .blogger-vid-slot iframe, .blogger-vid-slot object, .blogger-vid-slot video {
+            max-width: 100% !important;
+            border-radius: 8px;
+        }
+
+        mark { background-color: #fbd38d !important; color: #000000 !important; border-radius: 3px; padding: 0 3px; font-weight: 600; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body class="theme-light">
+
+<div id="appWrapper" class="theme-light">
+    <main>
+        <div class="controls-container" id="stickyControls">
+            <div class="search-wrapper">
+                <input type="text" id="searchBox" placeholder="Search digestive points, herbs, medicines, or symptoms...">
+            </div>
+
+            <!-- Automatic Quick-Look Card Titles Box (Starts Collapsed to Save Space) -->
+            <div class="quick-index-container" id="quickIndexContainer">
+                <div class="quick-index-header" id="toggleQuickIndex">
+                    <span id="quickIndexLabel">Quick Jump Index (Click to open/close)</span>
+                    <span id="quickIndexArrow">[+]</span>
+                </div>
+                <div class="quick-index-list collapsed" id="quickIndexList"></div>
+            </div>
+
+            <div class="action-buttons">
+                <button type="button" class="ctrl-btn" id="expandAll">Expand All</button>
+                <button type="button" class="ctrl-btn" id="collapseAll">Collapse All</button>
+                <button type="button" class="ctrl-btn" id="pinToggle" title="Pin or Unpin Sticky Menu">Pin: ON</button>
+                <button type="button" class="ctrl-btn" id="langToggle" title="Switch Language"></button>
+                <button type="button" class="ctrl-btn" id="themeToggle" title="Toggle Dark/Light Mode">Dark Mode</button>
+                <div class="font-controls">
+                    <button type="button" class="ctrl-btn" id="fontDec" title="Decrease Text Size">A-</button>
+                    <button type="button" class="ctrl-btn" id="fontReset" title="Reset Text Scale">100%</button>
+                    <button type="button" class="ctrl-btn" id="fontInc" title="Enlarge Text Size">A+</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="contentContainer"></div>
+    </main>
+</div>
+
+    <!-- ========================================================== -->
+    <!-- STATIC BLOGGER VIDEO VAULT                                 -->
+    <!-- Kept in HTML body so Blogger's backend parser renders them -->
+    <!-- ========================================================== -->
+    <div id="blogger-video-store" style="display:none;">
+        <div id="vid-1" class="blogger-vid-slot">
+            <object class="BLOG_video_class" contentid="6d9f4366c4f97955" width="600" height="498" id="BLOG_video-6d9f4366c4f97955" aria-label="Upload video"></object>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // INLINE SVG FLAGS (Zero External Requests)
+        // ==========================================
+        const flagSVGs = {
+            en: '<svg class="flag-svg" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="30" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="3"/><path d="M30,0 v30 M0,15 h60" stroke="#ffffff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></svg>',
+            id: '<svg class="flag-svg" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="15" fill="#e11d48"/><rect y="15" width="60" height="15" fill="#ffffff"/></svg>'
+        };
+
+        // ==========================================
+        // UI TRANSLATIONS (Pure ASCII)
+        // ==========================================
+        const uiStrings = {
+            en: {
+                searchPlaceholder: "Search digestive points, herbs, medicines, or symptoms...",
+                quickIndexLabel: "Quick Jump Index (Click to open/close)",
+                expandAll: "Expand All",
+                collapseAll: "Collapse All",
+                pinOn: "Pin: ON",
+                pinOff: "Pin: OFF",
+                langCode: "EN",
+                themeDark: "Dark Mode",
+                themeLight: "Light Mode",
+                proTip: "Pro Tip:"
+            },
+            id: {
+                searchPlaceholder: "Cari titik akupresur, herbal, obat, atau gejala...",
+                quickIndexLabel: "Indeks Cepat (Klik untuk buka/tutup)",
+                expandAll: "Buka Semua",
+                collapseAll: "Tutup Semua",
+                pinOn: "Pin: ON",
+                pinOff: "Pin: OFF",
+                langCode: "ID",
+                themeDark: "Mode Gelap",
+                themeLight: "Mode Terang",
+                proTip: "Tips Penting:"
+            }
+        };
+
+        // ==========================================
+        // DATABASE (Bilingual EN & ID)
+        // ==========================================
+        const db = [
+            {
+                t: `Core Eating Habits & Rules`,
+                t_id: `Kebiasaan & Aturan Makan Utama`,
+                p: `Drinking large amounts of liquid during meals dilutes digestive enzymes and stomach acid, slowing down breakdown.`,
+                p_id: `Minum cairan dalam jumlah banyak saat makan dapat mengencerkan enzim pencernaan dan asam lambung, sehingga memperlambat pemecahan makanan.`,
+                c: `<ul>
+                        <li>Eat often but in smaller quantities. Eat before you feel hungry and stop before you feel full.</li>
+                        <li>Eat slower near the end of your meal to help reduce stomach's acid build up.</li>
+                        <li>Take ONLY a sip of water or so if you feel want to drink before/during/after meal.</li>
+                    </ul>`,
+                c_id: `<ul>
+                        <li>Makanlah lebih sering namun dalam porsi kecil. Makan sebelum merasa lapar dan berhenti sebelum merasa kenyang.</li>
+                        <li>Makanlah lebih lambat menjelang akhir waktu makan untuk membantu mengurangi penumpukan asam lambung.</li>
+                        <li>Minum HANYA satu teguk air jika merasa ingin minum sebelum, saat, atau sesudah makan.</li>
+                    </ul>`
+            },
+            {
+                t: `Gas & Bloating Acupressure Points`,
+                t_id: `Titik Akupresur untuk Gas & Perut Kembung`,
+                c: `<p>Acupressure protocols and meridian points (including Spleen 9 / SP9 and Heart 5 / HT5) for relieving abdominal distension, trapped wind, and flatulence.</p>`,
+                c_id: `<p>Protokol akupresur dan titik meridian (termasuk Limpa 9 / SP9 dan Jantung 5 / HT5) untuk meredakan distensi abdomen, angin terjebak, dan perut kembung.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTJiP6rtUs92urKCoqe6SftAO9cQtM1E6rGSBfmO1L5lXvBi_8hxES34WszGyZrLw/pub?embedded=true" loading="lazy"></iframe></div>
+                    <div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vQrovbdy2GKSOTShyDmP-aPugvkKnLI8I6MsMNvJeM201rQxUYrjmt-gtJ9Hi8Q5Q/pub?embedded=true" loading="lazy"></iframe></div>
+                    <a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj5p9OyjyBdrP-Q2ctvHpGuRIIQZl-j6HFjl7MYLzEfN5J6L19fRfK-cW_4AJo5Y7RelgdhEoYZzoW2iAums1JHyNLJ57m4fY_ZsXzsV02uPpYw3xkVO8A3gtNWP7ZKARVYdt13ceCQBSGGNAFcfgsJvivrQsMSJYwR4_WGgFNoMHwmYDkTR3JniPhE/s760/spleen%20sp%209.jpg" target="_blank"><img loading="lazy" alt="Spleen SP 9" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj5p9OyjyBdrP-Q2ctvHpGuRIIQZl-j6HFjl7MYLzEfN5J6L19fRfK-cW_4AJo5Y7RelgdhEoYZzoW2iAums1JHyNLJ57m4fY_ZsXzsV02uPpYw3xkVO8A3gtNWP7ZKARVYdt13ceCQBSGGNAFcfgsJvivrQsMSJYwR4_WGgFNoMHwmYDkTR3JniPhE/s600/spleen%20sp%209.jpg"/></a>
+                    <a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOjXiBpkAnEJyrHlpNRxY_iAl37uplLNp6k4ASpw_-clYFSwYDVgZ9nN8vhSJBsb6gS9hgBuS9rxCo1-urPIQ6t-TimLiOUWytWp7G-jUSOP-BCbozXo4SO9hA_WsceE8hCHuwwsTUkR3IDaSnRj60hDC1EqGlN_doFY3VsqS5LldLNM1CzY9HIciM/s665/ht5%20bloating.png" target="_blank"><img loading="lazy" alt="HT5 Bloating" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgOjXiBpkAnEJyrHlpNRxY_iAl37uplLNp6k4ASpw_-clYFSwYDVgZ9nN8vhSJBsb6gS9hgBuS9rxCo1-urPIQ6t-TimLiOUWytWp7G-jUSOP-BCbozXo4SO9hA_WsceE8hCHuwwsTUkR3IDaSnRj60hDC1EqGlN_doFY3VsqS5LldLNM1CzY9HIciM/s600/ht5%20bloating.png"/></a>`
+            },
+            {
+                t: `Explanation of Digestive Disorder`,
+                t_id: `Penjelasan Gangguan Pencernaan`,
+                c: `<p>Root mechanisms and physiological breakdowns behind common gastrointestinal complaints and dyspepsia.</p>`,
+                c_id: `<p>Mekanisme dasar dan gangguan fisiologis di balik keluhan saluran pencernaan umum serta dispepsia.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTmmf06yG3jI-z8r5lMnLRslHaFwiTn9onaUwZmh6bTXrGP5J5uzt0yXPrIlY2sMA/pub?embedded=true" loading="lazy"></iframe></div>
+                    <div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSY358DcdF7YUuUeXrhMngfB7CJQsokYxIv7OEcz99mGD2yL5S1uxpZl04UABJKrA/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Relaxation for IBS`,
+                t_id: `Relaksasi untuk IBS (Sindrom Iritasi Usus)`,
+                c: `<p>Calming the enteric nervous system and gut-brain axis to reduce Irritable Bowel Syndrome spasms and visceral hypersensitivity.</p>`,
+                c_id: `<p>Menenangkan sistem saraf enterik dan poros usus-otak (gut-brain axis) untuk mengurangi kram Irritable Bowel Syndrome serta hipersensitivitas viseral.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTLiSap3wtnfM5DziZvcGaIIFy6fvrIUfqCk9x_0M1ew195hA_jQ4rCzOLygwmxbw/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Healing irritable bowel syndrome with diaphragmatic breathing`,
+                t_id: `Menyembuhkan IBS dengan Pernapasan Diafragma`,
+                c: `<p>Activating the parasympathetic nervous system (vagus nerve) through deep belly breathing to normalize bowel motility.</p>`,
+                c_id: `<p>Mengaktifkan sistem saraf parasimpatis (saraf vagus) melalui pernapasan perut dalam untuk menormalkan motilitas usus.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTG-EUDVlszjQeWWqKWyGkpmAsMIjYr8UGPf1JgCbZ0MXH2ReWWccc7_QoiUEfR-Q/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Yoga Complete Pose for Digestion`,
+                t_id: `Pose Yoga Lengkap untuk Pencernaan`,
+                c: `<p>Full-body yoga postures that gently compress, massage, and stimulate blood flow to the abdominal organs.</p>`,
+                c_id: `<p>Postur yoga seluruh tubuh yang secara lembut menekan, memijat, dan merangsang aliran darah ke organ-organ perut.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSOgZZyfZg9GqOFm9Bjm8v8na5A01fqDSFGhgtTualp7DgL-JlkZkSvmXO2Ict_ow/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Exercise for Bloating`,
+                t_id: `Latihan Fisik untuk Perut Kembung`,
+                c: `<p>Physical movements and stretches designed to move trapped intestinal gas and accelerate gut transit.</p>`,
+                c_id: `<p>Gerakan fisik dan peregangan yang dirancang untuk mengeluarkan gas usus yang terjebak serta mempercepat transit saluran cerna.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vRUNMgnQS4M21DgKQ5tYQod1GTQngCn4VvL-ZH6qkIWUiU8mrJWbK-MY5Lr0rv75A/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Improve Nutrient Absorption`,
+                t_id: `Meningkatkan Penyerapan Nutrisi`,
+                c: `<p>Strategies to optimize assimilation of vitamins, minerals, and macronutrients across the small intestinal lining.</p>`,
+                c_id: `<p>Strategi untuk mengoptimalkan asimilasi vitamin, mineral, dan makronutrisi melalui lapisan usus halus.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vQ-XazL6MPIa692_OlFjYca3Kd_3D13XXJ78T-HlGtF6AVKPBxIiUjIvCt9VpaEcw/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Medicine You Can Buy`,
+                t_id: `Obat yang Dapat Dibeli`,
+                c: `<p>Over-the-counter (OTC) remedies and accessible commercial formulations for acute and chronic digestive relief.</p>`,
+                c_id: `<p>Obat bebas (OTC) dan formulasi komersial yang mudah didapat untuk meredakan gangguan pencernaan akut maupun kronis.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTrSdJcNm1Y0oNPwN_pz5xzzd_fjiy9-TD1AcQbKW0XIyPTAvFjT4YSg3SFhnOuaQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Other Medicine - Huo Xiang Zheng Qi Kou Fu Ye`,
+                t_id: `Obat Lainnya - Huo Xiang Zheng Qi Kou Fu Ye`,
+                c: `<p>Classic TCM liquid formula (Agastache) used to resolve turbid dampness, summer-heat, stomach flu, nausea, vomiting, and diarrhea.</p>`,
+                c_id: `<p>Formula cair TCM klasik (Agastache) untuk mengatasi lembap keruh, panas musim panas, flu perut, mual, muntah, dan diare.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSLGgpA9hXAyvOVivGfBmcqad2K66B8fkHWc_4lW0LGiz4qR-_4flma12vjpfr6Sg/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Bu Zhong Yi Qi Wan`,
+                t_id: `Bu Zhong Yi Qi Wan`,
+                c: `<p>Tonifies Middle Jiao Qi and raises sunken Yang; used for chronic fatigue, weak digestion, bloating after eating, and organ prolapse.</p>`,
+                c_id: `<p>Menguatkan Qi Jiao Tengah dan mengangkat Yang yang turun; digunakan untuk kelelahan kronis, pencernaan lemah, kembung setelah makan, dan prolaps organ.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vRPVQ7EcjiVPjsWULfir1tps5-DZoKAX5YkFhADRef1aFqGJJhg1DvkV7PMVHAoYQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Gastric Health Green World`,
+                t_id: `Gastric Health Green World`,
+                c: `<p>Herbal supplement formulation aimed at protecting the gastric mucosa and regulating stomach function.</p>`,
+                c_id: `<p>Formulasi suplemen herbal yang bertujuan melindungi mukosa lambung dan mengatur fungsi lambung.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTjyzcwixOTQ53oLJNmkriI9iqOOqge62l5ZvwSTonLCnBUZ9OK9j8Iw7mDnwg3tQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Jian Pi Wan`,
+                t_id: `Jian Pi Wan`,
+                c: `<p>Strengthens the Spleen and harmonizes the Stomach; relieves food stagnation, poor appetite, loose stools, and abdominal fullness.</p>`,
+                c_id: `<p>Menguatkan Limpa dan mengharmoniskan Lambung; meredakan stagnasi makanan, nafsu makan buruk, tinja lembek, dan rasa penuh di perut.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTxz3CEqtr1Mgew1LKVu09lpNDRxPO5H73P6ERAzFRb4ks5VBvK9CNIkEDX4dvfvQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Xiang Sha Liu Jun Zi Tang`,
+                t_id: `Xiang Sha Liu Jun Zi Tang`,
+                c: `<p>Six Gentlemen Decoction with Aucklandia and Amomum; treats Spleen and Stomach Qi deficiency with damp-cold stagnation, belching, and distension.</p>`,
+                c_id: `<p>Rebusan Enam Pria Budiman dengan Aucklandia dan Amomum; mengatasi defisiensi Qi Limpa dan Lambung disertai stagnasi lembap-dingin, sendawa, dan perut terasa penuh.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vQKEffIk7dF850lP2pk_bVq3pffMEvoAKnZNH82xZmSelmlLk_RaYs0YNOOY9VSxA/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Sun Salutation Yoga`,
+                t_id: `Yoga Sun Salutation (Surya Namaskar)`,
+                c: `<p>Surya Namaskar sequence to build internal warmth, core circulation, and metabolic fire.</p>`,
+                c_id: `<p>Rangkaian gerakan Surya Namaskar untuk membangun kehangatan internal, sirkulasi inti tubuh, dan api metabolisme.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTcXeprLSbUb24ex85pBGoSGAwH8DOgaPz82WwY4aXmWUYhdKlB8xIJmQXAZJOKOQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Digestion`,
+                t_id: `Pencernaan Umum`,
+                c: `<p>General overview of digestive mechanics, transit times, and gut maintenance.</p>`,
+                c_id: `<p>Gambaran umum mekanisme pencernaan, waktu transit makanan, dan pemeliharaan kesehatan usus.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTxjYmAU7RP3g_2OZKgKtUY5WV69uI0-CXGdglXgrQiZFwv5BsA9s1chqsJ7X4mWA/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Spleen`,
+                t_id: `Organ Limpa (TCM)`,
+                c: `<p>The role of the Spleen in TCM as the primary organ of transformation and transportation of food and fluids (Gu Qi).</p>`,
+                c_id: `<p>Peran Limpa dalam TCM sebagai organ utama transformasi dan transportasi makanan serta cairan (Gu Qi).</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vT7--zQ9pSQ1heJ6H3hD_ooSuRJ5_NhRRl0ymGHm5awWnLeypuvix7cp9KuvhM7_Q/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Spleen Qi Deficiency`,
+                t_id: `Defisiensi Qi Limpa`,
+                c: `<p>Symptoms and management of weak Spleen Qi: fatigue after meals, pale tongue with teeth marks, bloating, and loose stools.</p>`,
+                c_id: `<p>Gejala dan penanganan Qi Limpa yang lemah: lelah setelah makan, lidah pucat dengan bekas gigi, perut kembung, dan tinja lembek.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vT7FSUhJPeAmP4unFO_yIJpiC93A6o3-FEpU3Ewh4xSm7zxIprypQ56uuWbi2Hiuw/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Qi Stagnation`,
+                t_id: `Stagnasi Qi`,
+                c: `<p>Identifying and moving stagnant Qi that causes distending pain, sighing, and fluctuating digestive symptoms.</p>`,
+                c_id: `<p>Mengenali dan menggerakkan Qi yang stagnan penyebab nyeri menekan, sering menghela napas, dan gejala pencernaan yang naik-turun.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vQvsX144kne-6Y4rllhjeAteIPJ3QFl9RCf2MNJ0lN77PKH6NJSErVR09W1zQ8mbw/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Liver Qi Stagnation and Diet`,
+                t_id: `Stagnasi Qi Hati dan Pola Makan`,
+                c: `<p>How stress-induced Liver Qi stagnation "overacts" on the Spleen and Stomach, and dietary choices to soothe the Liver.</p>`,
+                c_id: `<p>Bagaimana stagnasi Qi Hati akibat stres menyerang Limpa dan Lambung, serta pilihan makanan untuk menenangkan Hati.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTNs2sqw2H_Ca-aPjAoneowt91ZV2xFqqGtPK9yFA5guf4HlRnn4EHEMWWKCH-_mQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Diaphragmatic Breathing`,
+                t_id: `Pernapasan Diafragma`,
+                c: `<p>Technique guide for engaging the diaphragm to mechanically massage the stomach and intestines while lowering cortisol.</p>`,
+                c_id: `<p>Panduan teknik menggerakkan diafragma untuk memijat lambung dan usus secara mekanis sekaligus menurunkan hormon kortisol.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTrLR7oPmGWBvTQXOj9gLAziysEPE7GfU48oz_jfpZzkzOm8xawgmvQTtYLspAa0w/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Blood Stagnation`,
+                t_id: `Stagnasi Darah`,
+                c: `<p>Recognizing fixed, sharp pain and circulation blockages in TCM, along with methods to invigorate blood flow.</p>`,
+                c_id: `<p>Mengenali nyeri tajam yang menetap dan sumbatan sirkulasi dalam TCM, beserta metode untuk melancarkan aliran darah.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vS7ylWy1YkqJt33_4hwlHv50gndkiLft6ruPTGK5Ljhvf9M4zQ4mRw8Ouvo6nOU7w/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Acid Reflux`,
+                t_id: `Refluks Asam Lambung (Acid Reflux)`,
+                c: `<p>Causes and management of gastroesophageal reflux, lower esophageal sphincter (LES) dysfunction, and stomach acid regulation.</p>`,
+                c_id: `<p>Penyebab dan penanganan refluks gastroesofageal, disfungsi sfingter esofagus bawah (LES), serta regulasi asam lambung.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vQspHzraQG2fZUlu4nZtR3728xWJcefu1UIWefcaUTQA6LWBx8iaUkBtWws0Xvjuw/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Stomach Acid & Hunger`,
+                t_id: `Asam Lambung & Rasa Lapar`,
+                c: `<p>How gastric acid (HCl), ghrelin, and meal timing interact to create hunger cues or false acid-gnawing sensations.</p>`,
+                c_id: `<p>Bagaimana asam lambung (HCl), hormon ghrelin, dan waktu makan saling berinteraksi menciptakan sinyal lapar atau sensasi perih semu.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSvoRuRoZeiRpJ40T0DHdltlv4YnJb5LnUFbR5moehsdLBYyAW_KcuHwwRwhHmBUQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Small Intestinal Bacterial Overgrowth`,
+                t_id: `Pertumbuhan Bakteri Berlebih di Usus Halus (SIBO)`,
+                c: `<p>Understanding SIBO: fermentation in the small bowel, hydrogen/methane gas production, motility (MMC), and dietary management.</p>`,
+                c_id: `<p>Memahami SIBO: fermentasi di usus halus, produksi gas hidrogen/metana, kompleks motorik bermigrasi (MMC), dan pengaturan pola makan.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSzb6qXSbM4bXhowknEZozabKqQ8fhJRPbejpMTweVe90ud-L8-XB5sLC9hsCYVtw/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Probiotic vs Digestive Enzymes`,
+                t_id: `Probiotik vs Enzim Pencernaan`,
+                c: `<p>Comparing beneficial gut flora supplementation (probiotics) against exogenous catalysts (protease, lipase, amylase) that break down food.</p>`,
+                c_id: `<p>Membandingkan suplementasi flora usus baik (probiotik) dengan katalis eksogen (protease, lipase, amilase) yang memecah makanan.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vRh0pN4vD22vhE1N7oSMQrj9Et2EUPhmvQ9JgH_4bbaRs_7fQKg9d42xUmYJ876AA/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Gastroparesis`,
+                t_id: `Gastroparesis (Pengosongan Lambung Lambat)`,
+                c: `<p>Delayed gastric emptying: causes, vagus nerve involvement, and dietary modifications (low-fiber, small frequent meals).</p>`,
+                c_id: `<p>Pengosongan lambung yang tertunda: penyebab, keterlibatan saraf vagus, dan modifikasi diet (rendah serat, porsi kecil tapi sering).</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vR-KQOjRenpf6FuCfshfXKIvBlCslfgoIJy7Dx_C-CB3hQSvv1JvfOq368byjo68A/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Food that coats your digestive system`,
+                t_id: `Makanan Pelapis Saluran Pencernaan`,
+                c: `<p>Demulcent and mucilaginous foods that soothe, coat, and protect irritated gastric and intestinal mucosa.</p>`,
+                c_id: `<p>Makanan bersifat demulsen dan berlendir alami (mucilaginous) yang menenangkan, melapisi, serta melindungi mukosa lambung dan usus yang teriritasi.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTSyo3-GCF_tIPiZcguAD33IPG0dru0cfl-opwFlQ1CYacu7Cp--AhZZpG1qD0wVQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Pineapple for Digestion`,
+                t_id: `Nanas untuk Pencernaan`,
+                c: `<p>Using natural bromelain proteolytic enzymes found in pineapple to assist protein breakdown and reduce gut inflammation.</p>`,
+                c_id: `<p>Memanfaatkan enzim proteolitik bromelain alami dalam buah nanas untuk membantu pemecahan protein dan meredakan peradangan usus.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTqiuguOlnOsrbdG-aZTvZWga7M0YibKfzA2L1-2ffDV-0VDz2drtA0zNs7B-BPQQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Yoga Poses for Digestion`,
+                t_id: `Pose Yoga untuk Pencernaan`,
+                c: `<p>Targeted asanas (twists, wind-relieving pose, gentle extensions) for relieving post-meal heaviness.</p>`,
+                c_id: `<p>Asana terfokus (gerakan memutar/twist, pose pelepas angin, peregangan lembut) untuk meredakan rasa berat setelah makan.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSPjR4gcyHXgZghw4iu7tvSyro_4treGzlbOZzsldEbo85tGB7CLKfx3RVg8JwSqw/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Herbs for Food Stagnation`,
+                t_id: `Herbal untuk Stagnasi Makanan`,
+                c: `<p>Botanicals and TCM herbs (such as Hawthorn/Shan Zha, Radish Seed/Lai Fu Zi, Chen Pi) that clear undigested food accumulation.</p>`,
+                c_id: `<p>Tanaman obat dan herbal TCM (seperti Hawthorn/Shan Zha, Biji Lobak/Lai Fu Zi, Chen Pi) yang membersihkan penumpukan makanan yang tidak tercerna.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vRAmEd5R6jHGhD_X9uTY2u8qROZMNNvJBO3E80EIjmg6bjSN8bxQSDOdmTETbr-pg/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Food Stagnation`,
+                t_id: `Stagnasi Makanan`,
+                c: `<p>TCM pathology of overeating or weak digestion leading to foul belching, acid regurgitation, thick tongue coating, and fullness.</p>`,
+                c_id: `<p>Patologi TCM akibat makan berlebihan atau pencernaan lemah yang memicu sendawa berbau, regurgitasi asam, selaput lidah tebal, dan perut penuh.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSAIPvu3wEvlx8VpG_PxAhVbfh3cqOQOSaGVHdxjxGLoGXnWAoZLXj1t69TiNSF3A/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Herbs for Digestion`,
+                t_id: `Herbal untuk Pencernaan`,
+                c: `<p>Comprehensive reference on carminative, bitter, and warming herbs that stimulate bile, enzymes, and peristalsis.</p>`,
+                c_id: `<p>Referensi lengkap mengenai herbal karminatif, pahit, dan penghangat yang merangsang empedu, enzim, serta gerak peristaltik.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vRiRkfPPwskWp1FnYhi9bMOSCzJpVh0AsEqesN3TtECBKQeX_3jtERt0uDw76PwMA/pub?embedded=true" loading="lazy"></iframe></div>
+                    <div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vTGSutrwBvDcFmCb3CcCjvNYas8K54SQ0ww8A1V-ORFYFoqv0vBiCQCdFmR10ENpw/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Bloating Tips & Tricks & Cases`,
+                t_id: `Tips, Trik & Studi Kasus Perut Kembung`,
+                c: `<p>Practical troubleshooting, real-world scenarios, and behavioral adjustments to prevent and resolve abdominal bloating.</p>`,
+                c_id: `<p>Solusi praktis, skenario kasus nyata, dan penyesuaian kebiasaan untuk mencegah serta mengatasi perut kembung.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vRghTMbkQXOkSmUJrf9ou7XfvcaR0dpsRvPQCUWj6FK4HIQ-u7VAYHo0rF4Qg5YmQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Food That Cause Inflammation`,
+                t_id: `Makanan Pemicu Peradangan`,
+                c: `<p>Dietary triggers (refined sugars, oxidized oils, intolerances) that irritate the gut lining and drive systemic inflammation.</p>`,
+                c_id: `<p>Pemicu dari makanan (gula rafinasi, minyak teroksidasi, intoleransi makanan) yang mengiritasi lapisan usus dan memicu peradangan sistemik.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSx8m7czkLZWXC81CkRyVTxmaYHHQCTLsr8m9G4NIdztGmnMYACV0ZhRuaJHsgQnQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Acupressure for GERD, Acid Reflux and Heartburn`,
+                t_id: `Akupresur untuk GERD, Refluks Asam, dan Heartburn`,
+                c: `<p>Specific points (such as CV12 / Ren 12, PC6, ST36) to descend rebellious Stomach Qi and calm esophageal burning.</p>`,
+                c_id: `<p>Titik-titik spesifik (seperti CV12 / Ren 12, PC6, ST36) untuk menurunkan Qi Lambung yang berbalik naik dan menenangkan rasa terbakar di kerongkongan.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vT9IhH3DNZ7UYK4TPLO_xM6lw_M8PzV78Vd3wtLKBZnlqQBlZzA6Hb5xQHo0hNO7g/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `About Agni`,
+                t_id: `Tentang Agni (Api Pencernaan)`,
+                c: `<p>Ayurvedic concept of Agni (digestive fire) and how to keep it balanced without excess heat (Pitta) or sluggishness (Kapha/Ama).</p>`,
+                c_id: `<p>Konsep Ayurveda tentang Agni (api pencernaan) dan cara menjaganya tetap seimbang tanpa panas berlebih (Pitta) atau kelambanan (Kapha/Ama).</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSj9XWy6Y6CuUc8nmO2UuxME9xy7Q-PtG7REr-PLx0-SJA3TAzCPv3vyL2FdgiS-w/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Food as Medicine`,
+                t_id: `Makanan sebagai Obat`,
+                c: `<p>Therapeutic nutrition principles using everyday ingredients to heal and maintain the gastrointestinal tract.</p>`,
+                c_id: `<p>Prinsip nutrisi terapeutik menggunakan bahan makanan sehari-hari untuk memulihkan dan memelihara saluran pencernaan.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vQ6shNYa4hw0-pA5TZAmESL8gpLRcxRs3xCPDDVNa8Cmn4iRrGJgwk7x1q6XSUFMQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Malabsorption`,
+                t_id: `Malabsorpsi (Gangguan Penyerapan)`,
+                c: `<p>Identifying signs of poor nutrient uptake (steatorrhea, weight loss, deficiencies) and addressing underlying mucosal or enzymatic causes.</p>`,
+                c_id: `<p>Mengenali tanda-tanda penyerapan nutrisi yang buruk (steatorea, penurunan berat badan, defisiensi) dan mengatasi penyebab mukosa atau enzimatiknya.</p>`,
+                m: `<div class="iframe-container"><iframe src="https://docs.google.com/document/d/e/2PACX-1vSGRVrCZUd-ro2umrHoggcMT463VgvptB75s_FgHAHy-B48fe2Mzld4XC3A_NBcBQ/pub?embedded=true" loading="lazy"></iframe></div>`
+            },
+            {
+                t: `Pressure in Stomach <a href="https://www.youtube.com/watch?v=_V9utjNWrUs" target="_blank">&sup1;</a>`,
+                t_id: `Tekanan pada Lambung <a href="https://www.youtube.com/watch?v=_V9utjNWrUs" target="_blank">&sup1;</a>`,
+                c: `<p>Video demonstration for relieving epigastric pressure, fullness, and tension in the stomach region.</p>`,
+                c_id: `<p>Demonstrasi video untuk meredakan tekanan epigastrik, rasa penuh, dan ketegangan di area lambung.</p>`,
+                v: `vid-1`
+            }
+        ];
+
+        // ==========================================
+        // RENDER & LOGIC
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            const appWrapper = document.getElementById("appWrapper");
+            const container = document.getElementById("contentContainer");
+            const quickIndexContainer = document.getElementById("quickIndexContainer");
+            const quickIndexList = document.getElementById("quickIndexList");
+            const toggleQuickIndex = document.getElementById("toggleQuickIndex");
+            const quickIndexArrow = document.getElementById("quickIndexArrow");
+            const quickIndexLabel = document.getElementById("quickIndexLabel");
+            const searchInput = document.getElementById("searchBox");
+            const expandAllBtn = document.getElementById("expandAll");
+            const collapseAllBtn = document.getElementById("collapseAll");
+            const pinToggleBtn = document.getElementById("pinToggle");
+            const langToggleBtn = document.getElementById("langToggle");
+            const themeToggleBtn = document.getElementById("themeToggle");
+            const fontDecBtn = document.getElementById("fontDec");
+            const fontResetBtn = document.getElementById("fontReset");
+            const fontIncBtn = document.getElementById("fontInc");
+            const stickyControls = document.getElementById("stickyControls");
+
+            let currentLang = "en";
+            let currentTheme = "light";
+            let fontScale = 100;
+            let isPinned = true;
+
+            function stripHtml(html) {
+                const tmp = document.createElement("div");
+                tmp.innerHTML = html;
+                return tmp.textContent || tmp.innerText || "";
+            }
+
+            // 1. Automatically Build Cards AND Quick Jump Index from db array
+            let htmlOutput = "";
+            let quickLinksOutput = "";
+
+            db.forEach((item, index) => {
+                const tipHtml = item.p ? `<div class="tip-box"><strong>${uiStrings.en.proTip}</strong> ${item.p}</div>` : "";
+                const mediaHtml = item.m ? item.m : "";
+                const contentHtml = item.c ? item.c : "";
+                
+                htmlOutput += `
+                <details class="data-island" id="island-${index}">
+                    <summary><span class="island-title">${item.t}</span></summary>
+                    <div class="island-content">
+                        <div class="island-text">
+                            ${tipHtml}
+                            ${contentHtml}
+                        </div>
+                        <div class="island-media" id="media-${index}">${mediaHtml}</div>
+                    </div>
+                </details>`;
+
+                quickLinksOutput += `<button type="button" class="quick-chip" data-index="${index}">${index + 1}. ${stripHtml(item.t)}</button>`;
+            });
+
+            container.innerHTML = htmlOutput;
+          
+          	container.querySelectorAll("iframe").forEach(iframe => {
+    			iframe.setAttribute("sandbox", "allow-same-origin allow-scripts");
+			});
+            quickIndexList.innerHTML = quickLinksOutput;
+
+            // 2. Move Blogger's pre-rendered video elements from the vault into their cards
+            db.forEach((item, index) => {
+                if (item.v) {
+                    const videoElement = document.getElementById(item.v);
+                    const targetMediaContainer = document.getElementById(`media-${index}`);
+                    if (videoElement && targetMediaContainer) {
+                        targetMediaContainer.appendChild(videoElement);
+                    }
+                }
+            });
+
+            const islands = document.querySelectorAll(".data-island");
+            const quickChips = document.querySelectorAll(".quick-chip");
+
+            // Force inline styles onto a single card's title & data (defeats Blogger dark CSS)
+            function styleCardElements(island) {
+                const isDark = currentTheme === "dark";
+                const cardBg = isDark ? "#1b222d" : "#b0cce4";
+                const summaryClosedBg = isDark ? "#1b222d" : "#9fc0db";
+                const summaryOpenBg = isDark ? "#222b38" : "#8ab0d0";
+                const borderHex = isDark ? "#2d3748" : "#6b92b5";
+                const textHex = isDark ? "#e2e8f0" : "#0b1d30";
+                const bodyTextHex = isDark ? "#cbd5e0" : "#0b1d30";
+                const linkHex = isDark ? "#63b3ed" : "#0a3d62";
+                const tipBg = isDark ? "#1a365d" : "#97bad8";
+                const tipBorder = isDark ? "#63b3ed" : "#133b5c";
+                const tipText = isDark ? "#bee3f8" : "#071524";
+
+                island.style.setProperty("background-color", cardBg, "important");
+                island.style.setProperty("border-color", borderHex, "important");
+                island.style.setProperty("color", textHex, "important");
+
+                const summary = island.querySelector("summary");
+                if (summary) {
+                    summary.style.setProperty("background-color", island.open ? summaryOpenBg : summaryClosedBg, "important");
+                    summary.style.setProperty("color", textHex, "important");
+                    summary.style.setProperty("border-bottom-color", borderHex, "important");
+                }
+
+                const titleSpan = island.querySelector(".island-title");
+                if (titleSpan) {
+                    titleSpan.style.setProperty("background-color", "transparent", "important");
+                    titleSpan.style.setProperty("color", textHex, "important");
+                }
+
+                const contentBox = island.querySelector(".island-content");
+                if (contentBox) {
+                    contentBox.style.setProperty("background-color", cardBg, "important");
+                    contentBox.style.setProperty("color", bodyTextHex, "important");
+                }
+
+                const textBox = island.querySelector(".island-text");
+                if (textBox) {
+                    textBox.style.setProperty("background-color", cardBg, "important");
+                    textBox.style.setProperty("color", bodyTextHex, "important");
+                    textBox.querySelectorAll("p, li, ul, ol, span, strong").forEach(el => {
+                        if (!el.closest(".tip-box")) {
+                            el.style.setProperty("background-color", "transparent", "important");
+                            el.style.setProperty("color", bodyTextHex, "important");
+                        }
+                    });
+                }
+
+                const mediaBox = island.querySelector(".island-media");
+                if (mediaBox) {
+                    mediaBox.style.setProperty("background-color", cardBg, "important");
+                }
+
+                const tipBox = island.querySelector(".tip-box");
+                if (tipBox) {
+                    tipBox.style.setProperty("background-color", tipBg, "important");
+                    tipBox.style.setProperty("border-left-color", tipBorder, "important");
+                    tipBox.style.setProperty("color", tipText, "important");
+                    tipBox.querySelectorAll("strong, span").forEach(el => {
+                        el.style.setProperty("background-color", "transparent", "important");
+                        el.style.setProperty("color", tipText, "important");
+                    });
+                }
+
+                island.querySelectorAll("a").forEach(a => {
+                    a.style.setProperty("color", linkHex, "important");
+                });
+            }
+
+            // Update summary background when a card is toggled open/closed
+            islands.forEach(island => {
+                island.addEventListener("toggle", () => styleCardElements(island));
+            });
+
+            // Cache Title and Text HTML so media/iframes/videos never reset on search or language switch
+            function updatePristineCaches() {
+                const strings = uiStrings[currentLang];
+                db.forEach((item, index) => {
+                    const island = islands[index];
+                    const titleStr = currentLang === "id" && item.t_id ? item.t_id : item.t;
+                    const tipStr = currentLang === "id" && item.p_id ? item.p_id : item.p;
+                    const bodyStr = currentLang === "id" && item.c_id ? item.c_id : (item.c || "");
+                    const tipHtml = tipStr ? `<div class="tip-box"><strong>${strings.proTip}</strong> ${tipStr}</div>` : "";
+
+                    island.dataset.pristineTitle = titleStr;
+                    island.dataset.pristineText = tipHtml + bodyStr;
+
+                    quickChips[index].textContent = `${index + 1}. ${stripHtml(titleStr)}`;
+                });
+            }
+
+            // 3. Quick Jump Index Click & Auto-Collapse Logic
+            toggleQuickIndex.addEventListener("click", () => {
+                const isCollapsed = quickIndexList.classList.toggle("collapsed");
+                quickIndexArrow.textContent = isCollapsed ? "[+]" : "[-]";
+            });
+
+            quickIndexList.addEventListener("click", (e) => {
+                const chip = e.target.closest(".quick-chip");
+                if (!chip) return;
+                const idx = chip.dataset.index;
+                const targetIsland = document.getElementById(`island-${idx}`);
+                if (!targetIsland) return;
+
+                // Auto-collapse Quick Jump list after clicking so user gets maximum screen height
+                quickIndexList.classList.add("collapsed");
+                quickIndexArrow.textContent = "[+]";
+
+                targetIsland.classList.remove("hidden");
+                targetIsland.open = true;
+                styleCardElements(targetIsland);
+
+                const stickyHeight = isPinned ? stickyControls.offsetHeight : 0;
+                const targetTop = targetIsland.getBoundingClientRect().top + window.pageYOffset - stickyHeight - 10;
+                window.scrollTo({ top: targetTop, behavior: "smooth" });
+
+                targetIsland.classList.add("flash-target");
+                setTimeout(() => targetIsland.classList.remove("flash-target"), 1200);
+            });
+
+            // 4. Expand / Collapse / Pin Listeners
+            expandAllBtn.addEventListener("click", () => islands.forEach(i => { i.open = true; styleCardElements(i); }));
+            collapseAllBtn.addEventListener("click", () => islands.forEach(i => { i.open = false; styleCardElements(i); }));
+
+            pinToggleBtn.addEventListener("click", () => {
+                isPinned = !isPinned;
+                stickyControls.classList.toggle("unpinned", !isPinned);
+                updateUIText();
+            });
+
+            // 5. Search & Highlight Logic
+            function applySearchFilter() {
+                const query = searchInput.value.trim().toLowerCase();
+
+                islands.forEach((island, index) => {
+                    const titleNode = island.querySelector(".island-title");
+                    const textNode = island.querySelector(".island-text");
+                    const chip = quickChips[index];
+                    
+                    titleNode.innerHTML = island.dataset.pristineTitle;
+                    textNode.innerHTML = island.dataset.pristineText;
+
+                    if (!query) {
+                        island.classList.remove("hidden");
+                        chip.classList.remove("hidden");
+                        styleCardElements(island);
+                        return;
+                    }
+
+                    const titleText = titleNode.textContent.toLowerCase();
+                    const bodyText = textNode.textContent.toLowerCase();
+
+                    if (titleText.includes(query) || bodyText.includes(query)) {
+                        island.classList.remove("hidden");
+                        chip.classList.remove("hidden");
+                        island.open = true; 
+                        
+                        if (titleText.includes(query)) highlightTextInNode(titleNode, query);
+                        if (bodyText.includes(query)) highlightTextInNode(textNode, query);
+                    } else {
+                        island.classList.add("hidden");
+                        chip.classList.add("hidden");
+                    }
+                    styleCardElements(island);
+                });
+            }
+
+            searchInput.addEventListener("input", applySearchFilter);
+
+            // 6. Language & Theme UI Sync
+            function updateUIText() {
+                const s = uiStrings[currentLang];
+                document.documentElement.lang = currentLang;
+                searchInput.placeholder = s.searchPlaceholder;
+                quickIndexLabel.textContent = s.quickIndexLabel;
+                expandAllBtn.textContent = s.expandAll;
+                collapseAllBtn.textContent = s.collapseAll;
+                pinToggleBtn.textContent = isPinned ? s.pinOn : s.pinOff;
+                langToggleBtn.innerHTML = `${flagSVGs[currentLang]} <span>${s.langCode}</span>`;
+                themeToggleBtn.textContent = currentTheme === "dark" ? s.themeLight : s.themeDark;
+            }
+
+            // Force background & text color on page, controls, AND every card title/data element
+            function applyThemeClasses() {
+                const isDark = currentTheme === "dark";
+                const addCls = isDark ? "theme-dark" : "theme-light";
+                const remCls = isDark ? "theme-light" : "theme-dark";
+
+                const pageBg = isDark ? "#11151c" : "#8eaec9";
+                const controlBg = isDark ? "#263040" : "#9fc0db";
+                const boxBg = isDark ? "#1b222d" : "#b0cce4";
+                const headerBg = isDark ? "#222b38" : "#8ab0d0";
+                const borderHex = isDark ? "#2d3748" : "#6b92b5";
+                const textHex = isDark ? "#e2e8f0" : "#0b1d30";
+
+                [document.documentElement, document.body, appWrapper, stickyControls].forEach(el => {
+                    if (!el) return;
+                    el.classList.remove(remCls);
+                    el.classList.add(addCls);
+                    el.style.setProperty("background-color", pageBg, "important");
+                    el.style.setProperty("color", textHex, "important");
+                });
+
+                // Walk up any Blogger parent containers
+                let parent = appWrapper.parentElement;
+                while (parent && parent !== document.body && parent !== document.documentElement) {
+                    parent.style.setProperty("background-color", pageBg, "important");
+                    parent.style.setProperty("color", textHex, "important");
+                    parent = parent.parentElement;
+                }
+
+                // Style search box & quick index
+                searchInput.style.setProperty("background-color", boxBg, "important");
+                searchInput.style.setProperty("color", textHex, "important");
+                searchInput.style.setProperty("border-color", borderHex, "important");
+              	searchInput.style.setProperty("opacity", "1", "important");
+
+                quickIndexContainer.style.setProperty("background-color", boxBg, "important");
+                quickIndexContainer.style.setProperty("border-color", borderHex, "important");
+                toggleQuickIndex.style.setProperty("background-color", headerBg, "important");
+                toggleQuickIndex.style.setProperty("color", textHex, "important");
+                quickIndexList.style.setProperty("background-color", boxBg, "important");
+
+                // Style buttons & quick chips
+                document.querySelectorAll(".ctrl-btn, .quick-chip").forEach(btn => {
+                    btn.style.setProperty("background-color", controlBg, "important");
+                    btn.style.setProperty("color", textHex, "important");
+                    btn.style.setProperty("border-color", borderHex, "important");
+                });
+
+                // Style all cards (titles + data)
+                islands.forEach(island => styleCardElements(island));
+            }
+
+            langToggleBtn.addEventListener("click", () => {
+                currentLang = currentLang === "en" ? "id" : "en";
+                updateUIText();
+                updatePristineCaches();
+                applySearchFilter();
+            });
+
+            // 7. Dark / Light Theme Toggle
+            themeToggleBtn.addEventListener("click", () => {
+                currentTheme = currentTheme === "light" ? "dark" : "light";
+                applyThemeClasses();
+                updateUIText();
+            });
+
+            // 8. Font Size Scaling Controls with Percentage Display
+            function applyFontScale() {
+                document.documentElement.style.fontSize = `${fontScale}%`;
+                fontResetBtn.textContent = `${fontScale}%`;
+            }
+
+            fontIncBtn.addEventListener("click", () => {
+                if (fontScale < 145) {
+                    fontScale += 10;
+                    applyFontScale();
+                }
+            });
+
+            fontDecBtn.addEventListener("click", () => {
+                if (fontScale > 85) {
+                    fontScale -= 10;
+                    applyFontScale();
+                }
+            });
+
+            fontResetBtn.addEventListener("click", () => {
+                fontScale = 100;
+                applyFontScale();
+            });
+
+            // Initialize UI
+            updatePristineCaches();
+            applySearchFilter();
+            applyThemeClasses();
+            updateUIText();
+
+            // Safe Highlighter (ignores scripts/styles/media links)
+            function highlightTextInNode(node, query) {
+                const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+                const nodesToReplace = [];
+
+                let currentNode;
+                while (currentNode = walker.nextNode()) {
+                    if (currentNode.nodeValue.toLowerCase().includes(query) && 
+                        currentNode.parentNode.nodeName !== 'SCRIPT' && 
+                        currentNode.parentNode.nodeName !== 'STYLE') {
+                        nodesToReplace.push(currentNode);
+                    }
+                }
+
+                nodesToReplace.forEach(textNode => {
+                    const regex = new RegExp(`(${escapeRegExp(query)})`, 'gi');
+                    const fragment = document.createDocumentFragment();
+                    let lastIdx = 0;
+                    
+                    textNode.nodeValue.replace(regex, (match, p1, offset) => {
+                        const before = textNode.nodeValue.slice(lastIdx, offset);
+                        if (before) fragment.appendChild(document.createTextNode(before));
+                        const mark = document.createElement('mark');
+                        mark.textContent = match;
+                        fragment.appendChild(mark);
+                        lastIdx = offset + match.length;
+                    });
+                    
+                    const after = textNode.nodeValue.slice(lastIdx);
+                    if (after) fragment.appendChild(document.createTextNode(after));
+                    textNode.parentNode.replaceChild(fragment, textNode);
+                });
+            }
+
+            function escapeRegExp(string) {
+                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+        });
+    </script>
+</body>
+</html>
