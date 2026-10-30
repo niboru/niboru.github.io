@@ -348,7 +348,8 @@
 
 <div id="appWrapper" class="theme-dark">
     <main>
-        <div class="controls-container" id="stickyControls">
+      	<div class="controls-container unpinned" id="stickyControls">
+        <!--<div class="controls-container" id="stickyControls"> -->
             <div class="search-wrapper">
                 <input type="text" id="searchBox" placeholder="Search digestive points, herbs, medicines, or symptoms...">
             </div>
@@ -754,7 +755,7 @@
             let currentLang = "en";
             let currentTheme = "dark";
             let fontScale = 100;
-            let isPinned = true;
+            let isPinned = false;
 
             function stripHtml(html) {
                 const tmp = document.createElement("div");
