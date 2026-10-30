@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="theme-light">
+<html lang="en" class="theme-dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,17 +26,17 @@
             border-bottom: 1px solid #6b92b5 !important;
         }
         #appWrapper.theme-light #searchBox {
-			background-color: #9fc0db !important; /* Deeper pastel blue for high contrast */
-			color: #0b1d30 !important;
-            border: 2px solid #6b92b5 !important;
+            background-color: #7399b8 !important; /* Darker slate-pastel blue */
+            color: #05101c !important;
+            border: 2px solid #4a7296 !important;
         }
         #appWrapper.theme-light #searchBox::placeholder {
-            color: black !important;
-          	opacity: 1 !important;
-    		font-weight: 500 !important;
+            color: #0b1d30 !important;
+            opacity: 1 !important;
+            font-weight: 500 !important;
         }
         #appWrapper.theme-light #searchBox:focus {
-            background-color: #bdd6eb !important;
+            background-color: #648cae !important;
             border-color: #133b5c !important;
         }
         #appWrapper.theme-light .quick-index-container {
@@ -127,14 +127,17 @@
             border-bottom: 1px solid #2d3748 !important;
         }
         #appWrapper.theme-dark #searchBox {
-            background-color: #1b222d !important;
+            background-color: #0b0e14 !important; /* Deeper dark background */
             color: #e2e8f0 !important;
             border: 2px solid #2d3748 !important;
         }
         #appWrapper.theme-dark #searchBox::placeholder {
-            color: #94a3b8 !important;
+            olor: #e2e8f0 !important; /* Brighter high-contrast text; use #ffffff for maximum brightness */
+    		opacity: 1 !important;    /* Prevents default browser dimming */
+    		font-weight: 500 !important;
         }
         #appWrapper.theme-dark #searchBox:focus {
+            background-color: #141923 !important;
             border-color: #63b3ed !important;
         }
         #appWrapper.theme-dark .quick-index-container {
@@ -341,9 +344,9 @@
         .hidden { display: none !important; }
     </style>
 </head>
-<body class="theme-light">
+<body class="theme-dark">
 
-<div id="appWrapper" class="theme-light">
+<div id="appWrapper" class="theme-dark">
     <main>
         <div class="controls-container" id="stickyControls">
             <div class="search-wrapper">
@@ -749,7 +752,7 @@
             const stickyControls = document.getElementById("stickyControls");
 
             let currentLang = "en";
-            let currentTheme = "light";
+            let currentTheme = "dark";
             let fontScale = 100;
             let isPinned = true;
 
@@ -785,9 +788,9 @@
 
             container.innerHTML = htmlOutput;
           
-          	container.querySelectorAll("iframe").forEach(iframe => {
-    			iframe.setAttribute("sandbox", "allow-same-origin allow-scripts");
-			});
+            container.querySelectorAll("iframe").forEach(iframe => {
+                iframe.setAttribute("sandbox", "allow-same-origin allow-scripts");
+            });
             quickIndexList.innerHTML = quickLinksOutput;
 
             // 2. Move Blogger's pre-rendered video elements from the vault into their cards
@@ -996,6 +999,8 @@
                 const pageBg = isDark ? "#11151c" : "#8eaec9";
                 const controlBg = isDark ? "#263040" : "#9fc0db";
                 const boxBg = isDark ? "#1b222d" : "#b0cce4";
+                const searchBg = isDark ? "#0b0e14" : "#7399b8";
+                const searchBorderHex = isDark ? "#2d3748" : "#4a7296";
                 const headerBg = isDark ? "#222b38" : "#8ab0d0";
                 const borderHex = isDark ? "#2d3748" : "#6b92b5";
                 const textHex = isDark ? "#e2e8f0" : "#0b1d30";
@@ -1016,11 +1021,11 @@
                     parent = parent.parentElement;
                 }
 
-                // Style search box & quick index
-                searchInput.style.setProperty("background-color", boxBg, "important");
+                // Style search box with dedicated darker background
+                searchInput.style.setProperty("background-color", searchBg, "important");
                 searchInput.style.setProperty("color", textHex, "important");
-                searchInput.style.setProperty("border-color", borderHex, "important");
-              	searchInput.style.setProperty("opacity", "1", "important");
+                searchInput.style.setProperty("border-color", searchBorderHex, "important");
+                searchInput.style.setProperty("opacity", "1", "important");
 
                 quickIndexContainer.style.setProperty("background-color", boxBg, "important");
                 quickIndexContainer.style.setProperty("border-color", borderHex, "important");
@@ -1038,6 +1043,19 @@
                 // Style all cards (titles + data)
                 islands.forEach(island => styleCardElements(island));
             }
+
+            // Preserve focus visual feedback on searchBox alongside inline !important styles
+            searchInput.addEventListener("focus", () => {
+                const isDark = currentTheme === "dark";
+                searchInput.style.setProperty("background-color", isDark ? "#141923" : "#648cae", "important");
+                searchInput.style.setProperty("border-color", isDark ? "#63b3ed" : "#133b5c", "important");
+            });
+
+            searchInput.addEventListener("blur", () => {
+                const isDark = currentTheme === "dark";
+                searchInput.style.setProperty("background-color", isDark ? "#0b0e14" : "#7399b8", "important");
+                searchInput.style.setProperty("border-color", isDark ? "#2d3748" : "#4a7296", "important");
+            });
 
             langToggleBtn.addEventListener("click", () => {
                 currentLang = currentLang === "en" ? "id" : "en";
