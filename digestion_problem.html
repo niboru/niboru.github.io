@@ -328,17 +328,26 @@
 
         /* Responsive wrapper for Blogger native video objects */
         .blogger-vid-slot {
-            width: 100%;
-            overflow: hidden;
-            border-radius: 8px;
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-        }
-        .BLOG_video_class, .blogger-vid-slot iframe, .blogger-vid-slot object, .blogger-vid-slot video {
-            max-width: 100% !important;
-            border-radius: 8px;
-        }
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    background: #000;
+}
+
+.BLOG_video_class, 
+.blogger-vid-slot iframe, 
+.blogger-vid-slot object, 
+.blogger-vid-slot video {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+    border-radius: 8px;
+}
 
         mark { background-color: #fbd38d !important; color: #000000 !important; border-radius: 3px; padding: 0 3px; font-weight: 600; }
         .hidden { display: none !important; }
