@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -13,7 +12,30 @@
     main { width: min(100% - 2rem, 50rem); margin-inline: auto; padding-block: 1.5rem; line-height: 1.6; }
     img, video { display: block; max-width: 100%; height: auto; margin: 0 auto; padding: 0; }
     pre { overflow: auto; padding: 2px 5px; border-radius: 3px; background-color: #121650; color: #e1e1dc; font-size: 0.9em; white-space: pre-wrap; word-break: break-all; }
-    p { margin-bottom: -20px; padding: 2px 5px; border-radius: 3px; background-color: gray; color: #ffffff; }
+    
+    /* NEW ACCORDION CARD STYLING */
+    .link-card {
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-radius: 4px;
+        margin: 15px 0;
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+    .link-card summary {
+        background-color: gray;
+        color: #ffffff;
+        padding: 6px 12px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1em;
+        user-select: none;
+    }
+    .link-card summary:hover {
+        opacity: 0.9;
+    }
+    .link-card .card-content {
+        padding: 5px 12px;
+    }
+
     .hl { color: #01ff70; }
     .ll { color: #ff6f2f; }
     hr { margin-top: 10px; margin-bottom: 10px; padding: 1px; color: silver; box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.34); filter: blur(1px); }
@@ -964,16 +986,14 @@ https://webhacklist.com/
 </pre>
 </main>
 
-<!-- NEW PARSER SCRIPT REPLACING THE OLD ONE -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     "use strict";
 
-    // CONFIG: Target container ID
     const container = document.getElementById("link-list");
     if (!container) return;
 
-    // CONFIG: Search Engine Mappings
+    // --- PHASE 1: LINK PARSER ---
     const engines = {
         "g!": "https://www.google.com/search?q=",
         "y!": "https://www.youtube.com/results?search_query=",
@@ -1006,7 +1026,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     nodesToProcess.forEach((textNode) => {
         const text = textNode.nodeValue;
-        
         if (!text.match(tokenRegex)) return;
 
         const fragment = document.createDocumentFragment();
@@ -1045,6 +1064,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
         textNode.parentNode.replaceChild(fragment, textNode);
     });
+
+    // --- PHASE 2: ACCORDION CARD GENERATOR ---
+    // Iterate over child nodes. Wrap everything under a <p> tag inside a <details> card.
+    const children = Array.from(container.childNodes);
+    let currentDetails = null;
+    let currentContent = null;
+
+    children.forEach(node => {
+        if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === "P") {
+            
+            // Create the card container
+            currentDetails = document.createElement("details");
+            currentDetails.className = "link-card";
+            
+            // Convert the <p> into the clickable <summary> tab
+            const summary = document.createElement("summary");
+            while (node.firstChild) {
+                summary.appendChild(node.firstChild);
+            }
+            currentDetails.appendChild(summary);
+            
+            // Create the inner body to hold the links
+            currentContent = document.createElement("div");
+            currentContent.className = "card-content";
+            currentDetails.appendChild(currentContent);
+            
+            // Insert the card where the <p> used to be and destroy the old <p>
+            container.insertBefore(currentDetails, node);
+            node.remove(); 
+            
+        } else if (currentContent) {
+            // If we are currently inside an active card group, vacuum this node into the card
+            currentContent.appendChild(node);
+        }
+    });
 });
 </script>
 
@@ -1061,7 +1115,6 @@ document.addEventListener("DOMContentLoaded", () => {
     <label>Title <input id="ls-name" type="text" maxlength="100" autocomplete="off" required></label>
     <label>URL <input id="ls-url" type="url" maxlength="500" placeholder="https://example.com" autocomplete="off" required></label>
     <label>Short description (optional) <textarea id="ls-desc" maxlength="300" rows="3"></textarea></label>
-    <!-- Honeypot: invisible to people, bots fill it in. -->
     <div style="position:absolute;left:-9999px" aria-hidden="true">
       <label>Leave empty <input id="ls-hp" type="text" tabindex="-1" autocomplete="off"></label>
     </div>
@@ -1094,17 +1147,15 @@ document.addEventListener("DOMContentLoaded", () => {
 (() => {
   "use strict";
 
-  /* ---------- CONFIG: edit these ---------- */
   const SUPABASE_URL = "https://bypfgvbykzgqbdckxqln.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable__IK07a9-Y6NZyyRR9L4SrQ_Mp7pv03O";
-  /* ---------------------------------------- */
 
   const TABLE = `${SUPABASE_URL}/rest/v1/links`;
   const TIMEOUT_MS = 8000;
-  const MIN_FILL_MS = 3000;          // forms submitted faster than this are almost certainly bots
-  const COOLDOWN_MS = 30000;         // one submission per 30s per visitor
+  const MIN_FILL_MS = 3000;
+  const COOLDOWN_MS = 30000;
   const MAX_TITLE = 100, MAX_URL = 500, MAX_DESC = 300;
-  const SEEN_KEY = "ls-sent-v1";     // remembers recent submissions to block repeat-posting from one browser
+  const SEEN_KEY = "ls-sent-v1";
   const MAX_PER_DAY = 5;
 
   const $ = (id) => document.getElementById(id);
@@ -1116,7 +1167,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const setText = (n, t, err) => { n.textContent = t || ""; n.classList.toggle("err", !!err); };
   const clean = (s) => String(s ?? "").replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim();
 
-  /** http(s) only, no credentials, host must contain a dot. Returns normalized URL or null. */
   function safeUrl(input) {
     const raw = String(input ?? "").trim();
     if (!raw || raw.length > MAX_URL) return null;
@@ -1125,7 +1175,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return u.href;
   }
 
-  /** fetch with a timeout so a slow service can't hang the page. */
   async function api(url, opts) {
     const ctl = new AbortController();
     const t = setTimeout(() => ctl.abort(), TIMEOUT_MS);
@@ -1135,7 +1184,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } finally { clearTimeout(t); }
   }
 
-  /* Per-browser daily limit (soft: blocks casual repeat posting; real limits live in the database). */
   function sentToday() {
     try { const a = JSON.parse(localStorage.getItem(SEEN_KEY) || "[]");
           return (Array.isArray(a) ? a : []).filter((t) => Number.isFinite(t) && Date.now() - t < 864e5); }
@@ -1143,13 +1191,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function markSent() { try { localStorage.setItem(SEEN_KEY, JSON.stringify([...sentToday(), Date.now()])); } catch {} }
 
-  /* ---------- submit ---------- */
   form.addEventListener("submit", async (ev) => {
     ev.preventDefault();
     if (busy) return;
     setText(msg, "");
 
-    // Spam traps: pretend success so bots learn nothing.
     if (hp.value || Date.now() - openedAt < MIN_FILL_MS) { setText(msg, "Thanks! Your link will appear once it's approved."); form.reset(); return; }
 
     const title = clean(nameEl.value), url = safeUrl(urlEl.value), desc = clean(descEl.value);
@@ -1168,7 +1214,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await api(TABLE, { method: "POST",
         headers: { "Content-Type": "application/json", Prefer: "return=minimal" },
-        body: JSON.stringify({ title, url, description: desc }) });   // "approved" is never sent; DB forces false
+        body: JSON.stringify({ title, url, description: desc }) });
       if (res.status === 201 || res.status === 204) {
         lastSubmit = Date.now(); markSent(); form.reset();
         setText(msg, "Thanks! Your link will appear once it's approved.");
@@ -1182,13 +1228,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                               : "Couldn't submit your link. Please try again.", true);
       }
     } catch (e) {
-      // Network down, timeout or CORS failure. The form keeps the user's input.
       setText(msg, e.name === "AbortError" ? "The request timed out. Please try again."
                                           : "Couldn't reach the server. Check your connection and retry.", true);
     } finally { busy = false; btn.disabled = false; }
   });
 
-  /* ---------- list ---------- */
   async function load() {
     try {
       const res = await api(`${TABLE}?select=title,url,description,created_at&approved=eq.true&order=created_at.desc&limit=200`);
@@ -1199,7 +1243,7 @@ document.addEventListener("DOMContentLoaded", () => {
       listEl.replaceChildren();
       for (const r of rows) {
         const url = safeUrl(r && r.url), title = clean(r && r.title).slice(0, MAX_TITLE);
-        if (!url || !title) continue;                      // treat server data as untrusted too
+        if (!url || !title) continue;
         const li = document.createElement("li");
         const a = document.createElement("a");
         a.textContent = title; a.href = url; a.target = "_blank"; a.rel = "noopener noreferrer nofollow ugc";
