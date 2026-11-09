@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,41 +7,154 @@
 
 <style>
     * { font-family: "Roboto", sans-serif; }
-    body { margin: 0; }
+    body { margin: 0; background-color: #0f172a; color: #e2e8f0; }
     main { width: min(100% - 2rem, 50rem); margin-inline: auto; padding-block: 1.5rem; line-height: 1.6; }
-    img, video { display: block; max-width: 100%; height: auto; margin: 0 auto; padding: 0; }
+    
+    /* Full-width media bleed */
+    img, video { display: block; width: 100vw; max-width: 100vw; margin-inline: calc(50% - 50vw); height: auto; padding: 0; }
     pre { overflow: auto; padding: 2px 5px; border-radius: 3px; background-color: #121650; color: #e1e1dc; font-size: 0.9em; white-space: pre-wrap; word-break: break-all; }
     
-    /* NEW ACCORDION CARD STYLING */
+    /* ACCORDION CARD STYLING */
     .link-card {
         border: 2px solid rgba(255, 255, 255, 0.4);
-        border-radius: 4px;
-        margin: 15px 0;
-        background-color: rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        margin: 16px 0;
+        background-color: rgba(15, 23, 42, 0.6);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        transition: all 0.3s ease;
     }
+    
     .link-card summary {
-        background-color: gray;
-        color: #ffffff;
-        padding: 6px 12px;
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #f8fafc;
+        padding: 12px 16px;
         cursor: pointer;
-        font-weight: bold;
+        font-weight: 600;
         font-size: 1.1em;
+        letter-spacing: 0.5px;
         user-select: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid transparent;
+        transition: background-color 0.2s ease;
     }
+    
     .link-card summary:hover {
-        opacity: 0.9;
+        background-color: rgba(255, 255, 255, 0.12);
     }
-    .link-card .card-content {
-        padding: 5px 12px;
+    
+    .link-card[open] summary {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.3);
     }
 
+    .link-card summary::-webkit-details-marker {
+        display: none;
+    }
+    
+    .link-card summary::after {
+        content: "▼";
+        font-size: 0.8em;
+        color: #94a3b8;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .link-card[open] summary::after {
+        transform: rotate(-180deg);
+    }
+
+    /* ISLAND/CHIP LAYOUT & FLOATING NOTES (Flexbox prevents baseline tearing) */
+    /* ISLAND/CHIP LAYOUT & IN-FLOW NOTES */
+    .link-card .card-content { 
+        padding: 16px; 
+        display: flex;
+        flex-wrap: wrap;
+        /*gap: 12px 12px;*/ /* Uniform vertical and horizontal gap */
+        align-items: flex-end; /* Locks all pills to the bottom of their row */
+        color: #cbd5e1; 
+    }
+    
+    .link-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end; /* Right-aligns the pill and the note */
+        margin: 4px 6px 4px 0; /* Spacing handled at the wrapper level */
+    }
+
+    .link-note {
+        /* IN FLOW: No absolute positioning! */
+        font-size: 0.7em;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: #64748b;
+        white-space: nowrap; /* Keeps notes on a single line */
+        margin-bottom: 4px; /* Breathing room above the pill */
+        margin-right: 12px; /* Typographic inset aligning text with pill inner curve */
+        pointer-events: none;
+        transition: color 0.2s ease, transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Default margin for raw links WITHOUT notes */
+    .card-content > a {
+        margin: 4px 6px 4px 0; 
+    }
+
+    .card-content a {
+        background-color: rgba(56, 189, 248, 0.15);
+        color: #bae6fd;
+        padding: 4px 14px;
+        border-radius: 20px;
+        text-decoration: none;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        font-size: 0.95em;
+        line-height: 1.5;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Strip margin from links inside wrappers to prevent double-spacing */
+    .link-wrapper a {
+        margin: 0;
+    }
+    
+    /* SHARED HOVER STATES */
+    .link-wrapper:hover a, .card-content > a:hover {
+        background-color: #0284c7;
+        color: #ffffff;
+        border-color: #38bdf8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+    }
+    
+    .link-wrapper:hover .link-note {
+        color: #01ff70; /* Neon highlight */
+        transform: translateY(-2px); /* Lifts in sync with pill */
+    }
+
+    /* ELEGANT SUB-DIVIDERS */
+
+    /* ELEGANT SUB-DIVIDERS */
+    .card-content b, .card-content .label, .card-content .hl {
+        width: 100%; /* Forces a line break in flexbox */
+        margin-top: 8px;
+        margin-bottom: 2px;
+        font-size: 0.85em;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: #94a3b8;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 4px;
+    }
+    
+    .card-content > *:first-child { margin-top: 0; }
+    
     .hl { color: #01ff70; }
     .ll { color: #ff6f2f; }
     hr { margin-top: 10px; margin-bottom: 10px; padding: 1px; color: silver; box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.34); filter: blur(1px); }
     code { display: inline-block; overflow: auto; margin-top: 3px; padding: 3px; border: 1px solid #ddd; background: #1a3089; font-size: 0.8em; letter-spacing: 2px; text-align: left; }
     pre a { color: inherit; text-decoration: underline; }
-    pre a:hover { opacity: 0.75; }
-    .label { border-radius: 3px; font-size: 1.1em; padding: 2px 2px; background-color: gray; }
+    pre a:hover { opacity: 0.9; }
 </style>
 </head>
 
@@ -993,7 +1105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById("link-list");
     if (!container) return;
 
-    // --- PHASE 1: LINK PARSER ---
     const engines = {
         "g!": "https://www.google.com/search?q=",
         "y!": "https://www.youtube.com/results?search_query=",
@@ -1002,9 +1113,12 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const prefixes = Object.keys(engines).join("|");
-    const regexStr = `(https?:\\/\\/[^\\s]+|www\\.[^\\s]+)|(${prefixes})"([^"]+)"|(${prefixes})([^\\s.,;!?]+)`;
+    const baseMatch = `(https?:\\/\\/[^\\s]+|www\\.[^\\s]+)|(${prefixes})"([^"]+)"|(${prefixes})([^\\s.,;!?]+)`;
+    const noteMatch = `(?:[ \\t]*(?:→|\\n[ \\t]+)([^\\n]+))?`;
+    const regexStr = `(?:${baseMatch})${noteMatch}`;
     const tokenRegex = new RegExp(regexStr, "gi");
 
+    // PHASE 1: LINK PARSER & FLEXBOX WRAPPER EXTRACTOR
     const walker = document.createTreeWalker(
         container,
         NodeFilter.SHOW_TEXT,
@@ -1040,21 +1154,42 @@ document.addEventListener("DOMContentLoaded", () => {
             const urlMatch = match[1];
             const prefixMatch = (match[2] || match[4] || "").toLowerCase();
             const searchMatch = match[3] || match[5]; 
+            const noteText = match[6]; 
             
             const link = document.createElement("a");
             link.target = "_blank";
             link.rel = "noopener noreferrer";
 
             if (urlMatch) {
-                link.href = urlMatch.toLowerCase().startsWith("www.") ? "https://" + urlMatch : urlMatch;
-                link.textContent = urlMatch;
+                const fullUrl = urlMatch.toLowerCase().startsWith("www.") ? "https://" + urlMatch : urlMatch;
+                link.href = fullUrl;
+                try {
+                    link.textContent = new URL(fullUrl).hostname.replace(/^www\./i, '');
+                } catch (e) {
+                    link.textContent = urlMatch;
+                }
             } else if (prefixMatch && searchMatch && engines[prefixMatch]) {
                 const query = searchMatch.trim();
                 link.href = engines[prefixMatch] + encodeURIComponent(query);
                 link.textContent = query; 
             }
 
-            fragment.appendChild(link);
+            // Restore the HTML Wrapper for Flexbox layout stability
+            if (noteText) {
+                const wrapper = document.createElement("span");
+                wrapper.className = "link-wrapper";
+                
+                const noteEl = document.createElement("span");
+                noteEl.className = "link-note";
+                noteEl.textContent = noteText.trim();
+                wrapper.appendChild(noteEl);
+                
+                wrapper.appendChild(link);
+                fragment.appendChild(wrapper);
+            } else {
+                fragment.appendChild(link);
+            }
+
             lastIndex = tokenRegex.lastIndex;
         }
 
@@ -1065,50 +1200,35 @@ document.addEventListener("DOMContentLoaded", () => {
         textNode.parentNode.replaceChild(fragment, textNode);
     });
 
-    // --- PHASE 2: ACCORDION CARD GENERATOR ---
-    // Iterate over child nodes. Wrap everything under a <p> tag inside a <details> card.
+    // PHASE 2: ACCORDION CARD GENERATOR
     const children = Array.from(container.childNodes);
     let currentDetails = null;
     let currentContent = null;
 
     children.forEach(node => {
         if (node.nodeType === Node.ELEMENT_NODE && node.nodeName === "P") {
-            
-            // Create the card container
             currentDetails = document.createElement("details");
             currentDetails.className = "link-card";
             
-            // Convert the <p> into the clickable <summary> tab
             const summary = document.createElement("summary");
             while (node.firstChild) {
                 summary.appendChild(node.firstChild);
             }
             currentDetails.appendChild(summary);
             
-            // Create the inner body to hold the links
             currentContent = document.createElement("div");
             currentContent.className = "card-content";
             currentDetails.appendChild(currentContent);
             
-            // Insert the card where the <p> used to be and destroy the old <p>
             container.insertBefore(currentDetails, node);
             node.remove(); 
-            
         } else if (currentContent) {
-            // If we are currently inside an active card group, vacuum this node into the card
             currentContent.appendChild(node);
         }
     });
 });
 </script>
 
-<!--
-  LINK SUGGESTION WIDGET (open to everyone, moderated). Paste just before </body>.
-  Setup: 1) run supabase-setup.sql  2) fill in SUPABASE_URL and SUPABASE_ANON_KEY below
-         (Dashboard > Project Settings > API). The anon key is meant to be public; the
-         database rules in the SQL file are what protect you.
-  Moderation: Table Editor > links > tick "approved" on good ones. Delete spam rows.
--->
 <section id="ls-widget" aria-labelledby="ls-title">
   <h2 id="ls-title">Suggest a link</h2>
   <form id="ls-form" novalidate>
@@ -1121,7 +1241,6 @@ document.addEventListener("DOMContentLoaded", () => {
     <button id="ls-submit" type="submit">Submit for review</button>
     <p id="ls-msg" role="status" aria-live="polite"></p>
   </form>
-
   <p>Community links</p>
   <ul id="ls-list"></ul>
   <br>
